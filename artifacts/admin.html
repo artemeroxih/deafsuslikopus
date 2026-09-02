@@ -1,0 +1,2345 @@
+<title>deafsuslik Admin Panel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* ============================================================
+   deafsuslik — Design Tokens
+   Dark-committed cinematic system. Every colour is painted
+   explicitly; nothing inherits the host ground.
+   ============================================================ */
+
+:root {
+  /* ---- Ground & surfaces (blue-biased graphite, never pure grey) ---- */
+  --ds-void:        #06070A;
+  --ds-sunken:      #030407;
+  --ds-panel:       #0D1016;
+  --ds-raised:      #14181F;
+  --ds-raised-2:    #1B2029;
+  --ds-raised-3:    #242A35;
+  --ds-scrim:       rgba(6, 7, 10, 0.72);
+
+  /* ---- Hairlines ---- */
+  --ds-line:        rgba(255, 255, 255, 0.07);
+  --ds-line-mid:    rgba(255, 255, 255, 0.12);
+  --ds-line-strong: rgba(255, 255, 255, 0.20);
+
+  /* ---- Ink ---- */
+  --ds-ink:         #F2F4F8;
+  --ds-ink-2:       #A8B0BF;
+  --ds-ink-3:       #6E7787;
+  --ds-ink-4:       #4A515E;
+  --ds-ink-inv:     #06070A;
+
+  /* ---- Suslik Gold — play, brand, commerce ---- */
+  --ds-gold:        #FFC24B;
+  --ds-gold-hi:     #FFD37B;
+  --ds-gold-lo:     #E0A430;
+  --ds-gold-dim:    rgba(255, 194, 75, 0.14);
+  --ds-gold-edge:   rgba(255, 194, 75, 0.34);
+
+  /* ---- Signal Aqua — captions, CC, CC+, accessibility ---- */
+  --ds-aqua:        #5FE3D0;
+  --ds-aqua-hi:     #8FF0E2;
+  --ds-aqua-lo:     #38BFAC;
+  --ds-aqua-dim:    rgba(95, 227, 208, 0.13);
+  --ds-aqua-edge:   rgba(95, 227, 208, 0.32);
+
+  /* ---- Semantic (separate from both accents) ---- */
+  --ds-ok:          #3DDC97;
+  --ds-ok-dim:      rgba(61, 220, 151, 0.14);
+  --ds-warn:        #FF9F45;
+  --ds-warn-dim:    rgba(255, 159, 69, 0.14);
+  --ds-err:         #FF5C5C;
+  --ds-err-dim:     rgba(255, 92, 92, 0.14);
+  --ds-info:        #5FA8FF;
+  --ds-info-dim:    rgba(95, 168, 255, 0.14);
+
+  /* ---- Subscription: one plan for everyone ---- */
+  --ds-vip:         #FFC24B;
+  --ds-vip-edge:    rgba(255, 194, 75, 0.34);
+  /* Editorial collection accent — content, not a paid tier */
+  --ds-coll:        #C89BFF;
+
+  /* ---- Type ---- */
+  --ds-display: "Unbounded", "Onest", system-ui, -apple-system, sans-serif;
+  --ds-ui:      "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ds-t-hero:  clamp(2.6rem, 6.2vw, 5.2rem);
+  --ds-t-d1:    clamp(2.0rem, 4.0vw, 3.25rem);
+  --ds-t-d2:    clamp(1.6rem, 2.8vw, 2.25rem);
+  --ds-t-h1:    1.625rem;
+  --ds-t-h2:    1.25rem;
+  --ds-t-h3:    1.0625rem;
+  --ds-t-body:  0.9375rem;
+  --ds-t-sm:    0.8125rem;
+  --ds-t-xs:    0.6875rem;
+
+  /* ---- Space (4-based) ---- */
+  --ds-1: 4px;  --ds-2: 8px;  --ds-3: 12px; --ds-4: 16px;
+  --ds-5: 20px; --ds-6: 24px; --ds-8: 32px; --ds-10: 40px;
+  --ds-12: 48px; --ds-16: 64px; --ds-20: 80px; --ds-24: 96px;
+
+  /* ---- Radius ---- */
+  --ds-r-xs: 6px;  --ds-r-sm: 10px; --ds-r-md: 14px;
+  --ds-r-lg: 20px; --ds-r-xl: 28px; --ds-r-2xl: 36px; --ds-r-pill: 999px;
+
+  /* ---- Elevation ---- */
+  --ds-e1: 0 1px 2px rgba(0,0,0,.4);
+  --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
+  --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
+  --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
+  --ds-glow-gold: 0 0 0 1px var(--ds-gold-edge), 0 10px 40px -12px rgba(255,194,75,.42);
+  --ds-glow-aqua: 0 0 0 1px var(--ds-aqua-edge), 0 10px 40px -12px rgba(95,227,208,.36);
+
+  /* ---- Motion ---- */
+  --ds-m-micro: 120ms;
+  --ds-m-base:  220ms;
+  --ds-m-large: 420ms;
+  --ds-ease:    cubic-bezier(.32,.72,0,1);
+  --ds-ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   deafsuslik — Component Layer
+   Maps 1:1 to React/Tailwind/shadcn primitives on handoff.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ds-void);
+  color: var(--ds-ink);
+  font-family: var(--ds-ui);
+  font-size: var(--ds-t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:where(a) { color: inherit; text-decoration: none; }
+:where(button, input, select, textarea) { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--ds-aqua);
+  outline-offset: 2px;
+  border-radius: var(--ds-r-xs);
+}
+
+::selection { background: var(--ds-gold); color: var(--ds-ink-inv); }
+
+/* ---------- Scrollbars ---------- */
+.ds-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-raised-3) transparent; }
+.ds-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+.ds-scroll::-webkit-scrollbar-thumb { background: var(--ds-raised-3); border-radius: 99px; }
+.ds-scroll::-webkit-scrollbar-track { background: transparent; }
+.ds-noscroll { scrollbar-width: none; }
+.ds-noscroll::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+.ds-logo { display: inline-flex; align-items: center; gap: 10px; }
+.ds-logo__mark { display: block; flex: none; }
+.ds-logo__word {
+  font-family: var(--ds-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--ds-ink);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.ds-hero-title {
+  font-family: var(--ds-display);
+  font-weight: 700;
+  font-size: var(--ds-t-hero);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  margin: 0;
+}
+.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.05; letter-spacing: -0.038em; margin: 0; text-wrap: balance; }
+.ds-d2 { font-family: var(--ds-ui); font-weight: 700; font-size: var(--ds-t-d2); line-height: 1.15; letter-spacing: -0.028em; margin: 0; text-wrap: balance; }
+.ds-h1 { font-weight: 700; font-size: var(--ds-t-h1); line-height: 1.25; letter-spacing: -0.022em; margin: 0; }
+.ds-h2 { font-weight: 600; font-size: var(--ds-t-h2); line-height: 1.3;  letter-spacing: -0.016em; margin: 0; }
+.ds-h3 { font-weight: 600; font-size: var(--ds-t-h3); line-height: 1.4;  letter-spacing: -0.01em;  margin: 0; }
+.ds-body { font-size: var(--ds-t-body); color: var(--ds-ink-2); margin: 0; max-width: 66ch; }
+.ds-sm   { font-size: var(--ds-t-sm); color: var(--ds-ink-2); margin: 0; }
+.ds-cap  { font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin: 0; }
+.ds-eyebrow {
+  font-size: var(--ds-t-xs); font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ds-ink-3); margin: 0;
+}
+.ds-num { font-family: var(--ds-mono); font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.ds-btn {
+  --_bg: var(--ds-raised-2); --_fg: var(--ds-ink); --_bd: var(--ds-line-mid);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 20px;
+  background: var(--_bg); color: var(--_fg);
+  border: 1px solid var(--_bd); border-radius: var(--ds-r-pill);
+  font-weight: 600; font-size: var(--ds-t-body); letter-spacing: -0.005em;
+  cursor: pointer; white-space: nowrap;
+  transition: transform var(--ds-m-micro) var(--ds-ease),
+              background var(--ds-m-micro) var(--ds-ease),
+              border-color var(--ds-m-micro) var(--ds-ease),
+              box-shadow var(--ds-m-base) var(--ds-ease);
+}
+.ds-btn:hover { transform: translateY(-1px); }
+.ds-btn:active { transform: translateY(0) scale(.985); }
+.ds-btn svg { flex: none; }
+
+.ds-btn--primary { --_bg: var(--ds-gold); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--primary:hover { --_bg: var(--ds-gold-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+
+.ds-btn--aqua { --_bg: var(--ds-aqua); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--aqua:hover { --_bg: var(--ds-aqua-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
+
+.ds-btn--secondary { --_bg: rgba(255,255,255,.07); --_bd: var(--ds-line-mid); }
+.ds-btn--secondary:hover { --_bg: rgba(255,255,255,.12); --_bd: var(--ds-line-strong); }
+
+.ds-btn--ghost { --_bg: transparent; --_bd: transparent; --_fg: var(--ds-ink-2); }
+.ds-btn--ghost:hover { --_bg: rgba(255,255,255,.07); --_fg: var(--ds-ink); }
+
+.ds-btn--outline { --_bg: transparent; --_bd: var(--ds-line-strong); }
+.ds-btn--outline:hover { --_bg: rgba(255,255,255,.06); }
+
+.ds-btn--danger { --_bg: var(--ds-err-dim); --_fg: var(--ds-err); --_bd: rgba(255,92,92,.32); }
+.ds-btn--danger:hover { --_bg: rgba(255,92,92,.22); }
+
+.ds-btn--sm { min-height: 34px; padding: 0 14px; font-size: var(--ds-t-sm); }
+.ds-btn--lg { min-height: 54px; padding: 0 30px; font-size: 1.0625rem; }
+.ds-btn--block { width: 100%; }
+.ds-btn[disabled], .ds-btn[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+
+.ds-iconbtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; flex: none;
+  background: rgba(255,255,255,.06); color: var(--ds-ink);
+  border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill);
+  cursor: pointer;
+  transition: background var(--ds-m-micro) var(--ds-ease), border-color var(--ds-m-micro) var(--ds-ease), transform var(--ds-m-micro) var(--ds-ease);
+}
+.ds-iconbtn:hover { background: rgba(255,255,255,.12); border-color: var(--ds-line-strong); }
+.ds-iconbtn:active { transform: scale(.94); }
+.ds-iconbtn--sm { width: 34px; height: 34px; }
+.ds-iconbtn--bare { background: transparent; border-color: transparent; color: var(--ds-ink-2); }
+.ds-iconbtn--bare:hover { background: rgba(255,255,255,.08); color: var(--ds-ink); }
+.ds-iconbtn--on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+
+/* ============================================================
+   BADGES  — never colour-only: each carries a glyph or letters
+   ============================================================ */
+.ds-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 20px; padding: 0 7px;
+  border-radius: var(--ds-r-xs);
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; white-space: nowrap;
+  background: rgba(255,255,255,.10); color: var(--ds-ink);
+  border: 1px solid var(--ds-line-mid);
+  font-family: var(--ds-ui);
+}
+.ds-badge--cc      { background: transparent; color: var(--ds-aqua); border-color: var(--ds-aqua-edge); }
+.ds-badge--ccplus  { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-badge--4k      { background: rgba(255,255,255,.14); color: #fff; border-color: var(--ds-line-strong); letter-spacing: .04em; }
+.ds-badge--hd      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
+.ds-badge--offline { background: rgba(255,255,255,.08); color: var(--ds-ink); border-color: var(--ds-line-mid); }
+.ds-badge--ad      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
+.ds-badge--gold    { background: var(--ds-gold-dim); color: var(--ds-gold); border-color: var(--ds-gold-edge); }
+.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(61,220,151,.3); }
+.ds-badge--warn    { background: var(--ds-warn-dim); color: var(--ds-warn); border-color: rgba(255,159,69,.3); }
+.ds-badge--err     { background: var(--ds-err-dim); color: var(--ds-err); border-color: rgba(255,92,92,.3); }
+.ds-badge--info    { background: var(--ds-info-dim); color: var(--ds-info); border-color: rgba(95,168,255,.3); }
+.ds-badge--age     { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); font-family: var(--ds-mono); letter-spacing: 0; }
+.ds-badge--lg      { height: 26px; padding: 0 11px; font-size: 11px; }
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+.ds-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 36px; padding: 0 14px;
+  background: rgba(255,255,255,.05); color: var(--ds-ink-2);
+  border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill);
+  font-size: var(--ds-t-sm); font-weight: 500; cursor: pointer; white-space: nowrap;
+  transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-chip:hover { background: rgba(255,255,255,.10); color: var(--ds-ink); }
+.ds-chip[aria-pressed="true"], .ds-chip.is-on {
+  background: var(--ds-ink); color: var(--ds-ink-inv); border-color: transparent; font-weight: 600;
+}
+.ds-chip--aqua[aria-pressed="true"], .ds-chip--aqua.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); }
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+.ds-field { display: flex; flex-direction: column; gap: 7px; }
+.ds-label { font-size: var(--ds-t-sm); font-weight: 600; color: var(--ds-ink-2); }
+.ds-input, .ds-select, .ds-textarea {
+  width: 100%; min-height: 50px; padding: 13px 16px;
+  background: var(--ds-raised); color: var(--ds-ink);
+  border: 1px solid var(--ds-line-mid); border-radius: var(--ds-r-md);
+  font-size: var(--ds-t-body); outline: none;
+  transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease);
+}
+.ds-textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
+.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-4); }
+.ds-input:focus, .ds-select:focus, .ds-textarea:focus {
+  border-color: var(--ds-aqua-edge); background: var(--ds-raised-2);
+  box-shadow: 0 0 0 3px rgba(95,227,208,.13); outline: none;
+}
+.ds-input[aria-invalid="true"], .ds-textarea[aria-invalid="true"] {
+  border-color: rgba(255,92,92,.55); box-shadow: 0 0 0 3px rgba(255,92,92,.12);
+}
+.ds-select { appearance: none; cursor: pointer; padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E7787' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center; }
+.ds-help { font-size: var(--ds-t-xs); color: var(--ds-ink-3); }
+.ds-err-text { font-size: var(--ds-t-xs); color: var(--ds-err); display: flex; align-items: center; gap: 5px; }
+
+.ds-inputwrap { position: relative; display: flex; align-items: center; }
+.ds-inputwrap .ds-input { padding-left: 46px; }
+.ds-inputwrap__icon { position: absolute; left: 16px; color: var(--ds-ink-3); pointer-events: none; display: flex; }
+.ds-inputwrap__trail { position: absolute; right: 8px; }
+
+/* Search bar */
+.ds-search {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; min-height: 54px; padding: 0 18px;
+  background: var(--ds-raised); border: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-pill);
+  transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease);
+}
+.ds-search:focus-within { border-color: var(--ds-aqua-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
+.ds-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: var(--ds-t-body); }
+.ds-search input::placeholder { color: var(--ds-ink-4); }
+
+/* Switch */
+.ds-switch { position: relative; display: inline-flex; align-items: center; width: 46px; height: 27px; flex: none; cursor: pointer; }
+.ds-switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.ds-switch__track {
+  width: 100%; height: 100%; border-radius: 99px;
+  background: var(--ds-raised-3); border: 1px solid var(--ds-line-mid);
+  transition: background var(--ds-m-base) var(--ds-ease), border-color var(--ds-m-base) var(--ds-ease);
+}
+.ds-switch__thumb {
+  position: absolute; left: 3px; width: 21px; height: 21px; border-radius: 99px;
+  background: var(--ds-ink-2); box-shadow: var(--ds-e1);
+  transition: transform var(--ds-m-base) var(--ds-ease), background var(--ds-m-base) var(--ds-ease);
+  pointer-events: none;
+}
+.ds-switch input:checked ~ .ds-switch__track { background: var(--ds-aqua); border-color: transparent; }
+.ds-switch input:checked ~ .ds-switch__thumb { transform: translateX(19px); background: var(--ds-ink-inv); }
+.ds-switch input:focus-visible ~ .ds-switch__track { outline: 2px solid var(--ds-aqua); outline-offset: 2px; }
+
+/* Radio & checkbox */
+.ds-opt { display: flex; align-items: center; gap: 11px; padding: 11px 0; cursor: pointer; min-height: 44px; }
+.ds-opt__box {
+  width: 21px; height: 21px; flex: none; border: 2px solid var(--ds-line-strong);
+  display: grid; place-items: center; transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-opt__box--radio { border-radius: 99px; }
+.ds-opt__box--check { border-radius: 6px; }
+.ds-opt__box::after { content: ""; opacity: 0; transition: opacity var(--ds-m-micro) var(--ds-ease); }
+.ds-opt__box--radio::after { width: 9px; height: 9px; border-radius: 99px; background: var(--ds-ink-inv); }
+.ds-opt.is-on .ds-opt__box { border-color: var(--ds-aqua); background: var(--ds-aqua); }
+.ds-opt.is-on .ds-opt__box::after { opacity: 1; }
+.ds-opt__box--check::after {
+  width: 11px; height: 11px;
+  background: var(--ds-ink-inv);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Slider */
+.ds-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 99px;
+  background: var(--ds-raised-3); outline: none; cursor: pointer; }
+.ds-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 99px;
+  background: var(--ds-ink); box-shadow: var(--ds-e2); cursor: grab; }
+.ds-slider::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 99px; background: var(--ds-ink); cursor: grab; }
+
+/* ============================================================
+   SURFACES
+   ============================================================ */
+.ds-card {
+  background: var(--ds-panel); border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-lg); padding: var(--ds-5);
+}
+.ds-card--flush { padding: 0; overflow: hidden; }
+.ds-glass {
+  background: rgba(20, 24, 31, .72);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--ds-line-mid);
+}
+.ds-divider { height: 1px; background: var(--ds-line); border: 0; margin: 0; }
+
+/* Row list */
+.ds-rows { display: flex; flex-direction: column; }
+.ds-row {
+  display: flex; align-items: center; gap: 14px;
+  min-height: 58px; padding: 13px 18px;
+  border-bottom: 1px solid var(--ds-line);
+  cursor: pointer; text-align: left; width: 100%;
+  background: none; border-left: 0; border-right: 0; border-top: 0;
+  transition: background var(--ds-m-micro) var(--ds-ease);
+}
+.ds-row:last-child { border-bottom: 0; }
+.ds-row:hover { background: rgba(255,255,255,.04); }
+.ds-row__ico { width: 22px; flex: none; color: var(--ds-ink-3); display: flex; }
+.ds-row__main { flex: 1; min-width: 0; }
+.ds-row__title { display: block; font-size: var(--ds-t-body); font-weight: 500; }
+.ds-row__sub { display: block; font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin-top: 1px; line-height: 1.45; }
+.ds-row__meta { font-size: var(--ds-t-sm); color: var(--ds-ink-3); flex: none; }
+.ds-row__chev { color: var(--ds-ink-4); flex: none; display: flex; }
+
+/* Tabs */
+.ds-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--ds-line); overflow-x: auto; }
+.ds-tab {
+  position: relative; padding: 13px 4px; margin-right: 20px;
+  background: none; border: 0; cursor: pointer; white-space: nowrap;
+  font-size: var(--ds-t-body); font-weight: 600; color: var(--ds-ink-3);
+  transition: color var(--ds-m-micro) var(--ds-ease);
+}
+.ds-tab:hover { color: var(--ds-ink-2); }
+.ds-tab[aria-selected="true"] { color: var(--ds-ink); }
+.ds-tab[aria-selected="true"]::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--ds-gold); border-radius: 2px;
+}
+
+/* Segmented */
+.ds-seg { display: inline-flex; padding: 3px; background: var(--ds-raised); border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill); }
+.ds-seg button {
+  padding: 7px 15px; background: none; border: 0; border-radius: var(--ds-r-pill);
+  font-size: var(--ds-t-sm); font-weight: 600; color: var(--ds-ink-3); cursor: pointer;
+  transition: all var(--ds-m-micro) var(--ds-ease); display: inline-flex; align-items: center; gap: 6px;
+}
+.ds-seg button[aria-selected="true"] { background: var(--ds-raised-3); color: var(--ds-ink); }
+
+/* Progress */
+.ds-prog { height: 3px; background: rgba(255,255,255,.16); border-radius: 99px; overflow: hidden; }
+.ds-prog__bar { height: 100%; background: var(--ds-gold); border-radius: 99px; }
+.ds-prog--aqua .ds-prog__bar { background: var(--ds-aqua); }
+.ds-prog--thick { height: 6px; }
+
+/* Toast */
+.ds-toast {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: var(--ds-r-md);
+  background: rgba(27,32,41,.92); backdrop-filter: blur(20px);
+  border: 1px solid var(--ds-line-mid); box-shadow: var(--ds-e3);
+  font-size: var(--ds-t-sm); max-width: 420px;
+}
+.ds-toast__ico { flex: none; display: flex; }
+
+/* Skeleton */
+.ds-skel {
+  background: linear-gradient(90deg, var(--ds-raised) 25%, var(--ds-raised-2) 50%, var(--ds-raised) 75%);
+  background-size: 400% 100%;
+  animation: ds-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--ds-r-sm);
+}
+@keyframes ds-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+/* Empty state */
+.ds-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: var(--ds-16) var(--ds-6); }
+.ds-empty__ico {
+  width: 68px; height: 68px; display: grid; place-items: center; border-radius: 22px;
+  background: var(--ds-raised); border: 1px solid var(--ds-line); color: var(--ds-ink-3);
+}
+
+/* ============================================================
+   POSTER / ARTWORK  (procedural — no third-party imagery)
+   ============================================================ */
+.ds-art { position: relative; overflow: hidden; background: var(--ds-raised); isolation: isolate; }
+.ds-art__grad { position: absolute; inset: 0; }
+.ds-art::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,4,7,.92) 0%, rgba(3,4,7,.35) 42%, transparent 72%); }
+.ds-art__title {
+  position: absolute; left: 10px; right: 10px; bottom: 10px;
+  font-family: var(--ds-display); font-weight: 700; letter-spacing: -0.03em;
+  line-height: .92; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   MOVIE CARDS
+   ============================================================ */
+.ds-poster {
+  position: relative; display: block; width: 100%;
+  border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer;
+  background: var(--ds-raised); border: 1px solid var(--ds-line);
+  transition: transform var(--ds-m-base) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease), border-color var(--ds-m-base) var(--ds-ease);
+}
+.ds-poster:hover { transform: translateY(-4px); box-shadow: var(--ds-e3); border-color: var(--ds-line-strong); }
+.ds-poster__art { aspect-ratio: 2/3; }
+.ds-poster__badges { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; flex-wrap: wrap; z-index: 2; }
+.ds-poster__hover {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 14px;
+  background: linear-gradient(to top, rgba(3,4,7,.94), rgba(3,4,7,.2) 60%, transparent);
+  opacity: 0; transition: opacity var(--ds-m-base) var(--ds-ease); z-index: 3;
+}
+.ds-poster:hover .ds-poster__hover { opacity: 1; }
+.ds-poster__meta { padding: 10px 2px 2px; }
+.ds-poster__name { font-size: var(--ds-t-sm); font-weight: 600; line-height: 1.3; }
+.ds-poster__sub { font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin-top: 2px; display: flex; align-items: center; gap: 6px; }
+
+.ds-land { position: relative; border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer; border: 1px solid var(--ds-line); }
+.ds-land__art { aspect-ratio: 16/9; }
+
+.ds-cw { position: relative; border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer; border: 1px solid var(--ds-line); background: var(--ds-panel); }
+.ds-cw__art { aspect-ratio: 16/9; position: relative; }
+.ds-cw__play {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(3,4,7,.28); transition: background var(--ds-m-base) var(--ds-ease);
+}
+.ds-cw:hover .ds-cw__play { background: rgba(3,4,7,.5); }
+.ds-cw__playbtn {
+  width: 48px; height: 48px; border-radius: 99px; display: grid; place-items: center;
+  background: rgba(255,255,255,.94); color: var(--ds-ink-inv); box-shadow: var(--ds-e2);
+}
+.ds-cw__bar { position: absolute; left: 0; right: 0; bottom: 0; }
+.ds-cw__foot { padding: 11px 13px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* Compact search-result row */
+.ds-hit { display: flex; gap: 14px; padding: 11px; border-radius: var(--ds-r-md); cursor: pointer; align-items: center;
+  transition: background var(--ds-m-micro) var(--ds-ease); }
+.ds-hit:hover { background: rgba(255,255,255,.05); }
+.ds-hit__art { width: 92px; flex: none; aspect-ratio: 16/10; border-radius: var(--ds-r-sm); overflow: hidden; }
+.ds-hit__main { flex: 1; min-width: 0; }
+
+/* Downloaded card */
+.ds-dl { display: flex; gap: 14px; padding: 13px; background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); }
+.ds-dl__art { width: 74px; flex: none; aspect-ratio: 2/3; border-radius: var(--ds-r-sm); overflow: hidden; }
+.ds-dl__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+
+/* Rail */
+.ds-rail { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.ds-rail > * { scroll-snap-align: start; }
+.ds-railhead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+
+/* ============================================================
+   CAPTION SYSTEM — the product's signature
+   ============================================================ */
+.ds-cue {
+  font-family: var(--ds-ui); font-weight: 600; line-height: 1.34;
+  color: #fff; text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
+}
+.ds-cue__speaker { color: var(--ds-aqua); font-weight: 700; letter-spacing: .04em; display: block; }
+.ds-cue__sound { color: var(--ds-aqua-hi); font-style: italic; font-weight: 500; display: block; }
+.ds-cuebox {
+  display: inline-block; padding: 7px 15px; border-radius: 8px;
+  background: rgba(0,0,0,.62); backdrop-filter: blur(3px);
+  max-width: 34ch; text-align: center;
+}
+/* Full-width centring track the cue box sits in */
+.ds-cuetrack { width: 100%; text-align: center; padding: 0 5%; }
+
+/* Caption strip — recurring structural device */
+.ds-strip {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; border-radius: var(--ds-r-md);
+  background: var(--ds-aqua-dim); border-left: 3px solid var(--ds-aqua);
+}
+.ds-strip__label {
+  font-family: var(--ds-mono); font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  color: var(--ds-aqua); text-transform: uppercase; flex: none; padding-top: 3px;
+}
+
+/* ============================================================
+   PLAYER
+   ============================================================ */
+.ds-player { position: relative; background: #000; overflow: hidden; }
+.ds-player__stage { position: absolute; inset: 0; }
+.ds-player__ui { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(3,4,7,.8) 0%, transparent 22%, transparent 55%, rgba(3,4,7,.88) 100%); }
+.ds-player__top { display: flex; align-items: center; gap: 12px; padding: 18px 22px; }
+.ds-player__bottom { padding: 0 22px 18px; display: flex; flex-direction: column; gap: 12px; }
+.ds-player__center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 38px; }
+
+.ds-scrub { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; }
+.ds-scrub__track { position: absolute; left: 0; right: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.24); }
+.ds-scrub__buf   { position: absolute; left: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.38); }
+.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-gold); }
+.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-gold);
+  box-shadow: 0 0 0 4px rgba(255,194,75,.24), var(--ds-e2); transform: translateX(-50%); }
+.ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,7,10,.7); border-radius: 1px; }
+
+.ds-pbtn {
+  display: grid; place-items: center; border-radius: 99px; cursor: pointer;
+  background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); color: #fff;
+  transition: background var(--ds-m-micro) var(--ds-ease), transform var(--ds-m-micro) var(--ds-ease);
+}
+.ds-pbtn:hover { background: rgba(255,255,255,.2); }
+.ds-pbtn:active { transform: scale(.93); }
+.ds-pbtn--main { width: 76px; height: 76px; background: rgba(255,255,255,.95); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-pbtn--main:hover { background: #fff; }
+.ds-pbtn--skip { width: 58px; height: 58px; }
+.ds-pbtn--sm { width: 40px; height: 40px; background: transparent; border-color: transparent; }
+.ds-pbtn--cc { padding: 0 12px; height: 40px; width: auto; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+.ds-pbtn--cc.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+
+/* ============================================================
+   SHEETS / MODALS
+   ============================================================ */
+.ds-scrim-l { position: absolute; inset: 0; background: rgba(3,4,7,.72); backdrop-filter: blur(6px); }
+.ds-sheet {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: var(--ds-panel); border-top: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-xl) var(--ds-r-xl) 0 0;
+  box-shadow: var(--ds-e4); max-height: 88%; display: flex; flex-direction: column;
+}
+.ds-sheet__grab { width: 38px; height: 4px; border-radius: 99px; background: var(--ds-line-strong); margin: 10px auto 4px; flex: none; }
+.ds-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px 14px; flex: none; }
+.ds-sheet__body { padding: 0 20px 20px; overflow-y: auto; }
+.ds-sheet__foot { padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--ds-line); display: flex; gap: 10px; flex: none; }
+
+.ds-modal {
+  background: var(--ds-panel); border: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-xl); box-shadow: var(--ds-e4);
+  width: min(480px, 92%); max-height: 86%; display: flex; flex-direction: column;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.ds-tabbar {
+  display: flex; align-items: stretch;
+  background: rgba(13,16,22,.88); backdrop-filter: blur(28px) saturate(160%);
+  border-top: 1px solid var(--ds-line); flex: none;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ds-tabbar__item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 9px 2px 7px; background: none; border: 0; cursor: pointer;
+  color: var(--ds-ink-3); font-size: 10px; font-weight: 600; min-height: 52px;
+  transition: color var(--ds-m-micro) var(--ds-ease);
+}
+.ds-tabbar__item.is-on { color: var(--ds-ink); }
+.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-gold); }
+.ds-tabbar__ico { display: flex; position: relative; }
+.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-gold); border: 2px solid var(--ds-panel); }
+
+.ds-topbar {
+  display: flex; align-items: center; gap: 18px;
+  height: 68px; padding: 0 28px;
+  background: rgba(6,7,10,.78); backdrop-filter: blur(26px) saturate(160%);
+  border-bottom: 1px solid var(--ds-line);
+  position: sticky; top: 0; z-index: 50;
+}
+.ds-topnav { display: flex; align-items: center; gap: 2px; }
+.ds-topnav a {
+  padding: 8px 14px; border-radius: var(--ds-r-pill); font-size: var(--ds-t-sm); font-weight: 600;
+  color: var(--ds-ink-3); transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-topnav a:hover { color: var(--ds-ink); background: rgba(255,255,255,.06); }
+.ds-topnav a.is-on { color: var(--ds-ink); background: rgba(255,255,255,.09); }
+
+/* ============================================================
+   DEVICE FRAMES
+   ============================================================ */
+.ds-phone { position: relative; flex: none; }
+.ds-phone__body {
+  position: relative; background: #0A0B0E; border-radius: 46px;
+  padding: 11px; box-shadow: 0 0 0 2px #2A2E36, 0 0 0 4px #101216, var(--ds-e4);
+}
+.ds-phone__screen {
+  position: relative; width: 372px; height: 806px; border-radius: 36px; overflow: hidden;
+  background: var(--ds-void); display: flex; flex-direction: column;
+}
+.ds-phone--sm .ds-phone__screen { width: 320px; height: 692px; }
+.ds-phone--land .ds-phone__screen { width: 806px; height: 372px; }
+.ds-island {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 118px; height: 34px; border-radius: 99px; background: #000; z-index: 60;
+}
+.ds-android__punch {
+  position: absolute; top: 13px; left: 50%; transform: translateX(-50%);
+  width: 11px; height: 11px; border-radius: 99px; background: #000; z-index: 60;
+}
+.ds-statusbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 28px 6px; font-size: 13px; font-weight: 600; flex: none; z-index: 55;
+  position: relative; color: var(--ds-ink);
+}
+.ds-statusbar--android { padding: 9px 16px 5px; font-size: 12px; }
+.ds-homebar { height: 22px; display: grid; place-items: center; flex: none; }
+.ds-homebar::after { content: ""; width: 134px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.32); }
+.ds-navbar-and { height: 26px; display: flex; align-items: center; justify-content: center; gap: 46px; flex: none; color: var(--ds-ink-3); }
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+.ds-table { width: 100%; border-collapse: collapse; font-size: var(--ds-t-sm); }
+.ds-table th {
+  text-align: left; padding: 11px 14px; font-size: var(--ds-t-xs); font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--ds-ink-3);
+  border-bottom: 1px solid var(--ds-line); white-space: nowrap;
+}
+.ds-table td { padding: 12px 14px; border-bottom: 1px solid var(--ds-line); vertical-align: middle; }
+.ds-table tbody tr { transition: background var(--ds-m-micro) var(--ds-ease); }
+.ds-table tbody tr:hover { background: rgba(255,255,255,.03); }
+.ds-tablewrap { overflow-x: auto; }
+
+.ds-stat { padding: 16px 18px; background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); }
+.ds-stat__k { font-size: var(--ds-t-xs); color: var(--ds-ink-3); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.ds-stat__v { font-family: var(--ds-mono); font-size: 1.7rem; font-weight: 700; letter-spacing: -.03em; margin-top: 6px; line-height: 1; }
+.ds-stat__d { font-size: var(--ds-t-xs); margin-top: 7px; display: flex; align-items: center; gap: 4px; }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.ds-stack { display: flex; flex-direction: column; }
+.ds-row-f { display: flex; align-items: center; }
+.ds-between { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.ds-wrap { display: flex; flex-wrap: wrap; }
+.ds-grow { flex: 1; min-width: 0; }
+.ds-g1 { gap: 4px; } .ds-g2 { gap: 8px; } .ds-g3 { gap: 12px; } .ds-g4 { gap: 16px; }
+.ds-g5 { gap: 20px; } .ds-g6 { gap: 24px; } .ds-g8 { gap: 32px; } .ds-g10 { gap: 40px; } .ds-g12 { gap: 48px; }
+.ds-mut { color: var(--ds-ink-2); } .ds-mut2 { color: var(--ds-ink-3); }
+.ds-gold-t { color: var(--ds-gold); } .ds-aqua-t { color: var(--ds-aqua); }
+.ds-center { text-align: center; }
+.ds-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+.ds-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+</style>
+<script>
+/* ============================================================
+   deafsuslik — shared runtime
+   Logo, icon set, procedural artwork engine, catalogue.
+   ============================================================ */
+
+/* ---------- Brand mark ----------
+   A squircle token. Inside, an upright suslik silhouette knocked
+   out in negative space; its chest carries the play triangle.
+   Reads at 16px, works on gold or on graphite.                */
+function dsLogoMark(size, opts) {
+  opts = opts || {};
+  var fill = opts.fill || 'url(#dsg)';
+  var cut  = opts.cut  || '#06070A';
+  var id   = 'dsg' + Math.random().toString(36).slice(2, 7);
+  return '' +
+  '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
+    '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
+      '<stop stop-color="#FFD37B"/><stop offset=".55" stop-color="#FFC24B"/><stop offset="1" stop-color="#E0A430"/>' +
+    '</linearGradient></defs>' +
+    '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
+    /* suslik: ears */
+    '<path d="M17.4 12.6a2.9 2.9 0 1 1 5.05 2.83l-.62 1.1-4.9-2.75.47-1.18Z" fill="' + cut + '"/>' +
+    '<path d="M30.6 12.6a2.9 2.9 0 1 0-5.05 2.83l.62 1.1 4.9-2.75-.47-1.18Z" fill="' + cut + '"/>' +
+    /* body: upright silhouette, play triangle cut from chest */
+    '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 13.2c-5.35 0-9.35 3.9-9.35 9.35v9.9c0 5.45 4 9.35 9.35 9.35s9.35-3.9 9.35-9.35v-9.9c0-5.45-4-9.35-9.35-9.35Zm-2.6 8.55c0-.86.94-1.39 1.67-.94l7.05 4.35c.7.43.7 1.45 0 1.88l-7.05 4.35c-.73.45-1.67-.08-1.67-.94v-8.7Z" fill="' + cut + '"/>' +
+  '</svg>';
+}
+
+function dsLogo(px, wordPx, opts) {
+  return '<span class="ds-logo">' + dsLogoMark(px, opts) +
+    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">deafsuslik</span></span>';
+}
+
+/* ---------- Icons (24px stroke set, one consistent family) ---------- */
+var DSI = {
+  home:'M3 10.4 12 3l9 7.4V20a1.6 1.6 0 0 1-1.6 1.6h-4.2v-6.2H9.8v6.2H5.6A1.6 1.6 0 0 1 4 20v-9.6Z',
+  search:'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.35-4.35',
+  library:'M4 5h4v14H4zM10.5 5h4v14h-4zM17.4 5.6l3 .8-3.4 12.8-3-.8z',
+  download:'M12 3v12M7.5 11l4.5 4.5 4.5-4.5M4 20h16',
+  user:'M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4ZM4.5 21c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6',
+  play:'M7 4.5v15l13-7.5z',
+  pause:'M8.5 4.5v15M15.5 4.5v15',
+  back10:'M11 7 6 12l5 5M6 12h8.5A5.5 5.5 0 0 1 20 17.5',
+  fwd10:'M13 7l5 5-5 5M18 12H9.5A5.5 5.5 0 0 0 4 17.5',
+  plus:'M12 5v14M5 12h14',
+  minus:'M5 12h14',
+  check:'M20 6 9 17l-5-5',
+  x:'M18 6 6 18M6 6l12 12',
+  chevR:'m9 5 7 7-7 7',
+  chevL:'m15 5-7 7 7 7',
+  chevD:'m6 9 6 6 6-6',
+  chevU:'m6 15 6-6 6 6',
+  arrowL:'M19 12H5M11 6l-6 6 6 6',
+  heart:'M12 20.5 4.3 13a4.9 4.9 0 0 1 7.7-6 4.9 4.9 0 0 1 7.7 6L12 20.5Z',
+  bookmark:'M6 3.5h12v17l-6-4.2-6 4.2z',
+  star:'m12 3.5 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z',
+  bell:'M18 8.5a6 6 0 1 0-12 0c0 6-2.2 7.5-2.2 7.5h16.4S18 14.5 18 8.5ZM13.7 20a2 2 0 0 1-3.4 0',
+  settings:'M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z|M19.3 15a1.6 1.6 0 0 0 .3 1.8l.1.1a1.9 1.9 0 1 1-2.7 2.7l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a1.9 1.9 0 1 1-3.8 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1A1.9 1.9 0 1 1 4.8 17l.1-.1A1.6 1.6 0 0 0 3.8 14h-.3a1.9 1.9 0 1 1 0-3.8h.2a1.6 1.6 0 0 0 1.1-2.8l-.1-.1A1.9 1.9 0 1 1 7.4 4.6l.1.1a1.6 1.6 0 0 0 1.8.3H9.4a1.6 1.6 0 0 0 1-1.5v-.3a1.9 1.9 0 0 1 3.8 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a1.9 1.9 0 1 1 2.7 2.7l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.5 1h.3a1.9 1.9 0 0 1 0 3.8h-.2a1.6 1.6 0 0 0-1.5 1Z',
+  filter:'M4 5h16M7 12h10M10 19h4',
+  grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+  list:'M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01',
+  cc:'M4 5h16a1.6 1.6 0 0 1 1.6 1.6v10.8A1.6 1.6 0 0 1 20 19H4a1.6 1.6 0 0 1-1.6-1.6V6.6A1.6 1.6 0 0 1 4 5Z|M6.6 10.2h4.2M13.2 10.2h4.2M6.6 14h7.4',
+  volume:'M11 5 6.5 8.8H3v6.4h3.5L11 19zM15.5 9.2a4 4 0 0 1 0 5.6M18.5 6.5a8 8 0 0 1 0 11',
+  mute:'M11 5 6.5 8.8H3v6.4h3.5L11 19zM17 9.5l4.5 5M21.5 9.5 17 14.5',
+  fullscreen:'M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3',
+  exitfull:'M3 8h3a2 2 0 0 0 2-2V3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M21 16h-3a2 2 0 0 0-2 2v3',
+  pip:'M21 11V6.6A1.6 1.6 0 0 0 19.4 5H4.6A1.6 1.6 0 0 0 3 6.6v10.8A1.6 1.6 0 0 0 4.6 19H10M13 13h7a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Z',
+  lock:'M6.5 10.5V7.8a5.5 5.5 0 0 1 11 0v2.7M5.6 10.5h12.8a1.6 1.6 0 0 1 1.6 1.6v7.3a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19.4v-7.3a1.6 1.6 0 0 1 1.6-1.6Z',
+  unlock:'M6.5 10.5V7.8a5.5 5.5 0 0 1 10.6-2M5.6 10.5h12.8a1.6 1.6 0 0 1 1.6 1.6v7.3a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19.4v-7.3a1.6 1.6 0 0 1 1.6-1.6Z',
+  speed:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 12l4-4',
+  quality:'M4 6h16v12H4zM8.5 10.5v3M12 10v4M15.5 10.5v3',
+  next:'M5 5l9 7-9 7zM18 5v14',
+  prev:'M19 5l-9 7 9 7zM6 5v14',
+  alert:'M12 8.5v4.5M12 16.5h.01M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z',
+  info:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 16v-4.5M12 8h.01',
+  checkc:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM8.5 12l2.5 2.5 4.5-5',
+  xc:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM14.8 9.2l-5.6 5.6M9.2 9.2l5.6 5.6',
+  wifi:'M2.5 9.5a15 15 0 0 1 19 0M5.5 13a10.5 10.5 0 0 1 13 0M8.5 16.5a6 6 0 0 1 7 0M12 20h.01',
+  wifioff:'M2 2l20 20M8.5 16.5a6 6 0 0 1 7 0M12 20h.01M5.5 13a10.5 10.5 0 0 1 4-2.4M2.5 9.5a15 15 0 0 1 5-3.2M14 5.6a15 15 0 0 1 7.5 3.9',
+  clock:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3.2 2',
+  trash:'M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7M6.5 7l.9 12.1A1.6 1.6 0 0 0 9 20.6h6a1.6 1.6 0 0 0 1.6-1.5L17.5 7',
+  edit:'M4 20h4L19 9a2.4 2.4 0 0 0-3.4-3.4L4.5 16.7 4 20Z',
+  share:'M4 12v7.4A1.6 1.6 0 0 0 5.6 21h12.8a1.6 1.6 0 0 0 1.6-1.6V12M12 15V3M8 7l4-4 4 4',
+  card:'M3 8.5h18M4.6 5h14.8A1.6 1.6 0 0 1 21 6.6v10.8a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.4V6.6A1.6 1.6 0 0 1 4.6 5Z',
+  shield:'M12 21s7.5-3.4 7.5-9V6L12 3 4.5 6v6c0 5.6 7.5 9 7.5 9Z',
+  devices:'M3.5 5.5h11a1 1 0 0 1 1 1V9M3.5 5.5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1H10M17.5 9h3a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1Z',
+  help:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9.6 9.5a2.5 2.5 0 0 1 4.85.8c0 1.7-2.45 2.5-2.45 2.5M12 17h.01',
+  ticket:'M4 8.5V6.6A1.6 1.6 0 0 1 5.6 5h12.8A1.6 1.6 0 0 1 20 6.6v1.9a2.4 2.4 0 0 0 0 7v1.9a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 17.4v-1.9a2.4 2.4 0 0 0 0-7ZM11 9v6',
+  logout:'M9 21H5.6A1.6 1.6 0 0 1 4 19.4V4.6A1.6 1.6 0 0 1 5.6 3H9M16 16l5-4-5-4M21 12H9',
+  globe:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.2 10h17.6M3.2 14h17.6M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18',
+  folder:'M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h9a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5Z',
+  film:'M4.6 4h14.8A1.6 1.6 0 0 1 21 5.6v12.8a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18.4V5.6A1.6 1.6 0 0 1 4.6 4ZM7.5 4v16M16.5 4v16M3 9.5h4.5M3 14.5h4.5M16.5 9.5H21M16.5 14.5H21',
+  layers:'m12 3 9 5-9 5-9-5 9-5ZM3 16l9 5 9-5M3 12l9 5 9-5',
+  chart:'M4 20V10M10 20V4M16 20v-7M22 20H2',
+  users:'M16 20v-1.6c0-2.2-2.4-3.4-5.5-3.4S5 16.2 5 18.4V20M10.5 12a3.6 3.6 0 1 0 0-7.2 3.6 3.6 0 0 0 0 7.2ZM19 20v-1.5c0-1.7-1.2-2.8-3-3.2M16 5a3.6 3.6 0 0 1 0 6.9',
+  db:'M12 8.5c4.4 0 8-1.2 8-2.75S16.4 3 12 3 4 4.2 4 5.75 7.6 8.5 12 8.5ZM4 5.75v12.5C4 19.8 7.6 21 12 21s8-1.2 8-2.75V5.75M4 12c0 1.55 3.6 2.75 8 2.75s8-1.2 8-2.75',
+  cloud:'M17.5 19a4.5 4.5 0 0 0 .5-8.97A6.5 6.5 0 0 0 5.2 11.2 3.9 3.9 0 0 0 6 19h11.5Z',
+  upload:'M12 16V4M7.5 8.5 12 4l4.5 4.5M4 20h16',
+  key:'M15.5 14a5.5 5.5 0 1 0-4.6-2.5L3 19.4V21h3l1.3-1.3v-2h2v-2h2l1.3-1.3a5.5 5.5 0 0 0 2.9.6ZM17 8.5h.01',
+  mic:'M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 0 0-7 0v5A3.5 3.5 0 0 0 12 15ZM5 11.5a7 7 0 0 0 14 0M12 15v6M9 21h6',
+  eye:'M12 5c5.5 0 9.5 7 9.5 7s-4 7-9.5 7-9.5-7-9.5-7 4-7 9.5-7ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+  eyeoff:'M3 3l18 18M10.6 6.3A9.6 9.6 0 0 1 12 6c5.5 0 9.5 6 9.5 6a17 17 0 0 1-3.2 3.8M6.6 8.2A17 17 0 0 0 2.5 12s4 6 9.5 6a9 9 0 0 0 3.5-.7M9.9 9.9a3 3 0 0 0 4.2 4.2',
+  refresh:'M20 11a8 8 0 0 0-13.7-5L3 9M4 13a8 8 0 0 0 13.7 5L21 15M3 5v4h4M21 19v-4h-4',
+  more:'M12 6.5h.01M12 12h.01M12 17.5h.01',
+  moreH:'M6.5 12h.01M12 12h.01M17.5 12h.01',
+  sparkle:'M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3Z',
+  waveform:'M3 12h2M7 8v8M11 5v14M15 9v6M19 11.5v1M21.5 12h.5',
+  scissors:'M6.5 8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM6.5 20.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM8.7 9.8 20 19M20 5 8.7 14.2',
+  merge:'M8 3v6.5c0 1.4 1.1 2.5 2.5 2.5h3c1.4 0 2.5 1.1 2.5 2.5V21M8 3 5 6M8 3l3 3M16 21l-3-3M16 21l3-3',
+  bolt:'M13 2 4 14h7l-1 8 9-12h-7l1-8Z',
+  calendar:'M4.6 5.5h14.8A1.6 1.6 0 0 1 21 7.1v12.3a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 19.4V7.1a1.6 1.6 0 0 1 1.6-1.6ZM3 10.5h18M8 3v5M16 3v5',
+  paperclip:'M20 11.5 12 19.5a5 5 0 0 1-7-7l8.5-8.5a3.4 3.4 0 0 1 4.8 4.8L9.7 17.4a1.8 1.8 0 1 1-2.5-2.5l7.8-7.8',
+  send:'M21 3 10.5 13.5M21 3l-6.5 18-4-8-8-4L21 3Z',
+  storage:'M4.6 4h14.8A1.6 1.6 0 0 1 21 5.6v3.2a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 8.8V5.6A1.6 1.6 0 0 1 4.6 4ZM4.6 13.6h14.8a1.6 1.6 0 0 1 1.6 1.6v3.2a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18.4v-3.2a1.6 1.6 0 0 1 1.6-1.6ZM7 7h.01M7 17h.01',
+  drag:'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
+  apple:'M16.4 12.7c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.8-2-1.6-.2-3.1.9-3.9.9s-2.1-.9-3.4-.9c-1.8 0-3.4 1-4.3 2.6-1.8 3.2-.5 7.9 1.3 10.5.9 1.3 1.9 2.7 3.2 2.6 1.3-.05 1.8-.83 3.4-.83s2 .83 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.03 0-2.7-1-2.7-4.1ZM13.9 4.9c.7-.85 1.2-2 1-3.2-1 .04-2.3.7-3 1.5-.65.75-1.2 1.9-1.1 3.1 1.1.08 2.3-.6 3.1-1.4Z',
+  google:'M21.4 12.2c0-.7-.06-1.4-.18-2H12v3.9h5.3a4.5 4.5 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4ZM12 21.5c2.7 0 5-.9 6.6-2.4l-3.2-2.5a6 6 0 0 1-9-3.1H3v2.6A10 10 0 0 0 12 21.5ZM6.4 13.5a6 6 0 0 1 0-3.8V7.1H3a10 10 0 0 0 0 9L6.4 13.5ZM12 6.3c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3 7.1l3.4 2.6A6 6 0 0 1 12 6.3Z'
+};
+
+function ic(name, size, sw) {
+  var d = DSI[name];
+  if (!d) return '';
+  size = size || 20; sw = sw || 1.7;
+  var paths = d.split('|').map(function (p) { return '<path d="' + p + '"/>'; }).join('');
+  var solid = (name === 'play' || name === 'next' || name === 'prev' || name === 'star' || name === 'apple' || name === 'google' || name === 'bolt');
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="' + (solid ? 'currentColor' : 'none') +
+    '" stroke="' + (solid ? 'none' : 'currentColor') + '" stroke-width="' + sw +
+    '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
+}
+
+/* ---------- Procedural artwork engine ----------
+   Deterministic per-title. No third-party imagery, so the whole
+   catalogue is copyright-clean and visually one family.        */
+function dsHash(s) {
+  var h = 2166136261;
+  for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0);
+}
+var DS_PAL = [
+  ['#1B2A4A', '#3E5C8C', '#0A1020'], ['#4A1B2A', '#8C3E52', '#20080E'],
+  ['#1B4A3E', '#3E8C74', '#08201A'], ['#4A3A1B', '#8C6E3E', '#201808'],
+  ['#2A1B4A', '#5C3E8C', '#100820'], ['#4A2A1B', '#8C523E', '#200E08'],
+  ['#1B3A4A', '#3E748C', '#081820'], ['#3A4A1B', '#748C3E', '#182008'],
+  ['#4A1B4A', '#8C3E8C', '#200820'], ['#12232E', '#2E5468', '#060E14'],
+  ['#2E1212', '#68302E', '#140606'], ['#20304A', '#48688C', '#0C1220']
+];
+function dsArt(seed, opts) {
+  opts = opts || {};
+  var h = dsHash(seed);
+  var p = DS_PAL[h % DS_PAL.length];
+  var a = (h >> 4) % 360, x1 = 12 + ((h >> 7) % 70), y1 = 8 + ((h >> 11) % 50);
+  var x2 = 25 + ((h >> 13) % 60), y2 = 45 + ((h >> 17) % 45);
+  var rot = ((h >> 19) % 60) - 30;
+  return '' +
+    '<div class="ds-art__grad" style="background:' +
+      'radial-gradient(60% 46% at ' + x1 + '% ' + y1 + '%, ' + p[1] + 'DD 0%, transparent 62%),' +
+      'radial-gradient(52% 40% at ' + x2 + '% ' + y2 + '%, ' + p[0] + 'EE 0%, transparent 66%),' +
+      'linear-gradient(' + a + 'deg, ' + p[2] + ' 0%, ' + p[0] + ' 55%, ' + p[2] + ' 100%)' +
+    '"></div>' +
+    '<div class="ds-art__grad" style="opacity:.5;background:' +
+      'conic-gradient(from ' + rot + 'deg at 50% 62%, transparent 0deg, ' + p[1] + '55 40deg, transparent 90deg, transparent 250deg, ' + p[1] + '44 300deg, transparent 340deg)' +
+    '"></div>';
+}
+/* Render a poster/backdrop tile */
+function art(seed, cls, style, title, titleSize) {
+  return '<div class="ds-art ' + (cls || '') + '" style="' + (style || '') + '">' +
+    dsArt(seed) + '<div class="ds-art__vig"></div>' +
+    (title ? '<div class="ds-art__title" style="font-size:' + (titleSize || 15) + 'px">' + title + '</div>' : '') +
+    '</div>';
+}
+
+/* ---------- Catalogue ---------- */
+var CAT = [
+  { t:'Тихий рассвет',      o:'Quiet Dawn',        y:2025, d:'2 ч 08 мин', g:'Драма · Триллер', r:8.4, age:'16+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Северный маршрут',   o:'Northern Route',    y:2024, d:'1 ч 54 мин', g:'Приключения',     r:7.9, age:'12+', c:'Норвегия',q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Глубина',            o:'The Deep',          y:2023, d:'2 ч 21 мин', g:'Фантастика',      r:8.1, age:'16+', c:'США',     q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Письма из Гаваны',   o:'Letters from Havana',y:2025,d:'1 ч 47 мин', g:'Мелодрама',       r:7.6, age:'16+', c:'Куба',    q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Стеклянный дом',     o:'Glass House',       y:2024, d:'1 ч 39 мин', g:'Триллер',         r:7.2, age:'18+', c:'Дания',   q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Хроника одного дня', o:'One Day Chronicle', y:2022, d:'2 ч 32 мин', g:'Документальный',  r:8.8, age:'12+', c:'Россия',  q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Пепел и снег',       o:'Ash and Snow',      y:2025, d:'2 ч 04 мин', g:'Драма',           r:8.6, age:'16+', c:'Исландия',q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Между нами город',   o:'A City Between Us', y:2024, d:'1 ч 58 мин', g:'Драма',    r:8.2, age:'18+', c:'Франция', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Полярная станция',   o:'Polar Station',     y:2023, d:'1 ч 44 мин', g:'Триллер',         r:7.4, age:'16+', c:'Канада',  q:[],     cc:'cc',     dl:0, plan:'vip' },
+  { t:'Год тишины',         o:'The Silent Year',   y:2025, d:'2 ч 12 мин', g:'Драма',           r:9.0, age:'16+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Операция «Восход»',  o:'Operation Sunrise', y:2024, d:'2 ч 26 мин', g:'История',         r:8.3, age:'16+', c:'Польша',  q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Красная линия',      o:'The Red Line',      y:2022, d:'1 ч 51 мин', g:'Криминал',        r:7.7, age:'18+', c:'Италия',  q:[],     cc:'cc',     dl:1, plan:'vip' },
+  { t:'Двое на побережье',  o:'Two on the Shore',  y:2025, d:'1 ч 36 мин', g:'Мелодрама',r:8.0, age:'16+', c:'Испания', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Последний рейс',     o:'The Last Flight',   y:2023, d:'2 ч 03 мин', g:'Драма',           r:7.8, age:'12+', c:'Германия',q:[],     cc:'cc',     dl:1, plan:'vip' },
+  { t:'Свидетели',          o:'The Witnesses',     y:2024, d:'1 ч 49 мин', g:'Документальный',  r:8.5, age:'16+', c:'Украина', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Отражение',          o:'Reflection',        y:2025, d:'1 ч 42 мин', g:'Триллер',         r:7.5, age:'16+', c:'Япония',  q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Тёплый ветер',       o:'Warm Wind',         y:2023, d:'1 ч 33 мин', g:'Комедия',         r:7.1, age:'12+', c:'Грузия',  q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Городские огни',     o:'City Lights',       y:2024, d:'2 ч 15 мин', g:'Драма',    r:8.4, age:'18+', c:'Бразилия',q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Территория льда',    o:'Territory of Ice',  y:2022, d:'2 ч 41 мин', g:'Приключения',     r:8.7, age:'12+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Ночная смена',       o:'Night Shift',       y:2025, d:'1 ч 28 мин', g:'Триллер',         r:7.3, age:'18+', c:'Корея',   q:[],     cc:'cc',     dl:1, plan:'vip' }
+];
+function M(i) { return CAT[i % CAT.length]; }
+
+/* Badge markup for a title */
+function badges(m, opts) {
+  opts = opts || {};
+  var out = [];
+  if (m.cc === 'ccplus') out.push('<span class="ds-badge ds-badge--ccplus">CC+</span>');
+  else if (m.cc === 'cc') out.push('<span class="ds-badge ds-badge--cc">CC</span>');
+  if (m.q.indexOf('4K') > -1) out.push('<span class="ds-badge ds-badge--4k">4K</span>');
+  else if (!opts.noHd) out.push('<span class="ds-badge ds-badge--hd">HD</span>');
+  if (opts.offline && m.dl) out.push('<span class="ds-badge ds-badge--offline">' + ic('download', 9, 2.6) + ' OFFLINE</span>');
+  if (opts.ad && m.ad) out.push('<span class="ds-badge ds-badge--ad">AD</span>');
+  return out.join('');
+}
+function stars(r) {
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-gold)">' + ic('star', 11) +
+    '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
+}
+
+/* ---------- Subscription plans — shared by every surface ---------- */
+/* The one subscription. Recurring monthly, identical access for everyone. */
+var PLANS = {
+  vip: {
+    id: 'vip', name: 'ВИП', price: 500, color: 'var(--ds-vip)', hex: '#FFC24B',
+    tag: 'Полный доступ',
+    desc: 'Одна подписка на весь deafsuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
+    feats: [
+      'Весь каталог — 1 204 фильма',
+      'Все коллекции, включая «Реальные события»',
+      'Качество до 4K UHD',
+      'Скачивание и просмотр офлайн',
+      'CC и CC+ на всём каталоге',
+      'Тифлокомментарий (AD), где доступен',
+      'До 5 устройств одновременно',
+      'Без рекламы'
+    ]
+  }
+};
+var VIP = PLANS.vip;
+
+</script>
+<script>
+/* ============================================================
+   deafsuslik Admin — shell, login, dashboard, content
+   ============================================================ */
+var A = {};
+
+var ANAV = [
+  ['', 'Dashboard', [['dash', 'Дашборд', 'chart']]],
+  ['Контент', [], [['movies', 'Фильмы', 'film'], ['series', 'Сериалы', 'layers'],
+    ['collections', 'Коллекции', 'folder'], ['homepage', 'Главная страница', 'home'],
+    ['rights', 'Права и лицензии', 'shield']]],
+  ['Медиа', [], [['processing', 'Обработка видео', 'refresh'], ['subs-list', 'Субтитры и CC+', 'cc'],
+    ['editor', 'Редактор субтитров', 'waveform'], ['storage', 'Хранилище', 'storage']]],
+  ['Люди и деньги', [], [['users', 'Пользователи', 'users'], ['subs-admin', 'Подписки', 'card'],
+    ['payments', 'Платежи', 'db']]],
+  ['Поддержка', [], [['tickets', 'Обращения', 'ticket']]],
+  ['Аналитика', [], [['analytics', 'Просмотры', 'chart'], ['revenue', 'Выручка', 'bolt'],
+    ['searchan', 'Поиск', 'search']]],
+  ['Система', [], [['api', 'API и интеграции', 'key'], ['roles', 'Роли и доступы', 'shield'],
+    ['audit', 'Журнал действий', 'list'], ['trash', 'Корзина', 'trash'],
+    ['asettings', 'Настройки', 'settings']]]
+];
+
+/* Admin chrome: fixed sidebar + top bar + content region */
+function adminShell(active, title, sub, actions, body) {
+  return '<div style="display:grid;grid-template-columns:240px minmax(0,1fr);min-height:900px;background:var(--ds-void)">' +
+    '<aside style="border-right:1px solid var(--ds-line);background:var(--ds-sunken);display:flex;flex-direction:column">' +
+      '<div style="padding:18px 18px 16px;border-bottom:1px solid var(--ds-line)">' +
+        dsLogo(26, 16) +
+        '<div class="ds-badge ds-badge--err" style="margin-top:9px">Админ-панель</div></div>' +
+      '<div class="ds-scroll" style="flex:1;overflow-y:auto;padding:8px 10px 24px">' +
+        ANAV.map(function (g) {
+          return (g[0] ? '<p class="ds-eyebrow" style="padding:14px 10px 6px;font-size:9.5px">' + g[0] + '</p>' : '') +
+            g[2].map(function (n) {
+              var on = n[0] === active;
+              return '<button data-ago="' + n[0] + '" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:var(--ds-r-sm);cursor:pointer;text-align:left;font-size:13px;font-weight:' + (on ? 600 : 500) + ';' +
+                'background:' + (on ? 'var(--ds-gold-dim)' : 'none') + ';color:' + (on ? 'var(--ds-gold)' : 'var(--ds-ink-3)') + '">' +
+                '<span style="display:flex;flex:none">' + ic(n[2], 17) + '</span>' + n[1] + '</button>';
+            }).join('');
+        }).join('') + '</div>' +
+      '<div style="padding:14px;border-top:1px solid var(--ds-line);display:flex;align-items:center;gap:10px">' +
+        '<div style="width:32px;height:32px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art('Мария Р', '', 'position:absolute;inset:0') + '</div>' +
+        '<div style="min-width:0;flex:1"><div style="font-size:12.5px;font-weight:600">Мария Р.</div>' +
+        '<div class="ds-cap">Редактор субтитров</div></div>' +
+        '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Выйти">' + ic('logout', 16) + '</button></div>' +
+    '</aside>' +
+    '<div style="min-width:0;display:flex;flex-direction:column">' +
+      '<header style="display:flex;align-items:center;gap:16px;padding:16px 26px;border-bottom:1px solid var(--ds-line);background:var(--ds-void);position:sticky;top:0;z-index:20">' +
+        '<div style="min-width:0"><h1 class="ds-h1">' + title + '</h1>' +
+        (sub ? '<p class="ds-cap" style="margin-top:2px">' + sub + '</p>' : '') + '</div>' +
+        '<div class="ds-grow"></div>' +
+        '<div class="ds-search" style="width:260px;min-height:38px;padding:0 14px">' +
+          '<span style="color:var(--ds-ink-3);display:flex">' + ic('search', 16) + '</span>' +
+          '<input placeholder="Поиск" style="font-size:13px"></div>' +
+        (actions || '') +
+        '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell', 18) +
+          '<span style="position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:99px;background:var(--ds-err)"></span></button>' +
+      '</header>' +
+      '<div style="flex:1;padding:24px 26px 40px">' + body + '</div>' +
+    '</div></div>';
+}
+
+function stat(k, v, d, tone) {
+  return '<div class="ds-stat"><div class="ds-stat__k">' + k + '</div>' +
+    '<div class="ds-stat__v">' + v + '</div>' +
+    (d ? '<div class="ds-stat__d" style="color:var(--ds-' + (tone || 'ok') + ')">' +
+      ic(tone === 'err' ? 'chevD' : 'chevU', 12, 2.6) + d + '</div>' : '') + '</div>';
+}
+
+/* Compact bar chart — no library, encodes one series honestly */
+function bars(data, h, color) {
+  var max = Math.max.apply(null, data.map(function (d) { return d[1]; }));
+  return '<div style="display:flex;align-items:flex-end;gap:5px;height:' + (h || 92) + 'px">' +
+    data.map(function (d, i) {
+      var last = i === data.length - 1;
+      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">' +
+        '<div title="' + d[0] + ': ' + d[1] + '" style="width:100%;border-radius:4px 4px 2px 2px;height:' + Math.max(3, (d[1] / max) * 100) + '%;' +
+        'background:' + (last ? (color || 'var(--ds-gold)') : 'rgba(255,194,75,.30)') + '"></div>' +
+        '<span class="ds-cap" style="font-size:9px">' + d[0] + '</span></div>';
+    }).join('') + '</div>';
+}
+
+/* ---------- Admin login ---------- */
+A.login = function () {
+  return '<div style="min-height:900px;display:grid;place-items:center;background:var(--ds-sunken);position:relative;overflow:hidden">' +
+    '<div class="ds-art" style="position:absolute;inset:0;opacity:.32">' + dsArt('admin-login') + '</div>' +
+    '<div style="position:relative;width:min(400px,90%)">' +
+      '<div class="ds-center" style="margin-bottom:26px">' + dsLogo(44, 27) +
+        '<div class="ds-badge ds-badge--err ds-badge--lg" style="margin-top:12px">Админ-панель</div></div>' +
+      '<div class="ds-card" style="padding:26px">' +
+        '<h2 class="ds-h1">Вход для сотрудников</h2>' +
+        '<p class="ds-sm" style="margin-top:6px">Доступ только для аккаунтов с ролью в системе.</p>' +
+        '<div class="ds-stack ds-g3" style="margin-top:20px">' +
+          '<div class="ds-field"><label class="ds-label">Рабочий email</label><input class="ds-input" value="maria.r@deafsuslik.ru"></div>' +
+          '<div class="ds-field"><label class="ds-label">Пароль</label><input class="ds-input" type="password" value="adminpass"></div>' +
+          '<div class="ds-field"><label class="ds-label">Код из приложения</label>' +
+            '<div class="ds-row-f ds-g2">' + [1, 2, 3, 4, 5, 6].map(function (i) {
+              return '<input class="ds-input ds-num" maxlength="1" value="' + (i <= 3 ? [4, 8, 1][i - 1] : '') + '" style="text-align:center;padding:12px 0;font-size:1.15rem;font-weight:700">';
+            }).join('') + '</div>' +
+            '<span class="ds-help">Двухфакторная аутентификация обязательна для всех ролей.</span></div>' +
+          '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-ago="dash">Войти в админ-панель</button></div>' +
+        '<div class="ds-stack ds-g2" style="margin-top:18px;padding-top:16px;border-top:1px solid var(--ds-line)">' +
+          '<p class="ds-eyebrow">Состояния</p>' +
+          '<div class="ds-toast" style="max-width:none"><span class="ds-toast__ico" style="color:var(--ds-err)">' + ic('alert', 17) + '</span>' +
+            '<div><strong style="font-size:13px">Неверный код</strong><div class="ds-cap">Осталось 2 попытки, затем блокировка на 15 минут</div></div></div>' +
+          '<div class="ds-toast" style="max-width:none"><span class="ds-toast__ico" style="color:var(--ds-warn)">' + ic('clock', 17) + '</span>' +
+            '<div><strong style="font-size:13px">Сессия истекла</strong><div class="ds-cap">Админ-сессия живёт 8 часов</div></div></div>' +
+          '<div class="ds-toast" style="max-width:none"><span class="ds-toast__ico" style="color:var(--ds-err)">' + ic('lock', 17) + '</span>' +
+            '<div><strong style="font-size:13px">Аккаунт заблокирован</strong><div class="ds-cap">Обратитесь к владельцу проекта</div></div></div>' +
+        '</div></div>' +
+      '<p class="ds-cap ds-center" style="margin-top:16px">Все действия в панели записываются в журнал</p></div></div>';
+};
+
+/* ---------- Dashboard ---------- */
+A.dash = function () {
+  return adminShell('dash', 'Дашборд', 'Сегодня, 2 сентября 2026',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('calendar', 14) + ' 30 дней</button>',
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">' +
+      stat('Пользователи', '48 214', '+3.2% за месяц') +
+      stat('Активные за 30 дней', '31 907', '+5.8%') +
+      stat('Активные подписки', '27 480', '+2.1%') +
+      stat('MRR', '13 740 000 ₽', '+4.4%') +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px">' +
+      stat('Новые подписки', '1 284', '+11%') +
+      stat('Отмены', '396', '−0.4 п.п. churn') +
+      stat('Фильмов опубликовано', '1 204', '+18 за месяц') +
+      stat('Фильмов с CC+', '340', '+22 за месяц') +
+    '</div>' +
+
+    '<div style="display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:16px;margin-top:20px;align-items:start">' +
+      '<div class="ds-card">' +
+        '<div class="ds-between" style="margin-bottom:16px"><h3 class="ds-h2">Выручка по месяцам</h3>' +
+          '<div class="ds-seg"><button aria-selected="true">MRR</button><button aria-selected="false">Подписки</button></div></div>' +
+        bars([['мар', 11.1], ['апр', 11.6], ['май', 11.9], ['июн', 12.3], ['июл', 12.6], ['авг', 13.2], ['сен', 13.7]], 140) +
+        '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px;padding-top:16px;border-top:1px solid var(--ds-line)">' +
+          [['Подписка ВИП', '13 740 000 ₽', 'var(--ds-vip)', '27 480 подписок'],
+           ['Средний чек', '500 ₽', 'var(--ds-vip)', 'один тариф для всех'],
+           ['Отток за месяц', '1.4%', 'var(--ds-warn)', '396 отмен']].map(function (p) {
+            return '<div><div class="ds-row-f ds-g2"><span style="width:20px;height:3px;border-radius:2px;background:' + p[2] + '"></span>' +
+              '<span class="ds-cap">' + p[0] + '</span></div>' +
+              '<div class="ds-num" style="font-size:1.05rem;font-weight:700;margin-top:5px">' + p[1] + '</div>' +
+              '<div class="ds-cap">' + p[3] + '</div></div>';
+          }).join('') + '</div></div>' +
+
+      '<div class="ds-card">' +
+        '<h3 class="ds-h2" style="margin-bottom:14px">Требует внимания</h3>' +
+        '<div class="ds-stack ds-g2">' +
+          [['err', 'alert', '3 видео не обработались', 'Ошибка кодирования 4K', 'processing'],
+           ['warn', 'clock', '5 лицензий истекают', 'В ближайшие 14 дней', 'rights'],
+           ['warn', 'ticket', '2 обращения просрочены', 'Срочные, старше 1 часа', 'tickets'],
+           ['info', 'cc', '12 CC+ ждут вычитки', 'Черновики автогенерации', 'subs-list'],
+           ['warn', 'storage', 'Хранилище 78%', '3.9 TB из 5 TB', 'storage']].map(function (r) {
+            return '<button class="ds-row" data-ago="' + r[4] + '" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:11px 12px">' +
+              '<span class="ds-row__ico" style="color:var(--ds-' + r[0] + ')">' + ic(r[1], 18) + '</span>' +
+              '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">' + r[2] + '</span>' +
+              '<span class="ds-row__sub">' + r[3] + '</span></span>' +
+              '<span class="ds-row__chev">' + ic('chevR', 15) + '</span></button>';
+          }).join('') + '</div></div></div>' +
+
+    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:16px;align-items:start">' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Самое смотримое</h3>' +
+        '<div class="ds-stack ds-g2">' + [9, 6, 0, 10, 14].map(function (i, k) {
+          var m = M(i);
+          return '<div class="ds-row-f ds-g3"><span class="ds-num ds-mut2" style="width:14px;font-size:12px">' + (k + 1) + '</span>' +
+            '<div style="width:34px;aspect-ratio:2/3;border-radius:5px;overflow:hidden;position:relative;flex:none">' + art(m.t, '', 'position:absolute;inset:0') + '</div>' +
+            '<div class="ds-grow" style="min-width:0"><div style="font-size:12.5px;font-weight:600">' + m.t + '</div>' +
+            '<div class="ds-cap ds-num">' + (48 - k * 6) + ' 200 просмотров</div></div></div>';
+        }).join('') + '</div></div>' +
+
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Использование субтитров</h3>' +
+        '<div class="ds-stack ds-g4">' +
+          [['CC+ включены', 62, 'var(--ds-aqua)'], ['CC включены', 24, 'var(--ds-aqua-lo)'],
+           ['Обычные субтитры', 9, 'var(--ds-raised-3)'], ['Без субтитров', 5, 'var(--ds-raised-3)']].map(function (r) {
+            return '<div><div class="ds-between" style="margin-bottom:5px"><span class="ds-sm">' + r[0] + '</span>' +
+              '<span class="ds-num ds-sm" style="font-weight:700">' + r[1] + '%</span></div>' +
+              '<div style="height:6px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
+              '<div style="height:100%;width:' + r[1] + '%;background:' + r[2] + ';border-radius:99px"></div></div></div>';
+          }).join('') + '</div>' +
+        '<p class="ds-cap" style="margin-top:14px">86% просмотров идут с субтитрами. Это не дополнительная функция — это основной сценарий.</p></div>' +
+
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Последние действия</h3>' +
+        '<div class="ds-stack ds-g3">' +
+          [['Мария Р.', 'исправила Русский CC+', 'Год тишины · 01:22:18', '14:42'],
+           ['Игорь С.', 'опубликовал фильм', 'Свидетели', '13:10'],
+           ['Система', 'завершила обработку', 'Пепел и снег · 4K', '12:04'],
+           ['Ольга К.', 'продлила лицензию', 'Территория льда', '11:20'],
+           ['Мария Р.', 'загрузила CC+', 'Глубина · Русский', '10:05']].map(function (r) {
+            return '<div><div class="ds-sm"><strong>' + r[0] + '</strong> ' + r[1] + '</div>' +
+              '<div class="ds-cap ds-num" style="margin-top:1px">' + r[2] + ' · ' + r[3] + '</div></div>';
+          }).join('') + '</div>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--ghost ds-btn--block" data-ago="audit" style="margin-top:12px">Весь журнал</button></div>' +
+    '</div>');
+};
+
+/* ---------- Movies list ---------- */
+A.movies = function () {
+  var ST = { pub: ['ds-badge--ok', 'Опубликован'], draft: ['', 'Черновик'], proc: ['ds-badge--info', 'Обработка'],
+    sched: ['ds-badge--warn', 'Запланирован'], fail: ['ds-badge--err', 'Ошибка'], hid: ['', 'Скрыт'] };
+  var ROWS = [
+    [9,  'pub',   '4K', 'RU CC+ · EN CC', 'Реальные события', '48 200', '2 сен'],
+    [6,  'pub',   '4K', 'RU CC+',         'Реальные события', '42 100', '28 авг'],
+    [0,  'pub',   '4K', 'RU CC+ · EN CC', '—',                '36 400', '24 авг'],
+    [10, 'proc',  '—',  'RU CC+',         'Реальные события', '—',      '—'],
+    [3,  'draft', '1080p', 'нет',         '—',                '—',      '—'],
+    [14, 'sched', '4K', 'RU CC+',         'Реальные события', '—',      '5 сен'],
+    [17, 'fail',  '—',  'RU CC',          '—',                '—',      '—'],
+    [12, 'pub',   '4K', 'RU CC+ · EN CC', 'Фильмы на вечер',  '18 900', '18 авг'],
+    [5,  'hid',   '1080p', 'RU CC',       '—',                '9 400',  '—']
+  ];
+  return adminShell('movies', 'Фильмы', '1 204 всего · 18 добавлено за месяц',
+    '<button class="ds-btn ds-btn--sm ds-btn--primary" data-ago="add-movie">' + ic('plus', 14) + ' Добавить фильм</button>',
+    '<div class="ds-between" style="margin-bottom:16px;flex-wrap:wrap;gap:10px">' +
+      '<div class="ds-wrap ds-g2">' + ['Все · 1204', 'Опубликованы · 1180', 'Черновики · 12', 'Обработка · 4', 'Ошибки · 3', 'Запланированы · 5'].map(function (t, i) {
+        return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
+      '<div class="ds-row-f ds-g2">' +
+        '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все коллекции</option><option>Реальные события</option><option>Фильмы на вечер</option><option>Лучшее с CC+</option></select>' +
+        '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все субтитры</option><option>С CC+</option><option>Только CC</option><option>Без субтитров</option></select>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('filter', 13) + ' Ещё фильтры</button></div></div>' +
+
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th style="width:34px"><span class="ds-opt__box ds-opt__box--check" style="width:16px;height:16px"></span></th>' +
+      '<th>Фильм</th><th>Год</th><th>Статус</th><th>Качество</th><th>Субтитры</th><th>Коллекция</th><th>Просмотры</th><th>Публикация</th><th></th></tr></thead><tbody>' +
+      ROWS.map(function (r) {
+        var m = M(r[0]), s = ST[r[1]];
+        return '<tr>' +
+          '<td><span class="ds-opt__box ds-opt__box--check" style="width:16px;height:16px"></span></td>' +
+          '<td><div class="ds-row-f ds-g3">' +
+            '<div style="width:32px;aspect-ratio:2/3;border-radius:5px;overflow:hidden;position:relative;flex:none">' + art(m.t, '', 'position:absolute;inset:0') + '</div>' +
+            '<div><div style="font-weight:600">' + m.t + '</div>' +
+            '<div class="ds-cap">' + m.o + '</div></div></div></td>' +
+          '<td class="ds-num">' + m.y + '</td>' +
+          '<td><span class="ds-badge ' + s[0] + '">' + s[1] + '</span></td>' +
+          '<td>' + (r[2] === '4K' ? '<span class="ds-badge ds-badge--4k">4K</span>' : '<span class="ds-mut2 ds-num">' + r[2] + '</span>') + '</td>' +
+          '<td>' + (r[3] === 'нет' ? '<span class="ds-badge ds-badge--warn">Нет</span>'
+            : '<span class="ds-num" style="font-size:11.5px;color:var(--ds-aqua)">' + r[3] + '</span>') + '</td>' +
+          '<td>' + (r[4] === '—' ? '<span class="ds-mut2">—</span>'
+            : '<span class="ds-badge" style="border-color:#C89BFF44;color:#C89BFF">' + r[4] + '</span>') + '</td>' +
+          '<td class="ds-num">' + r[5] + '</td>' +
+          '<td class="ds-num ds-mut2">' + r[6] + '</td>' +
+          '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
+      }).join('') + '</tbody></table></div>' +
+      '<div class="ds-between" style="padding:14px 18px;border-top:1px solid var(--ds-line)">' +
+        '<span class="ds-cap">Показано 9 из 1 204</span>' +
+        '<div class="ds-row-f ds-g2"><button class="ds-btn ds-btn--sm ds-btn--ghost">Назад</button>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--secondary">Вперёд</button></div></div></div>' +
+
+    '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-line-mid)">' +
+      '<div class="ds-between"><div class="ds-row-f ds-g3">' +
+        '<span class="ds-badge ds-badge--gold ds-badge--lg">Выбрано 3</span>' +
+        '<span class="ds-sm ds-mut">Массовые действия</span></div>' +
+        '<div class="ds-row-f ds-g2">' +
+          '<button class="ds-btn ds-btn--sm ds-btn--secondary">Опубликовать</button>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--secondary">В коллекцию</button>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--secondary">В архив</button>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--danger">В корзину</button></div></div></div>');
+};
+
+/* ---------- Add movie: choose path ---------- */
+A.addMovie = function () {
+  return adminShell('movies', 'Добавить фильм', 'Выберите способ', '',
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:820px">' +
+      [['upload', 'Ручная загрузка', 'Загрузите один мастер-файл — система сама подготовит все качества от 360p до 4K. Метаданные, обложки и субтитры заполняются вручную.', 'manual-upload', 1],
+       ['cloud', 'Импорт через API', 'Подтянуть метаданные из авторизованной интеграции. Импорт всегда создаёт черновик — публикация только после проверки.', 'api-import', 0]].map(function (c) {
+        return '<button class="ds-card" data-ago="' + c[3] + '" style="text-align:left;cursor:pointer;padding:26px' + (c[4] ? ';border-color:var(--ds-gold-edge)' : '') + '">' +
+          '<span style="color:' + (c[4] ? 'var(--ds-gold)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(c[0], 28) + '</span>' +
+          '<h3 class="ds-h1" style="margin-top:16px">' + c[1] + '</h3>' +
+          '<p class="ds-sm" style="margin-top:8px">' + c[2] + '</p>' +
+          '<span class="ds-btn ds-btn--sm ds-btn--secondary" style="margin-top:18px">Начать ' + ic('chevR', 13) + '</span></button>';
+      }).join('') + '</div>' +
+    '<div class="ds-strip" style="margin-top:22px;max-width:820px;border-left-color:var(--ds-warn);background:var(--ds-warn-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-warn)">Права</span>' +
+      '<p class="ds-sm" style="margin:0">Импорт через API даёт метаданные, а не права на показ. Публикация без заполненной лицензии ' +
+      '(правообладатель, срок, территория) блокируется системой.</p></div>');
+};
+
+/* ---------- Manual upload wizard ---------- */
+A.manualUpload = function () {
+  var STEPS = [['Информация', 1], ['Обложки', 1], ['Видео', 1], ['Обработка', 0], ['Субтитры', 0], ['Коллекции', 0], ['Публикация', 0]];
+  return adminShell('movies', 'Ручная загрузка', 'Шаг 4 из 7 · Обработка видео',
+    '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сохранить черновик</button>',
+    '<div class="ds-row-f" style="margin-bottom:24px;gap:0">' + STEPS.map(function (s, i) {
+      var cur = i === 3;
+      return '<div style="flex:1;display:flex;align-items:center;gap:8px">' +
+        '<span style="width:26px;height:26px;border-radius:99px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:700;' +
+          'background:' + (s[1] ? 'var(--ds-ok)' : cur ? 'var(--ds-gold)' : 'var(--ds-raised-2)') + ';' +
+          'color:' + (s[1] || cur ? 'var(--ds-ink-inv)' : 'var(--ds-ink-3)') + '">' +
+          (s[1] ? ic('check', 14, 3) : (i + 1)) + '</span>' +
+        '<span class="ds-cap" style="color:' + (cur ? 'var(--ds-gold)' : s[1] ? 'var(--ds-ink-2)' : 'var(--ds-ink-4)') + ';font-weight:600">' + s[0] + '</span>' +
+        (i < STEPS.length - 1 ? '<div style="flex:1;height:1px;background:' + (s[1] ? 'var(--ds-ok)' : 'var(--ds-line)') + '"></div>' : '') + '</div>';
+    }).join('') + '</div>' +
+
+    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start">' +
+      '<div class="ds-stack ds-g4">' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Мастер-файл</h3>' +
+          '<div class="ds-row-f ds-g3" style="padding:14px;border-radius:var(--ds-r-md);background:var(--ds-raised)">' +
+            '<span style="color:var(--ds-ok);display:flex">' + ic('checkc', 24) + '</span>' +
+            '<div class="ds-grow"><div class="ds-h3">god-tishiny-master.mov</div>' +
+            '<div class="ds-cap ds-num" style="margin-top:3px">ProRes 422 HQ · 3840×2160 · 24 fps · 02:12:04 · 184 GB</div></div>' +
+            '<span class="ds-badge ds-badge--ok">Загружен</span></div>' +
+          '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px">' +
+            [['Видеодорожка', 'ProRes 422 HQ'], ['Аудио 1', 'Русский · 5.1'], ['Аудио 2', 'English · stereo'], ['Аудио 3', 'AD Русский · stereo']].map(function (r) {
+              return '<div style="padding:10px 12px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+                '<div class="ds-cap">' + r[0] + '</div><div class="ds-sm" style="font-weight:600;margin-top:2px">' + r[1] + '</div></div>';
+            }).join('') + '</div></div>' +
+
+        '<div class="ds-card">' +
+          '<div class="ds-between" style="margin-bottom:14px"><h3 class="ds-h2">Подготовка качеств</h3>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('sparkle', 13) + ' Сгенерировать всё</button></div>' +
+          '<div class="ds-stack ds-g2">' +
+            [['360p', 'Готово', 100, 'ok', '450 MB'], ['480p', 'Готово', 100, 'ok', '780 MB'],
+             ['720p HD', 'Готово', 100, 'ok', '1.4 GB'], ['1080p Full HD', 'Обработка', 82, 'info', '~2.8 GB'],
+             ['1440p / 2K', 'В очереди', 0, '', '~5.1 GB'], ['2160p / 4K UHD', 'В очереди', 0, '', '~8.7 GB']].map(function (q) {
+              return '<div style="padding:12px 14px;border-radius:var(--ds-r-md);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+                '<div class="ds-between"><div class="ds-row-f ds-g3">' +
+                  '<span class="ds-opt__box ds-opt__box--check is-on" style="width:17px;height:17px;border-color:var(--ds-aqua);background:var(--ds-aqua)"></span>' +
+                  '<span class="ds-sm" style="font-weight:600;color:var(--ds-ink)">' + q[0] + '</span></div>' +
+                  '<div class="ds-row-f ds-g3"><span class="ds-num ds-cap">' + q[4] + '</span>' +
+                  '<span class="ds-badge ' + (q[3] ? 'ds-badge--' + q[3] : '') + '">' + q[1] + (q[2] > 0 && q[2] < 100 ? ' ' + q[2] + '%' : '') + '</span></div></div>' +
+                (q[2] > 0 && q[2] < 100 ? '<div class="ds-prog ds-prog--aqua" style="margin-top:9px"><div class="ds-prog__bar" style="width:' + q[2] + '%"></div></div>' : '') +
+                '</div>';
+            }).join('') + '</div>' +
+          '<p class="ds-cap" style="margin-top:12px">Оценка завершения — 34 минуты. Можно уйти со страницы, обработка идёт на сервере.</p></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Аудиодорожки</h3>' +
+          '<div class="ds-tablewrap"><table class="ds-table">' +
+            '<thead><tr><th>Язык</th><th>Тип</th><th>Каналы</th><th>По умолчанию</th><th></th></tr></thead><tbody>' +
+            [['Русский', 'Дубляж', '5.1', 1], ['English', 'Оригинал', 'Stereo', 0], ['Русский', 'Тифлокомментарий (AD)', 'Stereo', 0]].map(function (r) {
+              return '<tr><td style="font-weight:600">' + r[0] + '</td><td>' + r[1] + '</td>' +
+                '<td class="ds-num">' + r[2] + '</td>' +
+                '<td>' + (r[3] ? '<span class="ds-badge ds-badge--ok">По умолчанию</span>' : '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сделать</button>') + '</td>' +
+                '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
+            }).join('') + '</tbody></table></div></div>' +
+      '</div>' +
+
+      '<div class="ds-stack ds-g4" style="position:sticky;top:84px">' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Черновик</h3>' +
+          '<div style="border-radius:var(--ds-r-md);overflow:hidden;position:relative;aspect-ratio:2/3;border:1px solid var(--ds-line)">' +
+            art('Год тишины', '', 'position:absolute;inset:0', 'Год тишины', 17) + '</div>' +
+          '<div class="ds-stack ds-g2" style="margin-top:14px">' +
+            [['Название', 'Год тишины'], ['Оригинальное', 'The Silent Year'], ['Год', '2025'],
+             ['Хронометраж', '2 ч 12 мин'], ['Возраст', '16+'], ['Страна', 'Россия']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+                '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
+            }).join('') + '</div></div>' +
+        '<div class="ds-card" style="border-color:var(--ds-warn);background:var(--ds-warn-dim)">' +
+          '<div class="ds-row-f ds-g2" style="margin-bottom:8px"><span style="color:var(--ds-warn);display:flex">' + ic('alert', 18) + '</span>' +
+            '<h3 class="ds-h3">До публикации осталось</h3></div>' +
+          '<div class="ds-stack ds-g2">' +
+            [['Обработка 1080p, 2K, 4K', 0], ['Загрузить Русский CC+', 0], ['Добавить в коллекции', 0], ['Заполнить лицензию', 0]].map(function (r) {
+              return '<div class="ds-row-f ds-g2"><span style="width:15px;height:15px;border-radius:5px;border:2px solid var(--ds-line-strong);flex:none"></span>' +
+                '<span class="ds-cap" style="color:var(--ds-ink-2)">' + r[0] + '</span></div>';
+            }).join('') + '</div></div>' +
+        '<div class="ds-row-f ds-g2">' +
+          '<button class="ds-btn ds-btn--secondary ds-grow">Назад</button>' +
+          '<button class="ds-btn ds-btn--primary ds-grow">Далее</button></div>' +
+      '</div></div>');
+};
+
+/* ---------- API import ---------- */
+A.apiImport = function () {
+  return adminShell('movies', 'Импорт через API', 'Предпросмотр перед созданием черновика', '',
+    '<div class="ds-card" style="margin-bottom:16px">' +
+      '<div class="ds-between"><div class="ds-row-f ds-g3">' +
+        '<span style="color:var(--ds-ok);display:flex">' + ic('checkc', 22) + '</span>' +
+        '<div><div class="ds-h3">Кинопоставщик «Северный каталог»</div>' +
+        '<div class="ds-cap ds-num">api.severkatalog.ru · production · подключено</div></div></div>' +
+        '<div class="ds-row-f ds-g2">' +
+          '<span class="ds-badge ds-badge--ok">Соединение активно</span>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-ago="api">Настроить</button></div></div></div>' +
+
+    '<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px;align-items:start">' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Данные из API</h3>' +
+        '<pre class="ds-scroll" style="margin:0;padding:14px;border-radius:var(--ds-r-md);background:var(--ds-sunken);border:1px solid var(--ds-line);font-family:var(--ds-mono);font-size:11.5px;line-height:1.7;overflow-x:auto;color:var(--ds-ink-2)">' +
+'{\n' +
+'  "external_id": "SK-2024-01187",\n' +
+'  "title_ru": "Свидетели",\n' +
+'  "title_orig": "The Witnesses",\n' +
+'  "year": 2024,\n' +
+'  "runtime_min": 109,\n' +
+'  "country": "UA",\n' +
+'  "genres": ["documentary", "drama"],\n' +
+'  "director": "Olena Marchenko",\n' +
+'  "cast": ["A. Bondar", "M. Levchenko"],\n' +
+'  "age_rating": "16",\n' +
+'  "synopsis": "Хроника одного города...",\n' +
+'  "poster_url": "https://…/poster.jpg",\n' +
+'  "subtitles": [\n' +
+'    { "lang": "ru", "type": "cc_plus" },\n' +
+'    { "lang": "en", "type": "cc" }\n' +
+'  ],\n' +
+'  "rights": {\n' +
+'    "owner": "Sever Katalog LLC",\n' +
+'    "territories": ["RU", "BY", "KZ"],\n' +
+'    "from": "2026-09-01", "to": "2027-08-31",\n' +
+'    "download": true, "uhd": false\n' +
+'  }\n' +
+'}' + '</pre></div>' +
+
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Соответствие полям deafsuslik</h3>' +
+        '<div class="ds-stack ds-g1">' +
+          [['title_ru', 'Название', 'Свидетели', 1], ['title_orig', 'Оригинальное название', 'The Witnesses', 1],
+           ['year', 'Год', '2024', 1], ['runtime_min', 'Хронометраж', '1 ч 49 мин', 1],
+           ['country', 'Страна', 'Украина', 1], ['genres', 'Жанры', 'Документальный, Драма', 1],
+           ['director', 'Режиссёр', 'Олена Марченко', 1], ['age_rating', 'Возраст', '16+', 1],
+           ['poster_url', 'Постер', 'Скачается в хранилище', 1],
+           ['subtitles', 'Субтитры', 'Метаданные · файлы отдельно', 0],
+           ['rights', 'Лицензия', 'RU, BY, KZ · до 31.08.2027', 1],
+           ['—', 'Мастер-видео', 'Не передаётся API — загрузить вручную', 0]].map(function (r) {
+            return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[3] ? 'var(--ds-void)' : 'var(--ds-warn-dim)') + ';border:1px solid ' + (r[3] ? 'var(--ds-line)' : 'rgba(255,159,69,.3)') + '">' +
+              '<div style="min-width:0"><div class="ds-num ds-cap">' + r[0] + ' → ' + r[1] + '</div>' +
+              '<div class="ds-sm" style="font-weight:600;margin-top:2px">' + r[2] + '</div></div>' +
+              '<span style="color:var(--ds-' + (r[3] ? 'ok' : 'warn') + ');display:flex;flex:none">' + ic(r[3] ? 'check' : 'alert', 16, 2.4) + '</span></div>';
+          }).join('') + '</div></div></div>' +
+
+    '<div class="ds-card" style="margin-top:16px">' +
+      '<div class="ds-between"><div>' +
+        '<h3 class="ds-h2">Импортировать как черновик</h3>' +
+        '<p class="ds-sm" style="margin-top:5px">Фильм не появится в каталоге, пока редактор не проверит метаданные, не загрузит видео и субтитры и не подтвердит лицензию.</p></div>' +
+        '<div class="ds-row-f ds-g2" style="flex:none">' +
+          '<button class="ds-btn ds-btn--ghost">Пропустить</button>' +
+          '<button class="ds-btn ds-btn--primary" data-ago="movies">Импортировать как черновик</button></div></div></div>' +
+
+    '<div class="ds-card" style="margin-top:16px">' +
+      '<h3 class="ds-h2" style="margin-bottom:14px">Массовый импорт</h3>' +
+      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">' +
+        [['Найдено', '126', ''], ['Готовы к импорту', '118', 'ok'], ['Без метаданных', '5', 'warn'], ['Ошибки', '3', 'err']].map(function (s) {
+          return '<div class="ds-stat" style="background:var(--ds-void)"><div class="ds-stat__k">' + s[0] + '</div>' +
+            '<div class="ds-stat__v" style="font-size:1.4rem' + (s[2] ? ';color:var(--ds-' + s[2] + ')' : '') + '">' + s[1] + '</div></div>';
+        }).join('') + '</div>' +
+      '<div class="ds-row-f ds-g2" style="margin-top:14px">' +
+        '<button class="ds-btn ds-btn--sm ds-btn--secondary">Импортировать 118</button>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--ghost">Выбрать вручную</button>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--ghost">Отчёт об ошибках</button></div></div>');
+};
+
+</script>
+<script>
+/* ============================================================
+   deafsuslik Admin — subtitles, people, money, support, system
+   ============================================================ */
+
+/* ---------- Subtitles per movie ---------- */
+A.subsList = function () {
+  var ROWS = [
+    ['Русский', 'CC+', 'ok', 'Опубликованы', 'Мария Р.', '2 сен, 14:42', 418],
+    ['Русский', 'CC', 'ok', 'Опубликованы', 'Мария Р.', '28 авг', 402],
+    ['English', 'CC+', 'info', 'На вычитке', 'Игорь С.', '1 сен', 418],
+    ['English', 'CC', 'ok', 'Опубликованы', 'Импорт', '24 авг', 402],
+    ['Deutsch', 'SUB', 'warn', 'Черновик автогенерации', 'Система', '2 сен, 09:10', 396],
+    ['Français', 'SUB', 'err', '12 ошибок валидации', 'Импорт', '30 авг', 388]
+  ];
+  return adminShell('subs-list', 'Субтитры и CC+', 'Год тишины · DS-M-04187',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('sparkle', 13) + ' Создать автоматически</button>' +
+    '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Добавить субтитры</button>',
+    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:18px">' +
+      stat('Языков', '6') + stat('С CC+', '2') + stat('Ждут вычитки', '2', null) + stat('С ошибками', '1', null, 'err') +
+    '</div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Язык</th><th>Тип</th><th>Статус</th><th>Реплик</th><th>Автор</th><th>Обновлено</th><th></th></tr></thead><tbody>' +
+      ROWS.map(function (r) {
+        return '<tr><td style="font-weight:600">' + r[0] + '</td>' +
+          '<td><span class="ds-badge ' + (r[1] === 'CC+' ? 'ds-badge--ccplus' : r[1] === 'CC' ? 'ds-badge--cc' : '') + '">' + r[1] + '</span></td>' +
+          '<td><span class="ds-badge ds-badge--' + r[2] + '">' + r[3] + '</span></td>' +
+          '<td class="ds-num">' + r[6] + '</td>' +
+          '<td class="ds-mut2">' + r[4] + '</td><td class="ds-num ds-mut2">' + r[5] + '</td>' +
+          '<td><div class="ds-row-f ds-g1">' +
+            '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-ago="editor">Открыть в редакторе</button>' +
+            '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></div></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:start">' +
+      '<div class="ds-card" style="border-color:rgba(255,92,92,.28)">' +
+        '<h3 class="ds-h2" style="margin-bottom:12px">Валидация · Français SUB</h3>' +
+        '<div class="ds-stack ds-g2">' +
+          [['err', 'Перекрытие реплик', '00:14:22 — #64 начинается до конца #63'],
+           ['err', 'Слишком длинная строка', '00:41:07 — 58 символов при лимите 42'],
+           ['warn', 'Высокая скорость чтения', '01:02:11 — 24 симв./сек при лимите 17'],
+           ['warn', 'Пустая реплика', '01:33:40 — #301 без текста'],
+           ['warn', 'Неподдерживаемый символ', '01:51:02 — U+202E в строке']].map(function (r) {
+            return '<div class="ds-row-f ds-g3" style="padding:10px 12px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+              '<span style="color:var(--ds-' + r[0] + ');display:flex;flex:none">' + ic('alert', 16) + '</span>' +
+              '<div class="ds-grow"><div class="ds-sm" style="font-weight:600">' + r[1] + '</div>' +
+              '<div class="ds-cap ds-num">' + r[2] + '</div></div>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost" data-ago="editor">Открыть</button></div>';
+          }).join('') + '</div>' +
+        '<p class="ds-cap" style="margin-top:12px">Публикация заблокирована, пока есть ошибки уровня «Ошибка».</p></div>' +
+
+      '<div class="ds-card">' +
+        '<h3 class="ds-h2" style="margin-bottom:12px">Автогенерация и перевод</h3>' +
+        '<div class="ds-stack ds-g3">' +
+          '<div style="padding:14px;border-radius:var(--ds-r-md);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+            '<div class="ds-between"><span class="ds-h3" style="font-size:13.5px">Распознавание речи</span>' +
+              '<span class="ds-badge ds-badge--warn">Черновик</span></div>' +
+            '<p class="ds-cap" style="margin-top:6px">Аудио → транскрипт → тайминги → черновик. Результат всегда получает статус ' +
+            '«Требует вычитки» и не публикуется автоматически.</p>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--secondary" style="margin-top:10px">Запустить для Deutsch</button></div>' +
+          '<div style="padding:14px;border-radius:var(--ds-r-md);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+            '<div class="ds-between"><span class="ds-h3" style="font-size:13.5px">Перевод субтитров</span>' +
+              '<span class="ds-badge ds-badge--warn">Черновик</span></div>' +
+            '<div class="ds-row-f ds-g2" style="margin-top:10px">' +
+              '<select class="ds-select" style="min-height:36px;padding:6px 30px 6px 12px;font-size:12.5px"><option>Русский CC+</option></select>' +
+              '<span style="color:var(--ds-ink-3);display:flex">' + ic('chevR', 16) + '</span>' +
+              '<select class="ds-select" style="min-height:36px;padding:6px 30px 6px 12px;font-size:12.5px"><option>English</option><option>Deutsch</option></select></div>' +
+            '<p class="ds-cap" style="margin-top:10px">Описания звука в CC+ переводятся отдельным проходом — их формулировки ' +
+            'проверяет редактор, а не автомат.</p>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--secondary" style="margin-top:10px">Создать перевод</button></div></div>' +
+        '<div class="ds-strip" style="margin-top:14px">' +
+          '<span class="ds-strip__label">Правило</span>' +
+          '<p class="ds-cap" style="margin:0">Ни одни автоматические субтитры не попадают к зрителю без ручной вычитки. ' +
+          'Это не техническое ограничение, а обещание аудитории.</p></div></div></div>');
+};
+
+/* ---------- Subtitle editor — the workhorse screen ---------- */
+A.editor = function () {
+  var CUES = [
+    ['#414', '01:21:48,100', '01:21:50,640', '', 'Марк смотрит на приёмник.', 0, 0],
+    ['#415', '01:21:52,000', '01:21:55,120', '', '[помехи в динамике]', 1, 0],
+    ['#416', '01:21:58,400', '01:22:01,900', 'МАРК', 'Приём. Кто-нибудь меня слышит?', 0, 0],
+    ['#417', '01:22:04,200', '01:22:07,050', '', '[долгая тишина]', 1, 0],
+    ['#418', '01:22:16,340', '01:22:19,120', 'АННА', 'Я скоро вернусь, обещаю.', 0, 1],
+    ['#419', '01:22:19,400', '01:22:21,000', '', '[дверь резко захлопывается]', 1, 1],
+    ['#420', '01:22:24,600', '01:22:27,300', 'МАРК', 'Анна? Это ты?', 0, 0],
+    ['#421', '01:22:29,000', '01:22:33,480', '', '[ветер усиливается за окном]', 1, 0]
+  ];
+  return adminShell('editor', 'Редактор субтитров', 'Год тишины · Русский CC+ · открыт на 01:22:18 из обращения #DS-10482',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('search', 13) + ' Найти и заменить</button>' +
+    '<button class="ds-btn ds-btn--sm ds-btn--aqua">Опубликовать версию</button>',
+    '<div class="ds-strip" style="margin-bottom:16px;border-left-color:var(--ds-warn);background:var(--ds-warn-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-warn)">Из поддержки</span>' +
+      '<p class="ds-sm" style="margin:0">Обращение <strong>#DS-10482</strong>: «в сцене дверь закрывают тихо, а в CC+ написано «резко захлопывается»». ' +
+      'Редактор открыт ровно на этой реплике.</p></div>' +
+
+    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:18px;align-items:start">' +
+      '<div class="ds-stack ds-g4">' +
+        '<div class="ds-card ds-card--flush">' +
+          '<div class="ds-art" style="aspect-ratio:16/9;position:relative;display:flex;align-items:flex-end;justify-content:center;padding-bottom:26px">' +
+            dsArt('editor-video') + '<div class="ds-art__vig"></div>' +
+            '<div class="ds-cuetrack" style="position:relative;z-index:3">' +
+              '<span class="ds-cuebox"><span class="ds-cue" style="font-size:18px">' +
+              '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
+              '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span></div></div>' +
+          '<div style="padding:14px 16px;border-top:1px solid var(--ds-line)">' +
+            '<div class="ds-row-f ds-g3">' +
+              '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Назад на кадр">' + ic('chevL', 16) + '</button>' +
+              '<button class="ds-iconbtn" style="background:var(--ds-ink);color:var(--ds-ink-inv);border-color:transparent" aria-label="Пауза">' + ic('pause', 18, 2.4) + '</button>' +
+              '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Вперёд на кадр">' + ic('chevR', 16) + '</button>' +
+              '<span class="ds-num" style="font-size:13px;font-weight:700">01:22:18,120</span>' +
+              '<div class="ds-grow"></div>' +
+              '<div class="ds-seg"><button aria-selected="true">0.5×</button><button aria-selected="false">1×</button><button aria-selected="false">2×</button></div></div>' +
+            '<div style="margin-top:14px;position:relative;height:56px;border-radius:var(--ds-r-sm);background:var(--ds-sunken);border:1px solid var(--ds-line);overflow:hidden">' +
+              '<div style="position:absolute;inset:0;display:flex;align-items:center;gap:1px;padding:0 4px">' +
+                Array.apply(null, Array(120)).map(function (_, i) {
+                  var h = 12 + Math.abs(Math.sin(i * 0.7) * 26) + (i > 52 && i < 62 ? 14 : 0);
+                  return '<div style="flex:1;height:' + h + 'px;border-radius:1px;background:' +
+                    (i > 52 && i < 62 ? 'var(--ds-aqua)' : 'var(--ds-raised-3)') + '"></div>';
+                }).join('') + '</div>' +
+              '<div style="position:absolute;top:0;bottom:0;left:46%;width:2px;background:var(--ds-gold)"></div>' +
+              '<div style="position:absolute;top:0;bottom:0;left:44%;width:8%;background:rgba(95,227,208,.14);border-left:1px solid var(--ds-aqua);border-right:1px solid var(--ds-aqua)"></div>' +
+            '</div>' +
+            '<div class="ds-between" style="margin-top:6px"><span class="ds-cap ds-num">01:22:10</span>' +
+              '<span class="ds-cap ds-num">01:22:35</span></div></div></div>' +
+
+        '<div class="ds-card ds-card--flush">' +
+          '<div class="ds-between" style="padding:14px 16px;border-bottom:1px solid var(--ds-line)">' +
+            '<h3 class="ds-h2">Реплики</h3>' +
+            '<div class="ds-row-f ds-g2">' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost">' + ic('plus', 13) + ' Добавить</button>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost">' + ic('scissors', 13) + ' Разделить</button>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost">' + ic('merge', 13) + ' Объединить</button></div></div>' +
+          '<div class="ds-tablewrap"><table class="ds-table">' +
+            '<thead><tr><th style="width:52px">№</th><th style="width:132px">Начало</th><th style="width:132px">Конец</th>' +
+            '<th style="width:110px">Говорящий</th><th>Текст</th><th style="width:62px">Симв.</th><th style="width:44px"></th></tr></thead><tbody>' +
+            CUES.map(function (c) {
+              return '<tr' + (c[6] ? ' style="background:var(--ds-aqua-dim)"' : '') + '>' +
+                '<td class="ds-num" style="color:var(--ds-ink-3)">' + c[0] + '</td>' +
+                '<td class="ds-num" style="font-size:11.5px">' + c[1] + '</td>' +
+                '<td class="ds-num" style="font-size:11.5px">' + c[2] + '</td>' +
+                '<td>' + (c[3] ? '<span class="ds-badge" style="color:var(--ds-aqua);border-color:var(--ds-aqua-edge)">' + c[3] + '</span>' : '<span class="ds-mut2">—</span>') + '</td>' +
+                '<td>' + (c[5] ? '<span class="ds-cue__sound" style="display:inline;font-size:13px">' + c[4] + '</span>' : c[4]) + '</td>' +
+                '<td class="ds-num ds-mut2">' + c[4].length + '</td>' +
+                '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 14) + '</button></td></tr>';
+            }).join('') + '</tbody></table></div></div></div>' +
+
+      '<div class="ds-stack ds-g4" style="position:sticky;top:84px">' +
+        '<div class="ds-card" style="border-color:var(--ds-aqua-edge)">' +
+          '<h3 class="ds-h2" style="margin-bottom:14px">Реплика #419</h3>' +
+          '<div class="ds-stack ds-g3">' +
+            '<div class="ds-row-f ds-g2">' +
+              '<div class="ds-field ds-grow"><label class="ds-label">Начало</label>' +
+                '<input class="ds-input ds-num" value="01:22:19,400" style="min-height:42px;font-size:13px"></div>' +
+              '<div class="ds-field ds-grow"><label class="ds-label">Конец</label>' +
+                '<input class="ds-input ds-num" value="01:22:21,000" style="min-height:42px;font-size:13px"></div></div>' +
+            '<div class="ds-row-f ds-g2">' +
+              '<button class="ds-btn ds-btn--sm ds-btn--secondary ds-grow">−100 мс</button>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--secondary ds-grow">+100 мс</button>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--secondary ds-grow">По курсору</button></div>' +
+            '<div class="ds-field"><label class="ds-label">Тип реплики</label>' +
+              '<div class="ds-wrap ds-g2">' + [['Реплика', 0], ['Описание звука', 1], ['Музыка', 0]].map(function (t) {
+                return '<button class="ds-chip ds-chip--aqua"' + (t[1] ? ' aria-pressed="true"' : '') + '>' + t[0] + '</button>'; }).join('') + '</div></div>' +
+            '<div class="ds-field"><label class="ds-label">Говорящий</label>' +
+              '<select class="ds-select"><option>— не указан —</option><option>АННА</option><option>МАРК</option><option>РАДИСТ</option></select></div>' +
+            '<div class="ds-field"><label class="ds-label">Текст</label>' +
+              '<textarea class="ds-textarea" style="min-height:76px;font-family:var(--ds-mono);font-size:13px">[дверь тихо закрывается]</textarea>' +
+              '<div class="ds-between" style="margin-top:6px">' +
+                '<span class="ds-cap ds-num">24 / 42 симв.</span>' +
+                '<span class="ds-cap ds-num" style="color:var(--ds-ok)">15 симв./сек · норма</span></div></div>' +
+            '<div style="padding:11px 13px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+              '<div class="ds-cap" style="margin-bottom:5px">Было</div>' +
+              '<span class="ds-cue__sound" style="font-size:12.5px;text-decoration:line-through;opacity:.55">[дверь резко захлопывается]</span></div>' +
+            '<div class="ds-row-f ds-g2">' +
+              '<button class="ds-btn ds-btn--ghost ds-grow">Отменить</button>' +
+              '<button class="ds-btn ds-btn--aqua ds-grow">Сохранить</button></div></div></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Проверка файла</h3>' +
+          '<div class="ds-stack ds-g2">' +
+            [['ok', 'Перекрытий нет'], ['ok', 'Все тайминги валидны'], ['ok', 'Пустых реплик нет'],
+             ['ok', 'Кодировка UTF-8'], ['warn', '2 реплики длиннее 42 символов'], ['ok', 'Скорость чтения в норме']].map(function (r) {
+              return '<div class="ds-row-f ds-g2"><span style="color:var(--ds-' + r[0] + ');display:flex;flex:none">' +
+                ic(r[0] === 'ok' ? 'check' : 'alert', 15, 2.4) + '</span>' +
+                '<span class="ds-cap" style="color:var(--ds-ink-2)">' + r[1] + '</span></div>';
+            }).join('') + '</div></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Версии</h3>' +
+          '<div class="ds-stack ds-g2">' +
+            [['v4 · черновик', 'Мария Р. · сейчас', 1], ['v3', 'Мария Р. · 28 авг', 0], ['v2', 'Игорь С. · 12 авг', 0], ['v1 · импорт', 'Система · 4 авг', 0]].map(function (r) {
+              return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[2] ? 'var(--ds-gold-dim)' : 'var(--ds-void)') + ';border:1px solid ' + (r[2] ? 'var(--ds-gold-edge)' : 'var(--ds-line)') + '">' +
+                '<div><div class="ds-sm" style="font-weight:600">' + r[0] + '</div>' +
+                '<div class="ds-cap">' + r[1] + '</div></div>' +
+                (r[2] ? '' : '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сравнить</button>') + '</div>';
+            }).join('') + '</div></div>' +
+
+        '<button class="ds-btn ds-btn--primary ds-btn--block" data-ago="ticket">Исправлено — вернуться к обращению</button>' +
+      '</div></div>');
+};
+
+/* ---------- Users ---------- */
+A.users = function () {
+  var U = [
+    ['Анна Ковалёва', 'anna.k@example.ru', '12 мар 2026', 'act', 'ВИП', 'Сейчас', 3],
+    ['Игорь Демидов', 'i.demidov@example.ru', '4 янв 2026', 'act', 'ВИП', '2 часа назад', 2],
+    ['Ольга Титова', 'olga.t@example.ru', '28 фев 2026', 'act', 'ВИП', 'Вчера', 1],
+    ['Павел Рыков', 'p.rykov@example.ru', '19 июн 2026', 'susp', '—', '14 авг', 0],
+    ['Мария Лисина', 'm.lisina@example.ru', '2 авг 2026', 'act', 'ВИП', '3 дня назад', 2],
+    ['Сергей Ким', 's.kim@example.ru', '11 мая 2026', 'del', '—', '1 июл', 0]
+  ];
+  var ST = { act: ['ds-badge--ok', 'Активен'], susp: ['ds-badge--warn', 'Заблокирован'], del: ['ds-badge--err', 'Удалён'] };
+  return adminShell('users', 'Пользователи', '48 214 всего · 31 907 активных за 30 дней', '',
+    '<div class="ds-between" style="margin-bottom:16px">' +
+      '<div class="ds-wrap ds-g2">' + ['Все', 'Активные', 'С подпиской', 'Без подписки', 'Заблокированные', 'Удалённые'].map(function (t, i) {
+        return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
+      '<button class="ds-btn ds-btn--sm ds-btn--secondary">Экспорт CSV</button></div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Пользователь</th><th>Регистрация</th><th>Статус</th><th>Подписка</th><th>Последняя активность</th><th>Устройств</th><th></th></tr></thead><tbody>' +
+      U.map(function (u) {
+        var s = ST[u[3]];
+        return '<tr style="cursor:pointer" data-ago="user"><td><div class="ds-row-f ds-g3">' +
+          '<div style="width:30px;height:30px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art(u[0], '', 'position:absolute;inset:0') + '</div>' +
+          '<div><div style="font-weight:600">' + u[0] + '</div><div class="ds-cap ds-num">' + u[1] + '</div></div></div></td>' +
+          '<td class="ds-num ds-mut2">' + u[2] + '</td>' +
+          '<td><span class="ds-badge ' + s[0] + '">' + s[1] + '</span></td>' +
+          '<td class="ds-sm">' + u[4] + '</td>' +
+          '<td class="ds-num ds-mut2">' + u[5] + '</td>' +
+          '<td class="ds-num">' + u[6] + '</td>' +
+          '<td><span style="color:var(--ds-ink-4);display:flex">' + ic('chevR', 15) + '</span></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<p class="ds-cap" style="margin-top:12px">Роль «Поддержка» видит email и подписки, но не историю просмотра — она открывается ' +
+    'только при наличии обращения от этого пользователя.</p>');
+};
+
+A.user = function () {
+  return adminShell('users', 'Анна Ковалёва', 'anna.k@example.ru · ID DS-U-48211',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">Написать</button>' +
+    '<button class="ds-btn ds-btn--sm ds-btn--danger">Заблокировать</button>',
+    '<div style="display:grid;grid-template-columns:300px minmax(0,1fr);gap:20px;align-items:start">' +
+      '<div class="ds-stack ds-g4">' +
+        '<div class="ds-card ds-center">' +
+          '<div style="width:88px;height:88px;border-radius:28px;overflow:hidden;position:relative;margin:0 auto">' + art('Анна Ковалёва', '', 'position:absolute;inset:0') + '</div>' +
+          '<h3 class="ds-h1" style="margin-top:14px">Анна Ковалёва</h3>' +
+          '<p class="ds-cap ds-num">anna.k@example.ru</p>' +
+          '<span class="ds-badge ds-badge--ok ds-badge--lg" style="margin-top:10px">Активен</span></div>' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Аккаунт</h3>' +
+          '<div class="ds-stack ds-g2">' +
+            [['Регистрация', '12 марта 2026'], ['Последний вход', 'Сейчас'], ['Устройств', '3 из 5'],
+             ['2FA', 'Выключена'], ['Язык', 'Русский'], ['Субтитры', 'Русский CC+, крупный']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+                '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
+            }).join('') + '</div></div>' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Заметки сотрудников</h3>' +
+          '<div style="padding:11px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+            '<p class="ds-cap">Пользуется CC+ постоянно, даёт подробную обратную связь по субтитрам. ' +
+            'Стоит приглашать в бета-тесты новых языков.</p>' +
+            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-4)">Мария Р. · 14 сентября</p></div>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--ghost ds-btn--block" style="margin-top:10px">' + ic('plus', 13) + ' Добавить заметку</button>' +
+          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-4)">Заметки никогда не видны пользователю.</p></div></div>' +
+
+      '<div class="ds-stack ds-g4">' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Подписка</h3>' +
+          '<div class="ds-tablewrap"><table class="ds-table">' +
+            '<thead><tr><th>Подписка</th><th>Цена</th><th>Статус</th><th>Подключена</th><th>Следующее списание</th><th></th></tr></thead><tbody>' +
+            [['ВИП', '500 ₽ / месяц', 'ok', 'Активна', '12 мар 2026', '12 окт 2026']].map(function (r) {
+              return '<tr><td style="font-weight:600">' + r[0] + '</td><td class="ds-num">' + r[1] + '</td>' +
+                '<td><span class="ds-badge ds-badge--' + r[2] + '">' + r[3] + '</span></td>' +
+                '<td class="ds-num ds-mut2">' + r[4] + '</td><td class="ds-num">' + r[5] + '</td>' +
+                '<td><button class="ds-btn ds-btn--sm ds-btn--ghost">Открыть</button></td></tr>';
+            }).join('') + '</tbody></table></div></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Платежи</h3>' +
+          '<div class="ds-tablewrap"><table class="ds-table">' +
+            '<thead><tr><th>Дата</th><th>Подписка</th><th>Сумма</th><th>Статус</th><th>Ссылка на операцию</th></tr></thead><tbody>' +
+            [['12 сен 2026', 'ВИП', '500 ₽', 'ok', 'Оплачен', 'DS-PAY-88214'],
+             ['12 авг 2026', 'ВИП', '500 ₽', 'ok', 'Оплачен', 'DS-PAY-87001'],
+             ['12 июн 2026', 'ВИП', '500 ₽', 'err', 'Отклонён банком', 'DS-PAY-86440']].map(function (r) {
+              return '<tr><td class="ds-num ds-mut2">' + r[0] + '</td><td>' + r[1] + '</td><td class="ds-num">' + r[2] + '</td>' +
+                '<td><span class="ds-badge ds-badge--' + r[3] + '">' + r[4] + '</span></td>' +
+                '<td class="ds-num ds-mut2">' + r[5] + '</td></tr>';
+            }).join('') + '</tbody></table></div>' +
+          '<p class="ds-cap" style="margin-top:10px">Номер карты и CVV не хранятся и недоступны ни одной роли. ' +
+          'Для разбора платежа используется только ссылка на операцию.</p></div>' +
+
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+          '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Устройства</h3>' +
+            '<div class="ds-stack ds-g2">' +
+              [['iPhone 17 Pro', 'Сейчас'], ['Galaxy S25', 'Вчера'], ['Chrome — macOS', '2 часа назад']].map(function (r) {
+                return '<div class="ds-between"><span class="ds-sm">' + r[0] + '</span>' +
+                  '<span class="ds-cap ds-num">' + r[1] + '</span></div>';
+              }).join('') + '</div></div>' +
+          '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Обращения</h3>' +
+            '<div class="ds-stack ds-g2">' +
+              [['#DS-10482', 'В работе', 'info'], ['#DS-10318', 'Решено', 'ok'], ['#DS-10240', 'Закрыто', '']].map(function (r) {
+                return '<div class="ds-between"><span class="ds-num ds-sm" style="color:var(--ds-gold)">' + r[0] + '</span>' +
+                  '<span class="ds-badge ' + (r[2] ? 'ds-badge--' + r[2] : '') + '">' + r[1] + '</span></div>';
+              }).join('') + '</div></div></div></div></div>');
+};
+
+/* ---------- Payments ---------- */
+A.payments = function () {
+  return adminShell('payments', 'Платежи', 'Сентябрь 2026', '<button class="ds-btn ds-btn--sm ds-btn--secondary">Экспорт</button>',
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px">' +
+      stat('Оплачено', '13 740 000 ₽', '+4.4%') + stat('Успешных', '27 108') +
+      stat('Отклонено', '1 042', '3.7%', 'err') + stat('Ожидают', '86') + stat('Возвраты', '18') +
+    '</div>' +
+    '<div class="ds-between" style="margin-bottom:14px">' +
+      '<div class="ds-wrap ds-g2">' + ['Все', 'Оплачены', 'Отклонены', 'Ожидают', 'Возвраты'].map(function (t, i) {
+        return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
+      '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все платежи</option><option>Успешные</option><option>Отклонённые</option><option>Возвраты</option></select></div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Дата и время</th><th>Пользователь</th><th>Тариф</th><th>Сумма</th><th>Статус</th><th>Ссылка на операцию</th><th>Код банка</th><th></th></tr></thead><tbody>' +
+      [['2 сен, 14:22', 'Анна Ковалёва', 'ВИП', '500 ₽', 'ok', 'Оплачен', 'DS-PAY-88214', '00'],
+       ['2 сен, 13:58', 'Игорь Демидов', 'ВИП', '500 ₽', 'ok', 'Оплачен', 'DS-PAY-88213', '00'],
+       ['2 сен, 13:40', 'Ольга Титова', 'ВИП', '500 ₽', 'err', 'Отклонён', 'DS-PAY-88212', '51'],
+       ['2 сен, 12:11', 'Мария Лисина', 'ВИП', '500 ₽', 'ok', 'Оплачен', 'DS-PAY-88210', '00'],
+       ['2 сен, 11:05', 'Пётр Волков', 'ВИП', '500 ₽', 'warn', 'Ожидает 3-D Secure', 'DS-PAY-88208', '—'],
+       ['1 сен, 22:40', 'Елена Крон', 'ВИП', '500 ₽', 'info', 'Возврат', 'DS-PAY-88190', '00']].map(function (r) {
+        return '<tr><td class="ds-num ds-mut2">' + r[0] + '</td><td style="font-weight:600">' + r[1] + '</td>' +
+          '<td>' + r[2] + '</td><td class="ds-num">' + r[3] + '</td>' +
+          '<td><span class="ds-badge ds-badge--' + r[4] + '">' + r[5] + '</span></td>' +
+          '<td class="ds-num ds-mut2">' + r[6] + '</td><td class="ds-num ds-mut2">' + r[7] + '</td>' +
+          '<td><button class="ds-btn ds-btn--sm ds-btn--ghost">Детали</button></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-strip" style="margin-top:16px;border-left-color:var(--ds-err);background:var(--ds-err-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-err)">Безопасность</span>' +
+      '<p class="ds-sm" style="margin:0">Полный номер карты, срок действия и CVV не проходят через deafsuslik и не отображаются ' +
+      'ни одной роли, включая владельца. Для разбора спора достаточно ссылки на операцию и кода отказа банка.</p></div>');
+};
+
+/* ---------- Analytics ---------- */
+A.analytics = function () {
+  return adminShell('analytics', 'Аналитика просмотров', 'Последние 30 дней',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('calendar', 13) + ' 30 дней</button>',
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">' +
+      stat('Просмотров', '1 284 000', '+7.1%') + stat('Уникальных зрителей', '31 907', '+5.8%') +
+      stat('Часов просмотра', '2 148 000', '+6.4%') + stat('Средняя досмотренность', '74%', '+2 п.п.') +
+      stat('Просмотров с CC+', '62%', '+4 п.п.') +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:16px;margin-top:18px;align-items:start">' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:16px">Просмотры по дням</h3>' +
+        bars([['1', 38], ['5', 41], ['9', 44], ['13', 40], ['17', 47], ['21', 51], ['25', 49], ['29', 56]], 130) + '</div>' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Платформы</h3>' +
+        '<div class="ds-stack ds-g4">' +
+          [['iPhone', 41, 'var(--ds-gold)'], ['Android', 34, 'var(--ds-gold-lo)'], ['Web', 25, 'var(--ds-raised-3)']].map(function (r) {
+            return '<div><div class="ds-between" style="margin-bottom:5px"><span class="ds-sm">' + r[0] + '</span>' +
+              '<span class="ds-num ds-sm" style="font-weight:700">' + r[1] + '%</span></div>' +
+              '<div style="height:7px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
+              '<div style="height:100%;width:' + r[1] + '%;background:' + r[2] + ';border-radius:99px"></div></div></div>';
+          }).join('') + '</div>' +
+        '<h3 class="ds-h2" style="margin:20px 0 14px">Качество</h3>' +
+        '<div class="ds-stack ds-g3">' +
+          [['4K UHD', 18], ['1080p', 44], ['720p', 24], ['480p', 9], ['360p', 5]].map(function (r) {
+            return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+              '<div class="ds-row-f ds-g3" style="flex:1;margin-left:14px">' +
+                '<div style="flex:1;height:5px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
+                '<div style="height:100%;width:' + (r[1] / 44 * 100) + '%;background:var(--ds-aqua-lo);border-radius:99px"></div></div>' +
+                '<span class="ds-num ds-cap" style="width:28px;text-align:right">' + r[1] + '%</span></div></div>';
+          }).join('') + '</div></div></div>' +
+
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-top:16px;align-items:start">' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Языки субтитров</h3>' +
+        '<div class="ds-stack ds-g3">' +
+          [['Русский CC+', 58], ['Русский CC', 19], ['English CC+', 8], ['English CC', 6], ['Deutsch', 3], ['Выключены', 6]].map(function (r) {
+            return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+              '<span class="ds-num ds-sm" style="font-weight:600">' + r[1] + '%</span></div>';
+          }).join('') + '</div></div>' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Самое скачиваемое</h3>' +
+        '<div class="ds-stack ds-g2">' + [0, 9, 6, 14, 10].map(function (i, k) {
+          var m = M(i);
+          return '<div class="ds-between"><span class="ds-sm">' + (k + 1) + '. ' + m.t + '</span>' +
+            '<span class="ds-num ds-cap">' + (9 - k) + ' 4' + k + '0</span></div>';
+        }).join('') + '</div></div>' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Коллекции</h3>' +
+        '<div class="ds-stack ds-g3">' +
+          [['Лучшее с CC+', '128 400', 'var(--ds-aqua)'], ['Реальные события', '96 100', 'var(--ds-coll)'],
+           ['Фильмы на вечер', '42 800', 'var(--ds-coll)'], ['Лучшее в 4K', '38 200', 'var(--ds-gold)']].map(function (r) {
+            return '<div class="ds-between"><div class="ds-row-f ds-g2">' +
+              '<span style="width:18px;height:3px;border-radius:2px;background:' + r[2] + '"></span>' +
+              '<span class="ds-cap">' + r[0] + '</span></div>' +
+              '<span class="ds-num ds-sm">' + r[1] + '</span></div>';
+          }).join('') + '</div></div></div>' +
+
+    '<div class="ds-card" style="margin-top:16px">' +
+      '<h3 class="ds-h2" style="margin-bottom:14px">Поисковые запросы без результатов</h3>' +
+      '<p class="ds-sm" style="margin-bottom:14px">Прямой список того, чего людям не хватает в каталоге.</p>' +
+      '<div class="ds-tablewrap"><table class="ds-table">' +
+        '<thead><tr><th>Запрос</th><th>Показов</th><th>Динамика</th><th>Комментарий</th><th></th></tr></thead><tbody>' +
+        [['интерстеллар', '1 840', '+22%', 'Нет прав на показ'],
+         ['сериалы с cc+', '1 204', '+64%', 'Сериалы ещё не запущены'],
+         ['аудиодескрипция', '806', '+31%', 'AD есть у 42 фильмов — плохая находимость'],
+         ['фильмы жестовый язык', '512', '+118%', 'Функция не реализована'],
+         ['субтитры для детей', '388', '+9%', 'Нет отдельной подборки']].map(function (r) {
+          return '<tr><td style="font-weight:600">' + r[0] + '</td><td class="ds-num">' + r[1] + '</td>' +
+            '<td class="ds-num" style="color:var(--ds-ok)">' + r[2] + '</td>' +
+            '<td class="ds-mut2">' + r[3] + '</td>' +
+            '<td><button class="ds-btn ds-btn--sm ds-btn--ghost">Создать задачу</button></td></tr>';
+        }).join('') + '</tbody></table></div></div>');
+};
+
+/* ---------- Support admin ---------- */
+A.tickets = function () {
+  var T = [
+    ['#DS-10482', 'Анна Ковалёва', 'Описание звука не соответствует сцене', 'Ошибка CC+', 'Год тишины', 'norm', 'Обычный', 'Мария Р.', 'info', 'В работе', '14:42', 0],
+    ['#DS-10481', 'Пётр Волков', 'Не запускается 4K на Android', 'Видео', 'Пепел и снег', 'high', 'Высокий', 'Технические', 'info', 'В работе', '13:20', 1],
+    ['#DS-10479', 'Елена Крон', 'Списали дважды за месяц', 'Оплата', '—', 'urg', 'Срочный', 'Финансы', 'warn', 'Ожидает пользователя', '11:04', 1],
+    ['#DS-10477', 'Игорь Демидов', 'Субтитры отстают на 3 секунды', 'Субтитры', 'Глубина', 'norm', 'Обычный', 'Мария Р.', '', 'Новое', '10:15', 0],
+    ['#DS-10474', 'Ольга Титова', 'Офлайн-фильм не открывается', 'Загрузки', 'Свидетели', 'high', 'Высокий', '—', '', 'Новое', '09:40', 0],
+    ['#DS-10470', 'Мария Лисина', 'Не пришёл чек', 'Оплата', '—', 'low', 'Низкий', 'Финансы', 'ok', 'Решено', 'Вчера', 0]
+  ];
+  var PR = { urg: 'ds-badge--err', high: 'ds-badge--warn', norm: '', low: '' };
+  return adminShell('tickets', 'Обращения', '48 открытых · 2 просрочены',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">Мои · 12</button>',
+    '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin-bottom:18px">' +
+      stat('Новые', '14') + stat('В работе', '26') + stat('Ждут пользователя', '8') +
+      stat('Просрочены', '2', null, 'err') + stat('Первый ответ', '38 мин') + stat('Решение', '4.2 ч') +
+    '</div>' +
+    '<div class="ds-between" style="margin-bottom:14px;flex-wrap:wrap;gap:10px">' +
+      '<div class="ds-wrap ds-g2">' + ['Все · 48', 'Новые · 14', 'В работе · 26', 'Ждут ответа · 8', 'Решённые', 'Закрытые'].map(function (t, i) {
+        return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
+      '<div class="ds-row-f ds-g2">' +
+        '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все категории</option><option>Субтитры и CC+</option><option>Видео</option><option>Оплата</option><option>Загрузки</option></select>' +
+        '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все исполнители</option><option>Мария Р.</option><option>Технические</option><option>Финансы</option></select></div></div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Номер</th><th>Пользователь</th><th>Тема</th><th>Категория</th><th>Фильм</th><th>Приоритет</th><th>Исполнитель</th><th>Статус</th><th>Активность</th></tr></thead><tbody>' +
+      T.map(function (t) {
+        return '<tr style="cursor:pointer" data-ago="ticket"' + (t[11] ? ' style="background:rgba(255,92,92,.05);cursor:pointer"' : '') + '>' +
+          '<td class="ds-num" style="color:var(--ds-gold)">' + t[0] + (t[11] ? ' <span class="ds-badge ds-badge--err">SLA</span>' : '') + '</td>' +
+          '<td>' + t[1] + '</td><td style="font-weight:600">' + t[2] + '</td>' +
+          '<td class="ds-mut2">' + t[3] + '</td><td class="ds-mut2">' + t[4] + '</td>' +
+          '<td><span class="ds-badge ' + PR[t[5]] + '">' + t[6] + '</span></td>' +
+          '<td class="ds-mut2">' + t[7] + '</td>' +
+          '<td><span class="ds-badge ' + (t[8] ? 'ds-badge--' + t[8] : '') + '">' + t[9] + '</span></td>' +
+          '<td class="ds-num ds-mut2">' + t[10] + '</td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-card" style="margin-top:16px">' +
+      '<h3 class="ds-h2" style="margin-bottom:12px">Маршрутизация и SLA</h3>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">' +
+        '<div><p class="ds-eyebrow" style="margin-bottom:10px">Кому уходит</p>' +
+          '<div class="ds-stack ds-g2">' +
+            [['Ошибка в субтитрах, CC+', 'Редактор субтитров'], ['Видео, качество, зависания', 'Технические'],
+             ['Оплата, подписка, возврат', 'Финансы'], ['Аккаунт, вход, устройства', 'Поддержка'],
+             ['Предложить фильм', 'Контент-менеджер']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+                '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
+            }).join('') + '</div></div>' +
+        '<div><p class="ds-eyebrow" style="margin-bottom:10px">Целевое время ответа</p>' +
+          '<div class="ds-stack ds-g2">' +
+            [['Срочный', '1 час', 'err'], ['Высокий', '4 часа', 'warn'], ['Обычный', '24 часа', ''], ['Низкий', '48 часов', '']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-badge ' + (r[2] ? 'ds-badge--' + r[2] : '') + '">' + r[0] + '</span>' +
+                '<span class="ds-num ds-sm">' + r[1] + '</span></div>';
+            }).join('') + '</div></div></div></div>');
+};
+
+A.ticket = function () {
+  return adminShell('tickets', '#DS-10482 · Описание звука не соответствует сцене', 'Ошибка CC+ · Год тишины · 01:22:18',
+    '<button class="ds-btn ds-btn--sm ds-btn--aqua" data-ago="editor">Открыть в редакторе субтитров</button>',
+    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start">' +
+      '<div class="ds-card">' +
+        '<div class="ds-between" style="padding-bottom:14px;border-bottom:1px solid var(--ds-line);margin-bottom:18px">' +
+          '<div class="ds-row-f ds-g2"><span class="ds-badge ds-badge--info ds-badge--lg">В работе</span>' +
+            '<span class="ds-badge ds-badge--lg">Обычный приоритет</span>' +
+            '<span class="ds-badge ds-badge--lg">Мария Р.</span></div>' +
+          '<span class="ds-cap ds-num">Создано 14 сентября, 09:12</span></div>' +
+
+        [[1, 'Анна Ковалёва', '09:12', 'На 01:22:18 в CC+ написано «[дверь резко захлопывается]», но в сцене дверь закрывают очень тихо — это меняет смысл эпизода.'],
+         [0, 'Мария Р. · поддержка', '10:40', 'Спасибо, вижу проблему. Открыла редактор на этой реплике, сверяюсь с оригинальной дорожкой. Ответим сегодня.'],
+         [0, 'Мария Р. · редактор субтитров', '14:42', 'Вы правы. Исправила на «[дверь тихо закрывается]». Новая версия субтитров опубликована — обновите страницу плеера.']
+        ].map(function (m) {
+          return '<div style="display:flex;gap:12px;flex-direction:' + (m[0] ? 'row' : 'row-reverse') + ';margin-bottom:16px">' +
+            '<div style="width:32px;height:32px;border-radius:99px;flex:none;position:relative;overflow:hidden;' +
+              (m[0] ? '' : 'background:var(--ds-aqua-dim);border:1px solid var(--ds-aqua-edge);display:grid;place-items:center;color:var(--ds-aqua)') + '">' +
+              (m[0] ? art(m[1], '', 'position:absolute;inset:0') : ic('shield', 16)) + '</div>' +
+            '<div style="max-width:78%">' +
+              '<div class="ds-row-f ds-g2" style="margin-bottom:5px;' + (m[0] ? '' : 'justify-content:flex-end') + '">' +
+                '<span class="ds-sm" style="font-weight:600">' + m[1] + '</span>' +
+                '<span class="ds-cap ds-num">' + m[2] + '</span></div>' +
+              '<div style="padding:12px 15px;border-radius:var(--ds-r-md);background:' + (m[0] ? 'var(--ds-raised-2)' : 'var(--ds-aqua-dim)') +
+                ';border:1px solid ' + (m[0] ? 'var(--ds-line)' : 'var(--ds-aqua-edge)') + '">' +
+                '<p class="ds-sm" style="color:var(--ds-ink)">' + m[3] + '</p></div></div></div>';
+        }).join('') +
+
+        '<div style="padding:14px;border-radius:var(--ds-r-md);background:var(--ds-warn-dim);border:1px solid rgba(255,159,69,.3);margin-bottom:18px">' +
+          '<div class="ds-row-f ds-g2" style="margin-bottom:7px"><span style="color:var(--ds-warn);display:flex">' + ic('lock', 15) + '</span>' +
+            '<span class="ds-cap" style="color:var(--ds-warn);font-weight:700;letter-spacing:.08em">ВНУТРЕННЯЯ ЗАМЕТКА · НЕ ВИДНА ПОЛЬЗОВАТЕЛЮ</span></div>' +
+          '<p class="ds-sm">Сверила с исходной дорожкой — звук закрывающейся двери −28 dB, режиссёрская задумка. ' +
+          'Проверить остальные описания дверей в этом фильме, там ещё два похожих места.</p>' +
+          '<p class="ds-cap ds-num" style="margin-top:7px">Мария Р. · 14 сентября, 13:58</p></div>' +
+
+        '<div class="ds-field"><label class="ds-label">Ответ пользователю</label>' +
+          '<textarea class="ds-textarea" placeholder="Сообщение будет отправлено пользователю и придёт push-уведомлением"></textarea>' +
+          '<div class="ds-between" style="margin-top:10px">' +
+            '<div class="ds-row-f ds-g2">' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost">' + ic('paperclip', 13) + ' Прикрепить</button>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--ghost">' + ic('lock', 13) + ' Внутренняя заметка</button></div>' +
+            '<div class="ds-row-f ds-g2">' +
+              '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Решено</option><option>В работе</option><option>Ожидает пользователя</option><option>Закрыто</option></select>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--primary">Отправить</button></div></div></div></div>' +
+
+      '<div class="ds-stack ds-g4" style="position:sticky;top:84px">' +
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Пользователь</h3>' +
+          '<button class="ds-row" data-ago="user" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:9px 0">' +
+            '<div style="width:34px;height:34px;border-radius:99px;position:relative;overflow:hidden;flex:none;margin-right:10px">' + art('Анна Ковалёва', '', 'position:absolute;inset:0') + '</div>' +
+            '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">Анна Ковалёва</span>' +
+            '<span class="ds-row__sub ds-num">anna.k@example.ru</span></span>' +
+            '<span class="ds-row__chev">' + ic('chevR', 15) + '</span></button>' +
+          '<div class="ds-stack ds-g2" style="margin-top:12px;padding-top:12px;border-top:1px solid var(--ds-line)">' +
+            [['Подписка', 'ВИП · активна'], ['Обращений', '3'], ['Регистрация', '12 мар 2026']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+                '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
+            }).join('') + '</div></div>' +
+
+        '<div class="ds-card" style="border-color:var(--ds-aqua-edge)">' +
+          '<h3 class="ds-h2" style="margin-bottom:12px">Данные из плеера</h3>' +
+          '<div class="ds-stack ds-g2">' +
+            [['Фильм', 'Год тишины'], ['ID', 'DS-M-04187'], ['Момент', '01:22:18'], ['Реплика', '#418–419'],
+             ['Язык', 'Русский'], ['Тип', 'CC+'], ['Качество', '1080p (AUTO)'], ['Озвучка', 'Русский'],
+             ['Платформа', 'Web · Chrome 141'], ['Устройство', 'macOS 15.2'], ['Версия', '4.8.2']].map(function (r) {
+              return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
+                '<span class="ds-num" style="font-size:11.5px;color:var(--ds-ink-2)">' + r[1] + '</span></div>';
+            }).join('') + '</div>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-btn--block" data-ago="editor" style="margin-top:14px">Открыть 01:22:18 в редакторе</button></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Назначение</h3>' +
+          '<div class="ds-field" style="margin-bottom:10px"><label class="ds-label">Исполнитель</label>' +
+            '<select class="ds-select"><option>Мария Р. · Редактор субтитров</option><option>Игорь С. · Технические</option><option>Финансы</option></select></div>' +
+          '<div class="ds-field"><label class="ds-label">Приоритет</label>' +
+            '<select class="ds-select"><option>Обычный</option><option>Низкий</option><option>Высокий</option><option>Срочный</option></select></div></div>' +
+
+        '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">История</h3>' +
+          '<div class="ds-stack ds-g3">' +
+            [['Новое', '09:12'], ['Принято', '09:40'], ['В работе · Редактор субтитров', '10:40'],
+             ['Субтитры исправлены, v4 опубликована', '14:42']].map(function (r, i, arr) {
+              return '<div class="ds-row-f ds-g3"><span style="width:8px;height:8px;border-radius:99px;flex:none;background:' +
+                (i === arr.length - 1 ? 'var(--ds-gold)' : 'var(--ds-ok)') + '"></span>' +
+                '<div class="ds-grow"><div class="ds-cap" style="color:var(--ds-ink-2)">' + r[0] + '</div>' +
+                '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>';
+            }).join('') + '</div></div></div></div>');
+};
+
+/* ---------- Roles ---------- */
+A.roles = function () {
+  var ROLES = ['OWNER', 'ADMIN', 'КОНТЕНТ', 'СУБТИТРЫ', 'ПОДДЕРЖКА', 'ТЕХНИЧЕСКИЕ', 'ФИНАНСЫ', 'АНАЛИТИК'];
+  var PERMS = [
+    ['Публиковать и удалять фильмы',   [1, 1, 1, 0, 0, 0, 0, 0]],
+    ['Загружать мастер-видео',         [1, 1, 1, 0, 0, 1, 0, 0]],
+    ['Редактировать субтитры и CC+',   [1, 1, 0, 1, 0, 0, 0, 0]],
+    ['Публиковать версии субтитров',   [1, 1, 0, 1, 0, 0, 0, 0]],
+    ['Перезапускать обработку видео',  [1, 1, 0, 0, 0, 1, 0, 0]],
+    ['Видеть email пользователей',     [1, 1, 0, 0, 1, 0, 1, 0]],
+    ['Видеть историю просмотра',       [1, 1, 0, 0, 0, 0, 0, 0]],
+    ['Блокировать пользователей',      [1, 1, 0, 0, 0, 0, 0, 0]],
+    ['Видеть платежи',                 [1, 1, 0, 0, 0, 0, 1, 0]],
+    ['Делать возврат',                 [1, 0, 0, 0, 0, 0, 1, 0]],
+    ['Работать с обращениями',         [1, 1, 0, 1, 1, 1, 1, 0]],
+    ['Смотреть аналитику',             [1, 1, 1, 0, 0, 0, 1, 1]],
+    ['Менять API-интеграции',          [1, 1, 0, 0, 0, 0, 0, 0]],
+    ['Менять роли сотрудников',        [1, 0, 0, 0, 0, 0, 0, 0]],
+    ['Удалять безвозвратно',           [1, 0, 0, 0, 0, 0, 0, 0]]
+  ];
+  return adminShell('roles', 'Роли и доступы', '8 ролей · 14 сотрудников',
+    '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Добавить сотрудника</button>',
+    '<div class="ds-card ds-card--flush" style="margin-bottom:16px"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th style="min-width:250px">Право</th>' + ROLES.map(function (r) {
+        return '<th style="text-align:center;font-size:9px">' + r + '</th>'; }).join('') + '</tr></thead><tbody>' +
+      PERMS.map(function (p) {
+        return '<tr><td style="font-weight:500">' + p[0] + '</td>' +
+          p[1].map(function (v) {
+            return '<td style="text-align:center">' + (v
+              ? '<span style="color:var(--ds-ok);display:inline-flex">' + ic('check', 15, 2.8) + '</span>'
+              : '<span style="color:var(--ds-ink-4);display:inline-flex">' + ic('minus', 15, 2.8) + '</span>') + '</td>';
+          }).join('') + '</tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Сотрудник</th><th>Роль</th><th>2FA</th><th>Последний вход</th><th></th></tr></thead><tbody>' +
+      [['Артём Е.', 'a.e@deafsuslik.ru', 'OWNER', 1, 'Сейчас'],
+       ['Игорь Соловьёв', 'i.s@deafsuslik.ru', 'ТЕХНИЧЕСКИЕ', 1, '2 часа назад'],
+       ['Мария Романова', 'maria.r@deafsuslik.ru', 'СУБТИТРЫ', 1, 'Сейчас'],
+       ['Ольга Ким', 'o.kim@deafsuslik.ru', 'КОНТЕНТ', 1, 'Вчера'],
+       ['Денис Полев', 'd.polev@deafsuslik.ru', 'ФИНАНСЫ', 0, '3 дня назад']].map(function (r) {
+        return '<tr><td><div class="ds-row-f ds-g3">' +
+          '<div style="width:28px;height:28px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art(r[0], '', 'position:absolute;inset:0') + '</div>' +
+          '<div><div style="font-weight:600">' + r[0] + '</div><div class="ds-cap ds-num">' + r[1] + '</div></div></div></td>' +
+          '<td><span class="ds-badge ' + (r[2] === 'OWNER' ? 'ds-badge--gold' : '') + '">' + r[2] + '</span></td>' +
+          '<td>' + (r[3] ? '<span class="ds-badge ds-badge--ok">Включена</span>' : '<span class="ds-badge ds-badge--err">Выключена</span>') + '</td>' +
+          '<td class="ds-num ds-mut2">' + r[4] + '</td>' +
+          '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-strip" style="margin-top:16px">' +
+      '<span class="ds-strip__label">Принцип</span>' +
+      '<p class="ds-sm" style="margin:0">Разделы, недоступные роли, не отображаются в меню вообще — сотрудник не видит того, ' +
+      'к чему у него нет доступа. Опасные действия (удалить фильм, удалить пользователя, сменить роль, отключить интеграцию, ' +
+      'вернуть платёж) требуют повторного ввода пароля.</p></div>');
+};
+
+/* ---------- Audit log ---------- */
+A.audit = function () {
+  var L = [
+    ['Мария Романова', 'СУБТИТРЫ', 'Отредактировала Русский CC+', 'Год тишины · реплика #419 · 01:22:19', '2 сен, 14:42', 'edit'],
+    ['Мария Романова', 'СУБТИТРЫ', 'Опубликовала версию субтитров v4', 'Год тишины · Русский CC+', '2 сен, 14:43', 'upload'],
+    ['Игорь Соловьёв', 'ТЕХНИЧЕСКИЕ', 'Перезапустил обработку 4K', 'Ночная смена', '2 сен, 13:10', 'refresh'],
+    ['Ольга Ким', 'КОНТЕНТ', 'Опубликовала фильм', 'Свидетели', '2 сен, 13:10', 'check'],
+    ['Система', '—', 'Завершила обработку', 'Пепел и снег · 4K UHD', '2 сен, 12:04', 'cloud'],
+    ['Денис Полев', 'ФИНАНСЫ', 'Оформил возврат 500 ₽', 'DS-PAY-88190 · Елена Крон', '1 сен, 22:41', 'card'],
+    ['Артём Е.', 'OWNER', 'Изменил роль сотрудника', 'Мария Романова: ПОДДЕРЖКА → СУБТИТРЫ', '1 сен, 18:20', 'shield'],
+    ['Ольга Ким', 'КОНТЕНТ', 'Продлила лицензию', 'Территория льда · до 31.12.2027', '1 сен, 11:20', 'shield'],
+    ['Артём Е.', 'OWNER', 'Обновил ключ интеграции', 'Северный каталог · production', '31 авг, 16:02', 'key']
+  ];
+  return adminShell('audit', 'Журнал действий', 'Хранится 24 месяца, изменению не подлежит',
+    '<button class="ds-btn ds-btn--sm ds-btn--secondary">Экспорт</button>',
+    '<div class="ds-between" style="margin-bottom:14px">' +
+      '<div class="ds-wrap ds-g2">' + ['Все', 'Контент', 'Субтитры', 'Пользователи', 'Финансы', 'Система', 'Опасные'].map(function (t, i) {
+        return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
+      '<select class="ds-select" style="width:auto;min-height:34px;padding:5px 32px 5px 12px;font-size:12.5px"><option>Все сотрудники</option></select></div>' +
+    '<div class="ds-card ds-card--flush">' + L.map(function (r) {
+      return '<div class="ds-row" style="cursor:default;padding:14px 18px;align-items:flex-start">' +
+        '<span class="ds-row__ico" style="margin-top:2px">' + ic(r[5], 18) + '</span>' +
+        '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">' +
+          '<strong>' + r[0] + '</strong> · ' + r[2] + '</span>' +
+        '<span class="ds-row__sub ds-num">' + r[3] + '</span></span>' +
+        '<span class="ds-badge">' + r[1] + '</span>' +
+        '<span class="ds-row__meta ds-num" style="margin-left:12px">' + r[4] + '</span></div>';
+    }).join('') + '</div>');
+};
+
+/* ---------- Storage / rights / trash / settings ---------- */
+A.storage = function () {
+  return adminShell('storage', 'Хранилище', '3.9 TB из 5 TB · 78%', '',
+    '<div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-bottom:18px">' +
+      stat('Мастер-файлы', '2.4 TB') + stat('Готовые качества', '1.28 TB') +
+      stat('Изображения', '164 GB') + stat('Субтитры', '2.1 GB') + stat('Свободно', '1.1 TB', null, 'warn') +
+    '</div>' +
+    '<div class="ds-card" style="margin-bottom:16px">' +
+      '<div class="ds-between" style="margin-bottom:12px"><h3 class="ds-h2">Распределение</h3>' +
+        '<span class="ds-num ds-sm ds-mut">3.9 / 5 TB</span></div>' +
+      '<div style="height:14px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
+        '<div style="width:48%;background:var(--ds-gold)"></div><div style="width:26%;background:var(--ds-gold-lo)"></div>' +
+        '<div style="width:3.3%;background:var(--ds-aqua)"></div><div style="width:0.6%;background:var(--ds-ok)"></div></div>' +
+      '<div class="ds-wrap ds-g6" style="margin-top:12px">' +
+        [['Мастер-файлы 2.4 TB', 'var(--ds-gold)'], ['Качества 1.28 TB', 'var(--ds-gold-lo)'],
+         ['Изображения 164 GB', 'var(--ds-aqua)'], ['Субтитры 2.1 GB', 'var(--ds-ok)'],
+         ['Свободно 1.1 TB', 'var(--ds-raised-3)']].map(function (s) {
+          return '<div class="ds-row-f ds-g2"><span style="width:9px;height:9px;border-radius:3px;background:' + s[1] + '"></span>' +
+            '<span class="ds-cap">' + s[0] + '</span></div>';
+        }).join('') + '</div>' +
+      '<div class="ds-strip" style="margin-top:16px;border-left-color:var(--ds-warn);background:var(--ds-warn-dim)">' +
+        '<span class="ds-strip__label" style="color:var(--ds-warn)">Совет</span>' +
+        '<p class="ds-cap" style="margin:0">Мастер-файлы 214 архивных фильмов не открывались 12 месяцев — 680 GB. ' +
+        'Их можно перенести в холодное хранилище без потери готовых качеств.</p></div></div>' +
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Фильм</th><th>Мастер</th><th>Качества</th><th>Субтитры</th><th>Всего</th><th>Последний просмотр</th><th></th></tr></thead><tbody>' +
+      [[9, '184 GB', '21.4 GB', '2.4 MB', '205 GB', 'Сейчас'],
+       [6, '162 GB', '19.8 GB', '1.8 MB', '182 GB', '2 часа назад'],
+       [0, '148 GB', '18.2 GB', '2.1 MB', '166 GB', 'Вчера'],
+       [17, '96 GB', '11.4 GB', '0.9 MB', '107 GB', '14 месяцев назад']].map(function (r, i) {
+        var m = M(r[0]);
+        return '<tr><td><div class="ds-row-f ds-g3">' +
+          '<div style="width:28px;aspect-ratio:2/3;border-radius:4px;overflow:hidden;position:relative;flex:none">' + art(m.t, '', 'position:absolute;inset:0') + '</div>' +
+          '<span style="font-weight:600">' + m.t + '</span></div></td>' +
+          '<td class="ds-num">' + r[1] + '</td><td class="ds-num">' + r[2] + '</td><td class="ds-num">' + r[3] + '</td>' +
+          '<td class="ds-num" style="font-weight:700">' + r[4] + '</td>' +
+          '<td class="ds-num ' + (i === 3 ? '' : 'ds-mut2') + '"' + (i === 3 ? ' style="color:var(--ds-warn)"' : '') + '>' + r[5] + '</td>' +
+          '<td>' + (i === 3 ? '<button class="ds-btn ds-btn--sm ds-btn--secondary">В архив</button>' : '') + '</td></tr>';
+      }).join('') + '</tbody></table></div></div>');
+};
+
+A.rights = function () {
+  return adminShell('rights', 'Права и лицензии', '5 лицензий истекают в ближайшие 14 дней', '',
+    '<div class="ds-card ds-card--flush" style="margin-bottom:16px"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Фильм</th><th>Правообладатель</th><th>Территории</th><th>Действует</th><th>Онлайн</th><th>Офлайн</th><th>4K</th><th>Статус</th></tr></thead><tbody>' +
+      [[9, 'Северный каталог', 'RU · BY · KZ', 'до 31.12.2027', 1, 1, 1, 'ok', 'Действует'],
+       [6, 'Sever Katalog LLC', 'RU', 'до 14.09.2026', 1, 1, 0, 'warn', 'Истекает через 12 дней'],
+       [0, 'Пирамида Медиа', 'RU · BY', 'до 30.06.2028', 1, 1, 1, 'ok', 'Действует'],
+       [17, 'Nordic Films', 'RU', 'истекла 28.08.2026', 0, 0, 0, 'err', 'Истекла — фильм скрыт'],
+       [14, 'Восток Дистрибуция', 'RU · KZ', 'до 09.09.2026', 1, 0, 1, 'warn', 'Истекает через 7 дней']].map(function (r) {
+        var m = M(r[0]);
+        return '<tr><td><div class="ds-row-f ds-g3">' +
+          '<div style="width:28px;aspect-ratio:2/3;border-radius:4px;overflow:hidden;position:relative;flex:none">' + art(m.t, '', 'position:absolute;inset:0') + '</div>' +
+          '<span style="font-weight:600">' + m.t + '</span></div></td>' +
+          '<td class="ds-mut2">' + r[1] + '</td><td class="ds-num" style="font-size:11.5px">' + r[2] + '</td>' +
+          '<td class="ds-num ds-mut2">' + r[3] + '</td>' +
+          [4, 5, 6].map(function (k) {
+            return '<td>' + (r[k] ? '<span style="color:var(--ds-ok);display:flex">' + ic('check', 15, 2.6) + '</span>'
+              : '<span style="color:var(--ds-ink-4);display:flex">' + ic('minus', 15, 2.6) + '</span>') + '</td>';
+          }).join('') +
+          '<td><span class="ds-badge ds-badge--' + r[7] + '">' + r[8] + '</span></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-strip" style="border-left-color:var(--ds-err);background:var(--ds-err-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-err)">Автоматика</span>' +
+      '<p class="ds-sm" style="margin:0">Истечение лицензии автоматически скрывает фильм из каталога и делает скачанные копии ' +
+      'недоступными на следующий день. Импорт метаданных через API не создаёт прав на показ — публикация без ' +
+      'заполненной лицензии невозможна.</p></div>');
+};
+
+A.trash = function () {
+  return adminShell('trash', 'Корзина', 'Удалённое хранится 30 дней, потом стирается безвозвратно', '',
+    '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
+      '<thead><tr><th>Объект</th><th>Тип</th><th>Удалил</th><th>Когда</th><th>Сотрётся через</th><th></th></tr></thead><tbody>' +
+      [['Ночная смена', 'Фильм', 'Ольга Ким', '28 авг', '4 дня'],
+       ['Français SUB · Год тишины', 'Субтитры', 'Мария Р.', '30 авг', '6 дней'],
+       ['Кино для поездки', 'Коллекция', 'Ольга Ким', '1 сен', '28 дней'],
+       ['s.kim@example.ru', 'Пользователь', 'Артём Е.', '1 июл', 'Стёрт']].map(function (r, i) {
+        return '<tr><td style="font-weight:600">' + r[0] + '</td><td class="ds-mut2">' + r[1] + '</td>' +
+          '<td class="ds-mut2">' + r[2] + '</td><td class="ds-num ds-mut2">' + r[3] + '</td>' +
+          '<td class="ds-num"' + (i === 0 ? ' style="color:var(--ds-warn)"' : '') + '>' + r[4] + '</td>' +
+          '<td><div class="ds-row-f ds-g2">' +
+            (i === 3 ? '' : '<button class="ds-btn ds-btn--sm ds-btn--secondary">Восстановить</button>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--danger">Стереть</button>') + '</div></td></tr>';
+      }).join('') + '</tbody></table></div></div>' +
+    '<div class="ds-strip" style="margin-top:16px;border-left-color:var(--ds-err);background:var(--ds-err-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-err)">Подтверждение</span>' +
+      '<p class="ds-sm" style="margin:0">Безвозвратное удаление требует ввода названия объекта и повторного ввода пароля. ' +
+      'Право есть только у роли OWNER.</p></div>');
+};
+
+A.api = function () {
+  return adminShell('api', 'API и интеграции', '2 подключения',
+    '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Добавить интеграцию</button>',
+    '<div class="ds-stack ds-g4">' +
+      [['Северный каталог', 'api.severkatalog.ru/v2', 'production', 'ok', 'Подключено', 'Метаданные, обложки, права', '2 сен, 12:04'],
+       ['Тестовый источник', 'sandbox.example.ru/v1', 'test', 'warn', 'Ключ истекает через 8 дней', 'Только метаданные', '28 авг']].map(function (r) {
+        return '<div class="ds-card">' +
+          '<div class="ds-between"><div class="ds-row-f ds-g3">' +
+            '<span style="color:var(--ds-' + r[3] + ');display:flex">' + ic(r[3] === 'ok' ? 'checkc' : 'alert', 22) + '</span>' +
+            '<div><div class="ds-h3">' + r[0] + '</div>' +
+            '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>' +
+            '<div class="ds-row-f ds-g2">' +
+              '<span class="ds-badge ' + (r[2] === 'production' ? 'ds-badge--gold' : '') + '">' + r[2] + '</span>' +
+              '<span class="ds-badge ds-badge--' + r[3] + '">' + r[4] + '</span></div></div>' +
+          '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--ds-line)">' +
+            '<div><div class="ds-cap">Что импортирует</div><div class="ds-sm" style="margin-top:3px">' + r[5] + '</div></div>' +
+            '<div><div class="ds-cap">Последний импорт</div><div class="ds-sm ds-num" style="margin-top:3px">' + r[6] + '</div></div>' +
+            '<div><div class="ds-cap">Ключ</div>' +
+              '<div class="ds-row-f ds-g2" style="margin-top:3px"><span class="ds-num ds-sm">sk_••••••••••••4f2a</span>' +
+              '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Показать ключ">' + ic('eye', 14) + '</button></div></div></div>' +
+          '<div class="ds-row-f ds-g2" style="margin-top:14px">' +
+            '<button class="ds-btn ds-btn--sm ds-btn--secondary">Проверить соединение</button>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--ghost">Обновить ключ</button>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--ghost" data-ago="api-import">Импортировать</button>' +
+            '<div class="ds-grow"></div>' +
+            '<button class="ds-btn ds-btn--sm ds-btn--danger">Отключить</button></div></div>';
+      }).join('') + '</div>' +
+    '<div class="ds-strip" style="margin-top:16px;border-left-color:var(--ds-err);background:var(--ds-err-dim)">' +
+      '<span class="ds-strip__label" style="color:var(--ds-err)">Безопасность</span>' +
+      '<p class="ds-sm" style="margin:0">Ключи и секреты хранятся только на сервере и никогда не попадают в клиентский код ' +
+      'публичного приложения. В админке ключ показывается замаскированным; полное значение доступно только роли OWNER ' +
+      'после повторного ввода пароля и записывается в журнал действий.</p></div>');
+};
+
+A.collections = function () {
+  var C = [['Лучшее с CC+', 340, 'Опубликована', 'ok', 'var(--ds-aqua)'],
+    ['Основано на реальных событиях', 214, 'Опубликована', 'ok', 'var(--ds-coll)'],
+    ['Медленное кино', 96, 'Опубликована', 'ok', 'var(--ds-coll)'],
+    ['Фильмы на вечер', 42, 'Опубликована', 'ok', 'var(--ds-gold)'],
+    ['Лучшее в 4K', 268, 'Опубликована', 'ok', 'var(--ds-gold)'],
+    ['Кино для поездки', 88, 'Черновик', '', 'var(--ds-raised-3)'],
+    ['Новинки недели', 18, 'Запланирована на 5 сен', 'warn', 'var(--ds-gold)']];
+  return adminShell('collections', 'Коллекции', '7 редакционных подборок',
+    '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Новая коллекция</button>',
+    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">' +
+      C.map(function (c) {
+        return '<div class="ds-card ds-card--flush">' +
+          '<div style="display:grid;grid-template-columns:repeat(3,1fr);height:110px;gap:1px;position:relative">' +
+            [0, 1, 2].map(function (k) { return '<div style="position:relative;overflow:hidden">' + art(c[0] + k, '', 'position:absolute;inset:0') + '</div>'; }).join('') +
+            '<div style="position:absolute;left:0;top:0;bottom:0;width:4px;background:' + c[4] + '"></div></div>' +
+          '<div style="padding:14px 16px">' +
+            '<div class="ds-between"><h3 class="ds-h3">' + c[0] + '</h3>' +
+              '<span class="ds-badge ' + (c[3] ? 'ds-badge--' + c[3] : '') + '">' + c[2] + '</span></div>' +
+            '<p class="ds-cap ds-num" style="margin-top:4px">' + c[1] + ' фильмов</p>' +
+            '<div class="ds-row-f ds-g2" style="margin-top:12px">' +
+              '<button class="ds-btn ds-btn--sm ds-btn--secondary ds-grow">Редактировать</button>' +
+              '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></div></div></div>';
+      }).join('') + '</div>' +
+    '<div class="ds-card" style="margin-top:18px">' +
+      '<h3 class="ds-h2" style="margin-bottom:14px">Главная страница — порядок блоков</h3>' +
+      '<p class="ds-sm" style="margin-bottom:14px">Перетащите, чтобы изменить порядок. Блок «Продолжить просмотр» персональный и всегда идёт первым.</p>' +
+      '<div class="ds-stack ds-g2">' +
+        [['Герой — фильм недели', 'Год тишины', 1], ['Продолжить просмотр', 'персональный', 0],
+         ['Для вас', 'рекомендации', 0], ['Популярное', 'автоматически', 0], ['Новинки', 'автоматически', 0],
+         ['Подписка ВИП', 'блок тарифа', 0], ['С субтитрами', 'коллекция', 0], ['Лучшее с CC+', 'коллекция', 0],
+         ['Доступно в 4K', 'коллекция', 0], ['Можно скачать', 'коллекция', 0]].map(function (r) {
+          return '<div class="ds-row-f ds-g3" style="padding:11px 14px;border-radius:var(--ds-r-md);background:var(--ds-void);border:1px solid var(--ds-line)">' +
+            '<span style="color:var(--ds-ink-4);display:flex;cursor:grab">' + ic('drag', 16) + '</span>' +
+            '<span class="ds-sm ds-grow" style="font-weight:600;color:var(--ds-ink)">' + r[0] + '</span>' +
+            '<span class="ds-cap">' + r[1] + '</span>' +
+            (r[2] ? '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сменить фильм</button>' : '') +
+            '<label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>';
+        }).join('') + '</div></div>');
+};
+
+</script>
+<style>
+  body { background: var(--ds-sunken); }
+
+  .ap { display: flex; flex-direction: column; height: 100vh; }
+  .ap__bar {
+    display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 18px;
+    border-bottom: 1px solid var(--ds-line); background: var(--ds-void); flex: none;
+  }
+  .ap__pick {
+    appearance: none; background: var(--ds-raised); color: var(--ds-ink);
+    border: 1px solid var(--ds-line-mid); border-radius: var(--ds-r-pill);
+    padding: 7px 34px 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236E7787' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+  }
+  .ap__canvas { flex: 1; overflow: auto; background: var(--ds-sunken); padding: 22px; }
+  .ap__frame {
+    margin: 0 auto; background: var(--ds-void); border: 1px solid var(--ds-line-mid);
+    border-radius: var(--ds-r-lg); overflow: hidden; box-shadow: var(--ds-e4);
+    transform-origin: top left;
+  }
+  .ap__chrome {
+    display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px;
+    background: var(--ds-raised); border-bottom: 1px solid var(--ds-line);
+  }
+  .ap__dot { width: 9px; height: 9px; border-radius: 99px; }
+  .ap__url {
+    flex: 1; height: 22px; border-radius: 99px; background: var(--ds-void);
+    border: 1px solid var(--ds-line); display: flex; align-items: center; gap: 6px;
+    padding: 0 11px; font-size: 10.5px; color: var(--ds-ink-3); font-family: var(--ds-mono);
+  }
+</style>
+
+<div class="ap">
+  <div class="ap__bar">
+    <div id="apLogo"></div>
+    <span class="ds-badge ds-badge--err">Приватная панель</span>
+    <div style="width:1px;height:22px;background:var(--ds-line)"></div>
+    <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apPrev" aria-label="Предыдущий экран"></button>
+    <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apNext" aria-label="Следующий экран"></button>
+    <select class="ap__pick" id="apPick"></select>
+    <div class="ds-cap" id="apSub">Экран 02 из 18</div>
+    <div class="ds-grow"></div>
+    <div class="ds-seg" id="apVp"></div>
+  </div>
+  <div class="ap__canvas ds-scroll" id="apCanvas">
+    <div id="apWrap" style="margin:0 auto">
+      <div class="ap__frame" id="apFrame">
+        <div class="ap__chrome">
+          <span class="ap__dot" style="background:#FF5F57"></span>
+          <span class="ap__dot" style="background:#FEBC2E"></span>
+          <span class="ap__dot" style="background:#28C840"></span>
+          <div class="ap__url"><span id="apLock"></span><span id="apUrl">admin.deafsuslik.ru/</span></div>
+        </div>
+        <div id="apScreen"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SCREENS = [
+    ['login',        'Вход в админ-панель',       A.login,        '/login'],
+    ['dash',         'Дашборд',                   A.dash,         '/'],
+    ['movies',       'Фильмы',                    A.movies,       '/content/movies'],
+    ['add-movie',    'Добавить фильм',            A.addMovie,     '/content/movies/new'],
+    ['manual-upload','Ручная загрузка',           A.manualUpload, '/content/movies/new/upload'],
+    ['api-import',   'Импорт через API',          A.apiImport,    '/content/movies/new/import'],
+    ['subs-list',    'Субтитры и CC+',            A.subsList,     '/media/subtitles/DS-M-04187'],
+    ['editor',       'Редактор субтитров',        A.editor,       '/media/subtitles/DS-M-04187/ru-ccplus?t=01:22:18'],
+    ['collections',  'Коллекции и главная',       A.collections,  '/content/collections'],
+    ['rights',       'Права и лицензии',          A.rights,       '/content/rights'],
+    ['storage',      'Хранилище',                 A.storage,      '/media/storage'],
+    ['users',        'Пользователи',              A.users,        '/people/users'],
+    ['user',         'Карточка пользователя',     A.user,         '/people/users/DS-U-48211'],
+    ['payments',     'Платежи',                   A.payments,     '/money/payments'],
+    ['analytics',    'Аналитика',                 A.analytics,    '/analytics/views'],
+    ['tickets',      'Обращения',                 A.tickets,      '/support/tickets'],
+    ['ticket',       'Обращение · CC+',           A.ticket,       '/support/tickets/DS-10482'],
+    ['roles',        'Роли и доступы',            A.roles,        '/system/roles'],
+    ['audit',        'Журнал действий',           A.audit,        '/system/audit'],
+    ['api',          'API и интеграции',          A.api,          '/system/api'],
+    ['trash',        'Корзина',                   A.trash,        '/system/trash']
+  ];
+  var BY = {}; SCREENS.forEach(function (s, i) { BY[s[0]] = { s: s, i: i }; });
+
+  var VP = [['Large', 1600], ['Desktop', 1440], ['Laptop', 1280]];
+  var state = { id: 'dash', vw: 1440 };
+
+  $('apLogo').innerHTML = dsLogo(22, 14);
+  $('apPrev').innerHTML = ic('chevL', 17);
+  $('apNext').innerHTML = ic('chevR', 17);
+  $('apLock').innerHTML = ic('lock', 10, 2.6);
+  $('apVp').innerHTML = VP.map(function (v, i) {
+    return '<button data-vw="' + v[1] + '" aria-selected="' + (i === 1) + '">' + v[0] + '</button>';
+  }).join('');
+  $('apPick').innerHTML = SCREENS.map(function (s, i) {
+    return '<option value="' + s[0] + '">' + String(i + 1).padStart(2, '0') + ' · ' + s[1] + '</option>';
+  }).join('');
+
+  function fit() {
+    var frame = $('apFrame'), wrap = $('apWrap'), canvas = $('apCanvas');
+    frame.style.width = state.vw + 'px';
+    frame.style.transform = 'none';
+    var avail = canvas.clientWidth - 44;
+    var k = state.vw > avail ? avail / state.vw : 1;
+    var h = frame.offsetHeight;
+    frame.style.transform = k < 1 ? 'scale(' + k + ')' : 'none';
+    wrap.style.width = Math.round(state.vw * k) + 'px';
+    wrap.style.height = Math.round(h * k) + 'px';
+    wrap.style.overflow = 'hidden';
+  }
+
+  function go(id) {
+    var e = BY[id]; if (!e) return;
+    state.id = id;
+    $('apScreen').innerHTML = e.s[2]();
+    $('apPick').value = id;
+    $('apSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + SCREENS.length;
+    $('apUrl').textContent = 'admin.deafsuslik.ru' + e.s[3];
+    $('apCanvas').scrollTop = 0;
+    requestAnimationFrame(fit);
+  }
+
+  $('apPick').addEventListener('change', function () { go(this.value); });
+  $('apPrev').addEventListener('click', function () { go(SCREENS[Math.max(0, BY[state.id].i - 1)][0]); });
+  $('apNext').addEventListener('click', function () { go(SCREENS[Math.min(SCREENS.length - 1, BY[state.id].i + 1)][0]); });
+  window.addEventListener('resize', fit);
+
+  document.addEventListener('click', function (ev) {
+    var vp = ev.target.closest('[data-vw]');
+    if (vp) {
+      state.vw = +vp.dataset.vw;
+      vp.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === vp); });
+      fit(); return;
+    }
+    var g = ev.target.closest('[data-ago]');
+    if (g && g.dataset.ago) { go(g.dataset.ago); return; }
+    var chip = ev.target.closest('.ds-chip');
+    if (chip) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    var seg = ev.target.closest('.ds-seg button');
+    if (seg && !seg.dataset.vw) seg.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === seg); });
+  });
+
+  go('dash');
+})();
+</script>

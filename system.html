@@ -1,0 +1,2126 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="description" content="Дизайн-система deafsuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%23FFC24B%27/%3E%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%2306070A%27/%3E%3C/svg%3E">
+<style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>deafsuslik Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<style>
+/* ============================================================
+   deafsuslik — Design Tokens
+   Dark-committed cinematic system. Every colour is painted
+   explicitly; nothing inherits the host ground.
+   ============================================================ */
+
+:root {
+  /* ---- Ground & surfaces (blue-biased graphite, never pure grey) ---- */
+  --ds-void:        #06070A;
+  --ds-sunken:      #030407;
+  --ds-panel:       #0D1016;
+  --ds-raised:      #14181F;
+  --ds-raised-2:    #1B2029;
+  --ds-raised-3:    #242A35;
+  --ds-scrim:       rgba(6, 7, 10, 0.72);
+
+  /* ---- Hairlines ---- */
+  --ds-line:        rgba(255, 255, 255, 0.07);
+  --ds-line-mid:    rgba(255, 255, 255, 0.12);
+  --ds-line-strong: rgba(255, 255, 255, 0.20);
+
+  /* ---- Ink ---- */
+  --ds-ink:         #F2F4F8;
+  --ds-ink-2:       #A8B0BF;
+  --ds-ink-3:       #6E7787;
+  --ds-ink-4:       #4A515E;
+  --ds-ink-inv:     #06070A;
+
+  /* ---- Suslik Gold — play, brand, commerce ---- */
+  --ds-gold:        #FFC24B;
+  --ds-gold-hi:     #FFD37B;
+  --ds-gold-lo:     #E0A430;
+  --ds-gold-dim:    rgba(255, 194, 75, 0.14);
+  --ds-gold-edge:   rgba(255, 194, 75, 0.34);
+
+  /* ---- Signal Aqua — captions, CC, CC+, accessibility ---- */
+  --ds-aqua:        #5FE3D0;
+  --ds-aqua-hi:     #8FF0E2;
+  --ds-aqua-lo:     #38BFAC;
+  --ds-aqua-dim:    rgba(95, 227, 208, 0.13);
+  --ds-aqua-edge:   rgba(95, 227, 208, 0.32);
+
+  /* ---- Semantic (separate from both accents) ---- */
+  --ds-ok:          #3DDC97;
+  --ds-ok-dim:      rgba(61, 220, 151, 0.14);
+  --ds-warn:        #FF9F45;
+  --ds-warn-dim:    rgba(255, 159, 69, 0.14);
+  --ds-err:         #FF5C5C;
+  --ds-err-dim:     rgba(255, 92, 92, 0.14);
+  --ds-info:        #5FA8FF;
+  --ds-info-dim:    rgba(95, 168, 255, 0.14);
+
+  /* ---- Subscription: one plan for everyone ---- */
+  --ds-vip:         #FFC24B;
+  --ds-vip-edge:    rgba(255, 194, 75, 0.34);
+  /* Editorial collection accent — content, not a paid tier */
+  --ds-coll:        #C89BFF;
+
+  /* ---- Type ---- */
+  --ds-display: "Unbounded", "Onest", system-ui, -apple-system, sans-serif;
+  --ds-ui:      "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ds-t-hero:  clamp(2.6rem, 6.2vw, 5.2rem);
+  --ds-t-d1:    clamp(2.0rem, 4.0vw, 3.25rem);
+  --ds-t-d2:    clamp(1.6rem, 2.8vw, 2.25rem);
+  --ds-t-h1:    1.625rem;
+  --ds-t-h2:    1.25rem;
+  --ds-t-h3:    1.0625rem;
+  --ds-t-body:  0.9375rem;
+  --ds-t-sm:    0.8125rem;
+  --ds-t-xs:    0.6875rem;
+
+  /* ---- Space (4-based) ---- */
+  --ds-1: 4px;  --ds-2: 8px;  --ds-3: 12px; --ds-4: 16px;
+  --ds-5: 20px; --ds-6: 24px; --ds-8: 32px; --ds-10: 40px;
+  --ds-12: 48px; --ds-16: 64px; --ds-20: 80px; --ds-24: 96px;
+
+  /* ---- Radius ---- */
+  --ds-r-xs: 6px;  --ds-r-sm: 10px; --ds-r-md: 14px;
+  --ds-r-lg: 20px; --ds-r-xl: 28px; --ds-r-2xl: 36px; --ds-r-pill: 999px;
+
+  /* ---- Elevation ---- */
+  --ds-e1: 0 1px 2px rgba(0,0,0,.4);
+  --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
+  --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
+  --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
+  --ds-glow-gold: 0 0 0 1px var(--ds-gold-edge), 0 10px 40px -12px rgba(255,194,75,.42);
+  --ds-glow-aqua: 0 0 0 1px var(--ds-aqua-edge), 0 10px 40px -12px rgba(95,227,208,.36);
+
+  /* ---- Motion ---- */
+  --ds-m-micro: 120ms;
+  --ds-m-base:  220ms;
+  --ds-m-large: 420ms;
+  --ds-ease:    cubic-bezier(.32,.72,0,1);
+  --ds-ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   deafsuslik — Component Layer
+   Maps 1:1 to React/Tailwind/shadcn primitives on handoff.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--ds-void);
+  color: var(--ds-ink);
+  font-family: var(--ds-ui);
+  font-size: var(--ds-t-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+:where(a) { color: inherit; text-decoration: none; }
+:where(button, input, select, textarea) { font: inherit; color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--ds-aqua);
+  outline-offset: 2px;
+  border-radius: var(--ds-r-xs);
+}
+
+::selection { background: var(--ds-gold); color: var(--ds-ink-inv); }
+
+/* ---------- Scrollbars ---------- */
+.ds-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-raised-3) transparent; }
+.ds-scroll::-webkit-scrollbar { height: 8px; width: 8px; }
+.ds-scroll::-webkit-scrollbar-thumb { background: var(--ds-raised-3); border-radius: 99px; }
+.ds-scroll::-webkit-scrollbar-track { background: transparent; }
+.ds-noscroll { scrollbar-width: none; }
+.ds-noscroll::-webkit-scrollbar { display: none; }
+
+/* ============================================================
+   BRAND
+   ============================================================ */
+.ds-logo { display: inline-flex; align-items: center; gap: 10px; }
+.ds-logo__mark { display: block; flex: none; }
+.ds-logo__word {
+  font-family: var(--ds-display);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  color: var(--ds-ink);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+.ds-hero-title {
+  font-family: var(--ds-display);
+  font-weight: 700;
+  font-size: var(--ds-t-hero);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
+  margin: 0;
+}
+.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.05; letter-spacing: -0.038em; margin: 0; text-wrap: balance; }
+.ds-d2 { font-family: var(--ds-ui); font-weight: 700; font-size: var(--ds-t-d2); line-height: 1.15; letter-spacing: -0.028em; margin: 0; text-wrap: balance; }
+.ds-h1 { font-weight: 700; font-size: var(--ds-t-h1); line-height: 1.25; letter-spacing: -0.022em; margin: 0; }
+.ds-h2 { font-weight: 600; font-size: var(--ds-t-h2); line-height: 1.3;  letter-spacing: -0.016em; margin: 0; }
+.ds-h3 { font-weight: 600; font-size: var(--ds-t-h3); line-height: 1.4;  letter-spacing: -0.01em;  margin: 0; }
+.ds-body { font-size: var(--ds-t-body); color: var(--ds-ink-2); margin: 0; max-width: 66ch; }
+.ds-sm   { font-size: var(--ds-t-sm); color: var(--ds-ink-2); margin: 0; }
+.ds-cap  { font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin: 0; }
+.ds-eyebrow {
+  font-size: var(--ds-t-xs); font-weight: 600; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ds-ink-3); margin: 0;
+}
+.ds-num { font-family: var(--ds-mono); font-variant-numeric: tabular-nums; font-feature-settings: "tnum"; }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.ds-btn {
+  --_bg: var(--ds-raised-2); --_fg: var(--ds-ink); --_bd: var(--ds-line-mid);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 44px; padding: 0 20px;
+  background: var(--_bg); color: var(--_fg);
+  border: 1px solid var(--_bd); border-radius: var(--ds-r-pill);
+  font-weight: 600; font-size: var(--ds-t-body); letter-spacing: -0.005em;
+  cursor: pointer; white-space: nowrap;
+  transition: transform var(--ds-m-micro) var(--ds-ease),
+              background var(--ds-m-micro) var(--ds-ease),
+              border-color var(--ds-m-micro) var(--ds-ease),
+              box-shadow var(--ds-m-base) var(--ds-ease);
+}
+.ds-btn:hover { transform: translateY(-1px); }
+.ds-btn:active { transform: translateY(0) scale(.985); }
+.ds-btn svg { flex: none; }
+
+.ds-btn--primary { --_bg: var(--ds-gold); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--primary:hover { --_bg: var(--ds-gold-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+
+.ds-btn--aqua { --_bg: var(--ds-aqua); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--aqua:hover { --_bg: var(--ds-aqua-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
+
+.ds-btn--secondary { --_bg: rgba(255,255,255,.07); --_bd: var(--ds-line-mid); }
+.ds-btn--secondary:hover { --_bg: rgba(255,255,255,.12); --_bd: var(--ds-line-strong); }
+
+.ds-btn--ghost { --_bg: transparent; --_bd: transparent; --_fg: var(--ds-ink-2); }
+.ds-btn--ghost:hover { --_bg: rgba(255,255,255,.07); --_fg: var(--ds-ink); }
+
+.ds-btn--outline { --_bg: transparent; --_bd: var(--ds-line-strong); }
+.ds-btn--outline:hover { --_bg: rgba(255,255,255,.06); }
+
+.ds-btn--danger { --_bg: var(--ds-err-dim); --_fg: var(--ds-err); --_bd: rgba(255,92,92,.32); }
+.ds-btn--danger:hover { --_bg: rgba(255,92,92,.22); }
+
+.ds-btn--sm { min-height: 34px; padding: 0 14px; font-size: var(--ds-t-sm); }
+.ds-btn--lg { min-height: 54px; padding: 0 30px; font-size: 1.0625rem; }
+.ds-btn--block { width: 100%; }
+.ds-btn[disabled], .ds-btn[aria-disabled="true"] { opacity: .4; pointer-events: none; }
+
+.ds-iconbtn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; flex: none;
+  background: rgba(255,255,255,.06); color: var(--ds-ink);
+  border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill);
+  cursor: pointer;
+  transition: background var(--ds-m-micro) var(--ds-ease), border-color var(--ds-m-micro) var(--ds-ease), transform var(--ds-m-micro) var(--ds-ease);
+}
+.ds-iconbtn:hover { background: rgba(255,255,255,.12); border-color: var(--ds-line-strong); }
+.ds-iconbtn:active { transform: scale(.94); }
+.ds-iconbtn--sm { width: 34px; height: 34px; }
+.ds-iconbtn--bare { background: transparent; border-color: transparent; color: var(--ds-ink-2); }
+.ds-iconbtn--bare:hover { background: rgba(255,255,255,.08); color: var(--ds-ink); }
+.ds-iconbtn--on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+
+/* ============================================================
+   BADGES  — never colour-only: each carries a glyph or letters
+   ============================================================ */
+.ds-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 20px; padding: 0 7px;
+  border-radius: var(--ds-r-xs);
+  font-size: 10px; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; white-space: nowrap;
+  background: rgba(255,255,255,.10); color: var(--ds-ink);
+  border: 1px solid var(--ds-line-mid);
+  font-family: var(--ds-ui);
+}
+.ds-badge--cc      { background: transparent; color: var(--ds-aqua); border-color: var(--ds-aqua-edge); }
+.ds-badge--ccplus  { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-badge--4k      { background: rgba(255,255,255,.14); color: #fff; border-color: var(--ds-line-strong); letter-spacing: .04em; }
+.ds-badge--hd      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
+.ds-badge--offline { background: rgba(255,255,255,.08); color: var(--ds-ink); border-color: var(--ds-line-mid); }
+.ds-badge--ad      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
+.ds-badge--gold    { background: var(--ds-gold-dim); color: var(--ds-gold); border-color: var(--ds-gold-edge); }
+.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(61,220,151,.3); }
+.ds-badge--warn    { background: var(--ds-warn-dim); color: var(--ds-warn); border-color: rgba(255,159,69,.3); }
+.ds-badge--err     { background: var(--ds-err-dim); color: var(--ds-err); border-color: rgba(255,92,92,.3); }
+.ds-badge--info    { background: var(--ds-info-dim); color: var(--ds-info); border-color: rgba(95,168,255,.3); }
+.ds-badge--age     { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); font-family: var(--ds-mono); letter-spacing: 0; }
+.ds-badge--lg      { height: 26px; padding: 0 11px; font-size: 11px; }
+
+/* ============================================================
+   CHIPS
+   ============================================================ */
+.ds-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  min-height: 36px; padding: 0 14px;
+  background: rgba(255,255,255,.05); color: var(--ds-ink-2);
+  border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill);
+  font-size: var(--ds-t-sm); font-weight: 500; cursor: pointer; white-space: nowrap;
+  transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-chip:hover { background: rgba(255,255,255,.10); color: var(--ds-ink); }
+.ds-chip[aria-pressed="true"], .ds-chip.is-on {
+  background: var(--ds-ink); color: var(--ds-ink-inv); border-color: transparent; font-weight: 600;
+}
+.ds-chip--aqua[aria-pressed="true"], .ds-chip--aqua.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); }
+
+/* ============================================================
+   INPUTS
+   ============================================================ */
+.ds-field { display: flex; flex-direction: column; gap: 7px; }
+.ds-label { font-size: var(--ds-t-sm); font-weight: 600; color: var(--ds-ink-2); }
+.ds-input, .ds-select, .ds-textarea {
+  width: 100%; min-height: 50px; padding: 13px 16px;
+  background: var(--ds-raised); color: var(--ds-ink);
+  border: 1px solid var(--ds-line-mid); border-radius: var(--ds-r-md);
+  font-size: var(--ds-t-body); outline: none;
+  transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease);
+}
+.ds-textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
+.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-4); }
+.ds-input:focus, .ds-select:focus, .ds-textarea:focus {
+  border-color: var(--ds-aqua-edge); background: var(--ds-raised-2);
+  box-shadow: 0 0 0 3px rgba(95,227,208,.13); outline: none;
+}
+.ds-input[aria-invalid="true"], .ds-textarea[aria-invalid="true"] {
+  border-color: rgba(255,92,92,.55); box-shadow: 0 0 0 3px rgba(255,92,92,.12);
+}
+.ds-select { appearance: none; cursor: pointer; padding-right: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236E7787' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 15px center; }
+.ds-help { font-size: var(--ds-t-xs); color: var(--ds-ink-3); }
+.ds-err-text { font-size: var(--ds-t-xs); color: var(--ds-err); display: flex; align-items: center; gap: 5px; }
+
+.ds-inputwrap { position: relative; display: flex; align-items: center; }
+.ds-inputwrap .ds-input { padding-left: 46px; }
+.ds-inputwrap__icon { position: absolute; left: 16px; color: var(--ds-ink-3); pointer-events: none; display: flex; }
+.ds-inputwrap__trail { position: absolute; right: 8px; }
+
+/* Search bar */
+.ds-search {
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; min-height: 54px; padding: 0 18px;
+  background: var(--ds-raised); border: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-pill);
+  transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease);
+}
+.ds-search:focus-within { border-color: var(--ds-aqua-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
+.ds-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: var(--ds-t-body); }
+.ds-search input::placeholder { color: var(--ds-ink-4); }
+
+/* Switch */
+.ds-switch { position: relative; display: inline-flex; align-items: center; width: 46px; height: 27px; flex: none; cursor: pointer; }
+.ds-switch input { position: absolute; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.ds-switch__track {
+  width: 100%; height: 100%; border-radius: 99px;
+  background: var(--ds-raised-3); border: 1px solid var(--ds-line-mid);
+  transition: background var(--ds-m-base) var(--ds-ease), border-color var(--ds-m-base) var(--ds-ease);
+}
+.ds-switch__thumb {
+  position: absolute; left: 3px; width: 21px; height: 21px; border-radius: 99px;
+  background: var(--ds-ink-2); box-shadow: var(--ds-e1);
+  transition: transform var(--ds-m-base) var(--ds-ease), background var(--ds-m-base) var(--ds-ease);
+  pointer-events: none;
+}
+.ds-switch input:checked ~ .ds-switch__track { background: var(--ds-aqua); border-color: transparent; }
+.ds-switch input:checked ~ .ds-switch__thumb { transform: translateX(19px); background: var(--ds-ink-inv); }
+.ds-switch input:focus-visible ~ .ds-switch__track { outline: 2px solid var(--ds-aqua); outline-offset: 2px; }
+
+/* Radio & checkbox */
+.ds-opt { display: flex; align-items: center; gap: 11px; padding: 11px 0; cursor: pointer; min-height: 44px; }
+.ds-opt__box {
+  width: 21px; height: 21px; flex: none; border: 2px solid var(--ds-line-strong);
+  display: grid; place-items: center; transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-opt__box--radio { border-radius: 99px; }
+.ds-opt__box--check { border-radius: 6px; }
+.ds-opt__box::after { content: ""; opacity: 0; transition: opacity var(--ds-m-micro) var(--ds-ease); }
+.ds-opt__box--radio::after { width: 9px; height: 9px; border-radius: 99px; background: var(--ds-ink-inv); }
+.ds-opt.is-on .ds-opt__box { border-color: var(--ds-aqua); background: var(--ds-aqua); }
+.ds-opt.is-on .ds-opt__box::after { opacity: 1; }
+.ds-opt__box--check::after {
+  width: 11px; height: 11px;
+  background: var(--ds-ink-inv);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/contain no-repeat;
+}
+
+/* Slider */
+.ds-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 99px;
+  background: var(--ds-raised-3); outline: none; cursor: pointer; }
+.ds-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 99px;
+  background: var(--ds-ink); box-shadow: var(--ds-e2); cursor: grab; }
+.ds-slider::-moz-range-thumb { width: 18px; height: 18px; border: 0; border-radius: 99px; background: var(--ds-ink); cursor: grab; }
+
+/* ============================================================
+   SURFACES
+   ============================================================ */
+.ds-card {
+  background: var(--ds-panel); border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-lg); padding: var(--ds-5);
+}
+.ds-card--flush { padding: 0; overflow: hidden; }
+.ds-glass {
+  background: rgba(20, 24, 31, .72);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--ds-line-mid);
+}
+.ds-divider { height: 1px; background: var(--ds-line); border: 0; margin: 0; }
+
+/* Row list */
+.ds-rows { display: flex; flex-direction: column; }
+.ds-row {
+  display: flex; align-items: center; gap: 14px;
+  min-height: 58px; padding: 13px 18px;
+  border-bottom: 1px solid var(--ds-line);
+  cursor: pointer; text-align: left; width: 100%;
+  background: none; border-left: 0; border-right: 0; border-top: 0;
+  transition: background var(--ds-m-micro) var(--ds-ease);
+}
+.ds-row:last-child { border-bottom: 0; }
+.ds-row:hover { background: rgba(255,255,255,.04); }
+.ds-row__ico { width: 22px; flex: none; color: var(--ds-ink-3); display: flex; }
+.ds-row__main { flex: 1; min-width: 0; }
+.ds-row__title { display: block; font-size: var(--ds-t-body); font-weight: 500; }
+.ds-row__sub { display: block; font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin-top: 1px; line-height: 1.45; }
+.ds-row__meta { font-size: var(--ds-t-sm); color: var(--ds-ink-3); flex: none; }
+.ds-row__chev { color: var(--ds-ink-4); flex: none; display: flex; }
+
+/* Tabs */
+.ds-tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--ds-line); overflow-x: auto; }
+.ds-tab {
+  position: relative; padding: 13px 4px; margin-right: 20px;
+  background: none; border: 0; cursor: pointer; white-space: nowrap;
+  font-size: var(--ds-t-body); font-weight: 600; color: var(--ds-ink-3);
+  transition: color var(--ds-m-micro) var(--ds-ease);
+}
+.ds-tab:hover { color: var(--ds-ink-2); }
+.ds-tab[aria-selected="true"] { color: var(--ds-ink); }
+.ds-tab[aria-selected="true"]::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--ds-gold); border-radius: 2px;
+}
+
+/* Segmented */
+.ds-seg { display: inline-flex; padding: 3px; background: var(--ds-raised); border: 1px solid var(--ds-line); border-radius: var(--ds-r-pill); }
+.ds-seg button {
+  padding: 7px 15px; background: none; border: 0; border-radius: var(--ds-r-pill);
+  font-size: var(--ds-t-sm); font-weight: 600; color: var(--ds-ink-3); cursor: pointer;
+  transition: all var(--ds-m-micro) var(--ds-ease); display: inline-flex; align-items: center; gap: 6px;
+}
+.ds-seg button[aria-selected="true"] { background: var(--ds-raised-3); color: var(--ds-ink); }
+
+/* Progress */
+.ds-prog { height: 3px; background: rgba(255,255,255,.16); border-radius: 99px; overflow: hidden; }
+.ds-prog__bar { height: 100%; background: var(--ds-gold); border-radius: 99px; }
+.ds-prog--aqua .ds-prog__bar { background: var(--ds-aqua); }
+.ds-prog--thick { height: 6px; }
+
+/* Toast */
+.ds-toast {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 16px; border-radius: var(--ds-r-md);
+  background: rgba(27,32,41,.92); backdrop-filter: blur(20px);
+  border: 1px solid var(--ds-line-mid); box-shadow: var(--ds-e3);
+  font-size: var(--ds-t-sm); max-width: 420px;
+}
+.ds-toast__ico { flex: none; display: flex; }
+
+/* Skeleton */
+.ds-skel {
+  background: linear-gradient(90deg, var(--ds-raised) 25%, var(--ds-raised-2) 50%, var(--ds-raised) 75%);
+  background-size: 400% 100%;
+  animation: ds-shimmer 1.5s ease-in-out infinite;
+  border-radius: var(--ds-r-sm);
+}
+@keyframes ds-shimmer { 0% { background-position: 100% 0; } 100% { background-position: -100% 0; } }
+
+/* Empty state */
+.ds-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: var(--ds-16) var(--ds-6); }
+.ds-empty__ico {
+  width: 68px; height: 68px; display: grid; place-items: center; border-radius: 22px;
+  background: var(--ds-raised); border: 1px solid var(--ds-line); color: var(--ds-ink-3);
+}
+
+/* ============================================================
+   POSTER / ARTWORK  (procedural — no third-party imagery)
+   ============================================================ */
+.ds-art { position: relative; overflow: hidden; background: var(--ds-raised); isolation: isolate; }
+.ds-art__grad { position: absolute; inset: 0; }
+.ds-art::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+.ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,4,7,.92) 0%, rgba(3,4,7,.35) 42%, transparent 72%); }
+.ds-art__title {
+  position: absolute; left: 10px; right: 10px; bottom: 10px;
+  font-family: var(--ds-display); font-weight: 700; letter-spacing: -0.03em;
+  line-height: .92; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  text-transform: uppercase;
+}
+
+/* ============================================================
+   MOVIE CARDS
+   ============================================================ */
+.ds-poster {
+  position: relative; display: block; width: 100%;
+  border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer;
+  background: var(--ds-raised); border: 1px solid var(--ds-line);
+  transition: transform var(--ds-m-base) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease), border-color var(--ds-m-base) var(--ds-ease);
+}
+.ds-poster:hover { transform: translateY(-4px); box-shadow: var(--ds-e3); border-color: var(--ds-line-strong); }
+.ds-poster__art { aspect-ratio: 2/3; }
+.ds-poster__badges { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; flex-wrap: wrap; z-index: 2; }
+.ds-poster__hover {
+  position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 14px;
+  background: linear-gradient(to top, rgba(3,4,7,.94), rgba(3,4,7,.2) 60%, transparent);
+  opacity: 0; transition: opacity var(--ds-m-base) var(--ds-ease); z-index: 3;
+}
+.ds-poster:hover .ds-poster__hover { opacity: 1; }
+.ds-poster__meta { padding: 10px 2px 2px; }
+.ds-poster__name { font-size: var(--ds-t-sm); font-weight: 600; line-height: 1.3; }
+.ds-poster__sub { font-size: var(--ds-t-xs); color: var(--ds-ink-3); margin-top: 2px; display: flex; align-items: center; gap: 6px; }
+
+.ds-land { position: relative; border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer; border: 1px solid var(--ds-line); }
+.ds-land__art { aspect-ratio: 16/9; }
+
+.ds-cw { position: relative; border-radius: var(--ds-r-md); overflow: hidden; cursor: pointer; border: 1px solid var(--ds-line); background: var(--ds-panel); }
+.ds-cw__art { aspect-ratio: 16/9; position: relative; }
+.ds-cw__play {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: rgba(3,4,7,.28); transition: background var(--ds-m-base) var(--ds-ease);
+}
+.ds-cw:hover .ds-cw__play { background: rgba(3,4,7,.5); }
+.ds-cw__playbtn {
+  width: 48px; height: 48px; border-radius: 99px; display: grid; place-items: center;
+  background: rgba(255,255,255,.94); color: var(--ds-ink-inv); box-shadow: var(--ds-e2);
+}
+.ds-cw__bar { position: absolute; left: 0; right: 0; bottom: 0; }
+.ds-cw__foot { padding: 11px 13px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+/* Compact search-result row */
+.ds-hit { display: flex; gap: 14px; padding: 11px; border-radius: var(--ds-r-md); cursor: pointer; align-items: center;
+  transition: background var(--ds-m-micro) var(--ds-ease); }
+.ds-hit:hover { background: rgba(255,255,255,.05); }
+.ds-hit__art { width: 92px; flex: none; aspect-ratio: 16/10; border-radius: var(--ds-r-sm); overflow: hidden; }
+.ds-hit__main { flex: 1; min-width: 0; }
+
+/* Downloaded card */
+.ds-dl { display: flex; gap: 14px; padding: 13px; background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); }
+.ds-dl__art { width: 74px; flex: none; aspect-ratio: 2/3; border-radius: var(--ds-r-sm); overflow: hidden; }
+.ds-dl__main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 7px; }
+
+/* Rail */
+.ds-rail { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px; scroll-snap-type: x proximity; }
+.ds-rail > * { scroll-snap-align: start; }
+.ds-railhead { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+
+/* ============================================================
+   CAPTION SYSTEM — the product's signature
+   ============================================================ */
+.ds-cue {
+  font-family: var(--ds-ui); font-weight: 600; line-height: 1.34;
+  color: #fff; text-align: center;
+  text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
+}
+.ds-cue__speaker { color: var(--ds-aqua); font-weight: 700; letter-spacing: .04em; display: block; }
+.ds-cue__sound { color: var(--ds-aqua-hi); font-style: italic; font-weight: 500; display: block; }
+.ds-cuebox {
+  display: inline-block; padding: 7px 15px; border-radius: 8px;
+  background: rgba(0,0,0,.62); backdrop-filter: blur(3px);
+  max-width: 34ch; text-align: center;
+}
+/* Full-width centring track the cue box sits in */
+.ds-cuetrack { width: 100%; text-align: center; padding: 0 5%; }
+
+/* Caption strip — recurring structural device */
+.ds-strip {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 20px; border-radius: var(--ds-r-md);
+  background: var(--ds-aqua-dim); border-left: 3px solid var(--ds-aqua);
+}
+.ds-strip__label {
+  font-family: var(--ds-mono); font-size: 10px; font-weight: 700; letter-spacing: .1em;
+  color: var(--ds-aqua); text-transform: uppercase; flex: none; padding-top: 3px;
+}
+
+/* ============================================================
+   PLAYER
+   ============================================================ */
+.ds-player { position: relative; background: #000; overflow: hidden; }
+.ds-player__stage { position: absolute; inset: 0; }
+.ds-player__ui { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
+  background: linear-gradient(to bottom, rgba(3,4,7,.8) 0%, transparent 22%, transparent 55%, rgba(3,4,7,.88) 100%); }
+.ds-player__top { display: flex; align-items: center; gap: 12px; padding: 18px 22px; }
+.ds-player__bottom { padding: 0 22px 18px; display: flex; flex-direction: column; gap: 12px; }
+.ds-player__center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 38px; }
+
+.ds-scrub { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; }
+.ds-scrub__track { position: absolute; left: 0; right: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.24); }
+.ds-scrub__buf   { position: absolute; left: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.38); }
+.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-gold); }
+.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-gold);
+  box-shadow: 0 0 0 4px rgba(255,194,75,.24), var(--ds-e2); transform: translateX(-50%); }
+.ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,7,10,.7); border-radius: 1px; }
+
+.ds-pbtn {
+  display: grid; place-items: center; border-radius: 99px; cursor: pointer;
+  background: rgba(255,255,255,.10); border: 1px solid rgba(255,255,255,.14); color: #fff;
+  transition: background var(--ds-m-micro) var(--ds-ease), transform var(--ds-m-micro) var(--ds-ease);
+}
+.ds-pbtn:hover { background: rgba(255,255,255,.2); }
+.ds-pbtn:active { transform: scale(.93); }
+.ds-pbtn--main { width: 76px; height: 76px; background: rgba(255,255,255,.95); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-pbtn--main:hover { background: #fff; }
+.ds-pbtn--skip { width: 58px; height: 58px; }
+.ds-pbtn--sm { width: 40px; height: 40px; background: transparent; border-color: transparent; }
+.ds-pbtn--cc { padding: 0 12px; height: 40px; width: auto; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
+.ds-pbtn--cc.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+
+/* ============================================================
+   SHEETS / MODALS
+   ============================================================ */
+.ds-scrim-l { position: absolute; inset: 0; background: rgba(3,4,7,.72); backdrop-filter: blur(6px); }
+.ds-sheet {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  background: var(--ds-panel); border-top: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-xl) var(--ds-r-xl) 0 0;
+  box-shadow: var(--ds-e4); max-height: 88%; display: flex; flex-direction: column;
+}
+.ds-sheet__grab { width: 38px; height: 4px; border-radius: 99px; background: var(--ds-line-strong); margin: 10px auto 4px; flex: none; }
+.ds-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 20px 14px; flex: none; }
+.ds-sheet__body { padding: 0 20px 20px; overflow-y: auto; }
+.ds-sheet__foot { padding: 14px 20px calc(14px + env(safe-area-inset-bottom)); border-top: 1px solid var(--ds-line); display: flex; gap: 10px; flex: none; }
+
+.ds-modal {
+  background: var(--ds-panel); border: 1px solid var(--ds-line-mid);
+  border-radius: var(--ds-r-xl); box-shadow: var(--ds-e4);
+  width: min(480px, 92%); max-height: 86%; display: flex; flex-direction: column;
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+.ds-tabbar {
+  display: flex; align-items: stretch;
+  background: rgba(13,16,22,.88); backdrop-filter: blur(28px) saturate(160%);
+  border-top: 1px solid var(--ds-line); flex: none;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.ds-tabbar__item {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+  padding: 9px 2px 7px; background: none; border: 0; cursor: pointer;
+  color: var(--ds-ink-3); font-size: 10px; font-weight: 600; min-height: 52px;
+  transition: color var(--ds-m-micro) var(--ds-ease);
+}
+.ds-tabbar__item.is-on { color: var(--ds-ink); }
+.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-gold); }
+.ds-tabbar__ico { display: flex; position: relative; }
+.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-gold); border: 2px solid var(--ds-panel); }
+
+.ds-topbar {
+  display: flex; align-items: center; gap: 18px;
+  height: 68px; padding: 0 28px;
+  background: rgba(6,7,10,.78); backdrop-filter: blur(26px) saturate(160%);
+  border-bottom: 1px solid var(--ds-line);
+  position: sticky; top: 0; z-index: 50;
+}
+.ds-topnav { display: flex; align-items: center; gap: 2px; }
+.ds-topnav a {
+  padding: 8px 14px; border-radius: var(--ds-r-pill); font-size: var(--ds-t-sm); font-weight: 600;
+  color: var(--ds-ink-3); transition: all var(--ds-m-micro) var(--ds-ease);
+}
+.ds-topnav a:hover { color: var(--ds-ink); background: rgba(255,255,255,.06); }
+.ds-topnav a.is-on { color: var(--ds-ink); background: rgba(255,255,255,.09); }
+
+/* ============================================================
+   DEVICE FRAMES
+   ============================================================ */
+.ds-phone { position: relative; flex: none; }
+.ds-phone__body {
+  position: relative; background: #0A0B0E; border-radius: 46px;
+  padding: 11px; box-shadow: 0 0 0 2px #2A2E36, 0 0 0 4px #101216, var(--ds-e4);
+}
+.ds-phone__screen {
+  position: relative; width: 372px; height: 806px; border-radius: 36px; overflow: hidden;
+  background: var(--ds-void); display: flex; flex-direction: column;
+}
+.ds-phone--sm .ds-phone__screen { width: 320px; height: 692px; }
+.ds-phone--land .ds-phone__screen { width: 806px; height: 372px; }
+.ds-island {
+  position: absolute; top: 11px; left: 50%; transform: translateX(-50%);
+  width: 118px; height: 34px; border-radius: 99px; background: #000; z-index: 60;
+}
+.ds-android__punch {
+  position: absolute; top: 13px; left: 50%; transform: translateX(-50%);
+  width: 11px; height: 11px; border-radius: 99px; background: #000; z-index: 60;
+}
+.ds-statusbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 15px 28px 6px; font-size: 13px; font-weight: 600; flex: none; z-index: 55;
+  position: relative; color: var(--ds-ink);
+}
+.ds-statusbar--android { padding: 9px 16px 5px; font-size: 12px; }
+.ds-homebar { height: 22px; display: grid; place-items: center; flex: none; }
+.ds-homebar::after { content: ""; width: 134px; height: 5px; border-radius: 99px; background: rgba(255,255,255,.32); }
+.ds-navbar-and { height: 26px; display: flex; align-items: center; justify-content: center; gap: 46px; flex: none; color: var(--ds-ink-3); }
+
+/* ============================================================
+   ADMIN
+   ============================================================ */
+.ds-table { width: 100%; border-collapse: collapse; font-size: var(--ds-t-sm); }
+.ds-table th {
+  text-align: left; padding: 11px 14px; font-size: var(--ds-t-xs); font-weight: 700;
+  letter-spacing: .07em; text-transform: uppercase; color: var(--ds-ink-3);
+  border-bottom: 1px solid var(--ds-line); white-space: nowrap;
+}
+.ds-table td { padding: 12px 14px; border-bottom: 1px solid var(--ds-line); vertical-align: middle; }
+.ds-table tbody tr { transition: background var(--ds-m-micro) var(--ds-ease); }
+.ds-table tbody tr:hover { background: rgba(255,255,255,.03); }
+.ds-tablewrap { overflow-x: auto; }
+
+.ds-stat { padding: 16px 18px; background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-md); }
+.ds-stat__k { font-size: var(--ds-t-xs); color: var(--ds-ink-3); font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+.ds-stat__v { font-family: var(--ds-mono); font-size: 1.7rem; font-weight: 700; letter-spacing: -.03em; margin-top: 6px; line-height: 1; }
+.ds-stat__d { font-size: var(--ds-t-xs); margin-top: 7px; display: flex; align-items: center; gap: 4px; }
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+.ds-stack { display: flex; flex-direction: column; }
+.ds-row-f { display: flex; align-items: center; }
+.ds-between { display: flex; align-items: center; justify-content: space-between; gap: 14px; }
+.ds-wrap { display: flex; flex-wrap: wrap; }
+.ds-grow { flex: 1; min-width: 0; }
+.ds-g1 { gap: 4px; } .ds-g2 { gap: 8px; } .ds-g3 { gap: 12px; } .ds-g4 { gap: 16px; }
+.ds-g5 { gap: 20px; } .ds-g6 { gap: 24px; } .ds-g8 { gap: 32px; } .ds-g10 { gap: 40px; } .ds-g12 { gap: 48px; }
+.ds-mut { color: var(--ds-ink-2); } .ds-mut2 { color: var(--ds-ink-3); }
+.ds-gold-t { color: var(--ds-gold); } .ds-aqua-t { color: var(--ds-aqua); }
+.ds-center { text-align: center; }
+.ds-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
+.ds-sr {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+</style>
+<script>
+/* ============================================================
+   deafsuslik — shared runtime
+   Logo, icon set, procedural artwork engine, catalogue.
+   ============================================================ */
+
+/* ---------- Brand mark ----------
+   A squircle token. Inside, an upright suslik silhouette knocked
+   out in negative space; its chest carries the play triangle.
+   Reads at 16px, works on gold or on graphite.                */
+function dsLogoMark(size, opts) {
+  opts = opts || {};
+  var fill = opts.fill || 'url(#dsg)';
+  var cut  = opts.cut  || '#06070A';
+  var id   = 'dsg' + Math.random().toString(36).slice(2, 7);
+  return '' +
+  '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
+    '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
+      '<stop stop-color="#FFD37B"/><stop offset=".55" stop-color="#FFC24B"/><stop offset="1" stop-color="#E0A430"/>' +
+    '</linearGradient></defs>' +
+    '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
+    /* suslik: ears */
+    '<path d="M17.4 12.6a2.9 2.9 0 1 1 5.05 2.83l-.62 1.1-4.9-2.75.47-1.18Z" fill="' + cut + '"/>' +
+    '<path d="M30.6 12.6a2.9 2.9 0 1 0-5.05 2.83l.62 1.1 4.9-2.75-.47-1.18Z" fill="' + cut + '"/>' +
+    /* body: upright silhouette, play triangle cut from chest */
+    '<path fill-rule="evenodd" clip-rule="evenodd" d="M24 13.2c-5.35 0-9.35 3.9-9.35 9.35v9.9c0 5.45 4 9.35 9.35 9.35s9.35-3.9 9.35-9.35v-9.9c0-5.45-4-9.35-9.35-9.35Zm-2.6 8.55c0-.86.94-1.39 1.67-.94l7.05 4.35c.7.43.7 1.45 0 1.88l-7.05 4.35c-.73.45-1.67-.08-1.67-.94v-8.7Z" fill="' + cut + '"/>' +
+  '</svg>';
+}
+
+function dsLogo(px, wordPx, opts) {
+  return '<span class="ds-logo">' + dsLogoMark(px, opts) +
+    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">deafsuslik</span></span>';
+}
+
+/* ---------- Icons (24px stroke set, one consistent family) ---------- */
+var DSI = {
+  home:'M3 10.4 12 3l9 7.4V20a1.6 1.6 0 0 1-1.6 1.6h-4.2v-6.2H9.8v6.2H5.6A1.6 1.6 0 0 1 4 20v-9.6Z',
+  search:'M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM21 21l-4.35-4.35',
+  library:'M4 5h4v14H4zM10.5 5h4v14h-4zM17.4 5.6l3 .8-3.4 12.8-3-.8z',
+  download:'M12 3v12M7.5 11l4.5 4.5 4.5-4.5M4 20h16',
+  user:'M12 12a4.2 4.2 0 1 0 0-8.4 4.2 4.2 0 0 0 0 8.4ZM4.5 21c0-3.6 3.4-6 7.5-6s7.5 2.4 7.5 6',
+  play:'M7 4.5v15l13-7.5z',
+  pause:'M8.5 4.5v15M15.5 4.5v15',
+  back10:'M11 7 6 12l5 5M6 12h8.5A5.5 5.5 0 0 1 20 17.5',
+  fwd10:'M13 7l5 5-5 5M18 12H9.5A5.5 5.5 0 0 0 4 17.5',
+  plus:'M12 5v14M5 12h14',
+  minus:'M5 12h14',
+  check:'M20 6 9 17l-5-5',
+  x:'M18 6 6 18M6 6l12 12',
+  chevR:'m9 5 7 7-7 7',
+  chevL:'m15 5-7 7 7 7',
+  chevD:'m6 9 6 6 6-6',
+  chevU:'m6 15 6-6 6 6',
+  arrowL:'M19 12H5M11 6l-6 6 6 6',
+  heart:'M12 20.5 4.3 13a4.9 4.9 0 0 1 7.7-6 4.9 4.9 0 0 1 7.7 6L12 20.5Z',
+  bookmark:'M6 3.5h12v17l-6-4.2-6 4.2z',
+  star:'m12 3.5 2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z',
+  bell:'M18 8.5a6 6 0 1 0-12 0c0 6-2.2 7.5-2.2 7.5h16.4S18 14.5 18 8.5ZM13.7 20a2 2 0 0 1-3.4 0',
+  settings:'M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4Z|M19.3 15a1.6 1.6 0 0 0 .3 1.8l.1.1a1.9 1.9 0 1 1-2.7 2.7l-.1-.1a1.6 1.6 0 0 0-2.7 1.1v.3a1.9 1.9 0 1 1-3.8 0v-.2a1.6 1.6 0 0 0-2.8-1.1l-.1.1A1.9 1.9 0 1 1 4.8 17l.1-.1A1.6 1.6 0 0 0 3.8 14h-.3a1.9 1.9 0 1 1 0-3.8h.2a1.6 1.6 0 0 0 1.1-2.8l-.1-.1A1.9 1.9 0 1 1 7.4 4.6l.1.1a1.6 1.6 0 0 0 1.8.3H9.4a1.6 1.6 0 0 0 1-1.5v-.3a1.9 1.9 0 0 1 3.8 0v.2a1.6 1.6 0 0 0 2.7 1.1l.1-.1a1.9 1.9 0 1 1 2.7 2.7l-.1.1a1.6 1.6 0 0 0-.3 1.8v.1a1.6 1.6 0 0 0 1.5 1h.3a1.9 1.9 0 0 1 0 3.8h-.2a1.6 1.6 0 0 0-1.5 1Z',
+  filter:'M4 5h16M7 12h10M10 19h4',
+  grid:'M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z',
+  list:'M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01',
+  cc:'M4 5h16a1.6 1.6 0 0 1 1.6 1.6v10.8A1.6 1.6 0 0 1 20 19H4a1.6 1.6 0 0 1-1.6-1.6V6.6A1.6 1.6 0 0 1 4 5Z|M6.6 10.2h4.2M13.2 10.2h4.2M6.6 14h7.4',
+  volume:'M11 5 6.5 8.8H3v6.4h3.5L11 19zM15.5 9.2a4 4 0 0 1 0 5.6M18.5 6.5a8 8 0 0 1 0 11',
+  mute:'M11 5 6.5 8.8H3v6.4h3.5L11 19zM17 9.5l4.5 5M21.5 9.5 17 14.5',
+  fullscreen:'M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M8 21H5a2 2 0 0 1-2-2v-3M16 21h3a2 2 0 0 0 2-2v-3',
+  exitfull:'M3 8h3a2 2 0 0 0 2-2V3M21 8h-3a2 2 0 0 1-2-2V3M3 16h3a2 2 0 0 1 2 2v3M21 16h-3a2 2 0 0 0-2 2v3',
+  pip:'M21 11V6.6A1.6 1.6 0 0 0 19.4 5H4.6A1.6 1.6 0 0 0 3 6.6v10.8A1.6 1.6 0 0 0 4.6 19H10M13 13h7a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-7a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1Z',
+  lock:'M6.5 10.5V7.8a5.5 5.5 0 0 1 11 0v2.7M5.6 10.5h12.8a1.6 1.6 0 0 1 1.6 1.6v7.3a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19.4v-7.3a1.6 1.6 0 0 1 1.6-1.6Z',
+  unlock:'M6.5 10.5V7.8a5.5 5.5 0 0 1 10.6-2M5.6 10.5h12.8a1.6 1.6 0 0 1 1.6 1.6v7.3a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 19.4v-7.3a1.6 1.6 0 0 1 1.6-1.6Z',
+  speed:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 12l4-4',
+  quality:'M4 6h16v12H4zM8.5 10.5v3M12 10v4M15.5 10.5v3',
+  next:'M5 5l9 7-9 7zM18 5v14',
+  prev:'M19 5l-9 7 9 7zM6 5v14',
+  alert:'M12 8.5v4.5M12 16.5h.01M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z',
+  info:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 16v-4.5M12 8h.01',
+  checkc:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM8.5 12l2.5 2.5 4.5-5',
+  xc:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM14.8 9.2l-5.6 5.6M9.2 9.2l5.6 5.6',
+  wifi:'M2.5 9.5a15 15 0 0 1 19 0M5.5 13a10.5 10.5 0 0 1 13 0M8.5 16.5a6 6 0 0 1 7 0M12 20h.01',
+  wifioff:'M2 2l20 20M8.5 16.5a6 6 0 0 1 7 0M12 20h.01M5.5 13a10.5 10.5 0 0 1 4-2.4M2.5 9.5a15 15 0 0 1 5-3.2M14 5.6a15 15 0 0 1 7.5 3.9',
+  clock:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM12 7v5l3.2 2',
+  trash:'M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7M6.5 7l.9 12.1A1.6 1.6 0 0 0 9 20.6h6a1.6 1.6 0 0 0 1.6-1.5L17.5 7',
+  edit:'M4 20h4L19 9a2.4 2.4 0 0 0-3.4-3.4L4.5 16.7 4 20Z',
+  share:'M4 12v7.4A1.6 1.6 0 0 0 5.6 21h12.8a1.6 1.6 0 0 0 1.6-1.6V12M12 15V3M8 7l4-4 4 4',
+  card:'M3 8.5h18M4.6 5h14.8A1.6 1.6 0 0 1 21 6.6v10.8a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 17.4V6.6A1.6 1.6 0 0 1 4.6 5Z',
+  shield:'M12 21s7.5-3.4 7.5-9V6L12 3 4.5 6v6c0 5.6 7.5 9 7.5 9Z',
+  devices:'M3.5 5.5h11a1 1 0 0 1 1 1V9M3.5 5.5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1H10M17.5 9h3a1 1 0 0 1 1 1v9.5a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V10a1 1 0 0 1 1-1Z',
+  help:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM9.6 9.5a2.5 2.5 0 0 1 4.85.8c0 1.7-2.45 2.5-2.45 2.5M12 17h.01',
+  ticket:'M4 8.5V6.6A1.6 1.6 0 0 1 5.6 5h12.8A1.6 1.6 0 0 1 20 6.6v1.9a2.4 2.4 0 0 0 0 7v1.9a1.6 1.6 0 0 1-1.6 1.6H5.6A1.6 1.6 0 0 1 4 17.4v-1.9a2.4 2.4 0 0 0 0-7ZM11 9v6',
+  logout:'M9 21H5.6A1.6 1.6 0 0 1 4 19.4V4.6A1.6 1.6 0 0 1 5.6 3H9M16 16l5-4-5-4M21 12H9',
+  globe:'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18ZM3.2 10h17.6M3.2 14h17.6M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18',
+  folder:'M3 7.5A1.5 1.5 0 0 1 4.5 6h4l2 2.5h9a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19.5 20h-15A1.5 1.5 0 0 1 3 18.5Z',
+  film:'M4.6 4h14.8A1.6 1.6 0 0 1 21 5.6v12.8a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18.4V5.6A1.6 1.6 0 0 1 4.6 4ZM7.5 4v16M16.5 4v16M3 9.5h4.5M3 14.5h4.5M16.5 9.5H21M16.5 14.5H21',
+  layers:'m12 3 9 5-9 5-9-5 9-5ZM3 16l9 5 9-5M3 12l9 5 9-5',
+  chart:'M4 20V10M10 20V4M16 20v-7M22 20H2',
+  users:'M16 20v-1.6c0-2.2-2.4-3.4-5.5-3.4S5 16.2 5 18.4V20M10.5 12a3.6 3.6 0 1 0 0-7.2 3.6 3.6 0 0 0 0 7.2ZM19 20v-1.5c0-1.7-1.2-2.8-3-3.2M16 5a3.6 3.6 0 0 1 0 6.9',
+  db:'M12 8.5c4.4 0 8-1.2 8-2.75S16.4 3 12 3 4 4.2 4 5.75 7.6 8.5 12 8.5ZM4 5.75v12.5C4 19.8 7.6 21 12 21s8-1.2 8-2.75V5.75M4 12c0 1.55 3.6 2.75 8 2.75s8-1.2 8-2.75',
+  cloud:'M17.5 19a4.5 4.5 0 0 0 .5-8.97A6.5 6.5 0 0 0 5.2 11.2 3.9 3.9 0 0 0 6 19h11.5Z',
+  upload:'M12 16V4M7.5 8.5 12 4l4.5 4.5M4 20h16',
+  key:'M15.5 14a5.5 5.5 0 1 0-4.6-2.5L3 19.4V21h3l1.3-1.3v-2h2v-2h2l1.3-1.3a5.5 5.5 0 0 0 2.9.6ZM17 8.5h.01',
+  mic:'M12 15a3.5 3.5 0 0 0 3.5-3.5v-5a3.5 3.5 0 0 0-7 0v5A3.5 3.5 0 0 0 12 15ZM5 11.5a7 7 0 0 0 14 0M12 15v6M9 21h6',
+  eye:'M12 5c5.5 0 9.5 7 9.5 7s-4 7-9.5 7-9.5-7-9.5-7 4-7 9.5-7ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z',
+  eyeoff:'M3 3l18 18M10.6 6.3A9.6 9.6 0 0 1 12 6c5.5 0 9.5 6 9.5 6a17 17 0 0 1-3.2 3.8M6.6 8.2A17 17 0 0 0 2.5 12s4 6 9.5 6a9 9 0 0 0 3.5-.7M9.9 9.9a3 3 0 0 0 4.2 4.2',
+  refresh:'M20 11a8 8 0 0 0-13.7-5L3 9M4 13a8 8 0 0 0 13.7 5L21 15M3 5v4h4M21 19v-4h-4',
+  more:'M12 6.5h.01M12 12h.01M12 17.5h.01',
+  moreH:'M6.5 12h.01M12 12h.01M17.5 12h.01',
+  sparkle:'M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4L12 3Z',
+  waveform:'M3 12h2M7 8v8M11 5v14M15 9v6M19 11.5v1M21.5 12h.5',
+  scissors:'M6.5 8.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM6.5 20.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5ZM8.7 9.8 20 19M20 5 8.7 14.2',
+  merge:'M8 3v6.5c0 1.4 1.1 2.5 2.5 2.5h3c1.4 0 2.5 1.1 2.5 2.5V21M8 3 5 6M8 3l3 3M16 21l-3-3M16 21l3-3',
+  bolt:'M13 2 4 14h7l-1 8 9-12h-7l1-8Z',
+  calendar:'M4.6 5.5h14.8A1.6 1.6 0 0 1 21 7.1v12.3a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 19.4V7.1a1.6 1.6 0 0 1 1.6-1.6ZM3 10.5h18M8 3v5M16 3v5',
+  paperclip:'M20 11.5 12 19.5a5 5 0 0 1-7-7l8.5-8.5a3.4 3.4 0 0 1 4.8 4.8L9.7 17.4a1.8 1.8 0 1 1-2.5-2.5l7.8-7.8',
+  send:'M21 3 10.5 13.5M21 3l-6.5 18-4-8-8-4L21 3Z',
+  storage:'M4.6 4h14.8A1.6 1.6 0 0 1 21 5.6v3.2a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 8.8V5.6A1.6 1.6 0 0 1 4.6 4ZM4.6 13.6h14.8a1.6 1.6 0 0 1 1.6 1.6v3.2a1.6 1.6 0 0 1-1.6 1.6H4.6A1.6 1.6 0 0 1 3 18.4v-3.2a1.6 1.6 0 0 1 1.6-1.6ZM7 7h.01M7 17h.01',
+  drag:'M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01',
+  apple:'M16.4 12.7c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.8-2-1.6-.2-3.1.9-3.9.9s-2.1-.9-3.4-.9c-1.8 0-3.4 1-4.3 2.6-1.8 3.2-.5 7.9 1.3 10.5.9 1.3 1.9 2.7 3.2 2.6 1.3-.05 1.8-.83 3.4-.83s2 .83 3.4.8c1.4 0 2.3-1.3 3.2-2.6 1-1.5 1.4-2.9 1.4-3-.03 0-2.7-1-2.7-4.1ZM13.9 4.9c.7-.85 1.2-2 1-3.2-1 .04-2.3.7-3 1.5-.65.75-1.2 1.9-1.1 3.1 1.1.08 2.3-.6 3.1-1.4Z',
+  google:'M21.4 12.2c0-.7-.06-1.4-.18-2H12v3.9h5.3a4.5 4.5 0 0 1-2 3v2.5h3.2c1.9-1.7 3-4.3 3-7.4ZM12 21.5c2.7 0 5-.9 6.6-2.4l-3.2-2.5a6 6 0 0 1-9-3.1H3v2.6A10 10 0 0 0 12 21.5ZM6.4 13.5a6 6 0 0 1 0-3.8V7.1H3a10 10 0 0 0 0 9L6.4 13.5ZM12 6.3c1.5 0 2.8.5 3.8 1.5l2.8-2.8A10 10 0 0 0 3 7.1l3.4 2.6A6 6 0 0 1 12 6.3Z'
+};
+
+function ic(name, size, sw) {
+  var d = DSI[name];
+  if (!d) return '';
+  size = size || 20; sw = sw || 1.7;
+  var paths = d.split('|').map(function (p) { return '<path d="' + p + '"/>'; }).join('');
+  var solid = (name === 'play' || name === 'next' || name === 'prev' || name === 'star' || name === 'apple' || name === 'google' || name === 'bolt');
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="' + (solid ? 'currentColor' : 'none') +
+    '" stroke="' + (solid ? 'none' : 'currentColor') + '" stroke-width="' + sw +
+    '" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + paths + '</svg>';
+}
+
+/* ---------- Procedural artwork engine ----------
+   Deterministic per-title. No third-party imagery, so the whole
+   catalogue is copyright-clean and visually one family.        */
+function dsHash(s) {
+  var h = 2166136261;
+  for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); }
+  return (h >>> 0);
+}
+var DS_PAL = [
+  ['#1B2A4A', '#3E5C8C', '#0A1020'], ['#4A1B2A', '#8C3E52', '#20080E'],
+  ['#1B4A3E', '#3E8C74', '#08201A'], ['#4A3A1B', '#8C6E3E', '#201808'],
+  ['#2A1B4A', '#5C3E8C', '#100820'], ['#4A2A1B', '#8C523E', '#200E08'],
+  ['#1B3A4A', '#3E748C', '#081820'], ['#3A4A1B', '#748C3E', '#182008'],
+  ['#4A1B4A', '#8C3E8C', '#200820'], ['#12232E', '#2E5468', '#060E14'],
+  ['#2E1212', '#68302E', '#140606'], ['#20304A', '#48688C', '#0C1220']
+];
+function dsArt(seed, opts) {
+  opts = opts || {};
+  var h = dsHash(seed);
+  var p = DS_PAL[h % DS_PAL.length];
+  var a = (h >> 4) % 360, x1 = 12 + ((h >> 7) % 70), y1 = 8 + ((h >> 11) % 50);
+  var x2 = 25 + ((h >> 13) % 60), y2 = 45 + ((h >> 17) % 45);
+  var rot = ((h >> 19) % 60) - 30;
+  return '' +
+    '<div class="ds-art__grad" style="background:' +
+      'radial-gradient(60% 46% at ' + x1 + '% ' + y1 + '%, ' + p[1] + 'DD 0%, transparent 62%),' +
+      'radial-gradient(52% 40% at ' + x2 + '% ' + y2 + '%, ' + p[0] + 'EE 0%, transparent 66%),' +
+      'linear-gradient(' + a + 'deg, ' + p[2] + ' 0%, ' + p[0] + ' 55%, ' + p[2] + ' 100%)' +
+    '"></div>' +
+    '<div class="ds-art__grad" style="opacity:.5;background:' +
+      'conic-gradient(from ' + rot + 'deg at 50% 62%, transparent 0deg, ' + p[1] + '55 40deg, transparent 90deg, transparent 250deg, ' + p[1] + '44 300deg, transparent 340deg)' +
+    '"></div>';
+}
+/* Render a poster/backdrop tile */
+function art(seed, cls, style, title, titleSize) {
+  return '<div class="ds-art ' + (cls || '') + '" style="' + (style || '') + '">' +
+    dsArt(seed) + '<div class="ds-art__vig"></div>' +
+    (title ? '<div class="ds-art__title" style="font-size:' + (titleSize || 15) + 'px">' + title + '</div>' : '') +
+    '</div>';
+}
+
+/* ---------- Catalogue ---------- */
+var CAT = [
+  { t:'Тихий рассвет',      o:'Quiet Dawn',        y:2025, d:'2 ч 08 мин', g:'Драма · Триллер', r:8.4, age:'16+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Северный маршрут',   o:'Northern Route',    y:2024, d:'1 ч 54 мин', g:'Приключения',     r:7.9, age:'12+', c:'Норвегия',q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Глубина',            o:'The Deep',          y:2023, d:'2 ч 21 мин', g:'Фантастика',      r:8.1, age:'16+', c:'США',     q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Письма из Гаваны',   o:'Letters from Havana',y:2025,d:'1 ч 47 мин', g:'Мелодрама',       r:7.6, age:'16+', c:'Куба',    q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Стеклянный дом',     o:'Glass House',       y:2024, d:'1 ч 39 мин', g:'Триллер',         r:7.2, age:'18+', c:'Дания',   q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Хроника одного дня', o:'One Day Chronicle', y:2022, d:'2 ч 32 мин', g:'Документальный',  r:8.8, age:'12+', c:'Россия',  q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Пепел и снег',       o:'Ash and Snow',      y:2025, d:'2 ч 04 мин', g:'Драма',           r:8.6, age:'16+', c:'Исландия',q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Между нами город',   o:'A City Between Us', y:2024, d:'1 ч 58 мин', g:'Драма',    r:8.2, age:'18+', c:'Франция', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Полярная станция',   o:'Polar Station',     y:2023, d:'1 ч 44 мин', g:'Триллер',         r:7.4, age:'16+', c:'Канада',  q:[],     cc:'cc',     dl:0, plan:'vip' },
+  { t:'Год тишины',         o:'The Silent Year',   y:2025, d:'2 ч 12 мин', g:'Драма',           r:9.0, age:'16+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip',  ad:1 },
+  { t:'Операция «Восход»',  o:'Operation Sunrise', y:2024, d:'2 ч 26 мин', g:'История',         r:8.3, age:'16+', c:'Польша',  q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Красная линия',      o:'The Red Line',      y:2022, d:'1 ч 51 мин', g:'Криминал',        r:7.7, age:'18+', c:'Италия',  q:[],     cc:'cc',     dl:1, plan:'vip' },
+  { t:'Двое на побережье',  o:'Two on the Shore',  y:2025, d:'1 ч 36 мин', g:'Мелодрама',r:8.0, age:'16+', c:'Испания', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Последний рейс',     o:'The Last Flight',   y:2023, d:'2 ч 03 мин', g:'Драма',           r:7.8, age:'12+', c:'Германия',q:[],     cc:'cc',     dl:1, plan:'vip' },
+  { t:'Свидетели',          o:'The Witnesses',     y:2024, d:'1 ч 49 мин', g:'Документальный',  r:8.5, age:'16+', c:'Украина', q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Отражение',          o:'Reflection',        y:2025, d:'1 ч 42 мин', g:'Триллер',         r:7.5, age:'16+', c:'Япония',  q:['4K'], cc:'cc',     dl:1, plan:'vip' },
+  { t:'Тёплый ветер',       o:'Warm Wind',         y:2023, d:'1 ч 33 мин', g:'Комедия',         r:7.1, age:'12+', c:'Грузия',  q:[],     cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Городские огни',     o:'City Lights',       y:2024, d:'2 ч 15 мин', g:'Драма',    r:8.4, age:'18+', c:'Бразилия',q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Территория льда',    o:'Territory of Ice',  y:2022, d:'2 ч 41 мин', g:'Приключения',     r:8.7, age:'12+', c:'Россия',  q:['4K'], cc:'ccplus', dl:1, plan:'vip' },
+  { t:'Ночная смена',       o:'Night Shift',       y:2025, d:'1 ч 28 мин', g:'Триллер',         r:7.3, age:'18+', c:'Корея',   q:[],     cc:'cc',     dl:1, plan:'vip' }
+];
+function M(i) { return CAT[i % CAT.length]; }
+
+/* Badge markup for a title */
+function badges(m, opts) {
+  opts = opts || {};
+  var out = [];
+  if (m.cc === 'ccplus') out.push('<span class="ds-badge ds-badge--ccplus">CC+</span>');
+  else if (m.cc === 'cc') out.push('<span class="ds-badge ds-badge--cc">CC</span>');
+  if (m.q.indexOf('4K') > -1) out.push('<span class="ds-badge ds-badge--4k">4K</span>');
+  else if (!opts.noHd) out.push('<span class="ds-badge ds-badge--hd">HD</span>');
+  if (opts.offline && m.dl) out.push('<span class="ds-badge ds-badge--offline">' + ic('download', 9, 2.6) + ' OFFLINE</span>');
+  if (opts.ad && m.ad) out.push('<span class="ds-badge ds-badge--ad">AD</span>');
+  return out.join('');
+}
+function stars(r) {
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-gold)">' + ic('star', 11) +
+    '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
+}
+
+/* ---------- Subscription plans — shared by every surface ---------- */
+/* The one subscription. Recurring monthly, identical access for everyone. */
+var PLANS = {
+  vip: {
+    id: 'vip', name: 'ВИП', price: 500, color: 'var(--ds-vip)', hex: '#FFC24B',
+    tag: 'Полный доступ',
+    desc: 'Одна подписка на весь deafsuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
+    feats: [
+      'Весь каталог — 1 204 фильма',
+      'Все коллекции, включая «Реальные события»',
+      'Качество до 4K UHD',
+      'Скачивание и просмотр офлайн',
+      'CC и CC+ на всём каталоге',
+      'Тифлокомментарий (AD), где доступен',
+      'До 5 устройств одновременно',
+      'Без рекламы'
+    ]
+  }
+};
+var VIP = PLANS.vip;
+
+</script>
+<style>
+  html { scroll-behavior: smooth; }
+  body { background: var(--ds-void); }
+
+  .sy { display: grid; grid-template-columns: 244px minmax(0,1fr); align-items: start; }
+  .sy__nav {
+    position: sticky; top: 0; height: 100vh; overflow-y: auto;
+    border-right: 1px solid var(--ds-line); padding: 26px 16px 40px;
+    background: var(--ds-sunken);
+  }
+  .sy__nav a {
+    display: block; padding: 7px 12px; border-radius: var(--ds-r-sm);
+    font-size: 13px; font-weight: 500; color: var(--ds-ink-3);
+    transition: color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease);
+  }
+  .sy__nav a:hover { color: var(--ds-ink); background: rgba(255,255,255,.05); }
+  .sy__navgroup { font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ds-ink-4); padding: 20px 12px 7px; }
+  .sy__main { padding: 0 0 120px; min-width: 0; }
+
+  .sec { padding: 56px 44px; border-bottom: 1px solid var(--ds-line); max-width: 1180px; }
+  .sec__head { margin-bottom: 30px; }
+  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-gold); letter-spacing: .1em; }
+
+  .demo { background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); padding: 26px; }
+  .demo--grid { display: grid; gap: 18px; }
+  .lbl { font-family: var(--ds-mono); font-size: 10px; color: var(--ds-ink-4); letter-spacing: .06em; margin-bottom: 9px; text-transform: uppercase; }
+
+  .sw { border-radius: var(--ds-r-md); overflow: hidden; border: 1px solid var(--ds-line); }
+  .sw__chip { height: 74px; }
+  .sw__meta { padding: 10px 12px; background: var(--ds-panel); }
+  .sw__name { font-size: 12px; font-weight: 600; }
+  .sw__hex { font-family: var(--ds-mono); font-size: 10.5px; color: var(--ds-ink-3); margin-top: 2px; }
+  .sw__use { font-size: 10.5px; color: var(--ds-ink-4); margin-top: 4px; line-height: 1.4; }
+
+  .aud { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .aud th { text-align: left; padding: 11px 14px; font-size: 10px; letter-spacing: .09em; text-transform: uppercase;
+    color: var(--ds-ink-3); border-bottom: 1px solid var(--ds-line-mid); font-weight: 700; }
+  .aud td { padding: 14px; border-bottom: 1px solid var(--ds-line); vertical-align: top; line-height: 1.5; }
+  .aud td:first-child { font-weight: 600; white-space: nowrap; }
+  .aud .keep { color: var(--ds-ok); }
+  .aud .fix  { color: var(--ds-warn); }
+
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px,1fr)); gap: 14px; }
+  .grid3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px,1fr)); gap: 14px; }
+  .grid4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px,1fr)); gap: 12px; }
+
+  .tscale { display: flex; align-items: baseline; gap: 22px; padding: 14px 0; border-bottom: 1px solid var(--ds-line); }
+  .tscale__spec { font-family: var(--ds-mono); font-size: 10.5px; color: var(--ds-ink-4); width: 190px; flex: none; }
+
+  .ico-cell { display: flex; flex-direction: column; align-items: center; gap: 7px; padding: 14px 6px;
+    border: 1px solid var(--ds-line); border-radius: var(--ds-r-sm); color: var(--ds-ink-2); }
+  .ico-cell span { font-family: var(--ds-mono); font-size: 9.5px; color: var(--ds-ink-4); }
+
+  .spec { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-ink-3); }
+  code.k { font-family: var(--ds-mono); font-size: 11.5px; background: var(--ds-raised);
+    border: 1px solid var(--ds-line); border-radius: 5px; padding: 1.5px 6px; color: var(--ds-aqua); }
+
+  @media (max-width: 900px) {
+    .sy { grid-template-columns: 1fr; }
+    .sy__nav { display: none; }
+    .sec { padding: 40px 22px; }
+  }
+</style>
+
+<div class="sy">
+  <nav class="sy__nav ds-scroll" aria-label="Разделы дизайн-системы">
+    <div id="navlogo" style="padding:0 10px 6px"></div>
+    <div class="sy__navgroup">Основа</div>
+    <a href="#audit">Аудит референсов</a>
+    <a href="#brand">Логотип и бренд</a>
+    <a href="#color">Цвет</a>
+    <a href="#type">Типографика</a>
+    <a href="#space">Сетка и отступы</a>
+    <a href="#motion">Движение</a>
+    <div class="sy__navgroup">Компоненты</div>
+    <a href="#buttons">Кнопки</a>
+    <a href="#inputs">Поля и формы</a>
+    <a href="#chips">Чипы и бейджи</a>
+    <a href="#cards">Карточки фильмов</a>
+    <a href="#nav">Навигация</a>
+    <a href="#overlay">Модалки и шторки</a>
+    <a href="#states">Состояния</a>
+    <a href="#icons">Иконки</a>
+    <div class="sy__navgroup">Ядро продукта</div>
+    <a href="#captions">Субтитры, CC и CC+</a>
+    <a href="#player">Плеер</a>
+    <a href="#plans">Подписки</a>
+    <div class="sy__navgroup">Правила</div>
+    <a href="#a11y">Доступность</a>
+    <a href="#handoff">Передача в разработку</a>
+  </nav>
+
+  <main class="sy__main">
+
+    <!-- ===== MASTHEAD ===== -->
+    <header class="sec" style="padding-top:72px;padding-bottom:64px;position:relative;overflow:hidden">
+      <div style="position:absolute;inset:0;background:radial-gradient(70% 60% at 20% 0%, rgba(255,194,75,.10), transparent 60%),radial-gradient(50% 50% at 85% 20%, rgba(95,227,208,.08), transparent 60%);pointer-events:none"></div>
+      <div style="position:relative">
+        <div id="bigLogo" style="margin-bottom:26px"></div>
+        <h1 class="ds-hero-title" style="max-width:16ch">Дизайн-система deafsuslik</h1>
+        <p class="ds-body" style="margin-top:20px;font-size:1.0625rem;max-width:56ch">
+          Единый язык для веба, iPhone, Android и админ-панели. Один набор токенов, один набор компонентов,
+          одна логика навигации — от сплэша до редактора субтитров.
+        </p>
+        <div class="ds-strip" style="margin-top:30px;max-width:640px">
+          <span class="ds-strip__label">Принцип</span>
+          <div>
+            <p style="margin:0;font-weight:600">Смотреть — глазами.</p>
+            <p class="ds-sm" style="margin-top:5px">Большинство стриминговых интерфейсов спроектированы для слуха, а субтитры добавлены сверху.
+            Здесь наоборот: текст — это продукт. Поэтому в палитре два акцента, разделённых по смыслу, а не по вкусу.</p>
+          </div>
+        </div>
+        <div class="ds-wrap ds-g2" style="margin-top:26px">
+          <span class="ds-badge ds-badge--lg ds-badge--gold">Тёмная тема — единственная</span>
+          <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
+          <span class="ds-badge ds-badge--lg ds-badge--cc">WCAG 2.2 AA</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== AUDIT ===== -->
+    <section class="sec" id="audit">
+      <div class="sec__head">
+        <p class="sec__n">01</p>
+        <h2 class="ds-d2" style="margin-top:6px">Аудит референсов</h2>
+        <p class="ds-body" style="margin-top:10px">Разбор каждого экрана из архива: что он решает, что сохраняем, что переделываем.</p>
+      </div>
+      <div class="demo" style="padding:0;overflow-x:auto">
+        <table class="aud">
+          <thead><tr><th>Экран</th><th>Задача</th><th>Сохраняем</th><th>Переделываем</th></tr></thead>
+          <tbody id="auditBody"></tbody>
+        </table>
+      </div>
+      <div class="ds-strip" style="margin-top:22px">
+        <span class="ds-strip__label">Вывод</span>
+        <p class="ds-sm" style="margin:0">В референсах нет ни одного упоминания субтитров, кроме строки «Audio &amp; subtitle» в глубине аккаунта.
+        Для продукта, чья аудитория — глухие и слабослышащие зрители, это главный провал старой структуры. CC и CC+ выносятся
+        на карточки, в плеер, в фильтры, в загрузки и в отдельный раздел профиля.</p>
+      </div>
+    </section>
+
+    <!-- ===== BRAND ===== -->
+    <section class="sec" id="brand">
+      <div class="sec__head">
+        <p class="sec__n">02</p>
+        <h2 class="ds-d2" style="margin-top:6px">Логотип и бренд</h2>
+        <p class="ds-body" style="margin-top:10px">
+          Суслик стоит столбиком и смотрит. Он не слышит — он видит. Знак строится на этом: скруглённый
+          токен, внутри вырезан силуэт суслика, в его груди — треугольник Play.
+        </p>
+      </div>
+
+      <div class="ds-strip" style="margin-bottom:22px;border-left-color:var(--ds-warn);background:var(--ds-warn-dim)">
+        <span class="ds-strip__label" style="color:var(--ds-warn)">Внимание</span>
+        <p class="ds-sm" style="margin:0">Присланный файл <code class="k">qa-admin/CF2g6.png</code> полностью прозрачный — 1501×1849 пикселей с нулевой альфой,
+        изображения в нём нет. Знак ниже нарисован с нуля как рабочая замена. Пришлите оригинал — подменим, все размеры и отступы уже заданы.</p>
+      </div>
+
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+        <div>
+          <p class="lbl">Знак — конструкция</p>
+          <div style="display:flex;align-items:center;gap:26px;flex-wrap:wrap">
+            <div id="markBig"></div>
+            <div id="markFlatGold"></div>
+            <div id="markMono"></div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Минимальные размеры</p>
+          <div style="display:flex;align-items:flex-end;gap:22px" id="markScale"></div>
+          <p class="ds-cap" style="margin-top:12px">16 px — favicon и таббар. Ниже 16 px знак не используется.</p>
+        </div>
+      </div>
+
+      <div class="demo demo--grid" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+        <div>
+          <p class="lbl">Горизонтальный логотип</p>
+          <div style="display:flex;flex-direction:column;gap:20px;align-items:flex-start" id="logoLockups"></div>
+        </div>
+        <div>
+          <p class="lbl">Охранное поле и фоны</p>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="background:var(--ds-void);border:1px solid var(--ds-line);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgA"></div>
+            <div style="background:var(--ds-gold);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
+          </div>
+          <p class="ds-cap" style="margin-top:12px">Охранное поле — половина высоты знака со всех сторон. Знак не растягивается, не поворачивается,
+          не перекрашивается вне трёх утверждённых вариантов.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== COLOR ===== -->
+    <section class="sec" id="color">
+      <div class="sec__head">
+        <p class="sec__n">03</p>
+        <h2 class="ds-d2" style="margin-top:6px">Цвет</h2>
+        <p class="ds-body" style="margin-top:10px">
+          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Золото — всё, что запускает и продаёт.
+          Аква — всё, что читается: субтитры, CC, CC+, доступность. Пользователь узнаёт назначение кнопки до того, как прочитал её.
+        </p>
+      </div>
+
+      <p class="lbl">Акценты</p>
+      <div class="grid2" id="swAccent"></div>
+
+      <p class="lbl" style="margin-top:28px">Фон и поверхности</p>
+      <div class="grid2" id="swSurface"></div>
+
+      <p class="lbl" style="margin-top:28px">Текст</p>
+      <div class="grid2" id="swInk"></div>
+
+      <p class="lbl" style="margin-top:28px">Семантика — отдельно от акцентов</p>
+      <div class="grid2" id="swSem"></div>
+
+      <p class="lbl" style="margin-top:28px">Подписка и коллекции</p>
+      <div class="grid2" id="swPlan"></div>
+
+      <div class="demo" style="margin-top:26px">
+        <p class="lbl">Контраст на фоне <span class="spec">#06070A</span></p>
+        <div id="contrast" style="display:grid;gap:9px"></div>
+      </div>
+    </section>
+
+    <!-- ===== TYPE ===== -->
+    <section class="sec" id="type">
+      <div class="sec__head">
+        <p class="sec__n">04</p>
+        <h2 class="ds-d2" style="margin-top:6px">Типографика</h2>
+        <p class="ds-body" style="margin-top:10px">
+          Три гарнитуры, все с полной кириллицей. <strong>Unbounded</strong> — только логотип и самые крупные заголовки,
+          строго дозированно. <strong>Onest</strong> — весь интерфейс. <strong>JetBrains Mono</strong> — тайм-коды, размеры файлов,
+          номера обращений, редактор субтитров.
+        </p>
+      </div>
+      <div class="demo">
+        <div class="tscale"><span class="tscale__spec">Unbounded 700 · clamp(2.6–5.2rem) · -4.5%</span><span class="ds-hero-title" style="font-size:2.6rem">Год тишины</span></div>
+        <div class="tscale"><span class="tscale__spec">Unbounded 700 · 2rem · -3.8%</span><span class="ds-d1">Реальные события</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 700 · 1.6rem · -2.8%</span><span class="ds-d2">Продолжить просмотр</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 700 · 1.625rem</span><span class="ds-h1">Моя библиотека</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 600 · 1.25rem</span><span class="ds-h2">Субтитры и CC+</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 600 · 1.0625rem</span><span class="ds-h3">Настройки внешнего вида</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 400 · 0.9375rem · 1.55</span><span class="ds-body" style="max-width:44ch">Основной текст. Длина строки — не больше 66 символов, иначе глаз теряет начало следующей строки.</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 400 · 0.8125rem</span><span class="ds-sm">Вторичный текст, подписи к карточкам</span></div>
+        <div class="tscale"><span class="tscale__spec">Onest 600 · 0.6875rem · +14% caps</span><span class="ds-eyebrow">Надзаголовок раздела</span></div>
+        <div class="tscale" style="border-bottom:0"><span class="tscale__spec">JetBrains Mono 500 · tabular</span><span class="ds-num" style="font-size:1.1rem">01:22:18 / 02:04:00 · 2.8 GB · #DS-10482</span></div>
+      </div>
+    </section>
+
+    <!-- ===== SPACE ===== -->
+    <section class="sec" id="space">
+      <div class="sec__head">
+        <p class="sec__n">05</p>
+        <h2 class="ds-d2" style="margin-top:6px">Сетка, отступы, радиусы, тени</h2>
+      </div>
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(260px,1fr))">
+        <div>
+          <p class="lbl">Шкала отступов — шаг 4</p>
+          <div id="spaceScale" style="display:grid;gap:7px"></div>
+        </div>
+        <div>
+          <p class="lbl">Радиусы</p>
+          <div id="radScale" style="display:flex;gap:12px;flex-wrap:wrap"></div>
+          <p class="ds-cap" style="margin-top:14px">Карточки фильмов — 14. Панели и модалки — 20/28. Кнопки и чипы — pill.</p>
+        </div>
+        <div>
+          <p class="lbl">Тени</p>
+          <div id="elevScale" style="display:grid;gap:12px"></div>
+        </div>
+      </div>
+      <div class="demo" style="margin-top:16px">
+        <p class="lbl">Точки перелома</p>
+        <table class="aud"><tbody>
+          <tr><td style="width:190px">Large Desktop <span class="spec">≥1600</span></td><td>Контейнер 1440. Рельсы по 7 постеров. Герой 68vh.</td></tr>
+          <tr><td>Laptop <span class="spec">1280–1599</span></td><td>Контейнер 1200. Рельсы по 6. Герой 72vh.</td></tr>
+          <tr><td>Tablet Web <span class="spec">768–1279</span></td><td>Верхнее меню сворачивается в «бургер». Рельсы по 4. Сетка 3 колонки.</td></tr>
+          <tr><td>Mobile Web <span class="spec">&lt;768</span></td><td>Нижняя навигация вместо верхней. Фильтры — полноэкранная панель. Сетка 2 колонки.</td></tr>
+          <tr style="border-bottom:0"><td>Native <span class="spec">iOS / Android</span></td><td>Не масштабированный веб: таббар, шторки, свайпы, safe area, нативные переходы.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <!-- ===== MOTION ===== -->
+    <section class="sec" id="motion">
+      <div class="sec__head">
+        <p class="sec__n">06</p>
+        <h2 class="ds-d2" style="margin-top:6px">Движение</h2>
+        <p class="ds-body" style="margin-top:10px">Анимация подтверждает действие и объясняет иерархию. Ничего декоративного.
+        Всё уважает <code class="k">prefers-reduced-motion</code>.</p>
+      </div>
+      <div class="demo">
+        <table class="aud"><tbody>
+          <tr><td style="width:150px">Micro <span class="spec">120 мс</span></td><td>Hover, нажатие, переключатель, чип. <span class="spec">cubic-bezier(.32,.72,0,1)</span></td></tr>
+          <tr><td>Base <span class="spec">220 мс</span></td><td>Появление карточки, раскрытие аккордеона, смена вкладки.</td></tr>
+          <tr><td>Large <span class="spec">420 мс</span></td><td>Шторка снизу, модалка, переход между экранами, вход в плеер.</td></tr>
+          <tr style="border-bottom:0"><td>Ambient</td><td>Только в героях и на посадочных: медленный параллакс подложки, 8–12 с, амплитуда до 3%.</td></tr>
+        </tbody></table>
+        <div style="display:flex;gap:14px;margin-top:20px;flex-wrap:wrap">
+          <button class="ds-btn ds-btn--primary" onclick="this.animate([{transform:'scale(1)'},{transform:'scale(.94)'},{transform:'scale(1)'}],{duration:220,easing:'cubic-bezier(.32,.72,0,1)'})">Нажми — 220 мс</button>
+          <button class="ds-btn ds-btn--secondary" onclick="var e=document.getElementById('motionCard');e.animate([{opacity:0,transform:'translateY(14px)'},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'})">Появление — 420 мс</button>
+        </div>
+        <div id="motionCard" style="margin-top:18px;max-width:190px"></div>
+      </div>
+    </section>
+
+    <!-- ===== BUTTONS ===== -->
+    <section class="sec" id="buttons">
+      <div class="sec__head">
+        <p class="sec__n">07</p>
+        <h2 class="ds-d2" style="margin-top:6px">Кнопки</h2>
+        <p class="ds-body" style="margin-top:10px">Одна золотая кнопка на экран. Аква-кнопка появляется только там, где действие связано с субтитрами.</p>
+      </div>
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div>
+          <p class="lbl">Иерархия</p>
+          <div class="ds-wrap ds-g3" style="align-items:center">
+            <button class="ds-btn ds-btn--primary">▶&nbsp; Смотреть</button>
+            <button class="ds-btn ds-btn--secondary">Трейлер</button>
+            <button class="ds-btn ds-btn--outline">В библиотеку</button>
+            <button class="ds-btn ds-btn--ghost">Отмена</button>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Смысловые</p>
+          <div class="ds-wrap ds-g3" style="align-items:center">
+            <button class="ds-btn ds-btn--aqua">Включить CC+</button>
+            <button class="ds-btn ds-btn--danger">Удалить загрузку</button>
+            <button class="ds-btn ds-btn--secondary" disabled>Недоступно</button>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Размеры — 34 / 44 / 54 px</p>
+          <div class="ds-wrap ds-g3" style="align-items:center">
+            <button class="ds-btn ds-btn--sm ds-btn--secondary">Small</button>
+            <button class="ds-btn ds-btn--secondary">Medium</button>
+            <button class="ds-btn ds-btn--lg ds-btn--primary">Large</button>
+          </div>
+          <p class="ds-cap" style="margin-top:12px">44 px — минимум для касания. На мобильных Small не используется как единственная цель.</p>
+        </div>
+        <div>
+          <p class="lbl">Иконочные</p>
+          <div class="ds-wrap ds-g3" style="align-items:center" id="iconBtns"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== INPUTS ===== -->
+    <section class="sec" id="inputs">
+      <div class="sec__head">
+        <p class="sec__n">08</p>
+        <h2 class="ds-d2" style="margin-top:6px">Поля и формы</h2>
+      </div>
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div class="ds-stack ds-g4">
+          <div class="ds-field"><label class="ds-label" for="f1">Email</label>
+            <input class="ds-input" id="f1" type="email" value="anna@example.ru"></div>
+          <div class="ds-field"><label class="ds-label" for="f2">Пароль</label>
+            <div class="ds-inputwrap" style="position:relative">
+              <input class="ds-input" id="f2" type="password" value="mypassword" style="padding-left:16px;padding-right:52px">
+              <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare ds-inputwrap__trail" id="pwToggle" aria-label="Показать пароль"></button>
+            </div></div>
+          <div class="ds-field"><label class="ds-label" for="f3">Email</label>
+            <input class="ds-input" id="f3" aria-invalid="true" value="anna@examplе">
+            <span class="ds-err-text" id="errIco">Неверный формат email. Проверьте адрес.</span></div>
+        </div>
+        <div class="ds-stack ds-g4">
+          <div class="ds-field"><span class="ds-label">Поиск</span>
+            <div class="ds-search" id="searchDemo"><input placeholder="Фильм, актёр, режиссёр…"></div></div>
+          <div class="ds-field"><label class="ds-label" for="f4">Сортировка</label>
+            <select class="ds-select" id="f4"><option>По популярности</option><option>По рейтингу</option><option>Сначала новые</option><option>Сначала старые</option><option>A–Z</option></select></div>
+          <div class="ds-field"><label class="ds-label" for="f5">Комментарий</label>
+            <textarea class="ds-textarea" id="f5" placeholder="Опишите, что произошло"></textarea></div>
+        </div>
+        <div class="ds-stack ds-g4">
+          <div>
+            <p class="lbl">Переключатели</p>
+            <div class="ds-between" style="padding:9px 0"><span>Скачивать только по Wi-Fi</span>
+              <label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>
+            <div class="ds-between" style="padding:9px 0"><span>Всегда включать CC+</span>
+              <label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>
+            <div class="ds-between" style="padding:9px 0"><span class="ds-mut2">Автовоспроизведение</span>
+              <label class="ds-switch"><input type="checkbox"><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>
+          </div>
+          <div>
+            <p class="lbl">Выбор</p>
+            <div id="optDemo"></div>
+          </div>
+          <div>
+            <p class="lbl">Слайдер — прозрачность фона субтитров</p>
+            <input class="ds-slider" type="range" min="0" max="100" value="62" aria-label="Прозрачность фона">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CHIPS & BADGES ===== -->
+    <section class="sec" id="chips">
+      <div class="sec__head">
+        <p class="sec__n">09</p>
+        <h2 class="ds-d2" style="margin-top:6px">Чипы и бейджи</h2>
+        <p class="ds-body" style="margin-top:10px">
+          Ни один бейдж не опирается только на цвет: у каждого есть буквы или глиф. Слепой к цвету зритель
+          отличает CC от CC+ по заливке и по тексту, а не по оттенку.
+        </p>
+      </div>
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+        <div>
+          <p class="lbl">Бейджи на карточках</p>
+          <div class="ds-wrap ds-g2" style="align-items:center">
+            <span class="ds-badge ds-badge--cc">CC</span>
+            <span class="ds-badge ds-badge--ccplus">CC+</span>
+            <span class="ds-badge ds-badge--4k">4K</span>
+            <span class="ds-badge ds-badge--hd">HD</span>
+            <span class="ds-badge ds-badge--offline" id="bOff"></span>
+            <span class="ds-badge ds-badge--ad">AD</span>
+            <span class="ds-badge ds-badge--age">16+</span>
+          </div>
+          <table class="aud" style="margin-top:18px"><tbody>
+            <tr><td style="width:64px"><span class="ds-badge ds-badge--cc">CC</span></td><td>Обычные субтитры — только реплики.</td></tr>
+            <tr><td><span class="ds-badge ds-badge--ccplus">CC+</span></td><td>Расширенные: реплики, имена говорящих, музыка, важные звуки, окружение. Заливка, а не контур — читается сильнее.</td></tr>
+            <tr><td><span class="ds-badge ds-badge--4k">4K</span></td><td>Доступно 2160p. Не цветной — иначе конкурирует с CC.</td></tr>
+            <tr><td><span class="ds-badge ds-badge--offline" id="bOff2"></span></td><td>Фильм можно скачать. Глиф стрелки обязателен.</td></tr>
+            <tr style="border-bottom:0"><td><span class="ds-badge ds-badge--ad">AD</span></td><td>Есть тифлокомментарий.</td></tr>
+          </tbody></table>
+        </div>
+        <div>
+          <p class="lbl">Статусы</p>
+          <div class="ds-wrap ds-g2">
+            <span class="ds-badge ds-badge--ok">Активна</span>
+            <span class="ds-badge ds-badge--warn">Ожидает</span>
+            <span class="ds-badge ds-badge--err">Ошибка</span>
+            <span class="ds-badge ds-badge--info">В работе</span>
+            <span class="ds-badge ds-badge--gold">Premium</span>
+            <span class="ds-badge">Черновик</span>
+          </div>
+          <p class="lbl" style="margin-top:26px">Чипы фильтров</p>
+          <div class="ds-wrap ds-g2" id="chipDemo"></div>
+          <p class="lbl" style="margin-top:26px">Сегментированный переключатель</p>
+          <div class="ds-seg" id="segDemo"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CARDS ===== -->
+    <section class="sec" id="cards">
+      <div class="sec__head">
+        <p class="sec__n">10</p>
+        <h2 class="ds-d2" style="margin-top:6px">Карточки фильмов</h2>
+        <p class="ds-body" style="margin-top:10px">
+          Пять вариантов на все контексты. Обложки генерируются процедурно из названия — каталог остаётся
+          юридически чистым и визуально одной семьёй.
+        </p>
+      </div>
+      <div class="demo">
+        <p class="lbl">Poster — рельсы, сетки, категории <span style="color:var(--ds-ink-4);text-transform:none;letter-spacing:0"> · не более трёх бейджей, порядок: CC → качество → OFFLINE</span></p>
+        <div class="grid3" id="cardPosters"></div>
+
+        <p class="lbl" style="margin-top:30px">Landscape — подборки и «Похожие»</p>
+        <div class="grid2" id="cardLand"></div>
+
+        <p class="lbl" style="margin-top:30px">Continue Watching — прогресс всегда виден</p>
+        <div class="grid2" id="cardCW"></div>
+
+        <p class="lbl" style="margin-top:30px">Search Result — компактная строка</p>
+        <div style="max-width:480px" id="cardHit"></div>
+
+        <p class="lbl" style="margin-top:30px">Downloaded — качество, язык дорожки, размер, срок</p>
+        <div class="grid2" id="cardDL"></div>
+      </div>
+    </section>
+
+    <!-- ===== NAV ===== -->
+    <section class="sec" id="nav">
+      <div class="sec__head">
+        <p class="sec__n">11</p>
+        <h2 class="ds-d2" style="margin-top:6px">Навигация</h2>
+      </div>
+      <div class="demo">
+        <p class="lbl">Web — верхняя панель</p>
+        <div style="border:1px solid var(--ds-line);border-radius:var(--ds-r-md);overflow:hidden">
+          <div class="ds-topbar" style="position:static" id="topbarDemo"></div>
+        </div>
+        <p class="lbl" style="margin-top:28px">Мобильное приложение — нижний таббар</p>
+        <div style="max-width:380px;border:1px solid var(--ds-line);border-radius:var(--ds-r-md);overflow:hidden">
+          <div class="ds-tabbar" id="tabbarDemo"></div>
+        </div>
+        <p class="lbl" style="margin-top:28px">Вкладки и хлебные крошки</p>
+        <div class="ds-tabs" id="tabsDemo" style="max-width:560px"></div>
+      </div>
+    </section>
+
+    <!-- ===== OVERLAYS ===== -->
+    <section class="sec" id="overlay">
+      <div class="sec__head">
+        <p class="sec__n">12</p>
+        <h2 class="ds-d2" style="margin-top:6px">Модалки, шторки, тосты</h2>
+      </div>
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(290px,1fr))">
+        <div>
+          <p class="lbl">Модалка — Web</p>
+          <div class="ds-modal" style="width:100%;position:static">
+            <div class="ds-between" style="padding:20px 22px 0"><h3 class="ds-h2">Новый список</h3>
+              <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="mX" aria-label="Закрыть"></button></div>
+            <div style="padding:18px 22px" class="ds-stack ds-g4">
+              <div class="ds-field"><label class="ds-label" for="ml">Название списка</label>
+                <input class="ds-input" id="ml" value="Посмотреть с друзьями"></div>
+              <div class="ds-between"><span class="ds-sm">Приватный список</span>
+                <label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>
+            </div>
+            <div style="padding:0 22px 22px;display:flex;gap:10px">
+              <button class="ds-btn ds-btn--ghost ds-grow">Отмена</button>
+              <button class="ds-btn ds-btn--primary ds-grow">Создать</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Шторка — мобильное</p>
+          <div style="position:relative;height:290px;border-radius:var(--ds-r-md);overflow:hidden;border:1px solid var(--ds-line);background:var(--ds-sunken)">
+            <div class="ds-scrim-l"></div>
+            <div class="ds-sheet" style="max-height:none">
+              <div class="ds-sheet__grab"></div>
+              <div class="ds-sheet__head"><h3 class="ds-h2">Скорость воспроизведения</h3></div>
+              <div class="ds-sheet__body" id="sheetDemo"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">Тосты</p>
+          <div class="ds-stack ds-g3" id="toastDemo"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATES ===== -->
+    <section class="sec" id="states">
+      <div class="sec__head">
+        <p class="sec__n">13</p>
+        <h2 class="ds-d2" style="margin-top:6px">Состояния</h2>
+        <p class="ds-body" style="margin-top:10px">Каждое пустое и ошибочное состояние называет причину и даёт следующий шаг. Без извинений и без «упс».</p>
+      </div>
+      <div class="demo">
+        <p class="lbl">Скелетоны</p>
+        <div class="grid3" id="skelDemo"></div>
+        <p class="lbl" style="margin-top:30px">Пустые состояния и ошибки</p>
+        <div class="grid2" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))" id="emptyDemo"></div>
+      </div>
+    </section>
+
+    <!-- ===== ICONS ===== -->
+    <section class="sec" id="icons">
+      <div class="sec__head">
+        <p class="sec__n">14</p>
+        <h2 class="ds-d2" style="margin-top:6px">Иконки</h2>
+        <p class="ds-body" style="margin-top:10px">Одна семья: сетка 24, обводка 1.7, скруглённые концы. Заливка только у Play, Next, Prev и звезды рейтинга.</p>
+      </div>
+      <div class="demo"><div class="grid4" id="iconGrid"></div></div>
+    </section>
+
+    <!-- ===== CAPTIONS ===== -->
+    <section class="sec" id="captions">
+      <div class="sec__head">
+        <p class="sec__n">15</p>
+        <h2 class="ds-d2" style="margin-top:6px">Субтитры, CC и CC+</h2>
+        <p class="ds-body" style="margin-top:10px">Главная функция продукта. Три уровня, один визуальный язык.</p>
+      </div>
+
+      <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+        <div>
+          <p class="lbl">SUB — только перевод реплик</p>
+          <div class="ds-art" style="aspect-ratio:16/9;border-radius:var(--ds-r-md);display:grid;place-items:end center;padding-bottom:22px" id="capA">
+            <div class="ds-cuetrack" style="position:relative;z-index:2"><span class="ds-cuebox"><span class="ds-cue" style="font-size:15px">Я скоро вернусь.</span></span></div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">CC — реплики + говорящий</p>
+          <div class="ds-art" style="aspect-ratio:16/9;border-radius:var(--ds-r-md);display:grid;place-items:end center;padding-bottom:22px" id="capB">
+            <div class="ds-cuetrack" style="position:relative;z-index:2"><span class="ds-cuebox"><span class="ds-cue" style="font-size:15px"><span class="ds-cue__speaker">АННА:</span>Я скоро вернусь.</span></span></div>
+          </div>
+        </div>
+        <div>
+          <p class="lbl">CC+ — реплики, говорящий, звук, окружение</p>
+          <div class="ds-art" style="aspect-ratio:16/9;border-radius:var(--ds-r-md);display:grid;place-items:end center;padding-bottom:22px" id="capC">
+            <div class="ds-cuetrack" style="position:relative;z-index:2"><span class="ds-cuebox"><span class="ds-cue" style="font-size:15px">
+              <span class="ds-cue__speaker">АННА:</span>Я скоро вернусь.
+              <span class="ds-cue__sound">[дверь резко захлопывается]</span>
+            </span></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="demo" style="margin-top:16px">
+        <p class="lbl">Правила записи CC+</p>
+        <table class="aud"><tbody>
+          <tr><td style="width:210px"><span class="ds-cue__speaker" style="display:inline">АННА:</span></td><td>Имя говорящего — прописные, аква, отдельной строкой. Ставится при смене говорящего и когда говорящий вне кадра.</td></tr>
+          <tr><td><span class="ds-cue__sound" style="display:inline">[стук в дверь]</span></td><td>Звук в квадратных скобках, курсив, строчными. Описывается источник, а не эмоция.</td></tr>
+          <tr><td><span class="ds-cue__sound" style="display:inline">[тревожная музыка нарастает]</span></td><td>Музыка описывается только когда несёт сюжет. Фоновая — нет.</td></tr>
+          <tr><td><span class="ds-cue__sound" style="display:inline">[гром заглушает разговор]</span></td><td>Если звук перекрывает речь — это важнее самой речи. Пишем обязательно.</td></tr>
+          <tr style="border-bottom:0"><td class="spec">≤ 42 симв./строку · ≤ 2 строки<br>≤ 17 симв./сек</td><td>Жёсткие лимиты. Редактор в админке подсвечивает превышение до публикации.</td></tr>
+        </tbody></table>
+      </div>
+
+      <div class="demo" style="margin-top:16px">
+        <p class="lbl">Живой редактор внешнего вида — все настройки применяются мгновенно</p>
+        <div style="display:grid;grid-template-columns:minmax(0,1.15fr) minmax(240px,.85fr);gap:22px" id="capEditorWrap">
+          <div class="ds-art" id="capStage" style="aspect-ratio:16/9;border-radius:var(--ds-r-md);position:relative;display:flex;align-items:flex-end;justify-content:center">
+            <div id="capPreviewHolder" class="ds-cuetrack" style="position:relative;z-index:3"></div>
+          </div>
+          <div class="ds-stack ds-g4" id="capControls"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== PLAYER ===== -->
+    <section class="sec" id="player">
+      <div class="sec__head">
+        <p class="sec__n">16</p>
+        <h2 class="ds-d2" style="margin-top:6px">Плеер</h2>
+        <p class="ds-body" style="margin-top:10px">CC — не пункт в меню настроек, а кнопка первого уровня рядом с громкостью. Текущее состояние
+        подписано словами: <span class="spec">CC+ · Русский</span>.</p>
+      </div>
+      <div class="demo" style="padding:0;overflow:hidden">
+        <div class="ds-player" id="playerDemo" style="aspect-ratio:16/9"></div>
+      </div>
+      <div class="demo" style="margin-top:16px">
+        <p class="lbl">Клавиатура — Web</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px" id="kbdDemo"></div>
+        <p class="lbl" style="margin-top:26px">Жесты — мобильное</p>
+        <table class="aud"><tbody>
+          <tr><td style="width:230px">Двойное касание слева</td><td>−10 секунд, с волной от точки касания</td></tr>
+          <tr><td>Двойное касание справа</td><td>+10 секунд</td></tr>
+          <tr><td>Вертикальный свайп слева</td><td>Яркость</td></tr>
+          <tr><td>Вертикальный свайп справа</td><td>Громкость</td></tr>
+          <tr><td>Горизонтальный свайп</td><td>Перемотка с превью кадра</td></tr>
+          <tr style="border-bottom:0"><td>Долгое нажатие</td><td>Ускорение ×2, пока палец на экране</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <!-- ===== PLANS ===== -->
+    <section class="sec" id="plans">
+      <div class="sec__head">
+        <p class="sec__n">17</p>
+        <h2 class="ds-d2" style="margin-top:6px">Подписка — одна для всех</h2>
+        <p class="ds-body" style="margin-top:10px"><strong>ВИП, 500 ₽ в месяц, регулярное списание.</strong> Уровней, тарифов и платных
+        коллекций нет — доступ у всех одинаковый. Формулировка «в месяц» обязательна на кнопке и в заголовке;
+        «навсегда», «разово», «один раз» запрещены.</p>
+      </div>
+      <div class="demo"><div style="max-width:340px" id="planDemo"></div></div>
+    </section>
+
+    <!-- ===== A11Y ===== -->
+    <section class="sec" id="a11y">
+      <div class="sec__head">
+        <p class="sec__n">18</p>
+        <h2 class="ds-d2" style="margin-top:6px">Доступность</h2>
+      </div>
+      <div class="demo">
+        <table class="aud"><tbody>
+          <tr><td style="width:230px">Контраст</td><td>Основной текст ≥ 7:1. Вторичный ≥ 4.5:1. Границы интерактивных элементов ≥ 3:1. Проверено на <span class="spec">#06070A</span>.</td></tr>
+          <tr><td>Никогда только цветом</td><td>Каждый статус несёт текст или глиф. CC и CC+ различаются заливкой и символом «+».</td></tr>
+          <tr><td>Цели касания</td><td>Минимум 44×44. В плеере — 58×58, основная кнопка 76×76.</td></tr>
+          <tr><td>Фокус</td><td>Обводка 2 px аквой со смещением 2 px. Видна на всех поверхностях, никогда не снимается.</td></tr>
+          <tr><td>Клавиатура</td><td>Полный обход всего веба, включая плеер и редактор субтитров. Логичный порядок, ловушки фокуса в модалках.</td></tr>
+          <tr><td>Скринридер</td><td>Семантические заголовки, <code class="k">aria-live</code> для прогресса загрузки и статусов оплаты, подписи у всех иконочных кнопок.</td></tr>
+          <tr><td>Путь до субтитров</td><td>Из плеера — одно касание до языка, два до CC+. Из профиля — один пункт верхнего уровня.</td></tr>
+          <tr style="border-bottom:0"><td>Движение</td><td><code class="k">prefers-reduced-motion</code> отключает параллакс, автопрокрутку рельсов и все декоративные переходы.</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
+    <!-- ===== HANDOFF ===== -->
+    <section class="sec" id="handoff" style="border-bottom:0">
+      <div class="sec__head">
+        <p class="sec__n">19</p>
+        <h2 class="ds-d2" style="margin-top:6px">Передача в разработку</h2>
+        <p class="ds-body" style="margin-top:10px">Каждый класс здесь соответствует одному React-компоненту. Токены живут в CSS-переменных,
+        Tailwind читает их через <code class="k">theme.extend</code>.</p>
+      </div>
+      <div class="demo" style="padding:0;overflow-x:auto">
+        <table class="aud">
+          <thead><tr><th>Класс</th><th>React-компонент</th><th>Пропсы</th></tr></thead>
+          <tbody id="handoffBody"></tbody>
+        </table>
+      </div>
+      <div class="ds-strip" style="margin-top:22px">
+        <span class="ds-strip__label">Правило</span>
+        <p class="ds-sm" style="margin:0">Ни один экран не собирается из разовых стилей. Если элемент не описан здесь — сначала он добавляется
+        в систему, потом попадает на экран.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var set = function (id, html) { var e = $(id); if (e) e.innerHTML = html; };
+
+  /* ---- logos ---- */
+  set('navlogo', dsLogo(26, 15));
+  set('bigLogo', dsLogo(56, 34));
+  set('markBig', dsLogoMark(96));
+  set('markFlatGold', dsLogoMark(96, { flat: '#FFC24B' }));
+  set('markMono', dsLogoMark(96, { flat: '#F2F4F8', cut: '#06070A' }));
+  set('markScale', [64, 40, 28, 20, 16].map(function (s) { return dsLogoMark(s); }).join(''));
+  set('logoLockups', [dsLogo(40, 25), dsLogo(28, 17), dsLogo(20, 12.5)].join(''));
+  set('lgA', dsLogo(30, 19));
+  var lgB = $('lgB'); if (lgB) { lgB.innerHTML = dsLogo(30, 19, { flat: '#06070A', cut: '#FFC24B' }); lgB.querySelector('.ds-logo__word').style.color = '#06070A'; }
+
+  /* ---- audit ---- */
+  var AUDIT = [
+    ['Intro', 'Продающий вход: обложки, оффер, две CTA.', 'Стену постеров и две кнопки — сильный приём.', 'Оффер «$49.99 за 12 месяцев» противоречит трём месячным подпискам. Опечатка «TRI IT FREE». Ни слова о субтитрах — главном отличии продукта.'],
+    ['Login', 'Вход по email и паролю.', 'Минимализм, показ пароля, ссылка на регистрацию.', 'Нет логотипа, нет состояний ошибки и загрузки, нет входа через Apple/Google. Поля без подписей — при автозаполнении непонятно, что где.'],
+    ['Home', 'Витрина: герой + рельсы.', 'Полноэкранный герой и горизонтальные рельсы.', 'Название чужое. Нет бейджей CC/CC+/4K. Нет «Продолжить просмотр» на первом экране. Таббар из 4 пунктов без «Загрузок».'],
+    ['Search', 'Поиск с чипами жанров и переключением вида.', 'Чипы, переключатель сетка/список, рейтинг в строке.', 'Нет истории и подсказок, нет поиска по актёру и режиссёру, нет пустого состояния. Меню «⋮» без назначения.'],
+    ['Filters', 'Панель фильтров с аккордеонами.', 'Аккордеоны и одна кнопка применения.', 'Нет фильтра по субтитрам — критично для аудитории. «Gener» вместо «Genre». Сортировка спрятана в аккордеон. Нет сброса и счётчика результатов.'],
+    ['Categories', 'Витрина категорий крупными обложками.', 'Крупные карточки категорий со стопкой сзади.', 'Категории повторяют типы контента, а не вкусы. Нет категорий «С субтитрами», «CC+», «4K», «Офлайн».'],
+    ['Movie', 'Карточка фильма: похожие, актёры, отзывы.', 'Порядок блоков и горизонтальный список актёров.', 'Нет языков субтитров и озвучки, нет доступных качеств, нет кнопки скачивания на первом экране, нет режиссёра отдельно.'],
+    ['Library', 'Личная коллекция с тремя вкладками.', 'Вкладки и «+» для нового списка.', 'Нет вкладок «Мои списки» и «История». Нет сортировки и переключения вида. Нет прогресса на карточках.'],
+    ['New list', 'Создание списка одним полем.', 'Скорость: одно поле и одна кнопка.', 'Белая модалка в тёмном интерфейсе — разрыв системы. «Creat» вместо «Create». Нет описания и приватности.'],
+    ['Playlist', 'Подборки, сгруппированные по чужим сервисам.', 'Идею кураторских подборок.', 'Логотипы Netflix, Apple TV+, Prime, HBO — чужие бренды в продукте. Заменяем на собственные редакционные подборки.'],
+    ['Plans', 'Выбор тарифа каруселью.', 'Карусель тарифов и список преимуществ.', 'Тарифы по длительности вместо трёх коллекций. Цены в долларах. Нет объяснения регулярного списания и даты следующего платежа.'],
+    ['Account', 'Профиль и настройки.', 'Шапка с аватаром и список разделов.', '«Audio & subtitle» четвёртым пунктом в глубине — для этой аудитории должно быть первым уровнем. Нет устройств, истории, загрузок, поддержки.'],
+    ['AI-концепты web', 'Профиль вкуса, каталог, коллекция.', 'Плотный каталог, вид «список», фильтры в строке, сетку коллекции.', 'Продукт превращён в соцсеть о вкусах: Taste DNA, Taste Match, подписчики. Книги и игры вне скоупа. Фиолетовый неон и радар-графики уводят от кино.'],
+    ['AI-концепты mobile', 'Подбор по настроению, шеринг.', 'Шеринг фильма и мысль о подборе.', 'Робот-маскот и «AI Picker» конфликтуют с суслик-брендом. Жёлтый акцент случайный.']
+  ];
+  set('auditBody', AUDIT.map(function (r) {
+    return '<tr><td>' + r[0] + '</td><td class="ds-mut">' + r[1] +
+      '</td><td class="keep">' + r[2] + '</td><td class="fix">' + r[3] + '</td></tr>';
+  }).join(''));
+
+  /* ---- colour ---- */
+  function swatch(name, hex, use, bg) {
+    return '<div class="sw"><div class="sw__chip" style="background:' + (bg || hex) + '"></div>' +
+      '<div class="sw__meta"><div class="sw__name">' + name + '</div>' +
+      '<div class="sw__hex">' + hex + '</div><div class="sw__use">' + use + '</div></div></div>';
+  }
+  set('swAccent',
+    swatch('Suslik Gold', '#FFC24B', 'Основное действие, бренд, «Смотреть», подписки, прогресс просмотра') +
+    swatch('Gold Hover', '#FFD37B', 'Наведение и нажатие на золотую кнопку') +
+    swatch('Signal Aqua', '#5FE3D0', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
+    swatch('Aqua Hover', '#8FF0E2', 'Наведение на аква-элементы, описания звуков в CC+'));
+  set('swSurface',
+    swatch('Void', '#06070A', 'Основной фон приложения') +
+    swatch('Sunken', '#030407', 'Плеер, боковые панели, утопленные области') +
+    swatch('Panel', '#0D1016', 'Карточки, панели, шторки') +
+    swatch('Raised', '#14181F', 'Поля ввода, невыбранные состояния') +
+    swatch('Raised 2', '#1B2029', 'Вторичные кнопки, активные поля') +
+    swatch('Raised 3', '#242A35', 'Ползунки, дорожки, разделители блоков'));
+  set('swInk',
+    swatch('Ink', '#F2F4F8', 'Заголовки и основной текст — 15.8:1') +
+    swatch('Ink 2', '#A8B0BF', 'Вторичный текст, описания — 7.6:1') +
+    swatch('Ink 3', '#6E7787', 'Подписи, метаданные — 3.9:1, только для крупного') +
+    swatch('Ink 4', '#4A515E', 'Плейсхолдеры и выключенные элементы'));
+  set('swSem',
+    swatch('Success', '#3DDC97', 'Оплачено, загружено, подписка активна') +
+    swatch('Warning', '#FF9F45', 'Истекает срок, мало места, требует внимания') +
+    swatch('Error', '#FF5C5C', 'Платёж отклонён, загрузка не удалась, видео недоступно') +
+    swatch('Info', '#5FA8FF', 'Обращение в работе, нейтральные уведомления'));
+  set('swPlan',
+    swatch('Подписка ВИП', '#FFC24B', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
+    swatch('Коллекция', '#C89BFF', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
+
+  var CONTRAST = [
+    ['#F2F4F8', 'Основной текст', '15.8:1', 'AAA'],
+    ['#A8B0BF', 'Вторичный текст', '7.6:1', 'AAA'],
+    ['#FFC24B', 'Suslik Gold', '11.4:1', 'AAA'],
+    ['#5FE3D0', 'Signal Aqua', '11.9:1', 'AAA'],
+    ['#3DDC97', 'Success', '10.3:1', 'AAA'],
+    ['#FF9F45', 'Warning', '8.1:1', 'AAA'],
+    ['#FF5C5C', 'Error', '5.4:1', 'AA'],
+    ['#6E7787', 'Ink 3 — только ≥18px', '3.9:1', 'AA Large']
+  ];
+  set('contrast', CONTRAST.map(function (c) {
+    return '<div class="ds-between" style="padding:8px 12px;background:var(--ds-void);border:1px solid var(--ds-line);border-radius:8px">' +
+      '<span style="color:' + c[0] + ';font-weight:600">' + c[1] + '</span>' +
+      '<span class="ds-row-f ds-g3"><span class="spec">' + c[2] + '</span>' +
+      '<span class="ds-badge ' + (c[3] === 'AAA' ? 'ds-badge--ok' : 'ds-badge--info') + '">' + c[3] + '</span></span></div>';
+  }).join(''));
+
+  /* ---- space / radius / elevation ---- */
+  set('spaceScale', [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96].map(function (n) {
+    return '<div class="ds-row-f ds-g4"><span class="spec" style="width:42px">' + n + '</span>' +
+      '<div style="height:11px;width:' + n + 'px;background:var(--ds-gold);border-radius:3px"></div></div>';
+  }).join(''));
+  set('radScale', [6, 10, 14, 20, 28, 36].map(function (n) {
+    return '<div style="text-align:center"><div style="width:58px;height:58px;background:var(--ds-raised-2);border:1px solid var(--ds-line-mid);border-radius:' + n + 'px"></div>' +
+      '<div class="spec" style="margin-top:6px">' + n + '</div></div>';
+  }).join('') + '<div style="text-align:center"><div style="width:58px;height:58px;background:var(--ds-raised-2);border:1px solid var(--ds-line-mid);border-radius:99px"></div><div class="spec" style="margin-top:6px">pill</div></div>');
+  set('elevScale', ['--ds-e1', '--ds-e2', '--ds-e3', '--ds-e4'].map(function (v, i) {
+    return '<div class="ds-row-f ds-g4"><span class="spec" style="width:34px">e' + (i + 1) + '</span>' +
+      '<div style="height:38px;flex:1;background:var(--ds-raised);border-radius:10px;box-shadow:var(' + v + ')"></div></div>';
+  }).join(''));
+
+  set('motionCard', '<div class="ds-poster"><div class="ds-poster__art">' +
+    art(CAT[6].t, '', 'height:100%', CAT[6].t, 15) + '</div></div>');
+
+  /* ---- buttons / inputs ---- */
+  set('iconBtns',
+    '<button class="ds-iconbtn" aria-label="В избранное">' + ic('heart') + '</button>' +
+    '<button class="ds-iconbtn ds-iconbtn--on" aria-label="Субтитры включены">' + ic('cc') + '</button>' +
+    '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Ещё">' + ic('moreH') + '</button>' +
+    '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Закрыть">' + ic('x', 16) + '</button>');
+  var pw = $('pwToggle'), f2 = $('f2'), shown = false;
+  if (pw) {
+    pw.innerHTML = ic('eye', 17);
+    pw.addEventListener('click', function () {
+      shown = !shown; f2.type = shown ? 'text' : 'password';
+      pw.innerHTML = ic(shown ? 'eyeoff' : 'eye', 17);
+      pw.setAttribute('aria-label', shown ? 'Скрыть пароль' : 'Показать пароль');
+    });
+  }
+  var errIco = $('errIco'); if (errIco) errIco.insertAdjacentHTML('afterbegin', ic('alert', 13, 2));
+  var sd = $('searchDemo'); if (sd) sd.insertAdjacentHTML('afterbegin', '<span style="color:var(--ds-ink-3);display:flex">' + ic('search', 19) + '</span>');
+  set('optDemo',
+    '<label class="ds-opt is-on"><span class="ds-opt__box ds-opt__box--radio"></span><span>Русский CC+</span></label>' +
+    '<label class="ds-opt"><span class="ds-opt__box ds-opt__box--radio"></span><span>Русский</span></label>' +
+    '<label class="ds-opt is-on"><span class="ds-opt__box ds-opt__box--check"></span><span>Можно скачать</span></label>' +
+    '<label class="ds-opt"><span class="ds-opt__box ds-opt__box--check"></span><span>Только 4K</span></label>');
+  document.querySelectorAll('.ds-opt').forEach(function (o) {
+    o.addEventListener('click', function () {
+      if (o.querySelector('.ds-opt__box--radio')) {
+        o.parentNode.querySelectorAll('.ds-opt').forEach(function (s) { if (s.querySelector('.ds-opt__box--radio')) s.classList.remove('is-on'); });
+        o.classList.add('is-on');
+      } else o.classList.toggle('is-on');
+    });
+  });
+
+  /* ---- chips ---- */
+  set('bOff', ic('download', 9, 2.6) + ' OFFLINE');
+  set('bOff2', ic('download', 9, 2.6) + ' OFFLINE');
+  set('chipDemo', ['Все', 'Драма', 'Триллер', 'Документальные'].map(function (t, i) {
+    return '<button class="ds-chip"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
+  }).join('') + '<button class="ds-chip ds-chip--aqua" aria-pressed="true">' + ic('cc', 14) + ' CC+</button>');
+  document.querySelectorAll('.ds-chip').forEach(function (c) {
+    c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
+  });
+  set('segDemo', '<button aria-selected="true">' + ic('grid', 14) + ' Сетка</button><button aria-selected="false">' + ic('list', 14) + ' Список</button>');
+  $('segDemo').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    this.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+    b.setAttribute('aria-selected', 'true');
+  });
+
+  /* ---- cards ---- */
+  function poster(m, o) {
+    o = o || {};
+    return '<div class="ds-poster"><div class="ds-poster__art">' + art(m.t, '', 'height:100%', m.t, 14) +
+      '<div class="ds-poster__badges">' + badges(m, o) + '</div>' +
+      '<div class="ds-poster__hover"><span class="ds-btn ds-btn--sm ds-btn--primary">' + ic('play', 12) + ' Смотреть</span></div></div>' +
+      '<div class="ds-poster__meta"><div class="ds-poster__name">' + m.t + '</div>' +
+      '<div class="ds-poster__sub"><span class="ds-num">' + m.y + '</span><span>·</span><span>' + m.g.split(' · ')[0] + '</span>' + stars(m.r) + '</div></div></div>';
+  }
+  set('cardPosters', [0, 6, 9, 2, 17].map(function (i) { return poster(CAT[i], { offline: 1 }); }).join(''));
+
+  set('cardLand', [1, 10].map(function (i) {
+    var m = CAT[i];
+    return '<div class="ds-land"><div class="ds-land__art">' + art(m.o, '', 'height:100%') +
+      '<div style="position:absolute;inset:auto 0 0 0;padding:15px 17px;z-index:2">' +
+      '<div class="ds-wrap ds-g1" style="margin-bottom:7px">' + badges(m, { offline: 1 }) + '</div>' +
+      '<div style="font-family:var(--ds-display);font-weight:700;font-size:18px;letter-spacing:-.03em">' + m.t + '</div>' +
+      '<div class="ds-cap" style="margin-top:3px">' + m.y + ' · ' + m.d + ' · ' + m.g + '</div></div></div></div>';
+  }).join(''));
+
+  set('cardCW', [0, 12].map(function (i, k) {
+    var m = CAT[i], pct = k ? 47 : 78;
+    return '<div class="ds-cw"><div class="ds-cw__art">' + art(m.t + 'cw', '', 'position:absolute;inset:0') +
+      '<div class="ds-cw__play"><span class="ds-cw__playbtn">' + ic('play', 20) + '</span></div>' +
+      '<div class="ds-cw__bar"><div class="ds-prog"><div class="ds-prog__bar" style="width:' + pct + '%"></div></div></div></div>' +
+      '<div class="ds-cw__foot"><div style="min-width:0"><div class="ds-poster__name">' + m.t + '</div>' +
+      '<div class="ds-num" style="font-size:11px;color:var(--ds-ink-3);margin-top:2px">' + (k ? '47:12' : '1:37:04') + ' / ' + (k ? '1:36:00' : '2:08:00') + '</div></div>' +
+      '<span class="ds-badge ds-badge--ccplus">CC+</span></div></div>';
+  }).join(''));
+
+  set('cardHit', [2, 14].map(function (i) {
+    var m = CAT[i];
+    return '<div class="ds-hit"><div class="ds-hit__art">' + art(m.o, '', 'height:100%') + '</div>' +
+      '<div class="ds-hit__main"><div class="ds-h3">' + m.t + '</div>' +
+      '<div class="ds-cap" style="margin-top:2px">' + m.o + ' · ' + m.y + ' · ' + m.c + '</div>' +
+      '<div class="ds-wrap ds-g1" style="margin-top:7px;align-items:center">' + badges(m, { offline: 1 }) + stars(m.r) + '</div></div>' +
+      '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Ещё">' + ic('moreH', 16) + '</button></div>';
+  }).join(''));
+
+  set('cardDL', [
+    { i: 0, st: 'done', q: '1080p Full HD', sub: 'Русский CC+', sz: '2.8 GB', p: 100, ex: 'Доступно 24 дня' },
+    { i: 10, st: 'run', q: '720p HD', sub: 'Русский CC+', sz: '1.4 GB', p: 78, ex: 'Осталось 2 мин' }
+  ].map(function (d) {
+    var m = CAT[d.i], done = d.st === 'done';
+    return '<div class="ds-dl"><div class="ds-dl__art">' + art(m.t, '', 'height:100%') + '</div>' +
+      '<div class="ds-dl__main"><div class="ds-between" style="align-items:flex-start">' +
+      '<div style="min-width:0"><div class="ds-h3">' + m.t + '</div>' +
+      '<div class="ds-cap ds-num" style="margin-top:3px">' + d.q + ' · ' + d.sz + '</div></div>' +
+      (done ? '<span class="ds-badge ds-badge--ok">' + ic('check', 9, 3) + ' Готово</span>'
+            : '<span class="ds-badge ds-badge--info">78%</span>') + '</div>' +
+      '<div class="ds-wrap ds-g1"><span class="ds-badge ds-badge--ccplus">CC+</span><span class="ds-badge">' + d.sub + '</span></div>' +
+      (done ? '' : '<div class="ds-prog ds-prog--aqua"><div class="ds-prog__bar" style="width:' + d.p + '%"></div></div>') +
+      '<div class="ds-between"><span class="ds-cap">' + d.ex + '</span>' +
+      '<div class="ds-row-f ds-g1">' +
+      (done ? '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('play', 12) + ' Смотреть</button>'
+            : '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('pause', 12) + ' Пауза</button>') +
+      '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Удалить">' + ic('trash', 15) + '</button>' +
+      '</div></div></div></div>';
+  }).join(''));
+
+  /* ---- nav ---- */
+  set('topbarDemo', dsLogo(28, 17) +
+    '<nav class="ds-topnav" style="margin-left:14px">' +
+    ['Главная', 'Фильмы', 'Реальные события', 'Подборки', 'Моя библиотека'].map(function (t, i) {
+      return '<a href="#nav" class="' + (i === 0 ? 'is-on' : '') + '">' + t + '</a>';
+    }).join('') + '</nav>' +
+    '<div class="ds-grow"></div>' +
+    '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Поиск">' + ic('search') + '</button>' +
+    '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell') +
+    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-gold);border:2px solid var(--ds-void)"></span></button>' +
+    '<div style="width:34px;height:34px;border-radius:99px;background:linear-gradient(140deg,#3E5C8C,#1B2A4A);border:1px solid var(--ds-line-mid);display:grid;place-items:center;font-size:12px;font-weight:700">А</div>');
+
+  var TABS = [['home', 'Главная'], ['search', 'Поиск'], ['library', 'Библиотека'], ['download', 'Загрузки'], ['user', 'Профиль']];
+  set('tabbarDemo', TABS.map(function (t, i) {
+    return '<button class="ds-tabbar__item' + (i === 0 ? ' is-on' : '') + '">' +
+      '<span class="ds-tabbar__ico">' + ic(t[0], 22) + (i === 3 ? '<span class="ds-tabbar__dot"></span>' : '') + '</span>' + t[1] + '</button>';
+  }).join(''));
+  set('tabsDemo', ['Продолжить', 'Избранное', 'Мои списки', 'Загружено', 'История'].map(function (t, i) {
+    return '<button class="ds-tab" aria-selected="' + (i === 0) + '">' + t + '</button>';
+  }).join(''));
+  $('tabsDemo').addEventListener('click', function (e) {
+    var b = e.target.closest('.ds-tab'); if (!b) return;
+    this.querySelectorAll('.ds-tab').forEach(function (x) { x.setAttribute('aria-selected', 'false'); });
+    b.setAttribute('aria-selected', 'true');
+  });
+
+  /* ---- overlays ---- */
+  set('mX', ic('x', 16));
+  set('sheetDemo', ['0.5×', '0.75×', 'Обычная', '1.25×', '1.5×', '2×'].map(function (t, i) {
+    return '<button class="ds-row" style="border-radius:10px">' +
+      '<span class="ds-row__main"><span class="ds-row__title">' + t + '</span></span>' +
+      (i === 2 ? '<span style="color:var(--ds-aqua);display:flex">' + ic('check', 18, 2.4) + '</span>' : '') + '</button>';
+  }).join(''));
+  set('toastDemo',
+    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-ok)">' + ic('checkc', 19) + '</span><div><strong>Загрузка завершена</strong><div class="ds-cap" style="margin-top:1px">Год тишины · 1080p · Русский CC+</div></div></div>' +
+    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-warn)">' + ic('alert', 19) + '</span><div><strong>Осталось 1.2 GB</strong><div class="ds-cap" style="margin-top:1px">Освободите место, чтобы продолжить</div></div></div>' +
+    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-aqua)">' + ic('cc', 19) + '</span><div><strong>CC+ включены</strong><div class="ds-cap" style="margin-top:1px">Русский · сохранено для всех фильмов</div></div></div>');
+
+  /* ---- states ---- */
+  set('skelDemo', [0, 1, 2].map(function () {
+    return '<div><div class="ds-skel" style="aspect-ratio:2/3;border-radius:var(--ds-r-md)"></div>' +
+      '<div class="ds-skel" style="height:11px;width:78%;margin-top:10px"></div>' +
+      '<div class="ds-skel" style="height:9px;width:48%;margin-top:6px"></div></div>';
+  }).join(''));
+
+  var EMPTIES = [
+    ['search', 'Ничего не нашлось', 'По запросу «интерстеллер» нет фильмов. Проверьте раскладку или уберите часть фильтров.', 'Сбросить фильтры'],
+    ['download', 'Загрузок пока нет', 'Скачайте фильм — он будет доступен без интернета, вместе с субтитрами.', 'Найти фильм'],
+    ['wifioff', 'Вы офлайн', 'Каталог недоступен, но скачанные фильмы можно смотреть прямо сейчас.', 'Открыть загрузки'],
+    ['heart', 'В избранном пусто', 'Нажмите ♡ на любом фильме — он появится здесь.', 'В каталог'],
+    ['alert', 'Видео недоступно', 'Права на показ этого фильма закончились 12 сентября. Мы вернём его, если продлим лицензию.', 'Похожие фильмы'],
+    ['storage', 'Недостаточно места', 'Для 1080p нужно 2.8 GB, свободно 1.2 GB. Удалите загрузку или выберите 720p.', 'Освободить место']
+  ];
+  set('emptyDemo', EMPTIES.map(function (e) {
+    return '<div class="ds-card"><div class="ds-empty" style="padding:26px 12px">' +
+      '<span class="ds-empty__ico">' + ic(e[0], 26) + '</span>' +
+      '<div><h4 class="ds-h3">' + e[1] + '</h4><p class="ds-sm" style="margin-top:5px;max-width:34ch">' + e[2] + '</p></div>' +
+      '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + e[3] + '</button></div></div>';
+  }).join(''));
+
+  /* ---- icons ---- */
+  set('iconGrid', Object.keys(DSI).map(function (k) {
+    return '<div class="ico-cell">' + ic(k, 21) + '<span>' + k + '</span></div>';
+  }).join(''));
+
+  /* ---- captions ---- */
+  ['capA', 'capB', 'capC'].forEach(function (id, i) {
+    var e = $(id); if (e) e.insertAdjacentHTML('afterbegin', dsArt(CAT[i].t + id) + '<div class="ds-art__vig"></div>');
+  });
+
+  /* live caption editor */
+  var capState = { size: 20, weight: 600, color: '#FFFFFF', bg: 0.62, pos: 'bottom', outline: 1, font: 'ui' };
+  function renderCue() {
+    var h = $('capPreviewHolder'); if (!h) return;
+    var stage = $('capStage');
+    stage.style.alignItems = capState.pos === 'top' ? 'flex-start' : capState.pos === 'middle' ? 'center' : 'flex-end';
+    h.style.paddingBottom = capState.pos === 'bottom' ? '6%' : '0';
+    h.style.paddingTop = capState.pos === 'top' ? '6%' : '0';
+    var shadow = capState.outline
+      ? '0 0 3px #000, 0 0 3px #000, 0 2px 8px rgba(0,0,0,.9)'
+      : '0 2px 8px rgba(0,0,0,.55)';
+    h.innerHTML = '<span class="ds-cuebox" style="background:rgba(0,0,0,' + capState.bg + ')">' +
+      '<span class="ds-cue" style="font-size:' + capState.size + 'px;font-weight:' + capState.weight +
+      ';color:' + capState.color + ';text-shadow:' + shadow + ';font-family:' +
+      (capState.font === 'mono' ? 'var(--ds-mono)' : 'var(--ds-ui)') + '">' +
+      '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
+      '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span>';
+  }
+  var capStage = $('capStage');
+  if (capStage) capStage.insertAdjacentHTML('afterbegin', dsArt('editor-stage') + '<div class="ds-art__vig"></div>');
+  set('capControls',
+    '<div><p class="lbl">Размер</p><div class="ds-wrap ds-g2" data-g="size">' +
+      [['S', 15], ['M', 20], ['L', 26], ['XL', 33]].map(function (o) {
+        return '<button class="ds-chip" data-v="' + o[1] + '"' + (o[1] === 20 ? ' aria-pressed="true"' : '') + '>' + o[0] + '</button>';
+      }).join('') + '</div></div>' +
+    '<div><p class="lbl">Цвет текста</p><div class="ds-wrap ds-g2" data-g="color">' +
+      ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8'].map(function (c, i) {
+        return '<button class="ds-chip" data-v="' + c + '"' + (i === 0 ? ' aria-pressed="true"' : '') +
+          ' style="width:38px;padding:0;justify-content:center"><span style="width:16px;height:16px;border-radius:99px;background:' + c + '"></span></button>';
+      }).join('') + '</div></div>' +
+    '<div><p class="lbl">Положение</p><div class="ds-wrap ds-g2" data-g="pos">' +
+      [['Снизу', 'bottom'], ['По центру', 'middle'], ['Сверху', 'top']].map(function (o, i) {
+        return '<button class="ds-chip" data-v="' + o[1] + '"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + o[0] + '</button>';
+      }).join('') + '</div></div>' +
+    '<div><p class="lbl">Фон плашки — <span class="ds-num" id="bgVal">62%</span></p>' +
+      '<input class="ds-slider" type="range" min="0" max="100" value="62" id="bgSlider" aria-label="Прозрачность фона"></div>' +
+    '<div class="ds-between"><span class="ds-sm">Обводка текста</span>' +
+      '<label class="ds-switch"><input type="checkbox" checked id="outlineSw"><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>' +
+    '<div class="ds-row-f ds-g2" style="margin-top:4px"><button class="ds-btn ds-btn--sm ds-btn--ghost ds-grow" id="capReset">Сбросить</button>' +
+      '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-grow">Сохранить</button></div>');
+  $('capControls').addEventListener('click', function (e) {
+    var b = e.target.closest('.ds-chip'); if (!b) return;
+    var g = b.parentNode.getAttribute('data-g');
+    b.parentNode.querySelectorAll('.ds-chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+    b.setAttribute('aria-pressed', 'true');
+    capState[g] = g === 'size' ? +b.dataset.v : b.dataset.v;
+    renderCue();
+  });
+  $('bgSlider').addEventListener('input', function () {
+    capState.bg = this.value / 100; $('bgVal').textContent = this.value + '%'; renderCue();
+  });
+  $('outlineSw').addEventListener('change', function () { capState.outline = this.checked; renderCue(); });
+  $('capReset').addEventListener('click', function () {
+    capState = { size: 20, weight: 600, color: '#FFFFFF', bg: 0.62, pos: 'bottom', outline: 1, font: 'ui' };
+    $('bgSlider').value = 62; $('bgVal').textContent = '62%'; $('outlineSw').checked = true;
+    $('capControls').querySelectorAll('[data-g]').forEach(function (g) {
+      g.querySelectorAll('.ds-chip').forEach(function (x, i) { x.setAttribute('aria-pressed', i === (g.dataset.g === 'size' ? 1 : 0) ? 'true' : 'false'); });
+    });
+    renderCue();
+  });
+  renderCue();
+
+  /* ---- player ---- */
+  set('playerDemo',
+    '<div class="ds-player__stage">' + dsArt('player-demo') + '</div>' +
+    '<div class="ds-cuetrack" style="position:absolute;left:0;right:0;bottom:19%;z-index:2">' +
+      '<span class="ds-cuebox"><span class="ds-cue" style="font-size:clamp(13px,1.5vw,19px)">' +
+      '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
+      '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span></div>' +
+    '<div class="ds-player__ui">' +
+      '<div class="ds-player__top">' +
+        '<button class="ds-pbtn ds-pbtn--sm" aria-label="Назад">' + ic('arrowL', 21) + '</button>' +
+        '<div class="ds-grow" style="min-width:0"><div class="ds-h3">Год тишины</div>' +
+        '<div class="ds-cap ds-num">2025 · 2 ч 12 мин · AUTO · 1080p</div></div>' +
+        '<button class="ds-pbtn ds-pbtn--sm" aria-label="Сообщить о проблеме" style="width:auto;padding:0 13px;height:36px;font-size:12px;font-weight:600;gap:6px;background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.16)">' + ic('help', 15) + ' Проблема?</button>' +
+      '</div>' +
+      '<div class="ds-player__center">' +
+        '<button class="ds-pbtn ds-pbtn--skip" aria-label="Назад 10 секунд">' + ic('back10', 24) + '</button>' +
+        '<button class="ds-pbtn ds-pbtn--main" aria-label="Пауза">' + ic('pause', 28, 2.4) + '</button>' +
+        '<button class="ds-pbtn ds-pbtn--skip" aria-label="Вперёд 10 секунд">' + ic('fwd10', 24) + '</button>' +
+      '</div>' +
+      '<div class="ds-player__bottom">' +
+        '<div class="ds-scrub"><div class="ds-scrub__track"></div><div class="ds-scrub__buf" style="width:74%"></div>' +
+        '<div class="ds-scrub__fill" style="width:62%"></div>' +
+        '<div class="ds-scrub__chap" style="left:28%"></div><div class="ds-scrub__chap" style="left:55%"></div><div class="ds-scrub__chap" style="left:81%"></div>' +
+        '<div class="ds-scrub__knob" style="left:62%"></div></div>' +
+        '<div class="ds-between">' +
+          '<div class="ds-row-f ds-g2">' +
+            '<span class="ds-num" style="font-size:12px">01:22:18</span><span class="ds-cap">/</span>' +
+            '<span class="ds-num ds-mut2" style="font-size:12px">02:12:00</span>' +
+            '<button class="ds-pbtn ds-pbtn--sm" aria-label="Громкость" style="margin-left:8px">' + ic('volume', 19) + '</button>' +
+          '</div>' +
+          '<div class="ds-row-f ds-g2">' +
+            '<button class="ds-pbtn ds-pbtn--cc is-on" aria-label="Субтитры: Русский CC+, включены">' + ic('cc', 16) + ' CC+ · Русский</button>' +
+            '<button class="ds-pbtn ds-pbtn--sm" aria-label="Качество">' + ic('quality', 19) + '</button>' +
+            '<button class="ds-pbtn ds-pbtn--sm" aria-label="Скорость">' + ic('speed', 19) + '</button>' +
+            '<button class="ds-pbtn ds-pbtn--sm" aria-label="Картинка в картинке">' + ic('pip', 19) + '</button>' +
+            '<button class="ds-pbtn ds-pbtn--sm" aria-label="Полный экран">' + ic('fullscreen', 19) + '</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>');
+
+  var KBD = [['Space / K', 'Плей / пауза'], ['← →', 'Перемотка ±10 с'], ['J / L', 'Перемотка ±30 с'], ['↑ ↓', 'Громкость'],
+    ['F', 'Полный экран'], ['M', 'Без звука'], ['C', 'Субтитры вкл./выкл.'], ['Shift + C', 'Выбор языка субтитров'],
+    ['Q', 'Качество'], ['P', 'Картинка в картинке'], ['0–9', 'Переход к % фильма'], ['Esc', 'Выйти из плеера']];
+  set('kbdDemo', KBD.map(function (k) {
+    return '<div class="ds-row-f ds-g3" style="padding:9px 12px;background:var(--ds-void);border:1px solid var(--ds-line);border-radius:9px">' +
+      '<code class="k" style="flex:none;min-width:66px;text-align:center">' + k[0] + '</code><span class="ds-sm">' + k[1] + '</span></div>';
+  }).join(''));
+
+  /* ---- plans ---- */
+  var PLAN_DEMO = [
+    ['ВИП', '500', 'var(--ds-vip)', 'Одна подписка на весь сервис — у всех одинаковый доступ',
+      ['Весь каталог — 1 204 фильма', 'Все коллекции без доплат', 'До 4K UHD', 'Скачивание и офлайн', 'CC и CC+ на всём каталоге', 'До 5 устройств']]
+  ];
+  set('planDemo', PLAN_DEMO.map(function (p) {
+    return '<div class="ds-card" style="border-color:' + p[2] + '33;background:linear-gradient(180deg,' + p[2] + '0F,transparent 46%),var(--ds-panel)">' +
+      '<div style="width:34px;height:3px;border-radius:2px;background:' + p[2] + '"></div>' +
+      '<h3 class="ds-h2" style="margin-top:15px">' + p[0] + '</h3>' +
+      '<p class="ds-cap" style="margin-top:5px">' + p[3] + '</p>' +
+      '<div style="margin-top:17px;display:flex;align-items:baseline;gap:6px">' +
+        '<span class="ds-num" style="font-size:2.1rem;font-weight:700;letter-spacing:-.03em">' + p[1] + ' ₽</span>' +
+        '<span class="ds-sm ds-mut2">/ месяц</span></div>' +
+      '<ul style="list-style:none;padding:0;margin:17px 0 0;display:grid;gap:9px">' +
+        p[4].map(function (f) {
+          return '<li class="ds-row-f ds-g2" style="font-size:13px"><span style="color:' + p[2] + ';display:flex;flex:none">' + ic('check', 15, 2.4) + '</span>' + f + '</li>';
+        }).join('') + '</ul>' +
+      '<button class="ds-btn ds-btn--block" style="margin-top:20px;background:' + p[2] + ';color:var(--ds-ink-inv);border-color:transparent;font-weight:700;height:auto;min-height:54px;flex-direction:column;gap:1px;padding:9px 20px">' +
+        '<span>Подписаться</span><span style="font-size:11.5px;font-weight:600;opacity:.72">' + p[1] + ' ₽ / месяц</span></button>' +
+      '<p class="ds-cap" style="margin-top:11px;text-align:center">Списание раз в месяц. Отмена в любой момент.</p>' +
+      '</div>';
+  }).join(''));
+
+  /* ---- handoff ---- */
+  var HAND = [
+    ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | aqua | outline | ghost | danger · size: sm | md | lg · block · disabled'],
+    ['.ds-iconbtn', '&lt;IconButton&gt;', 'icon · size: sm | md · variant: solid | bare · active · aria-label (обязателен)'],
+    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | gold'],
+    ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | aqua · icon'],
+    ['.ds-input / .ds-select / .ds-textarea', '&lt;Field&gt;', 'label · error · help · trailing · type'],
+    ['.ds-search', '&lt;SearchBar&gt;', 'value · onChange · suggestions · voice'],
+    ['.ds-switch', '&lt;Switch&gt;', 'checked · onChange · label'],
+    ['.ds-opt', '&lt;Radio&gt; / &lt;Checkbox&gt;', 'checked · name · value'],
+    ['.ds-poster', '&lt;PosterCard&gt;', 'title · badges[] · rating · year · genre · progress · onPlay'],
+    ['.ds-land', '&lt;LandscapeCard&gt;', 'title · meta · badges[]'],
+    ['.ds-cw', '&lt;ContinueCard&gt;', 'title · position · duration · badges[]'],
+    ['.ds-hit', '&lt;ResultRow&gt;', 'title · original · year · country · badges[] · rating'],
+    ['.ds-dl', '&lt;DownloadCard&gt;', 'state: queued | downloading | paused | done | failed | expired · quality · subtitle · size · progress'],
+    ['.ds-rail', '&lt;Rail&gt;', 'title · seeAll · items[] · card component'],
+    ['.ds-tabs / .ds-tab', '&lt;Tabs&gt;', 'items[] · value · onChange'],
+    ['.ds-seg', '&lt;SegmentedControl&gt;', 'options[] · value · onChange'],
+    ['.ds-sheet', '&lt;BottomSheet&gt;', 'open · onClose · title · detents · footer'],
+    ['.ds-modal', '&lt;Dialog&gt;', 'open · onClose · title · footer'],
+    ['.ds-toast', '&lt;Toast&gt;', 'tone: ok | warn | err | info · title · detail · action'],
+    ['.ds-skel', '&lt;Skeleton&gt;', 'shape: poster | line | block'],
+    ['.ds-empty', '&lt;EmptyState&gt;', 'icon · title · body · action'],
+    ['.ds-player', '&lt;Player&gt;', 'src · captions[] · qualities[] · onReport · gestures · locked'],
+    ['.ds-cue / .ds-cuebox', '&lt;Cue&gt;', 'speaker · text · sound · style (из настроек пользователя)'],
+    ['.ds-strip', '&lt;CaptionStrip&gt;', 'label · children — фирменный структурный блок'],
+    ['.ds-tabbar', '&lt;TabBar&gt;', 'items[] · active · badges — только мобильное'],
+    ['.ds-table', '&lt;DataTable&gt;', 'columns[] · rows[] · sort · selection — только админка'],
+    ['.ds-stat', '&lt;StatTile&gt;', 'label · value · delta · tone — только админка']
+  ];
+  set('handoffBody', HAND.map(function (h) {
+    return '<tr><td><code class="k">' + h[0] + '</code></td><td class="spec" style="color:var(--ds-ink-2)">' + h[1] + '</td><td class="ds-cap">' + h[2] + '</td></tr>';
+  }).join(''));
+})();
+</script>
+
+</body>
+</html>

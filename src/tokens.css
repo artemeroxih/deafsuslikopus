@@ -1,0 +1,106 @@
+/* ============================================================
+   deafsuslik — Design Tokens
+   Dark-committed cinematic system. Every colour is painted
+   explicitly; nothing inherits the host ground.
+   ============================================================ */
+
+:root {
+  /* ---- Ground & surfaces (blue-biased graphite, never pure grey) ---- */
+  --ds-void:        #06070A;
+  --ds-sunken:      #030407;
+  --ds-panel:       #0D1016;
+  --ds-raised:      #14181F;
+  --ds-raised-2:    #1B2029;
+  --ds-raised-3:    #242A35;
+  --ds-scrim:       rgba(6, 7, 10, 0.72);
+
+  /* ---- Hairlines ---- */
+  --ds-line:        rgba(255, 255, 255, 0.07);
+  --ds-line-mid:    rgba(255, 255, 255, 0.12);
+  --ds-line-strong: rgba(255, 255, 255, 0.20);
+
+  /* ---- Ink ---- */
+  --ds-ink:         #F2F4F8;
+  --ds-ink-2:       #A8B0BF;
+  --ds-ink-3:       #6E7787;
+  --ds-ink-4:       #4A515E;
+  --ds-ink-inv:     #06070A;
+
+  /* ---- Suslik Gold — play, brand, commerce ---- */
+  --ds-gold:        #FFC24B;
+  --ds-gold-hi:     #FFD37B;
+  --ds-gold-lo:     #E0A430;
+  --ds-gold-dim:    rgba(255, 194, 75, 0.14);
+  --ds-gold-edge:   rgba(255, 194, 75, 0.34);
+
+  /* ---- Signal Aqua — captions, CC, CC+, accessibility ---- */
+  --ds-aqua:        #5FE3D0;
+  --ds-aqua-hi:     #8FF0E2;
+  --ds-aqua-lo:     #38BFAC;
+  --ds-aqua-dim:    rgba(95, 227, 208, 0.13);
+  --ds-aqua-edge:   rgba(95, 227, 208, 0.32);
+
+  /* ---- Semantic (separate from both accents) ---- */
+  --ds-ok:          #3DDC97;
+  --ds-ok-dim:      rgba(61, 220, 151, 0.14);
+  --ds-warn:        #FF9F45;
+  --ds-warn-dim:    rgba(255, 159, 69, 0.14);
+  --ds-err:         #FF5C5C;
+  --ds-err-dim:     rgba(255, 92, 92, 0.14);
+  --ds-info:        #5FA8FF;
+  --ds-info-dim:    rgba(95, 168, 255, 0.14);
+
+  /* ---- Subscription: one plan for everyone ---- */
+  --ds-vip:         #FFC24B;
+  --ds-vip-edge:    rgba(255, 194, 75, 0.34);
+  /* Editorial collection accent — content, not a paid tier */
+  --ds-coll:        #C89BFF;
+
+  /* ---- Type ---- */
+  --ds-display: "Unbounded", "Onest", system-ui, -apple-system, sans-serif;
+  --ds-ui:      "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --ds-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --ds-t-hero:  clamp(2.6rem, 6.2vw, 5.2rem);
+  --ds-t-d1:    clamp(2.0rem, 4.0vw, 3.25rem);
+  --ds-t-d2:    clamp(1.6rem, 2.8vw, 2.25rem);
+  --ds-t-h1:    1.625rem;
+  --ds-t-h2:    1.25rem;
+  --ds-t-h3:    1.0625rem;
+  --ds-t-body:  0.9375rem;
+  --ds-t-sm:    0.8125rem;
+  --ds-t-xs:    0.6875rem;
+
+  /* ---- Space (4-based) ---- */
+  --ds-1: 4px;  --ds-2: 8px;  --ds-3: 12px; --ds-4: 16px;
+  --ds-5: 20px; --ds-6: 24px; --ds-8: 32px; --ds-10: 40px;
+  --ds-12: 48px; --ds-16: 64px; --ds-20: 80px; --ds-24: 96px;
+
+  /* ---- Radius ---- */
+  --ds-r-xs: 6px;  --ds-r-sm: 10px; --ds-r-md: 14px;
+  --ds-r-lg: 20px; --ds-r-xl: 28px; --ds-r-2xl: 36px; --ds-r-pill: 999px;
+
+  /* ---- Elevation ---- */
+  --ds-e1: 0 1px 2px rgba(0,0,0,.4);
+  --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
+  --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
+  --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
+  --ds-glow-gold: 0 0 0 1px var(--ds-gold-edge), 0 10px 40px -12px rgba(255,194,75,.42);
+  --ds-glow-aqua: 0 0 0 1px var(--ds-aqua-edge), 0 10px 40px -12px rgba(95,227,208,.36);
+
+  /* ---- Motion ---- */
+  --ds-m-micro: 120ms;
+  --ds-m-base:  220ms;
+  --ds-m-large: 420ms;
+  --ds-ease:    cubic-bezier(.32,.72,0,1);
+  --ds-ease-out: cubic-bezier(.16,1,.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

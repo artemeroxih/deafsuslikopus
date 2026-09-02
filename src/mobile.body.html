@@ -1,0 +1,217 @@
+<!--TITLE: deafsuslik Mobile Apps -->
+<style>
+  body { background: var(--ds-sunken); }
+
+  .mp { display: grid; grid-template-columns: 260px minmax(0,1fr); height: 100vh; }
+  .mp__side { border-right: 1px solid var(--ds-line); background: var(--ds-void); display: flex; flex-direction: column; overflow: hidden; }
+  .mp__brand { padding: 18px 18px 14px; border-bottom: 1px solid var(--ds-line); }
+  .mp__list { overflow-y: auto; padding: 10px 10px 40px; flex: 1; }
+  .mp__group { font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; color: var(--ds-ink-4); padding: 16px 10px 6px; }
+  .mp__item {
+    display: flex; align-items: center; gap: 10px; width: 100%; padding: 8px 10px;
+    border: 0; background: none; border-radius: var(--ds-r-sm); color: var(--ds-ink-3);
+    font-size: 13px; font-weight: 500; cursor: pointer; text-align: left;
+    transition: background var(--ds-m-micro) var(--ds-ease), color var(--ds-m-micro) var(--ds-ease);
+  }
+  .mp__item:hover { background: rgba(255,255,255,.05); color: var(--ds-ink); }
+  .mp__item.is-on { background: var(--ds-gold-dim); color: var(--ds-gold); font-weight: 600; }
+  .mp__num { font-family: var(--ds-mono); font-size: 10.5px; color: var(--ds-ink-4); width: 20px; flex: none; }
+  .mp__item.is-on .mp__num { color: var(--ds-gold); }
+
+  .mp__main { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+  .mp__bar { display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 18px; border-bottom: 1px solid var(--ds-line); background: var(--ds-void); flex: none; }
+  .mp__stage { flex: 1; overflow: auto; padding: 34px; display: flex; align-items: flex-start; justify-content: center; gap: 52px; }
+  .mp__note { flex: 0 0 272px; width: 272px; align-self: center; }
+  .mp__flow { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 10px 0; }
+  .mp__flowbtn { padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ds-line); background: none; color: var(--ds-ink-3); font-size: 11px; font-weight: 600; cursor: pointer; }
+  .mp__flowbtn:hover { background: rgba(255,255,255,.06); color: var(--ds-ink); }
+  .mp__flowbtn.is-on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+</style>
+
+<div class="mp">
+  <nav class="mp__side">
+    <div class="mp__brand">
+      <div id="mpLogo"></div>
+      <p class="ds-cap" style="margin-top:8px">iPhone и Android · 44 экрана</p>
+      <div class="mp__flow" id="mpFlows"></div>
+    </div>
+    <div class="mp__list ds-scroll" id="mpList"></div>
+  </nav>
+
+  <div class="mp__main">
+    <div class="mp__bar">
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="mpPrev" aria-label="Предыдущий экран"></button>
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="mpNext" aria-label="Следующий экран"></button>
+      <div style="min-width:0">
+        <div class="ds-h3" id="mpTitle" style="font-size:14px">Главная</div>
+        <div class="ds-cap" id="mpSub">Экран 05 из 48</div>
+      </div>
+      <div class="ds-grow"></div>
+      <div class="ds-seg" id="mpMode">
+        <button data-mode="both" aria-selected="true">iOS + Android</button>
+        <button data-mode="ios" aria-selected="false">iPhone</button>
+        <button data-mode="android" aria-selected="false">Android</button>
+        <button data-mode="small" aria-selected="false">Маленький экран</button>
+      </div>
+    </div>
+    <div class="mp__stage ds-scroll" id="mpStage"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SCREENS = [
+    ['Вход', [
+      ['splash',     'Сплэш',                Mo.splash,     'Стена постеров под углом. Оффер называет ровно то, чем продукт отличается.'],
+      ['onboarding', 'Онбординг',            Mo.onboarding, 'Четыре экрана, второй — про CC+. Пропустить доступно всегда.'],
+      ['login',      'Вход',                 Mo.login,      'iOS первым предлагает Apple, Android — Google. Порядок кнопок меняется, вёрстка нет.'],
+      ['register',   'Регистрация',          Mo.register,   'Индикатор надёжности пароля вместо списка требований.']
+    ]],
+    ['Каталог', [
+      ['home',       'Главная',              Mo.home,       'Герой во всю ширину под статус-баром. Таббар из пяти пунктов, «Загрузки» — отдельный.'],
+      ['search',     'Поиск',                Mo.search,     'История, тренды и четыре плитки категорий, две из которых про субтитры.'],
+      ['results',    'Результаты поиска',    Mo.results,    'Активные фильтры — чипами со крестиком, снимаются одним касанием.'],
+      ['filters',    'Фильтры',              Mo.filters,    'Шторка на 92% высоты. Блок «Субтитры» подсвечен аквой и вынесен из общего списка.'],
+      ['categories', 'Категории',            Mo.categories, 'Плитки 4:3 в две колонки. Последние четыре — про доступность и качество.'],
+      ['category',   'Категория',            Mo.category,   'Шапка коллекции с бейджем CC+ и счётчиком фильмов.'],
+      ['movie',      'Страница фильма',      Mo.movie,      'Блок субтитров — отдельной аква-карточкой сразу под действиями, а не в конце страницы.']
+    ]],
+    ['Плеер', [
+      ['player',     'Плеер · портрет',      Mo.player,     'Крупные цели касания. CC+ — кнопка первого уровня слева, где до неё дотягивается большой палец.'],
+      ['playerLand', 'Плеер · ландшафт',     Mo.playerLand, 'Полноэкранный режим: главы на таймлайне, полная подпись «CC+ · Русский», блокировка управления.'],
+      ['problem',    'Меню «Проблема?»',     Mo.problem,    'Момент фильма и данные устройства прикладываются автоматически.'],
+      ['ccSelect',   'Выбор субтитров',      Mo.ccSelect,   'CC+ вверху списка, отдельной группой. Два касания от плеера до нужного языка.'],
+      ['ccSettings', 'Внешний вид субтитров',Mo.ccSettings, 'Живой предпросмотр закреплён сверху и не уезжает при прокрутке настроек.'],
+      ['reportCc',   'Ошибка в субтитрах',   Mo.reportCc,   'Реплика показана целиком — понятно, о какой именно строке речь.'],
+      ['quality',    'Качество видео',       Mo.quality,    'Показаны только доступные качества, с требованиями к скорости сети.'],
+      ['speed',      'Скорость',             Mo.speed,      'На высокой скорости субтитры держатся дольше минимального времени чтения.']
+    ]],
+    ['Загрузки', [
+      ['download',   'Скачать фильм',        Mo.download,   'Качество и субтитры выбираются в одной шторке, размер считается на лету.'],
+      ['downloads',  'Загрузки',             Mo.downloads,  'Все шесть состояний загрузки и шкала занятого места.'],
+      ['offline',    'Офлайн-режим',         Mo.offline,    'Полоса сверху, доступное — обычным цветом, недоступное — приглушено и не нажимается.']
+    ]],
+    ['Библиотека', [
+      ['library',    'Продолжить просмотр',  Mo.library,    'Вкладки прокручиваются горизонтально, активная подчёркнута золотом.'],
+      ['favorites',  'Избранное',            Mo.favorites,  'Сетка два в ряд — плотность, при которой обложка ещё читается.'],
+      ['lists',      'Мои списки',           Mo.lists,      'На Android — FAB в правом нижнем углу, на iOS — кнопка в шапке и в контенте.'],
+      ['createList', 'Новый список',         Mo.createList, 'Шторка на 58% высоты — клавиатура помещается, фон остаётся виден.'],
+      ['listDetail', 'Список',               Mo.listDetail, 'Коллаж из трёх обложек, перетаскивание за ручку справа.'],
+      ['history',    'История',              Mo.history,    'Группировка по времени, прогресс прямо на миниатюре.']
+    ]],
+    ['Подписки', [
+      ['plans',       'Подписка ВИП',        Mo.plans,      'Один тариф. «500 ₽ / месяц» повторяется и на кнопке, и под ней — формулировка не теряется.'],
+      ['landingReal', 'Коллекция «Реальные события»', Mo.landingReal,'Коллекция — это контент, а не платный уровень. Цвет коллекции подсвечивает героя, кнопка ведёт к единой подписке.'],
+      ['checkout',    'Оплата',              Mo.checkout,   'iOS предлагает Apple Pay, Android — Google Pay. Регулярность списания описана словами.'],
+      ['payOk',       'Оплата прошла',       Mo.payOk,      'Дата следующего списания видна сразу, без перехода в подписки.'],
+      ['payErr',      'Оплата не прошла',    Mo.payErr,     'Код отказа банка переведён на человеческий язык.']
+    ]],
+    ['Аккаунт', [
+      ['profile',       'Профиль',           Mo.profile,       'Подписки — бейджами под именем. Субтитры и CC+ — первый пункт настроек.'],
+      ['editProfile',   'Изменить профиль',  Mo.editProfile,   'На iOS правая кнопка шапки «Готово», на Android — та же логика в app bar.'],
+      ['subs',          'Мои подписки',      Mo.subs,          'Активные, истёкшие и история платежей на одном экране.'],
+      ['devices',       'Устройства',        Mo.devices,       'Текущее устройство помечено и не имеет кнопки выхода.'],
+      ['settings',      'Настройки',         Mo.settings,      'Сгруппированные списки в стиле платформы.'],
+      ['a11y',          'Субтитры и CC+',    Mo.a11y,          'Отдельный раздел верхнего уровня, а не подпункт настроек видео.'],
+      ['notifications', 'Уведомления',       Mo.notifications, 'Непрочитанные подсвечены фоном и точкой — не только цветом.']
+    ]],
+    ['Поддержка', [
+      ['help',    'Помощь',                  Mo.help,    'Плитка «Субтитры и CC+» выделена аквой — самая частая причина обращения.'],
+      ['support', 'Написать в поддержку',    Mo.support, 'Технические данные прикладываются с явного согласия, поле видно целиком.'],
+      ['tickets', 'Мои обращения',           Mo.tickets, 'Карточки вместо таблицы — статус читается с одного взгляда.'],
+      ['ticket',  'Переписка',               Mo.ticket,  'Правка субтитров показана как diff — видно, что именно изменилось.']
+    ]]
+  ];
+
+  var FLAT = [];
+  SCREENS.forEach(function (g) { g[1].forEach(function (s) { FLAT.push(s); }); });
+  var BY = {}; FLAT.forEach(function (s, i) { BY[s[0]] = { s: s, i: i }; });
+
+  var FLOWS = {
+    'A · Просмотр с CC+': ['home', 'movie', 'player', 'ccSelect', 'ccSettings'],
+    'B · Скачать и офлайн': ['movie', 'download', 'downloads', 'offline'],
+    'C · Подписка': ['plans', 'checkout', 'payOk'],
+    'D · Коллекция': ['landingReal', 'plans', 'checkout', 'payOk'],
+    'E · Свой список': ['library', 'lists', 'createList', 'listDetail'],
+    'F · Ошибка в субтитрах': ['player', 'problem', 'reportCc', 'tickets', 'ticket'],
+    'G · Управление подпиской': ['profile', 'subs']
+  };
+
+  var state = { id: 'home', mode: 'both', flow: null };
+
+  $('mpLogo').innerHTML = dsLogo(24, 15);
+  $('mpPrev').innerHTML = ic('chevL', 17);
+  $('mpNext').innerHTML = ic('chevR', 17);
+  $('mpFlows').innerHTML = Object.keys(FLOWS).map(function (f) {
+    return '<button class="mp__flowbtn" data-flow="' + f + '">' + f.split(' · ')[0] + '</button>';
+  }).join('');
+
+  function renderList() {
+    var n = 0;
+    $('mpList').innerHTML = SCREENS.map(function (g) {
+      return '<div class="mp__group">' + g[0] + '</div>' + g[1].map(function (s) {
+        n++;
+        var inFlow = state.flow && FLOWS[state.flow].indexOf(s[0]) > -1;
+        return '<button class="mp__item' + (s[0] === state.id ? ' is-on' : '') + '" data-id="' + s[0] + '"' +
+          (inFlow ? ' style="outline:1px solid var(--ds-aqua-edge)"' : '') + '>' +
+          '<span class="mp__num">' + String(n).padStart(2, '0') + '</span>' + s[1] + '</button>';
+      }).join('');
+    }).join('');
+  }
+
+  function go(id) {
+    var e = BY[id]; if (!e) return;
+    state.id = id;
+    var s = e.s, fn = s[2];
+    var out = '';
+    if (state.mode === 'both') out = fn('ios') + fn('android');
+    else if (state.mode === 'ios') out = fn('ios');
+    else if (state.mode === 'android') out = fn('android');
+    else out = fn('ios');
+    out += '<div class="mp__note ds-card"><p class="ds-eyebrow" style="margin-bottom:8px">Решение экрана</p>' +
+      '<p class="ds-sm">' + s[3] + '</p></div>';
+    $('mpStage').innerHTML = out;
+    if (state.mode === 'small') {
+      var p = $('mpStage').querySelector('.ds-phone');
+      if (p) p.classList.add('ds-phone--sm');
+    }
+    $('mpTitle').textContent = s[1];
+    $('mpSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + FLAT.length;
+    $('mpStage').scrollTop = 0;
+    renderList();
+  }
+
+  document.addEventListener('click', function (ev) {
+    var item = ev.target.closest('.mp__item');
+    if (item) { go(item.dataset.id); return; }
+
+    var flow = ev.target.closest('.mp__flowbtn');
+    if (flow) {
+      var f = flow.dataset.flow;
+      state.flow = (state.flow === f) ? null : f;
+      document.querySelectorAll('.mp__flowbtn').forEach(function (b) { b.classList.toggle('is-on', b.dataset.flow === state.flow); });
+      if (state.flow) go(FLOWS[state.flow][0]); else renderList();
+      return;
+    }
+
+    var m = ev.target.closest('[data-mode]');
+    if (m) {
+      state.mode = m.dataset.mode;
+      m.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === m); });
+      go(state.id); return;
+    }
+
+    var chip = ev.target.closest('.ds-chip');
+    if (chip) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    var tab = ev.target.closest('.ds-tab');
+    if (tab) tab.parentNode.querySelectorAll('.ds-tab').forEach(function (b) { b.setAttribute('aria-selected', b === tab); });
+  });
+
+  $('mpPrev').addEventListener('click', function () { go(FLAT[Math.max(0, BY[state.id].i - 1)][0]); });
+  $('mpNext').addEventListener('click', function () { go(FLAT[Math.min(FLAT.length - 1, BY[state.id].i + 1)][0]); });
+
+  go('home');
+})();
+</script>

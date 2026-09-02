@@ -1,0 +1,151 @@
+<!--TITLE: deafsuslik Admin Panel -->
+<style>
+  body { background: var(--ds-sunken); }
+
+  .ap { display: flex; flex-direction: column; height: 100vh; }
+  .ap__bar {
+    display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 18px;
+    border-bottom: 1px solid var(--ds-line); background: var(--ds-void); flex: none;
+  }
+  .ap__pick {
+    appearance: none; background: var(--ds-raised); color: var(--ds-ink);
+    border: 1px solid var(--ds-line-mid); border-radius: var(--ds-r-pill);
+    padding: 7px 34px 7px 14px; font-size: 13px; font-weight: 600; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236E7787' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center;
+  }
+  .ap__canvas { flex: 1; overflow: auto; background: var(--ds-sunken); padding: 22px; }
+  .ap__frame {
+    margin: 0 auto; background: var(--ds-void); border: 1px solid var(--ds-line-mid);
+    border-radius: var(--ds-r-lg); overflow: hidden; box-shadow: var(--ds-e4);
+    transform-origin: top left;
+  }
+  .ap__chrome {
+    display: flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px;
+    background: var(--ds-raised); border-bottom: 1px solid var(--ds-line);
+  }
+  .ap__dot { width: 9px; height: 9px; border-radius: 99px; }
+  .ap__url {
+    flex: 1; height: 22px; border-radius: 99px; background: var(--ds-void);
+    border: 1px solid var(--ds-line); display: flex; align-items: center; gap: 6px;
+    padding: 0 11px; font-size: 10.5px; color: var(--ds-ink-3); font-family: var(--ds-mono);
+  }
+</style>
+
+<div class="ap">
+  <div class="ap__bar">
+    <div id="apLogo"></div>
+    <span class="ds-badge ds-badge--err">Приватная панель</span>
+    <div style="width:1px;height:22px;background:var(--ds-line)"></div>
+    <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apPrev" aria-label="Предыдущий экран"></button>
+    <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apNext" aria-label="Следующий экран"></button>
+    <select class="ap__pick" id="apPick"></select>
+    <div class="ds-cap" id="apSub">Экран 02 из 18</div>
+    <div class="ds-grow"></div>
+    <div class="ds-seg" id="apVp"></div>
+  </div>
+  <div class="ap__canvas ds-scroll" id="apCanvas">
+    <div id="apWrap" style="margin:0 auto">
+      <div class="ap__frame" id="apFrame">
+        <div class="ap__chrome">
+          <span class="ap__dot" style="background:#FF5F57"></span>
+          <span class="ap__dot" style="background:#FEBC2E"></span>
+          <span class="ap__dot" style="background:#28C840"></span>
+          <div class="ap__url"><span id="apLock"></span><span id="apUrl">admin.deafsuslik.ru/</span></div>
+        </div>
+        <div id="apScreen"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SCREENS = [
+    ['login',        'Вход в админ-панель',       A.login,        '/login'],
+    ['dash',         'Дашборд',                   A.dash,         '/'],
+    ['movies',       'Фильмы',                    A.movies,       '/content/movies'],
+    ['add-movie',    'Добавить фильм',            A.addMovie,     '/content/movies/new'],
+    ['manual-upload','Ручная загрузка',           A.manualUpload, '/content/movies/new/upload'],
+    ['api-import',   'Импорт через API',          A.apiImport,    '/content/movies/new/import'],
+    ['subs-list',    'Субтитры и CC+',            A.subsList,     '/media/subtitles/DS-M-04187'],
+    ['editor',       'Редактор субтитров',        A.editor,       '/media/subtitles/DS-M-04187/ru-ccplus?t=01:22:18'],
+    ['collections',  'Коллекции и главная',       A.collections,  '/content/collections'],
+    ['rights',       'Права и лицензии',          A.rights,       '/content/rights'],
+    ['storage',      'Хранилище',                 A.storage,      '/media/storage'],
+    ['users',        'Пользователи',              A.users,        '/people/users'],
+    ['user',         'Карточка пользователя',     A.user,         '/people/users/DS-U-48211'],
+    ['payments',     'Платежи',                   A.payments,     '/money/payments'],
+    ['analytics',    'Аналитика',                 A.analytics,    '/analytics/views'],
+    ['tickets',      'Обращения',                 A.tickets,      '/support/tickets'],
+    ['ticket',       'Обращение · CC+',           A.ticket,       '/support/tickets/DS-10482'],
+    ['roles',        'Роли и доступы',            A.roles,        '/system/roles'],
+    ['audit',        'Журнал действий',           A.audit,        '/system/audit'],
+    ['api',          'API и интеграции',          A.api,          '/system/api'],
+    ['trash',        'Корзина',                   A.trash,        '/system/trash']
+  ];
+  var BY = {}; SCREENS.forEach(function (s, i) { BY[s[0]] = { s: s, i: i }; });
+
+  var VP = [['Large', 1600], ['Desktop', 1440], ['Laptop', 1280]];
+  var state = { id: 'dash', vw: 1440 };
+
+  $('apLogo').innerHTML = dsLogo(22, 14);
+  $('apPrev').innerHTML = ic('chevL', 17);
+  $('apNext').innerHTML = ic('chevR', 17);
+  $('apLock').innerHTML = ic('lock', 10, 2.6);
+  $('apVp').innerHTML = VP.map(function (v, i) {
+    return '<button data-vw="' + v[1] + '" aria-selected="' + (i === 1) + '">' + v[0] + '</button>';
+  }).join('');
+  $('apPick').innerHTML = SCREENS.map(function (s, i) {
+    return '<option value="' + s[0] + '">' + String(i + 1).padStart(2, '0') + ' · ' + s[1] + '</option>';
+  }).join('');
+
+  function fit() {
+    var frame = $('apFrame'), wrap = $('apWrap'), canvas = $('apCanvas');
+    frame.style.width = state.vw + 'px';
+    frame.style.transform = 'none';
+    var avail = canvas.clientWidth - 44;
+    var k = state.vw > avail ? avail / state.vw : 1;
+    var h = frame.offsetHeight;
+    frame.style.transform = k < 1 ? 'scale(' + k + ')' : 'none';
+    wrap.style.width = Math.round(state.vw * k) + 'px';
+    wrap.style.height = Math.round(h * k) + 'px';
+    wrap.style.overflow = 'hidden';
+  }
+
+  function go(id) {
+    var e = BY[id]; if (!e) return;
+    state.id = id;
+    $('apScreen').innerHTML = e.s[2]();
+    $('apPick').value = id;
+    $('apSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + SCREENS.length;
+    $('apUrl').textContent = 'admin.deafsuslik.ru' + e.s[3];
+    $('apCanvas').scrollTop = 0;
+    requestAnimationFrame(fit);
+  }
+
+  $('apPick').addEventListener('change', function () { go(this.value); });
+  $('apPrev').addEventListener('click', function () { go(SCREENS[Math.max(0, BY[state.id].i - 1)][0]); });
+  $('apNext').addEventListener('click', function () { go(SCREENS[Math.min(SCREENS.length - 1, BY[state.id].i + 1)][0]); });
+  window.addEventListener('resize', fit);
+
+  document.addEventListener('click', function (ev) {
+    var vp = ev.target.closest('[data-vw]');
+    if (vp) {
+      state.vw = +vp.dataset.vw;
+      vp.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === vp); });
+      fit(); return;
+    }
+    var g = ev.target.closest('[data-ago]');
+    if (g && g.dataset.ago) { go(g.dataset.ago); return; }
+    var chip = ev.target.closest('.ds-chip');
+    if (chip) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    var seg = ev.target.closest('.ds-seg button');
+    if (seg && !seg.dataset.vw) seg.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === seg); });
+  });
+
+  go('dash');
+})();
+</script>

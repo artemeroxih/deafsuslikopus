@@ -1,0 +1,348 @@
+<!--TITLE: deafsuslik Web Prototype -->
+<style>
+  body { background: var(--ds-sunken); }
+
+  .pt { display: grid; grid-template-columns: 268px minmax(0,1fr); height: 100vh; }
+  .pt__side {
+    border-right: 1px solid var(--ds-line); background: var(--ds-void);
+    display: flex; flex-direction: column; overflow: hidden;
+  }
+  .pt__brand { padding: 18px 18px 14px; border-bottom: 1px solid var(--ds-line); }
+  .pt__list { overflow-y: auto; padding: 10px 10px 40px; flex: 1; }
+  .pt__group {
+    font-size: 10px; font-weight: 700; letter-spacing: .13em; text-transform: uppercase;
+    color: var(--ds-ink-4); padding: 16px 10px 6px;
+  }
+  .pt__item {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    padding: 8px 10px; border: 0; background: none; border-radius: var(--ds-r-sm);
+    color: var(--ds-ink-3); font-size: 13px; font-weight: 500; cursor: pointer; text-align: left;
+    transition: background var(--ds-m-micro) var(--ds-ease), color var(--ds-m-micro) var(--ds-ease);
+  }
+  .pt__item:hover { background: rgba(255,255,255,.05); color: var(--ds-ink); }
+  .pt__item.is-on { background: var(--ds-gold-dim); color: var(--ds-gold); font-weight: 600; }
+  .pt__num { font-family: var(--ds-mono); font-size: 10.5px; color: var(--ds-ink-4); width: 20px; flex: none; }
+  .pt__item.is-on .pt__num { color: var(--ds-gold); }
+
+  .pt__main { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
+  .pt__bar {
+    display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 18px;
+    border-bottom: 1px solid var(--ds-line); background: var(--ds-void); flex: none;
+  }
+  .pt__canvas { flex: 1; overflow: auto; background: var(--ds-sunken); padding: 26px; }
+  .pt__frame {
+    margin: 0 auto; background: var(--ds-void); border: 1px solid var(--ds-line-mid);
+    border-radius: var(--ds-r-lg); overflow: hidden; box-shadow: var(--ds-e4);
+    transform-origin: top left;
+  }
+  .pt__chrome {
+    display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 14px;
+    background: var(--ds-raised); border-bottom: 1px solid var(--ds-line); flex: none;
+  }
+  .pt__dot { width: 10px; height: 10px; border-radius: 99px; }
+  .pt__url {
+    flex: 1; height: 24px; border-radius: 99px; background: var(--ds-void);
+    border: 1px solid var(--ds-line); display: flex; align-items: center;
+    padding: 0 12px; font-size: 11px; color: var(--ds-ink-3); font-family: var(--ds-mono);
+  }
+  .pt__flow { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 10px 0; }
+  .pt__flowbtn {
+    padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ds-line);
+    background: none; color: var(--ds-ink-3); font-size: 11px; font-weight: 600; cursor: pointer;
+  }
+  .pt__flowbtn:hover { background: rgba(255,255,255,.06); color: var(--ds-ink); }
+  .pt__flowbtn.is-on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+</style>
+
+<div class="pt">
+  <nav class="pt__side">
+    <div class="pt__brand">
+      <div id="ptLogo"></div>
+      <p class="ds-cap" style="margin-top:8px">Веб-приложение · 43 экрана</p>
+      <div class="pt__flow" id="ptFlows"></div>
+    </div>
+    <div class="pt__list ds-scroll" id="ptList"></div>
+  </nav>
+
+  <div class="pt__main">
+    <div class="pt__bar">
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="ptPrev" aria-label="Предыдущий экран"></button>
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="ptNext" aria-label="Следующий экран"></button>
+      <div style="min-width:0">
+        <div class="ds-h3" id="ptTitle" style="font-size:14px">Главная</div>
+        <div class="ds-cap" id="ptSub">Экран 04 из 40</div>
+      </div>
+      <div class="ds-grow"></div>
+      <div class="ds-seg" id="ptViewport"></div>
+      <label class="ds-row-f ds-g2" style="cursor:pointer">
+        <span class="ds-cap">Вписать</span>
+        <span class="ds-switch" style="width:38px;height:22px">
+          <input type="checkbox" id="ptFit" checked>
+          <span class="ds-switch__track"></span>
+          <span class="ds-switch__thumb" style="width:16px;height:16px"></span>
+        </span>
+      </label>
+    </div>
+    <div class="pt__canvas ds-scroll" id="ptCanvas">
+      <div id="ptFrameWrap" style="margin:0 auto">
+      <div class="pt__frame" id="ptFrame">
+        <div class="pt__chrome">
+          <span class="pt__dot" style="background:#FF5F57"></span>
+          <span class="pt__dot" style="background:#FEBC2E"></span>
+          <span class="pt__dot" style="background:#28C840"></span>
+          <div class="pt__url" id="ptUrl">deafsuslik.ru/</div>
+        </div>
+        <div id="ptScreen"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+
+  var SCREENS = [
+    ['Вход', [
+      ['landing',   'Лендинг / сплэш',        S.landing,    '/'],
+      ['login',     'Вход',                   S.login,      '/login'],
+      ['register',  'Регистрация',            S.register,   '/signup']
+    ]],
+    ['Каталог', [
+      ['home',      'Главная',                S.home,       '/'],
+      ['search',    'Поиск',                  S.search,     '/search'],
+      ['results',   'Результаты поиска',      S.results,    '/search?q=реальные+события'],
+      ['filters',   'Фильтры',                S.filters,    '/search/filters'],
+      ['categories','Категории',              S.categories, '/categories'],
+      ['category',  'Категория',              S.category,   '/categories/cc-plus'],
+      ['movie',     'Страница фильма',        S.movie,      '/movie/god-tishiny'],
+      ['movies',    'Фильмы',                 S.categories, '/movies'],
+      ['real',      'Реальные события',       S.landingReal,'/real'],
+      ['collections','Подборки',              S.categories, '/collections']
+    ]],
+    ['Плеер и субтитры', [
+      ['player',    'Видеоплеер',             S.player,     '/watch/god-tishiny'],
+      ['problem',   'Меню «Проблема?»',       S.problem,    '/watch/god-tishiny#report'],
+      ['cc-select', 'Выбор субтитров',        S.ccSelect,   '/watch/god-tishiny#captions'],
+      ['cc-settings','Внешний вид субтитров', S.ccSettings, '/settings/captions'],
+      ['report-cc', 'Ошибка в субтитрах',     S.reportCc,   '/watch/god-tishiny#report-cc']
+    ]],
+    ['Библиотека', [
+      ['library',   'Продолжить просмотр',    S.library,    '/library'],
+      ['favorites', 'Избранное',              S.favorites,  '/library/favorites'],
+      ['lists',     'Мои списки',             S.lists,      '/library/lists'],
+      ['create-list','Новый список',          S.createList, '/library/lists/new'],
+      ['list-detail','Список',                S.listDetail, '/library/lists/friends'],
+      ['history',   'История просмотра',      S.history,    '/library/history'],
+      ['download-web','Скачать фильм',        S.downloadWeb,'/movie/god-tishiny#download'],
+      ['downloads', 'Загрузки и офлайн',      S.downloads,  '/library/downloads']
+    ]],
+    ['Подписки', [
+      ['plans',     'Подписка ВИП',           S.plans,      '/plans'],
+      ['landing-real','Коллекция «Реальные события»', S.landingReal,'/real'],
+      ['checkout',  'Оплата',                 S.checkout,   '/checkout'],
+      ['pay-ok',    'Оплата прошла',          S.payOk,      '/checkout/success'],
+      ['pay-err',   'Оплата не прошла',       S.payErr,     '/checkout/error']
+    ]],
+    ['Аккаунт', [
+      ['profile',   'Профиль',                S.profile,    '/account'],
+      ['edit-profile','Изменить профиль',     S.editProfile,'/account/edit'],
+      ['subs',      'Мои подписки',           S.subs,       '/account/subscriptions'],
+      ['sub-detail','Подписка',               S.subDetail,  '/account/subscriptions/any'],
+      ['devices',   'Устройства',             S.devices,    '/account/devices'],
+      ['settings',  'Настройки',              S.settings,   '/account/settings'],
+      ['a11y',      'Субтитры и CC+',         S.a11y,       '/account/accessibility'],
+      ['notifications','Уведомления',         S.notifications,'/account/notifications']
+    ]],
+    ['Поддержка', [
+      ['help',      'Помощь',                 S.help,       '/help'],
+      ['support',   'Написать в поддержку',   S.support,    '/help/new'],
+      ['tickets',   'Мои обращения',          S.tickets,    '/help/tickets'],
+      ['ticket',    'Переписка по обращению', S.ticket,     '/help/tickets/DS-10482']
+    ]]
+  ];
+
+  var FLAT = [];
+  SCREENS.forEach(function (g) { g[1].forEach(function (s) { FLAT.push(s); }); });
+  var BY = {}; FLAT.forEach(function (s, i) { BY[s[0]] = { s: s, i: i }; });
+
+  var FLOWS = {
+    'A · Просмотр с CC+': ['home', 'movie', 'player', 'cc-select', 'cc-settings', 'library'],
+    'B · Скачать и офлайн': ['movie', 'download-web', 'downloads', 'player'],
+    'C · Подписка': ['plans', 'checkout', 'pay-ok', 'player'],
+    'D · Коллекция': ['landing-real', 'plans', 'checkout', 'pay-ok'],
+    'E · Свой список': ['library', 'lists', 'create-list', 'list-detail'],
+    'F · Ошибка в субтитрах': ['player', 'problem', 'report-cc', 'tickets', 'ticket'],
+    'G · Управление подпиской': ['profile', 'subs', 'sub-detail']
+  };
+
+  var VP = [['Desktop', 1440], ['Laptop', 1280], ['Tablet', 900], ['Mobile', 420]];
+  var state = { id: 'home', vw: 1440, fit: true, flow: null };
+
+  /* ---- sidebar ---- */
+  $('ptLogo').innerHTML = dsLogo(24, 15);
+  $('ptPrev').innerHTML = ic('chevL', 17);
+  $('ptNext').innerHTML = ic('chevR', 17);
+  $('ptViewport').innerHTML = VP.map(function (v, i) {
+    return '<button data-vw="' + v[1] + '" aria-selected="' + (i === 0) + '">' + v[0] + '</button>';
+  }).join('');
+  $('ptFlows').innerHTML = Object.keys(FLOWS).map(function (f) {
+    return '<button class="pt__flowbtn" data-flow="' + f + '">' + f.split(' · ')[0] + '</button>';
+  }).join('');
+
+  function renderList() {
+    var n = 0;
+    $('ptList').innerHTML = SCREENS.map(function (g) {
+      return '<div class="pt__group">' + g[0] + '</div>' + g[1].map(function (s) {
+        n++;
+        var inFlow = state.flow && FLOWS[state.flow].indexOf(s[0]) > -1;
+        return '<button class="pt__item' + (s[0] === state.id ? ' is-on' : '') + '" data-id="' + s[0] + '"' +
+          (inFlow ? ' style="outline:1px solid var(--ds-aqua-edge)"' : '') + '>' +
+          '<span class="pt__num">' + String(n).padStart(2, '0') + '</span>' + s[1] + '</button>';
+      }).join('');
+    }).join('');
+  }
+
+  function fit() {
+    var frame = $('ptFrame'), wrap = $('ptFrameWrap'), canvas = $('ptCanvas');
+    frame.style.width = state.vw + 'px';
+    frame.style.transform = 'none';
+    var avail = canvas.clientWidth - 52;
+    var k = state.fit && state.vw > avail ? avail / state.vw : 1;
+    var h = frame.offsetHeight;
+    frame.style.transform = k < 1 ? 'scale(' + k + ')' : 'none';
+    wrap.style.width = Math.round(state.vw * k) + 'px';
+    wrap.style.height = Math.round(h * k) + 'px';
+    wrap.style.overflow = 'hidden';
+  }
+
+  function go(id) {
+    var e = BY[id]; if (!e) return;
+    state.id = id;
+    var s = e.s;
+    $('ptScreen').innerHTML = s[2]();
+    $('ptTitle').textContent = s[1];
+    $('ptSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + FLAT.length;
+    $('ptUrl').textContent = 'deafsuslik.ru' + s[3];
+    $('ptCanvas').scrollTop = 0;
+    renderList();
+    afterRender();
+    requestAnimationFrame(fit);
+  }
+
+  /* ---- delegated navigation ---- */
+  document.addEventListener('click', function (ev) {
+    var item = ev.target.closest('.pt__item');
+    if (item) { go(item.dataset.id); return; }
+
+    var flow = ev.target.closest('.pt__flowbtn');
+    if (flow) {
+      var f = flow.dataset.flow;
+      state.flow = (state.flow === f) ? null : f;
+      document.querySelectorAll('.pt__flowbtn').forEach(function (b) { b.classList.toggle('is-on', b.dataset.flow === state.flow); });
+      if (state.flow) go(FLOWS[state.flow][0]);
+      else renderList();
+      return;
+    }
+
+    var vp = ev.target.closest('[data-vw]');
+    if (vp) {
+      state.vw = +vp.dataset.vw;
+      vp.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === vp); });
+      fit(); return;
+    }
+
+    var go2 = ev.target.closest('[data-go]');
+    if (go2 && go2.dataset.go) { go(go2.dataset.go); return; }
+
+    var pw = ev.target.closest('[data-pw]');
+    if (pw) {
+      var f2 = document.getElementById(pw.dataset.pw), sh = f2.type === 'password';
+      f2.type = sh ? 'text' : 'password';
+      pw.innerHTML = ic(sh ? 'eyeoff' : 'eye', 17);
+      return;
+    }
+
+    var chip = ev.target.closest('.ds-chip');
+    if (chip && !chip.dataset.cc) {
+      chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
+    }
+    var seg = ev.target.closest('.ds-seg button');
+    if (seg && !seg.dataset.vw) {
+      seg.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === seg); });
+    }
+    var tab = ev.target.closest('.ds-tab');
+    if (tab && !tab.dataset.go) {
+      tab.parentNode.querySelectorAll('.ds-tab').forEach(function (b) { b.setAttribute('aria-selected', b === tab); });
+    }
+  });
+
+  $('ptPrev').addEventListener('click', function () { go(FLAT[Math.max(0, BY[state.id].i - 1)][0]); });
+  $('ptNext').addEventListener('click', function () { go(FLAT[Math.min(FLAT.length - 1, BY[state.id].i + 1)][0]); });
+  $('ptFit').addEventListener('change', function () { state.fit = this.checked; fit(); });
+  window.addEventListener('resize', fit);
+
+  /* ---- per-screen wiring ---- */
+  function afterRender() {
+    var stage = document.getElementById('ccStage');
+    if (stage) initCaptionEditor();
+    var a11yPrev = document.getElementById('a11yPrev');
+    if (a11yPrev) a11yPrev.insertAdjacentHTML('afterbegin', dsArt('a11y-preview') + '<div class="ds-art__vig"></div>');
+  }
+
+  function initCaptionEditor() {
+    var st = { size: 26, font: 'ui', weight: 600, color: '#FFFFFF', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
+    var stage = document.getElementById('ccStage');
+    stage.insertAdjacentHTML('afterbegin', dsArt('cc-editor-stage') + '<div class="ds-art__vig"></div>');
+    var prev = document.getElementById('ccPreview');
+
+    function draw() {
+      stage.style.alignItems = st.pos === 'top' ? 'flex-start' : st.pos === 'middle' ? 'center' : 'flex-end';
+      prev.style.paddingBottom = st.pos === 'bottom' ? '7%' : '0';
+      prev.style.paddingTop = st.pos === 'top' ? '7%' : '0';
+      var sh = [];
+      if (st.outline) sh.push('0 0 3px #000', '0 0 3px #000', '0 0 3px #000');
+      if (st.shadow) sh.push('0 4px 10px rgba(0,0,0,.85)');
+      if (!sh.length) sh.push('none');
+      var fam = st.font === 'mono' ? 'var(--ds-mono)' : st.font === 'serif' ? 'Georgia, serif' : 'var(--ds-ui)';
+      prev.innerHTML = '<span class="ds-cuebox" style="background:rgba(0,0,0,' + st.bg + ');max-width:40ch">' +
+        '<span class="ds-cue" style="font-size:' + st.size + 'px;font-weight:' + st.weight + ';color:' + st.color +
+        ';opacity:' + st.txtOp + ';line-height:' + st.lh + ';text-shadow:' + sh.join(',') + ';font-family:' + fam + '">' +
+        '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
+        '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span>';
+    }
+
+    document.querySelectorAll('[data-cc]').forEach(function (grp) {
+      grp.addEventListener('click', function (e) {
+        var b = e.target.closest('.ds-chip'); if (!b) return;
+        grp.querySelectorAll('.ds-chip').forEach(function (x) { x.setAttribute('aria-pressed', 'false'); });
+        b.setAttribute('aria-pressed', 'true');
+        var k = grp.dataset.cc;
+        st[k] = (k === 'size' || k === 'weight') ? +b.dataset.v : b.dataset.v;
+        draw();
+      });
+    });
+    var bind = function (id, fn) { var e = document.getElementById(id); if (e) e.addEventListener('input', fn); };
+    bind('ccBg', function () { st.bg = this.value / 100; document.getElementById('ccBgVal').textContent = this.value + '%'; draw(); });
+    bind('ccTxtOp', function () { st.txtOp = this.value / 100; document.getElementById('ccTxtOpVal').textContent = this.value + '%'; draw(); });
+    bind('ccLh', function () { st.lh = this.value / 100; document.getElementById('ccLhVal').textContent = (this.value / 100).toFixed(2); draw(); });
+    ['ccOutline', 'ccShadow'].forEach(function (id) {
+      var e = document.getElementById(id);
+      if (e) e.addEventListener('change', function () { st[id === 'ccOutline' ? 'outline' : 'shadow'] = this.checked; draw(); });
+    });
+    var rb = document.getElementById('ccResetBtn');
+    if (rb) rb.addEventListener('click', function () {
+      st = { size: 26, font: 'ui', weight: 600, color: '#FFFFFF', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
+      document.getElementById('ccBg').value = 62; document.getElementById('ccBgVal').textContent = '62%';
+      document.getElementById('ccTxtOp').value = 100; document.getElementById('ccTxtOpVal').textContent = '100%';
+      document.getElementById('ccLh').value = 134; document.getElementById('ccLhVal').textContent = '1.34';
+      document.getElementById('ccOutline').checked = true; document.getElementById('ccShadow').checked = false;
+      draw();
+    });
+    draw();
+  }
+
+  go('home');
+})();
+</script>
