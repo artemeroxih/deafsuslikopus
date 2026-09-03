@@ -1,12 +1,12 @@
 /* ============================================================
-   deafsuslik — shared runtime
+   DeafSuslik — shared runtime
    Logo, icon set, procedural artwork engine, catalogue.
    ============================================================ */
 
 /* ---------- Brand mark ----------
    A squircle token. Inside, an upright suslik silhouette knocked
    out in negative space; its chest carries the play triangle.
-   Reads at 16px, works on blue or on graphite.                */
+   Reads at 16px, works on accent or on graphite.                */
 function dsLogoMark(size, opts) {
   opts = opts || {};
   var fill = opts.fill || 'url(#dsg)';
@@ -15,7 +15,7 @@ function dsLogoMark(size, opts) {
   return '' +
   '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
     '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
-      '<stop stop-color="#8CB9FF"/><stop offset=".55" stop-color="#5B9BFF"/><stop offset="1" stop-color="#3A78E0"/>' +
+      '<stop stop-color="#7BEEDF"/><stop offset=".55" stop-color="#35E0CB"/><stop offset="1" stop-color="#1FB9A5"/>' +
     '</linearGradient></defs>' +
     '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
     /* suslik: ears */
@@ -28,7 +28,8 @@ function dsLogoMark(size, opts) {
 
 function dsLogo(px, wordPx, opts) {
   return '<span class="ds-logo">' + dsLogoMark(px, opts) +
-    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">deafsuslik</span></span>';
+    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">' +
+      '<span class="ds-logo__deaf">Deaf</span><span class="ds-logo__suslik">Suslik</span></span></span>';
 }
 
 /* ---------- Icons (24px stroke set, one consistent family) ---------- */
@@ -207,7 +208,7 @@ function badges(m, opts) {
   return out.join('');
 }
 function stars(r) {
-  return '<span class="ds-row-f ds-g1" style="color:var(--ds-blue)">' + ic('star', 11) +
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-accent)">' + ic('star', 11) +
     '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
 }
 
@@ -217,7 +218,7 @@ var PLANS = {
   vip: {
     id: 'vip', name: 'ВИП', price: 500, color: 'var(--ds-vip)', hex: '#FFC24B',
     tag: 'Полный доступ',
-    desc: 'Одна подписка на весь deafsuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
+    desc: 'Одна подписка на весь DeafSuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
     feats: [
       'Весь каталог — 1 204 фильма',
       'Все коллекции, включая «Реальные события»',

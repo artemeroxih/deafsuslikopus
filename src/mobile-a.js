@@ -1,5 +1,5 @@
 /* ============================================================
-   deafsuslik — Mobile app: frames, chrome, screens 01–24
+   DeafSuslik — Mobile app: frames, chrome, screens 01–24
    iOS and Android share the design system; the chrome,
    headers, sheets and affordances follow each platform.
    ============================================================ */
@@ -55,7 +55,7 @@ function mHeader(os, title, opts) {
   }
   return '<div style="flex:none' + (opts.border ? ';border-bottom:1px solid var(--ds-line)' : '') + '">' +
     (opts.back ? '<div style="display:flex;align-items:center;justify-content:space-between;padding:2px 10px 0">' +
-      '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0 6px;color:var(--ds-blue)">' + ic('chevL', 17) + ' Назад</button>' +
+      '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0 6px;color:var(--ds-accent)">' + ic('chevL', 17) + ' Назад</button>' +
       '<div class="ds-row-f ds-g1">' + (opts.actions || '') + '</div></div>' : '') +
     '<div style="padding:' + (opts.back ? '4px' : '10px') + ' 20px 12px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">' +
       '<h1 class="ds-d2" style="font-size:1.75rem">' + title + '</h1>' +
@@ -175,7 +175,7 @@ Mo.onboarding = function (os) {
         '<div class="ds-row-f ds-g2" style="justify-content:center;margin-bottom:20px">' +
           [0, 1, 2, 3].map(function (i) {
             return '<span style="height:6px;border-radius:99px;transition:all .3s;background:' +
-              (i === step ? 'var(--ds-blue);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
+              (i === step ? 'var(--ds-accent);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
           }).join('') + '</div>' +
         '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Далее</button></div>' +
     '</div>');
@@ -211,7 +211,7 @@ Mo.login = function (os) {
         '<div><strong style="font-size:13px">Неверный пароль</strong>' +
         '<div class="ds-cap">Осталось 4 попытки</div></div></div>' +
       '<div class="ds-grow"></div>' +
-      '<p class="ds-sm ds-center" style="padding-bottom:16px">Нет аккаунта? <span style="color:var(--ds-blue);font-weight:600">Создать</span></p>' +
+      '<p class="ds-sm ds-center" style="padding-bottom:16px">Нет аккаунта? <span style="color:var(--ds-accent);font-weight:600">Создать</span></p>' +
     '</div>');
 };
 
@@ -233,9 +233,9 @@ Mo.register = function (os) {
           '<span class="ds-help">Надёжный пароль</span></div>' +
         '<div class="ds-field"><label class="ds-label">Повторите пароль</label><input class="ds-input" type="password" value="mypassword"></div>' +
         '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
-          '<span class="ds-sm">Принимаю <span style="color:var(--ds-blue)">соглашение</span> и <span style="color:var(--ds-blue)">политику конфиденциальности</span></span></label>' +
+          '<span class="ds-sm">Принимаю <span style="color:var(--ds-accent)">соглашение</span> и <span style="color:var(--ds-accent)">политику конфиденциальности</span></span></label>' +
         '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:4px">Создать аккаунт</button>' +
-        '<p class="ds-sm ds-center" style="margin-top:6px">Уже есть аккаунт? <span style="color:var(--ds-blue);font-weight:600">Войти</span></p>' +
+        '<p class="ds-sm ds-center" style="margin-top:6px">Уже есть аккаунт? <span style="color:var(--ds-accent);font-weight:600">Войти</span></p>' +
       '</div>'));
 };
 
@@ -254,9 +254,9 @@ Mo.home = function (os) {
           '<div class="ds-row-f ds-g1">' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Загрузки">' + ic('download', 20) + '</button>' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell', 20) +
-              '<span style="position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:99px;background:var(--ds-blue)"></span></button></div></div>' +
+              '<span style="position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:99px;background:var(--ds-accent)"></span></button></div></div>' +
         '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 20px 4px">' +
-          '<p class="ds-eyebrow" style="color:var(--ds-blue)">Фильм недели</p>' +
+          '<p class="ds-eyebrow" style="color:var(--ds-accent)">Фильм недели</p>' +
           '<h1 class="ds-hero-title" style="font-size:2.3rem;margin-top:8px">' + h.t + '</h1>' +
           '<div class="ds-wrap ds-g1" style="margin-top:10px;align-items:center">' +
             '<span class="ds-badge ds-badge--age">' + h.age + '</span>' +
@@ -320,7 +320,7 @@ Mo.search = function (os) {
       '<p class="ds-eyebrow" style="margin:24px 0 10px">Сейчас ищут</p>' +
       '<div class="ds-stack">' + [['Год тишины', '+240%'], ['Реальные события 2025', '+118%'], ['Пепел и снег', '+96%'], ['CC+ подборка', '+74%'], ['Территория льда', '+51%']].map(function (q, i) {
         return '<button class="ds-row" style="min-height:48px;padding:10px 0">' +
-          '<span class="ds-row__ico ds-num" style="color:var(--ds-blue);font-weight:700;width:18px">' + (i + 1) + '</span>' +
+          '<span class="ds-row__ico ds-num" style="color:var(--ds-accent);font-weight:700;width:18px">' + (i + 1) + '</span>' +
           '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + q[0] + '</span></span>' +
           '<span class="ds-row__meta ds-num" style="color:var(--ds-ok);font-size:12px">' + q[1] + '</span></button>';
       }).join('') + '</div>' +
@@ -331,7 +331,7 @@ Mo.search = function (os) {
             art(c[0] + 'sc', '', 'position:absolute;inset:0') +
             '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.86),transparent)"></div>' +
             '<div style="position:absolute;left:11px;bottom:9px;display:flex;align-items:center;gap:6px">' +
-            '<span style="color:' + (i < 2 ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex">' + ic(c[1], 15) + '</span>' +
+            '<span style="color:' + (i < 2 ? 'var(--ds-amber)' : 'var(--ds-accent)') + ';display:flex">' + ic(c[1], 15) + '</span>' +
             '<span style="font-size:13px;font-weight:600">' + c[0] + '</span></div></button>';
         }).join('') + '</div>') +
     mTabbar('search'));
@@ -481,7 +481,7 @@ Mo.movie = function (os) {
           }).join('') + '</div>' +
 
         '<p class="ds-sm" style="margin-top:18px">Оператор северной станции теряет связь с материком и остаётся один на один с тишиной, ' +
-          'которую он сам когда-то выбрал. <span style="color:var(--ds-blue)">Ещё</span></p>' +
+          'которую он сам когда-то выбрал. <span style="color:var(--ds-accent)">Ещё</span></p>' +
 
         '<div class="ds-card" style="margin-top:18px;padding:14px;border-color:var(--ds-amber-edge);background:var(--ds-amber-dim)">' +
           '<div class="ds-between"><div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 18) + '</span>' +

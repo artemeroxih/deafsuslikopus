@@ -25,10 +25,10 @@ S.downloads = function () {
       '<div class="ds-between" style="margin-bottom:14px"><h3 class="ds-h2">Место на устройстве</h3>' +
         '<span class="ds-num ds-sm ds-mut">16.7 GB из 64 GB</span></div>' +
       '<div style="height:10px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-        '<div style="width:18%;background:var(--ds-blue)"></div><div style="width:8%;background:var(--ds-amber)"></div>' +
+        '<div style="width:18%;background:var(--ds-accent)"></div><div style="width:8%;background:var(--ds-amber)"></div>' +
         '<div style="width:12%;background:var(--ds-raised-3);border-left:1px solid var(--ds-void)"></div></div>' +
       '<div class="ds-wrap ds-g5" style="margin-top:12px">' +
-        [['Фильмы', '11.4 GB', 'var(--ds-blue)'], ['Субтитры и CC+', '0.3 GB', 'var(--ds-amber)'],
+        [['Фильмы', '11.4 GB', 'var(--ds-accent)'], ['Субтитры и CC+', '0.3 GB', 'var(--ds-amber)'],
          ['Другое', '5.0 GB', 'var(--ds-raised-3)'], ['Свободно', '47.3 GB', 'transparent']].map(function (s) {
           return '<div class="ds-row-f ds-g2"><span style="width:9px;height:9px;border-radius:3px;background:' + s[2] + ';border:1px solid var(--ds-line-mid)"></span>' +
             '<span class="ds-cap">' + s[0] + '</span><span class="ds-num ds-sm">' + s[1] + '</span></div>';
@@ -79,7 +79,7 @@ S.plans = function () {
   return topbar('') + '<main class="ds-container" style="padding-top:56px;padding-bottom:64px;max-width:1080px">' +
     '<div class="ds-center" style="max-width:640px;margin:0 auto">' +
       '<h1 class="ds-d1">Одна подписка</h1>' +
-      '<p class="ds-body" style="margin:14px auto 0">500 ₽ в месяц открывают весь deafsuslik. ' +
+      '<p class="ds-body" style="margin:14px auto 0">500 ₽ в месяц открывают весь DeafSuslik. ' +
       'Никаких уровней, коллекций за отдельную плату и доплат за качество — у всех одинаковый доступ.</p></div>' +
     '<div style="margin-top:36px">' + planCard(VIP) + '</div>' +
 
@@ -129,7 +129,7 @@ function landingPage(coll, idx) {
         '<div style="max-width:600px">' +
           '<div class="ds-row-f ds-g2" style="margin-bottom:18px">' +
             '<span style="width:34px;height:3px;border-radius:2px;background:' + coll.hex + '"></span>' +
-            '<span class="ds-eyebrow" style="color:' + coll.hex + '">Коллекция deafsuslik</span></div>' +
+            '<span class="ds-eyebrow" style="color:' + coll.hex + '">Коллекция DeafSuslik</span></div>' +
           '<h1 class="ds-hero-title" style="font-size:clamp(2.4rem,4.6vw,4rem)">' + coll.name + '</h1>' +
           '<p class="ds-body" style="margin-top:18px;font-size:1.0625rem">' + coll.desc + '</p>' +
           '<div class="ds-wrap ds-g6" style="margin-top:28px">' +
@@ -165,7 +165,7 @@ S.checkout = function () {
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:16px">Способ оплаты</h3>' +
           '<div class="ds-stack ds-g2">' +
             [['Банковская карта', '•••• 4417 · Mir · до 09/28', 1], ['Новая карта', 'Добавить карту', 0], ['СБП', 'Оплата через приложение банка', 0]].map(function (r) {
-              return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:14px;border-radius:var(--ds-r-md);border:1px solid ' + (r[2] ? 'var(--ds-blue-edge)' : 'var(--ds-line)') + (r[2] ? ';background:var(--ds-blue-dim)' : '') + '">' +
+              return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:14px;border-radius:var(--ds-r-md);border:1px solid ' + (r[2] ? 'var(--ds-accent-edge)' : 'var(--ds-line)') + (r[2] ? ';background:var(--ds-accent-dim)' : '') + '">' +
                 '<span class="ds-opt__box ds-opt__box--radio"></span>' +
                 '<span class="ds-row__ico" style="color:var(--ds-ink-2)">' + ic('card', 19) + '</span>' +
                 '<span class="ds-grow"><span style="font-size:14px;font-weight:600">' + r[0] + '</span>' +
@@ -180,12 +180,12 @@ S.checkout = function () {
               return '<div class="ds-between"><span class="ds-sm ds-mut">' + r[0] + '</span>' +
                 '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
             }).join('') + '</div>' +
-          '<div class="ds-strip" style="margin-top:16px;background:var(--ds-blue-dim);border-left-color:var(--ds-blue)">' +
-            '<span class="ds-strip__label" style="color:var(--ds-blue)">Важно</span>' +
+          '<div class="ds-strip" style="margin-top:16px;background:var(--ds-accent-dim);border-left-color:var(--ds-accent)">' +
+            '<span class="ds-strip__label" style="color:var(--ds-accent)">Важно</span>' +
             '<p class="ds-cap" style="margin:0">Подписка продлевается автоматически каждый месяц, пока вы её не отмените. ' +
             'Отменить можно в любой момент — доступ сохранится до конца оплаченного периода.</p></div></div>' +
         '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
-          '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-blue)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
+          '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-accent)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
       '</div>' +
       '<aside style="position:sticky;top:92px">' +
         '<div class="ds-card" style="border-color:' + p.hex + '33">' +
@@ -204,7 +204,7 @@ S.checkout = function () {
           '<div class="ds-row-f ds-g2 ds-center" style="margin-top:14px;justify-content:center;color:var(--ds-ok)">' + ic('shield', 15) +
             '<span class="ds-cap">Защищённый платёж · 3-D Secure</span></div>' +
           '<p class="ds-cap" style="margin-top:12px;text-align:center">Данные карты обрабатывает банк-эквайер. ' +
-          'deafsuslik не хранит номер карты и CVV.</p></div>' +
+          'DeafSuslik не хранит номер карты и CVV.</p></div>' +
       '</aside></div></main>' + webFoot();
 };
 

@@ -20,7 +20,7 @@ S.profile = function () {
           '<h1 class="ds-d2">Анна Ковалёва</h1>' +
           '<p class="ds-sm ds-mut" style="margin-top:4px">anna.k@example.ru</p>' +
           '<div class="ds-wrap ds-g2" style="margin-top:10px">' +
-            '<span class="ds-badge ds-badge--blue ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
+            '<span class="ds-badge ds-badge--accent ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
             '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна до 12 октября</span></div></div>' +
         '<button class="ds-btn ds-btn--secondary" data-go="edit-profile" style="margin-bottom:8px">' + ic('edit', 16) + ' Изменить профиль</button></div>' +
 
@@ -54,7 +54,7 @@ S.profile = function () {
 
 /* 31 — Edit profile */
 S.editProfile = function () {
-  return settingsPage('Изменить профиль', 'Имя и аватар видны только вам — deafsuslik не публичный сервис.',
+  return settingsPage('Изменить профиль', 'Имя и аватар видны только вам — DeafSuslik не публичный сервис.',
     '<div class="ds-card" style="max-width:620px">' +
       '<div class="ds-row-f ds-g4" style="margin-bottom:24px">' +
         '<div style="width:96px;height:96px;border-radius:28px;overflow:hidden;position:relative;flex:none;border:1px solid var(--ds-line-mid)">' +
@@ -108,7 +108,7 @@ S.subs = function () {
 
     '<div class="ds-strip" style="margin-top:16px">' +
       '<span class="ds-strip__label">Тариф</span>' +
-      '<p class="ds-sm" style="margin:0">На deafsuslik один тариф для всех — 500 ₽ в месяц. ' +
+      '<p class="ds-sm" style="margin:0">На DeafSuslik один тариф для всех — 500 ₽ в месяц. ' +
       'Коллекции, качество до 4K, скачивание, CC и CC+ входят в него без доплат.</p></div>' +
 
     '<div class="ds-card" style="margin-top:24px">' +
@@ -284,7 +284,7 @@ S.a11y = function () {
       '<span class="ds-strip__label">Что такое CC+</span>' +
       '<p class="ds-sm" style="margin:0">Расширенные субтитры показывают не только реплики, но и кто говорит, ' +
       'какая звучит музыка, какие важные звуки происходят вокруг. Каждый текст вычитывает редактор вручную — ' +
-      'автоматических CC+ на deafsuslik не бывает.</p></div>',
+      'автоматических CC+ на DeafSuslik не бывает.</p></div>',
     navFor('a11y'));
 };
 
@@ -294,7 +294,7 @@ S.notifications = function () {
     ['sparkle', 'Новый фильм в коллекции «Реальные события»', '«Свидетели» — документальная драма 2024 с CC+ на русском.', 'Сегодня, 14:20', 1, 'var(--ds-coll)'],
     ['checkc', 'Загрузка завершена', '«Год тишины» · 1080p · Русский CC+ · 2.8 GB. Доступен офлайн 30 дней.', 'Сегодня, 12:04', 1, 'var(--ds-ok)'],
     ['ticket', 'Поддержка ответила на обращение #DS-10482', 'Ошибка в субтитрах «Год тишины» на 01:22:18 исправлена.', 'Сегодня, 09:51', 1, 'var(--ds-amber)'],
-    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ будут списаны с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-blue)'],
+    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ будут списаны с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-accent)'],
     ['film', 'Вышел новый фильм в вашей подборке', '«Двое на побережье» добавлен в подборку «Фильмы на вечер».', '12 сентября', 0, 'var(--ds-coll)'],
     ['alert', 'Срок загрузки истекает', '«Ночная смена» перестанет открываться через 3 дня.', '11 сентября', 0, 'var(--ds-warn)'],
     ['cc', 'Добавлены CC+ к фильму из избранного', '«Глубина» теперь с расширенными субтитрами на русском.', '10 сентября', 0, 'var(--ds-amber)']
@@ -310,7 +310,7 @@ S.notifications = function () {
         '<span class="ds-row__main"><span class="ds-row__title" style="font-weight:' + (n[4] ? 600 : 500) + '">' + n[1] + '</span>' +
         '<span class="ds-row__sub" style="margin-top:3px;line-height:1.5">' + n[2] + '</span>' +
         '<span class="ds-cap ds-num" style="display:block;margin-top:6px">' + n[3] + '</span></span>' +
-        (n[4] ? '<span style="width:8px;height:8px;border-radius:99px;background:var(--ds-blue);flex:none;margin-top:6px"></span>' : '') + '</button>';
+        (n[4] ? '<span style="width:8px;height:8px;border-radius:99px;background:var(--ds-accent);flex:none;margin-top:6px"></span>' : '') + '</button>';
     }).join('') + '</div>' +
     '<div class="ds-card ds-card--flush" style="margin-top:24px">' +
       '<p class="ds-eyebrow" style="padding:16px 18px 10px">Что присылать</p>' +
@@ -340,7 +340,7 @@ S.help = function () {
     '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">' +
       TOPICS.map(function (t, i) {
         return '<button class="ds-card" style="text-align:left;cursor:pointer' + (i === 1 ? ';border-color:var(--ds-amber-edge)' : '') + '">' +
-          '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex">' + ic(t[0], 22) + '</span>' +
+          '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-accent)') + ';display:flex">' + ic(t[0], 22) + '</span>' +
           '<div class="ds-h3" style="margin-top:12px">' + t[1] + '</div>' +
           '<p class="ds-cap" style="margin-top:4px">' + t[2] + '</p></button>';
       }).join('') + '</div>' +
@@ -358,7 +358,7 @@ S.help = function () {
             '<span style="color:var(--ds-ink-3);display:flex">' + ic('chevD', 17) + '</span></summary>' +
             '<p class="ds-sm" style="margin-top:10px">' + q[1] + '</p></details>';
         }).join('') + '</div></div>' +
-    '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-blue-edge);background:linear-gradient(140deg,rgba(255,194,75,.08),transparent 50%),var(--ds-panel)">' +
+    '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-accent-edge);background:linear-gradient(140deg,rgba(255,194,75,.08),transparent 50%),var(--ds-panel)">' +
       '<div class="ds-between"><div><h3 class="ds-h2">Не нашли ответ?</h3>' +
         '<p class="ds-sm" style="margin-top:6px">Ответим в течение суток, срочные вопросы — за час.</p></div>' +
         '<button class="ds-btn ds-btn--primary" data-go="support" style="flex:none">Обратиться в поддержку</button></div></div>',
@@ -391,7 +391,7 @@ S.support = function () {
         '<div class="ds-field"><span class="ds-label">Вложения — необязательно</span>' +
           '<div style="border:1px dashed var(--ds-line-strong);border-radius:var(--ds-r-md);padding:22px;text-align:center">' +
             '<span style="color:var(--ds-ink-3);display:flex;justify-content:center">' + ic('paperclip', 22) + '</span>' +
-            '<p class="ds-sm" style="margin-top:8px">Перетащите скриншот или <span style="color:var(--ds-blue)">выберите файл</span></p>' +
+            '<p class="ds-sm" style="margin-top:8px">Перетащите скриншот или <span style="color:var(--ds-accent)">выберите файл</span></p>' +
             '<p class="ds-cap" style="margin-top:4px">PNG, JPG, до 10 МБ · до 5 файлов</p></div>' +
           '<div class="ds-row-f ds-g2" style="margin-top:10px">' +
             '<span class="ds-badge ds-badge--lg">' + ic('paperclip', 10, 2.4) + ' screenshot-01-22-18.png · 840 KB ' + ic('x', 10, 2.4) + '</span></div></div>' +
@@ -428,7 +428,7 @@ S.tickets = function () {
     '<div class="ds-card ds-card--flush"><div class="ds-tablewrap"><table class="ds-table">' +
       '<thead><tr><th>Номер</th><th>Тема</th><th>Категория</th><th>Фильм</th><th>Статус</th><th>Обновлено</th><th></th></tr></thead><tbody>' +
       T.map(function (t) {
-        return '<tr style="cursor:pointer" data-go="ticket"><td class="ds-num" style="color:var(--ds-blue)">' + t[0] + '</td>' +
+        return '<tr style="cursor:pointer" data-go="ticket"><td class="ds-num" style="color:var(--ds-accent)">' + t[0] + '</td>' +
           '<td style="font-weight:600">' + t[1] + '</td><td class="ds-mut2">' + t[2] + '</td><td class="ds-mut2">' + t[3] + '</td>' +
           '<td><span class="ds-badge ' + ST[t[4]][0] + '">' + t[5] + '</span></td>' +
           '<td class="ds-num ds-mut2">' + t[6] + '</td>' +
@@ -465,7 +465,7 @@ S.ticket = function () {
           'На 01:22:18 в CC+ написано «[дверь резко захлопывается]», но в сцене дверь закрывают очень тихо — это меняет смысл эпизода.',
           '<div class="ds-row-f ds-g2" style="margin-top:10px"><span class="ds-badge">' + ic('paperclip', 10, 2.4) + ' screenshot-01-22-18.png</span></div>') +
 
-        msg('agent', 'Поддержка deafsuslik', '14 сент, 10:40',
+        msg('agent', 'Поддержка DeafSuslik', '14 сент, 10:40',
           'Спасибо, вижу проблему. Передала редактору субтитров — он откроет момент прямо в редакторе и сверится с оригинальной дорожкой. Ответим сегодня.') +
 
         msg('agent', 'Мария · редактор субтитров', '14 сент, 14:42',
@@ -508,7 +508,7 @@ S.ticket = function () {
           [['Новое', '14 сент, 09:12', 'ok'], ['Принято', '14 сент, 09:40', 'ok'],
            ['В работе · Редактор субтитров', '14 сент, 10:40', 'ok'], ['Ожидает подтверждения', '14 сент, 14:42', 'now']].map(function (r) {
             return '<div class="ds-row-f ds-g3"><span style="width:8px;height:8px;border-radius:99px;flex:none;background:' +
-              (r[2] === 'now' ? 'var(--ds-blue)' : 'var(--ds-ok)') + '"></span>' +
+              (r[2] === 'now' ? 'var(--ds-accent)' : 'var(--ds-ok)') + '"></span>' +
               '<div class="ds-grow"><div class="ds-sm">' + r[0] + '</div>' +
               '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>';
           }).join('') + '</div></aside></div>',

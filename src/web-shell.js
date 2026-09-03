@@ -1,5 +1,5 @@
 /* ============================================================
-   deafsuslik — Web prototype: shell + shared blocks
+   DeafSuslik — Web prototype: shell + shared blocks
    ============================================================ */
 
 var NAV = [
@@ -19,7 +19,7 @@ function topbar(active) {
     '<div class="ds-grow"></div>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" data-go="search" aria-label="Поиск">' + ic('search') + '</button>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" data-go="notifications" aria-label="Уведомления" style="position:relative">' +
-      ic('bell') + '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-blue);border:2px solid var(--ds-void)"></span></button>' +
+      ic('bell') + '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-accent);border:2px solid var(--ds-void)"></span></button>' +
     '<button data-go="profile" aria-label="Профиль" style="width:34px;height:34px;border-radius:99px;border:1px solid var(--ds-line-mid);background:linear-gradient(140deg,#3E5C8C,#1B2A4A);color:#fff;font-weight:700;font-size:12px;cursor:pointer">А</button>' +
   '</header>';
 }
@@ -39,7 +39,7 @@ function webFoot() {
       }).join('') +
     '</div>' +
     '<div class="ds-container" style="margin-top:32px;padding-top:20px;border-top:1px solid var(--ds-line)">' +
-      '<p class="ds-cap">© 2026 deafsuslik · Пользовательское соглашение · Политика конфиденциальности · Правообладателям</p></div>' +
+      '<p class="ds-cap">© 2026 DeafSuslik · Пользовательское соглашение · Политика конфиденциальности · Правообладателям</p></div>' +
   '</footer>';
 }
 

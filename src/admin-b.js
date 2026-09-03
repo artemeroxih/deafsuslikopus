@@ -1,5 +1,5 @@
 /* ============================================================
-   deafsuslik Admin — subtitles, people, money, support, system
+   DeafSuslik Admin — subtitles, people, money, support, system
    ============================================================ */
 
 /* ---------- Subtitles per movie ---------- */
@@ -117,7 +117,7 @@ A.editor = function () {
                   return '<div style="flex:1;height:' + h + 'px;border-radius:1px;background:' +
                     (i > 52 && i < 62 ? 'var(--ds-amber)' : 'var(--ds-raised-3)') + '"></div>';
                 }).join('') + '</div>' +
-              '<div style="position:absolute;top:0;bottom:0;left:46%;width:2px;background:var(--ds-blue)"></div>' +
+              '<div style="position:absolute;top:0;bottom:0;left:46%;width:2px;background:var(--ds-accent)"></div>' +
               '<div style="position:absolute;top:0;bottom:0;left:44%;width:8%;background:rgba(95,227,208,.14);border-left:1px solid var(--ds-amber);border-right:1px solid var(--ds-amber)"></div>' +
             '</div>' +
             '<div class="ds-between" style="margin-top:6px"><span class="ds-cap ds-num">01:22:10</span>' +
@@ -186,7 +186,7 @@ A.editor = function () {
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Версии</h3>' +
           '<div class="ds-stack ds-g2">' +
             [['v4 · черновик', 'Мария Р. · сейчас', 1], ['v3', 'Мария Р. · 28 авг', 0], ['v2', 'Игорь С. · 12 авг', 0], ['v1 · импорт', 'Система · 4 авг', 0]].map(function (r) {
-              return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[2] ? 'var(--ds-blue-dim)' : 'var(--ds-void)') + ';border:1px solid ' + (r[2] ? 'var(--ds-blue-edge)' : 'var(--ds-line)') + '">' +
+              return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[2] ? 'var(--ds-accent-dim)' : 'var(--ds-void)') + ';border:1px solid ' + (r[2] ? 'var(--ds-accent-edge)' : 'var(--ds-line)') + '">' +
                 '<div><div class="ds-sm" style="font-weight:600">' + r[0] + '</div>' +
                 '<div class="ds-cap">' + r[1] + '</div></div>' +
                 (r[2] ? '' : '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сравнить</button>') + '</div>';
@@ -290,7 +290,7 @@ A.user = function () {
           '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Обращения</h3>' +
             '<div class="ds-stack ds-g2">' +
               [['#DS-10482', 'В работе', 'info'], ['#DS-10318', 'Решено', 'ok'], ['#DS-10240', 'Закрыто', '']].map(function (r) {
-                return '<div class="ds-between"><span class="ds-num ds-sm" style="color:var(--ds-blue)">' + r[0] + '</span>' +
+                return '<div class="ds-between"><span class="ds-num ds-sm" style="color:var(--ds-accent)">' + r[0] + '</span>' +
                   '<span class="ds-badge ' + (r[2] ? 'ds-badge--' + r[2] : '') + '">' + r[1] + '</span></div>';
               }).join('') + '</div></div></div></div></div>');
 };
@@ -322,7 +322,7 @@ A.payments = function () {
       }).join('') + '</tbody></table></div></div>' +
     '<div class="ds-strip" style="margin-top:16px;border-left-color:var(--ds-err);background:var(--ds-err-dim)">' +
       '<span class="ds-strip__label" style="color:var(--ds-err)">Безопасность</span>' +
-      '<p class="ds-sm" style="margin:0">Полный номер карты, срок действия и CVV не проходят через deafsuslik и не отображаются ' +
+      '<p class="ds-sm" style="margin:0">Полный номер карты, срок действия и CVV не проходят через DeafSuslik и не отображаются ' +
       'ни одной роли, включая владельца. Для разбора спора достаточно ссылки на операцию и кода отказа банка.</p></div>');
 };
 
@@ -340,7 +340,7 @@ A.analytics = function () {
         bars([['1', 38], ['5', 41], ['9', 44], ['13', 40], ['17', 47], ['21', 51], ['25', 49], ['29', 56]], 130) + '</div>' +
       '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Платформы</h3>' +
         '<div class="ds-stack ds-g4">' +
-          [['iPhone', 41, 'var(--ds-blue)'], ['Android', 34, 'var(--ds-blue-lo)'], ['Web', 25, 'var(--ds-raised-3)']].map(function (r) {
+          [['iPhone', 41, 'var(--ds-accent)'], ['Android', 34, 'var(--ds-accent-lo)'], ['Web', 25, 'var(--ds-raised-3)']].map(function (r) {
             return '<div><div class="ds-between" style="margin-bottom:5px"><span class="ds-sm">' + r[0] + '</span>' +
               '<span class="ds-num ds-sm" style="font-weight:700">' + r[1] + '%</span></div>' +
               '<div style="height:7px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
@@ -372,7 +372,7 @@ A.analytics = function () {
       '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Коллекции</h3>' +
         '<div class="ds-stack ds-g3">' +
           [['Лучшее с CC+', '128 400', 'var(--ds-amber)'], ['Реальные события', '96 100', 'var(--ds-coll)'],
-           ['Фильмы на вечер', '42 800', 'var(--ds-coll)'], ['Лучшее в 4K', '38 200', 'var(--ds-blue)']].map(function (r) {
+           ['Фильмы на вечер', '42 800', 'var(--ds-coll)'], ['Лучшее в 4K', '38 200', 'var(--ds-accent)']].map(function (r) {
             return '<div class="ds-between"><div class="ds-row-f ds-g2">' +
               '<span style="width:18px;height:3px;border-radius:2px;background:' + r[2] + '"></span>' +
               '<span class="ds-cap">' + r[0] + '</span></div>' +
@@ -423,7 +423,7 @@ A.tickets = function () {
       '<thead><tr><th>Номер</th><th>Пользователь</th><th>Тема</th><th>Категория</th><th>Фильм</th><th>Приоритет</th><th>Исполнитель</th><th>Статус</th><th>Активность</th></tr></thead><tbody>' +
       T.map(function (t) {
         return '<tr style="cursor:pointer" data-ago="ticket"' + (t[11] ? ' style="background:rgba(255,92,92,.05);cursor:pointer"' : '') + '>' +
-          '<td class="ds-num" style="color:var(--ds-blue)">' + t[0] + (t[11] ? ' <span class="ds-badge ds-badge--err">SLA</span>' : '') + '</td>' +
+          '<td class="ds-num" style="color:var(--ds-accent)">' + t[0] + (t[11] ? ' <span class="ds-badge ds-badge--err">SLA</span>' : '') + '</td>' +
           '<td>' + t[1] + '</td><td style="font-weight:600">' + t[2] + '</td>' +
           '<td class="ds-mut2">' + t[3] + '</td><td class="ds-mut2">' + t[4] + '</td>' +
           '<td><span class="ds-badge ' + PR[t[5]] + '">' + t[6] + '</span></td>' +
@@ -530,7 +530,7 @@ A.ticket = function () {
             [['Новое', '09:12'], ['Принято', '09:40'], ['В работе · Редактор субтитров', '10:40'],
              ['Субтитры исправлены, v4 опубликована', '14:42']].map(function (r, i, arr) {
               return '<div class="ds-row-f ds-g3"><span style="width:8px;height:8px;border-radius:99px;flex:none;background:' +
-                (i === arr.length - 1 ? 'var(--ds-blue)' : 'var(--ds-ok)') + '"></span>' +
+                (i === arr.length - 1 ? 'var(--ds-accent)' : 'var(--ds-ok)') + '"></span>' +
                 '<div class="ds-grow"><div class="ds-cap" style="color:var(--ds-ink-2)">' + r[0] + '</div>' +
                 '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>';
             }).join('') + '</div></div></div></div>');
@@ -579,7 +579,7 @@ A.roles = function () {
         return '<tr><td><div class="ds-row-f ds-g3">' +
           '<div style="width:28px;height:28px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art(r[0], '', 'position:absolute;inset:0') + '</div>' +
           '<div><div style="font-weight:600">' + r[0] + '</div><div class="ds-cap ds-num">' + r[1] + '</div></div></div></td>' +
-          '<td><span class="ds-badge ' + (r[2] === 'OWNER' ? 'ds-badge--blue' : '') + '">' + r[2] + '</span></td>' +
+          '<td><span class="ds-badge ' + (r[2] === 'OWNER' ? 'ds-badge--accent' : '') + '">' + r[2] + '</span></td>' +
           '<td>' + (r[3] ? '<span class="ds-badge ds-badge--ok">Включена</span>' : '<span class="ds-badge ds-badge--err">Выключена</span>') + '</td>' +
           '<td class="ds-num ds-mut2">' + r[4] + '</td>' +
           '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
@@ -632,10 +632,10 @@ A.storage = function () {
       '<div class="ds-between" style="margin-bottom:12px"><h3 class="ds-h2">Распределение</h3>' +
         '<span class="ds-num ds-sm ds-mut">3.9 / 5 TB</span></div>' +
       '<div style="height:14px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-        '<div style="width:48%;background:var(--ds-blue)"></div><div style="width:26%;background:var(--ds-blue-lo)"></div>' +
+        '<div style="width:48%;background:var(--ds-accent)"></div><div style="width:26%;background:var(--ds-accent-lo)"></div>' +
         '<div style="width:3.3%;background:var(--ds-amber)"></div><div style="width:0.6%;background:var(--ds-ok)"></div></div>' +
       '<div class="ds-wrap ds-g6" style="margin-top:12px">' +
-        [['Мастер-файлы 2.4 TB', 'var(--ds-blue)'], ['Качества 1.28 TB', 'var(--ds-blue-lo)'],
+        [['Мастер-файлы 2.4 TB', 'var(--ds-accent)'], ['Качества 1.28 TB', 'var(--ds-accent-lo)'],
          ['Изображения 164 GB', 'var(--ds-amber)'], ['Субтитры 2.1 GB', 'var(--ds-ok)'],
          ['Свободно 1.1 TB', 'var(--ds-raised-3)']].map(function (s) {
           return '<div class="ds-row-f ds-g2"><span style="width:9px;height:9px;border-radius:3px;background:' + s[1] + '"></span>' +
@@ -723,7 +723,7 @@ A.api = function () {
             '<div><div class="ds-h3">' + r[0] + '</div>' +
             '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>' +
             '<div class="ds-row-f ds-g2">' +
-              '<span class="ds-badge ' + (r[2] === 'production' ? 'ds-badge--blue' : '') + '">' + r[2] + '</span>' +
+              '<span class="ds-badge ' + (r[2] === 'production' ? 'ds-badge--accent' : '') + '">' + r[2] + '</span>' +
               '<span class="ds-badge ds-badge--' + r[3] + '">' + r[4] + '</span></div></div>' +
           '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--ds-line)">' +
             '<div><div class="ds-cap">Что импортирует</div><div class="ds-sm" style="margin-top:3px">' + r[5] + '</div></div>' +
@@ -749,10 +749,10 @@ A.collections = function () {
   var C = [['Лучшее с CC+', 340, 'Опубликована', 'ok', 'var(--ds-amber)'],
     ['Основано на реальных событиях', 214, 'Опубликована', 'ok', 'var(--ds-coll)'],
     ['Медленное кино', 96, 'Опубликована', 'ok', 'var(--ds-coll)'],
-    ['Фильмы на вечер', 42, 'Опубликована', 'ok', 'var(--ds-blue)'],
-    ['Лучшее в 4K', 268, 'Опубликована', 'ok', 'var(--ds-blue)'],
+    ['Фильмы на вечер', 42, 'Опубликована', 'ok', 'var(--ds-accent)'],
+    ['Лучшее в 4K', 268, 'Опубликована', 'ok', 'var(--ds-accent)'],
     ['Кино для поездки', 88, 'Черновик', '', 'var(--ds-raised-3)'],
-    ['Новинки недели', 18, 'Запланирована на 5 сен', 'warn', 'var(--ds-blue)']];
+    ['Новинки недели', 18, 'Запланирована на 5 сен', 'warn', 'var(--ds-accent)']];
   return adminShell('collections', 'Коллекции', '7 редакционных подборок',
     '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Новая коллекция</button>',
     '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">' +

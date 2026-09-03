@@ -25,7 +25,7 @@ FONTS = (
     '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
     '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
     'family=Onest:wght@400;500;600;700;800&'
-    'family=Unbounded:wght@400;600;700;800&'
+    'family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&'
     'family=JetBrains+Mono:wght@400;500;700&display=swap">'
 )
 
@@ -45,7 +45,7 @@ HEAD = (
     '<meta name="description" content="{desc}">\n'
     '<link rel="icon" href="data:image/svg+xml,'
     '%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E'
-    '%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%235B9BFF%27/%3E'
+    '%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%2335E0CB%27/%3E'
     '%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 '
     '9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 '
     '1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%23060B18%27/%3E%3C/svg%3E">\n'
@@ -55,11 +55,11 @@ HEAD = (
 )
 
 DESCRIPTIONS = {
-    'index': 'deafsuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.',
-    'system': 'Дизайн-система deafsuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.',
-    'web': 'Кликабельный прототип веб-приложения deafsuslik.',
-    'mobile': 'Мобильные приложения deafsuslik для iPhone и Android.',
-    'admin': 'Приватная админ-панель deafsuslik.',
+    'index': 'DeafSuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.',
+    'system': 'Дизайн-система DeafSuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.',
+    'web': 'Кликабельный прототип веб-приложения DeafSuslik.',
+    'mobile': 'Мобильные приложения DeafSuslik для iPhone и Android.',
+    'admin': 'Приватная админ-панель DeafSuslik.',
 }
 
 
@@ -82,7 +82,7 @@ def read(p):
 def build(name):
     body = read(name + '.body.html')
     m = re.match(r'<!--TITLE:\s*(.*?)\s*-->\s*', body)
-    title = m.group(1) if m else 'deafsuslik'
+    title = m.group(1) if m else 'DeafSuslik'
     if m:
         body = body[m.end():]
 

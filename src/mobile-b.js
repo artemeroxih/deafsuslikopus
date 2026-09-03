@@ -197,7 +197,7 @@ Mo.reportCc = function (os) {
 Mo.quality = function (os) {
   return phone(os, mPlayer(os, { hideCue: 1, sheet:
     mSheet('Качество видео',
-      mRow('Авто', 'Сейчас 1080p · подстраивается под сеть', 1, '<span class="ds-badge ds-badge--blue">AUTO</span>') +
+      mRow('Авто', 'Сейчас 1080p · подстраивается под сеть', 1, '<span class="ds-badge ds-badge--accent">AUTO</span>') +
       '<div class="ds-divider" style="margin:12px 0"></div>' +
       mRow('4K UHD', '2160p · нужно 25 Мбит/с', 0, '<span class="ds-badge ds-badge--4k">4K</span>') +
       mRow('2K', '1440p · 16 Мбит/с', 0) +
@@ -284,9 +284,9 @@ Mo.downloads = function (os) {
         '<div class="ds-between" style="margin-bottom:10px"><span class="ds-sm" style="font-weight:600">Место на устройстве</span>' +
           '<span class="ds-num ds-cap">16.7 / 64 GB</span></div>' +
         '<div style="height:8px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-          '<div style="width:18%;background:var(--ds-blue)"></div><div style="width:8%;background:var(--ds-amber)"></div></div>' +
+          '<div style="width:18%;background:var(--ds-accent)"></div><div style="width:8%;background:var(--ds-amber)"></div></div>' +
         '<div class="ds-wrap ds-g3" style="margin-top:9px">' +
-          [['Фильмы 11.4 GB', 'var(--ds-blue)'], ['CC+ 0.3 GB', 'var(--ds-amber)'], ['Свободно 47.3 GB', 'var(--ds-raised-3)']].map(function (s) {
+          [['Фильмы 11.4 GB', 'var(--ds-accent)'], ['CC+ 0.3 GB', 'var(--ds-amber)'], ['Свободно 47.3 GB', 'var(--ds-raised-3)']].map(function (s) {
             return '<div class="ds-row-f ds-g1"><span style="width:7px;height:7px;border-radius:2px;background:' + s[1] + '"></span>' +
               '<span class="ds-cap">' + s[0] + '</span></div>';
           }).join('') + '</div></div>' +
@@ -572,7 +572,7 @@ Mo.checkout = function (os) {
           [['Банковская карта', '•••• 4417 · Mir', 1], ['Новая карта', 'Добавить', 0], ['СБП', 'Через приложение банка', 0],
            (os === 'ios' ? ['Apple Pay', 'Оплата через Apple', 0] : ['Google Pay', 'Оплата через Google', 0])].map(function (r) {
             return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:13px;border-radius:var(--ds-r-md);border:1px solid ' +
-              (r[2] ? 'var(--ds-blue-edge);background:var(--ds-blue-dim)' : 'var(--ds-line)') + '">' +
+              (r[2] ? 'var(--ds-accent-edge);background:var(--ds-accent-dim)' : 'var(--ds-line)') + '">' +
               '<span class="ds-opt__box ds-opt__box--radio"></span>' +
               '<span class="ds-row__ico">' + ic('card', 18) + '</span>' +
               '<span class="ds-grow"><span style="font-size:14px;font-weight:600">' + r[0] + '</span>' +
@@ -668,7 +668,7 @@ Mo.profile = function (os) {
             '<div class="ds-cap">anna.k@example.ru</div></div>' +
           '<button class="ds-iconbtn ds-iconbtn--sm" style="margin-bottom:4px" aria-label="Изменить профиль">' + ic('edit', 17) + '</button></div>' +
         '<div class="ds-wrap ds-g1" style="margin-top:12px">' +
-          '<span class="ds-badge ds-badge--blue ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
+          '<span class="ds-badge ds-badge--accent ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
           '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна до 12 октября</span></div>' +
         '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px">' +
           [['284', 'фильма'], ['512', 'часов'], ['78%', 'с CC+']].map(function (s) {
@@ -697,12 +697,12 @@ Mo.profile = function (os) {
 Mo.editProfile = function (os) {
   return phone(os,
     mHeader(os, 'Профиль', { back: 1, border: 1,
-      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-blue);font-weight:700">Готово</button>' }) +
+      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-accent);font-weight:700">Готово</button>' }) +
     mBody(
       '<div style="padding-top:18px;text-align:center">' +
         '<div style="width:96px;height:96px;border-radius:30px;overflow:hidden;position:relative;margin:0 auto;border:1px solid var(--ds-line-mid)">' +
           art('Анна Ковалёва', '', 'position:absolute;inset:0') + '</div>' +
-        '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="margin-top:10px;color:var(--ds-blue)">Изменить фото</button></div>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="margin-top:10px;color:var(--ds-accent)">Изменить фото</button></div>' +
       '<div class="ds-stack ds-g3" style="margin-top:18px">' +
         '<div class="ds-field"><label class="ds-label">Имя</label><input class="ds-input" value="Анна Ковалёва"></div>' +
         '<div class="ds-field"><label class="ds-label">Email</label>' +
@@ -796,19 +796,19 @@ Mo.notifications = function (os) {
   var N = [['sparkle', 'Новый фильм в «Реальных событиях»', '«Свидетели» — документальная драма с CC+.', 'Сегодня, 14:20', 1, 'var(--ds-coll)'],
     ['checkc', 'Загрузка завершена', 'Год тишины · 1080p · Русский CC+', 'Сегодня, 12:04', 1, 'var(--ds-ok)'],
     ['ticket', 'Поддержка ответила · #DS-10482', 'Ошибка в субтитрах исправлена.', 'Сегодня, 09:51', 1, 'var(--ds-amber)'],
-    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ спишутся с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-blue)'],
+    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ спишутся с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-accent)'],
     ['alert', 'Срок загрузки истекает', '«Ночная смена» — через 3 дня.', '11 сентября', 0, 'var(--ds-warn)'],
     ['cc', 'Добавлены CC+', '«Глубина» теперь с расширенными субтитрами.', '10 сентября', 0, 'var(--ds-amber)']];
   return phone(os,
     mHeader(os, 'Уведомления', { back: 1,
-      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-blue)">Прочитать всё</button>' }) +
+      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-accent)">Прочитать всё</button>' }) +
     mBody('<div class="ds-card ds-card--flush">' + N.map(function (n) {
       return '<button class="ds-row" style="padding:14px;align-items:flex-start' + (n[4] ? ';background:rgba(255,255,255,.03)' : '') + '">' +
         '<span class="ds-row__ico" style="color:' + n[5] + ';margin-top:2px">' + ic(n[0], 18) + '</span>' +
         '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px;font-weight:' + (n[4] ? 600 : 500) + '">' + n[1] + '</span>' +
         '<span class="ds-row__sub" style="margin-top:2px;line-height:1.45">' + n[2] + '</span>' +
         '<span class="ds-cap ds-num" style="display:block;margin-top:5px">' + n[3] + '</span></span>' +
-        (n[4] ? '<span style="width:7px;height:7px;border-radius:99px;background:var(--ds-blue);flex:none;margin-top:5px"></span>' : '') + '</button>';
+        (n[4] ? '<span style="width:7px;height:7px;border-radius:99px;background:var(--ds-accent);flex:none;margin-top:5px"></span>' : '') + '</button>';
     }).join('') + '</div>') +
     mTabbar('user', 1));
 };
@@ -826,7 +826,7 @@ Mo.help = function (os) {
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
         T.map(function (t, i) {
           return '<button class="ds-card" style="text-align:left;padding:14px' + (i === 1 ? ';border-color:var(--ds-amber-edge)' : '') + '">' +
-            '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex">' + ic(t[0], 19) + '</span>' +
+            '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-accent)') + ';display:flex">' + ic(t[0], 19) + '</span>' +
             '<div class="ds-h3" style="margin-top:9px;font-size:13.5px">' + t[1] + '</div></button>';
         }).join('') + '</div>' +
       '<p class="ds-eyebrow" style="margin:22px 0 8px">Частые вопросы</p>' +
@@ -837,7 +837,7 @@ Mo.help = function (os) {
             '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">' + q + '</span></span>' +
             '<span class="ds-row__chev">' + ic('chevR', 15) + '</span></button>';
         }).join('') + '</div>' +
-      '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-blue-edge);background:var(--ds-blue-dim);padding:16px">' +
+      '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-accent-edge);background:var(--ds-accent-dim);padding:16px">' +
         '<h3 class="ds-h3">Не нашли ответ?</h3>' +
         '<p class="ds-cap" style="margin-top:5px">Ответим за сутки, срочное — за час.</p>' +
         '<button class="ds-btn ds-btn--primary ds-btn--block" style="margin-top:12px">Обратиться в поддержку</button></div>') +
@@ -892,7 +892,7 @@ Mo.tickets = function (os) {
       '<div class="ds-stack ds-g2">' + T.map(function (t) {
         return '<button class="ds-card" style="text-align:left;padding:14px">' +
           '<div class="ds-between" style="align-items:flex-start">' +
-            '<span class="ds-num" style="font-size:11.5px;color:var(--ds-blue)">' + t[0] + '</span>' +
+            '<span class="ds-num" style="font-size:11.5px;color:var(--ds-accent)">' + t[0] + '</span>' +
             '<span class="ds-badge ' + (t[3] ? 'ds-badge--' + t[3] : '') + '">' + t[4] + '</span></div>' +
           '<div class="ds-h3" style="margin-top:7px;font-size:13.5px">' + t[1] + '</div>' +
           '<div class="ds-between" style="margin-top:6px"><span class="ds-cap">' + t[2] + '</span>' +
@@ -942,5 +942,5 @@ Mo.ticket = function (os) {
     '<div style="padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);display:flex;gap:8px;align-items:center;flex:none">' +
       '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Прикрепить">' + ic('paperclip', 18) + '</button>' +
       '<input class="ds-input" placeholder="Сообщение" style="min-height:42px;border-radius:99px;padding:10px 16px">' +
-      '<button class="ds-iconbtn" style="background:var(--ds-blue);color:var(--ds-ink-inv);border-color:transparent;width:42px;height:42px" aria-label="Отправить">' + ic('send', 18) + '</button></div>');
+      '<button class="ds-iconbtn" style="background:var(--ds-accent);color:var(--ds-ink-inv);border-color:transparent;width:42px;height:42px" aria-label="Отправить">' + ic('send', 18) + '</button></div>');
 };

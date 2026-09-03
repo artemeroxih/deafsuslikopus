@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<meta name="description" content="deafsuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%235B9BFF%27/%3E%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%23060B18%27/%3E%3C/svg%3E">
+<meta name="description" content="DeafSuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%2335E0CB%27/%3E%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%23060B18%27/%3E%3C/svg%3E">
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
-<title>deafsuslik</title>
+<title>DeafSuslik</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Unbounded:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* ============================================================
    deafsuslik — Design Tokens
@@ -21,7 +21,7 @@
    ============================================================ */
 
 :root {
-  /* ---- Ground & surfaces (blue-biased graphite, never pure grey) ---- */
+  /* ---- Ground & surfaces (accent-biased graphite, never pure grey) ---- */
   --ds-void:        #060B18;
   --ds-sunken:      #030713;
   --ds-panel:       #0C1424;
@@ -43,11 +43,11 @@
   --ds-ink-inv:     #060B18;
 
   /* ---- Polar Blue — play, brand, commerce ---- */
-  --ds-blue:        #5B9BFF;
-  --ds-blue-hi:     #8CB9FF;
-  --ds-blue-lo:     #3A78E0;
-  --ds-blue-dim:    rgba(91, 155, 255, 0.15);
-  --ds-blue-edge:   rgba(91, 155, 255, 0.36);
+  --ds-accent:        #35E0CB;
+  --ds-accent-hi:     #7BEEDF;
+  --ds-accent-lo:     #1FB9A5;
+  --ds-accent-dim:    rgba(53, 224, 203, 0.14);
+  --ds-accent-edge:   rgba(53, 224, 203, 0.34);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
   --ds-amber:        #FFC24B;
@@ -57,8 +57,8 @@
   --ds-amber-edge:   rgba(255, 194, 75, 0.34);
 
   /* ---- Semantic (separate from both accents) ---- */
-  --ds-ok:          #3DDC97;
-  --ds-ok-dim:      rgba(61, 220, 151, 0.14);
+  --ds-ok:          #57D96A;
+  --ds-ok-dim:      rgba(87, 217, 106, 0.14);
   --ds-warn:        #FF9F45;
   --ds-warn-dim:    rgba(255, 159, 69, 0.14);
   --ds-err:         #FF5C5C;
@@ -67,13 +67,13 @@
   --ds-info-dim:    rgba(155, 140, 255, 0.15);
 
   /* ---- Subscription: one plan for everyone ---- */
-  --ds-vip:         #5B9BFF;
-  --ds-vip-edge:    rgba(91, 155, 255, 0.36);
+  --ds-vip:         #35E0CB;
+  --ds-vip-edge:    rgba(53, 224, 203, 0.34);
   /* Editorial collection accent — content, not a paid tier */
   --ds-coll:        #E86FA9;
 
   /* ---- Type ---- */
-  --ds-display: "Unbounded", "Onest", system-ui, -apple-system, sans-serif;
+  --ds-display: "Playfair Display", "Onest", Georgia, serif;
   --ds-ui:      "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   --ds-mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
@@ -101,7 +101,7 @@
   --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
   --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
-  --ds-glow-blue: 0 0 0 1px var(--ds-blue-edge), 0 10px 40px -12px rgba(91,155,255,.45);
+  --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(53,224,203,.45);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
 
   /* ---- Motion ---- */
@@ -148,7 +148,7 @@ body {
   border-radius: var(--ds-r-xs);
 }
 
-::selection { background: var(--ds-blue); color: var(--ds-ink-inv); }
+::selection { background: var(--ds-accent); color: var(--ds-ink-inv); }
 
 /* ---------- Scrollbars ---------- */
 .ds-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-raised-3) transparent; }
@@ -164,27 +164,32 @@ body {
 .ds-logo { display: inline-flex; align-items: center; gap: 10px; }
 .ds-logo__mark { display: block; flex: none; }
 .ds-logo__word {
-  font-family: var(--ds-display);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  color: var(--ds-ink);
+  font-family: var(--ds-ui);
+  font-weight: 800;
+  letter-spacing: -0.028em;
   line-height: 1;
   white-space: nowrap;
 }
+/* Deaf — белый, Suslik — бирюзовый. Знак делит имя ровно там же, где его делит смысл. */
+.ds-logo__deaf   { color: #FFFFFF; }
+.ds-logo__suslik { color: var(--ds-accent); }
+/* На акцентной подложке имя становится одноцветным */
+.ds-logo--mono .ds-logo__deaf,
+.ds-logo--mono .ds-logo__suslik { color: inherit; }
 
 /* ============================================================
    TYPOGRAPHY
    ============================================================ */
 .ds-hero-title {
   font-family: var(--ds-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: var(--ds-t-hero);
-  line-height: 0.94;
-  letter-spacing: -0.045em;
+  line-height: 0.98;
+  letter-spacing: -0.018em;
   text-wrap: balance;
   margin: 0;
 }
-.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.05; letter-spacing: -0.038em; margin: 0; text-wrap: balance; }
+.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.1; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
 .ds-d2 { font-family: var(--ds-ui); font-weight: 700; font-size: var(--ds-t-d2); line-height: 1.15; letter-spacing: -0.028em; margin: 0; text-wrap: balance; }
 .ds-h1 { font-weight: 700; font-size: var(--ds-t-h1); line-height: 1.25; letter-spacing: -0.022em; margin: 0; }
 .ds-h2 { font-weight: 600; font-size: var(--ds-t-h2); line-height: 1.3;  letter-spacing: -0.016em; margin: 0; }
@@ -218,8 +223,8 @@ body {
 .ds-btn:active { transform: translateY(0) scale(.985); }
 .ds-btn svg { flex: none; }
 
-.ds-btn--primary { --_bg: var(--ds-blue); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
-.ds-btn--primary:hover { --_bg: var(--ds-blue-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+.ds-btn--primary { --_bg: var(--ds-accent); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--primary:hover { --_bg: var(--ds-accent-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
 
 .ds-btn--amber { --_bg: var(--ds-amber); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
 .ds-btn--amber:hover { --_bg: var(--ds-amber-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
@@ -275,8 +280,8 @@ body {
 .ds-badge--hd      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
 .ds-badge--offline { background: rgba(255,255,255,.08); color: var(--ds-ink); border-color: var(--ds-line-mid); }
 .ds-badge--ad      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
-.ds-badge--blue    { background: var(--ds-blue-dim); color: var(--ds-blue); border-color: var(--ds-blue-edge); }
-.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(61,220,151,.3); }
+.ds-badge--accent    { background: var(--ds-accent-dim); color: var(--ds-accent); border-color: var(--ds-accent-edge); }
+.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(87,217,106,.3); }
 .ds-badge--warn    { background: var(--ds-warn-dim); color: var(--ds-warn); border-color: rgba(255,159,69,.3); }
 .ds-badge--err     { background: var(--ds-err-dim); color: var(--ds-err); border-color: rgba(255,92,92,.3); }
 .ds-badge--info    { background: var(--ds-info-dim); color: var(--ds-info); border-color: rgba(95,168,255,.3); }
@@ -435,7 +440,7 @@ body {
 .ds-tab[aria-selected="true"] { color: var(--ds-ink); }
 .ds-tab[aria-selected="true"]::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: var(--ds-blue); border-radius: 2px;
+  background: var(--ds-accent); border-radius: 2px;
 }
 
 /* Segmented */
@@ -449,7 +454,7 @@ body {
 
 /* Progress */
 .ds-prog { height: 3px; background: rgba(255,255,255,.16); border-radius: 99px; overflow: hidden; }
-.ds-prog__bar { height: 100%; background: var(--ds-blue); border-radius: 99px; }
+.ds-prog__bar { height: 100%; background: var(--ds-accent); border-radius: 99px; }
 .ds-prog--amber .ds-prog__bar { background: var(--ds-amber); }
 .ds-prog--thick { height: 6px; }
 
@@ -491,8 +496,8 @@ body {
 .ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,7,19,.92) 0%, rgba(3,7,19,.35) 42%, transparent 72%); }
 .ds-art__title {
   position: absolute; left: 10px; right: 10px; bottom: 10px;
-  font-family: var(--ds-display); font-weight: 700; letter-spacing: -0.03em;
-  line-height: .92; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  font-family: var(--ds-display); font-weight: 700; letter-spacing: 0.015em;
+  line-height: 1.02; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
   text-transform: uppercase;
 }
 
@@ -595,8 +600,8 @@ body {
 .ds-scrub { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; }
 .ds-scrub__track { position: absolute; left: 0; right: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.24); }
 .ds-scrub__buf   { position: absolute; left: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.38); }
-.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-blue); }
-.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-blue);
+.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-accent); }
+.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-accent);
   box-shadow: 0 0 0 4px rgba(255,194,75,.24), var(--ds-e2); transform: translateX(-50%); }
 .ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,11,24,.7); border-radius: 1px; }
 
@@ -651,9 +656,9 @@ body {
   transition: color var(--ds-m-micro) var(--ds-ease);
 }
 .ds-tabbar__item.is-on { color: var(--ds-ink); }
-.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-blue); }
+.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-accent); }
 .ds-tabbar__ico { display: flex; position: relative; }
-.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-blue); border: 2px solid var(--ds-panel); }
+.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-accent); border: 2px solid var(--ds-panel); }
 
 .ds-topbar {
   display: flex; align-items: center; gap: 18px;
@@ -732,7 +737,7 @@ body {
 .ds-g1 { gap: 4px; } .ds-g2 { gap: 8px; } .ds-g3 { gap: 12px; } .ds-g4 { gap: 16px; }
 .ds-g5 { gap: 20px; } .ds-g6 { gap: 24px; } .ds-g8 { gap: 32px; } .ds-g10 { gap: 40px; } .ds-g12 { gap: 48px; }
 .ds-mut { color: var(--ds-ink-2); } .ds-mut2 { color: var(--ds-ink-3); }
-.ds-blue-t { color: var(--ds-blue); } .ds-amber-t { color: var(--ds-amber); }
+.ds-accent-t { color: var(--ds-accent); } .ds-amber-t { color: var(--ds-amber); }
 .ds-center { text-align: center; }
 .ds-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
 .ds-sr {
@@ -743,14 +748,14 @@ body {
 </style>
 <script>
 /* ============================================================
-   deafsuslik — shared runtime
+   DeafSuslik — shared runtime
    Logo, icon set, procedural artwork engine, catalogue.
    ============================================================ */
 
 /* ---------- Brand mark ----------
    A squircle token. Inside, an upright suslik silhouette knocked
    out in negative space; its chest carries the play triangle.
-   Reads at 16px, works on blue or on graphite.                */
+   Reads at 16px, works on accent or on graphite.                */
 function dsLogoMark(size, opts) {
   opts = opts || {};
   var fill = opts.fill || 'url(#dsg)';
@@ -759,7 +764,7 @@ function dsLogoMark(size, opts) {
   return '' +
   '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
     '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
-      '<stop stop-color="#8CB9FF"/><stop offset=".55" stop-color="#5B9BFF"/><stop offset="1" stop-color="#3A78E0"/>' +
+      '<stop stop-color="#7BEEDF"/><stop offset=".55" stop-color="#35E0CB"/><stop offset="1" stop-color="#1FB9A5"/>' +
     '</linearGradient></defs>' +
     '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
     /* suslik: ears */
@@ -772,7 +777,8 @@ function dsLogoMark(size, opts) {
 
 function dsLogo(px, wordPx, opts) {
   return '<span class="ds-logo">' + dsLogoMark(px, opts) +
-    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">deafsuslik</span></span>';
+    '<span class="ds-logo__word" style="font-size:' + wordPx + 'px">' +
+      '<span class="ds-logo__deaf">Deaf</span><span class="ds-logo__suslik">Suslik</span></span></span>';
 }
 
 /* ---------- Icons (24px stroke set, one consistent family) ---------- */
@@ -951,7 +957,7 @@ function badges(m, opts) {
   return out.join('');
 }
 function stars(r) {
-  return '<span class="ds-row-f ds-g1" style="color:var(--ds-blue)">' + ic('star', 11) +
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-accent)">' + ic('star', 11) +
     '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
 }
 
@@ -961,7 +967,7 @@ var PLANS = {
   vip: {
     id: 'vip', name: 'ВИП', price: 500, color: 'var(--ds-vip)', hex: '#FFC24B',
     tag: 'Полный доступ',
-    desc: 'Одна подписка на весь deafsuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
+    desc: 'Одна подписка на весь DeafSuslik. Никаких уровней и доплат — у всех одинаковый доступ.',
     feats: [
       'Весь каталог — 1 204 фильма',
       'Все коллекции, включая «Реальные события»',
@@ -1005,7 +1011,7 @@ var VIP = PLANS.vip;
   }
   .ix__card:hover { transform: translateY(-3px); border-color: var(--ds-line-strong); box-shadow: var(--ds-e3); }
   .ix__card__n {
-    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-blue);
+    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-accent);
   }
   .ix__thumb {
     position: relative; aspect-ratio: 16/9; border-radius: var(--ds-r-md);
@@ -1033,7 +1039,7 @@ var VIP = PLANS.vip;
     </p>
     <div class="ds-wrap ds-g2" style="margin-top:26px">
       <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
-      <span class="ds-badge ds-badge--lg ds-badge--blue">ВИП · 500 ₽ / месяц</span>
+      <span class="ds-badge ds-badge--lg ds-badge--accent">ВИП · 500 ₽ / месяц</span>
       <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
       <span class="ds-badge ds-badge--lg">108 экранов</span>
     </div>
@@ -1078,7 +1084,7 @@ var VIP = PLANS.vip;
           Обложки фильмов сгенерированы процедурно — каталог не использует чужие материалы.
         </p>
       </div>
-      <p class="ds-cap">© 2026 deafsuslik</p>
+      <p class="ds-cap">© 2026 DeafSuslik</p>
     </div>
   </footer>
 </main>
@@ -1120,21 +1126,21 @@ var VIP = PLANS.vip;
       '<p class="ds-sm">' + c[4] + '</p>' +
       '<div class="ds-wrap ds-g1" style="margin-top:14px">' +
         c[5].map(function (t) { return '<span class="ds-badge">' + t + '</span>'; }).join('') + '</div>' +
-      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-blue);font-weight:600;font-size:13.5px">' +
+      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-accent);font-weight:600;font-size:13.5px">' +
         'Открыть' + ic('chevR', 15) + '</div>' +
     '</a>';
   }).join('');
 
   var IDEAS = [
-    ['Два акцента, разделённых по смыслу', 'blue',
-     'Синий — всё, что запускает и продаёт. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
+    ['Два акцента, разделённых по смыслу', 'accent',
+     'Бирюза — всё, что запускает и продаёт, она же вторая половина логотипа. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
     ['CC+ как продукт, а не настройка', 'amber',
      'Бейдж на карточках, кнопка первого уровня в плеере, отдельный фильтр, отдельный раздел профиля и живой редактор внешнего вида. От плеера до нужного языка — одно касание.'],
-    ['Замкнутая петля поддержки', 'blue',
+    ['Замкнутая петля поддержки', 'accent',
      'Кнопка «Проблема?» прикладывает фильм, тайм-код и номер реплики. Редактор открывает ровно этот момент, публикует правку — зрителю приходит «исправлено».']
   ];
   $('ixIdeas').innerHTML = IDEAS.map(function (i) {
-    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-blue)';
+    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-accent)';
     return '<div class="ds-card">' +
       '<span style="display:block;width:28px;height:3px;border-radius:2px;background:' + col + '"></span>' +
       '<h3 class="ds-h2" style="margin-top:14px">' + i[0] + '</h3>' +

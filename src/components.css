@@ -25,7 +25,7 @@ body {
   border-radius: var(--ds-r-xs);
 }
 
-::selection { background: var(--ds-blue); color: var(--ds-ink-inv); }
+::selection { background: var(--ds-accent); color: var(--ds-ink-inv); }
 
 /* ---------- Scrollbars ---------- */
 .ds-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-raised-3) transparent; }
@@ -41,27 +41,32 @@ body {
 .ds-logo { display: inline-flex; align-items: center; gap: 10px; }
 .ds-logo__mark { display: block; flex: none; }
 .ds-logo__word {
-  font-family: var(--ds-display);
-  font-weight: 700;
-  letter-spacing: -0.035em;
-  color: var(--ds-ink);
+  font-family: var(--ds-ui);
+  font-weight: 800;
+  letter-spacing: -0.028em;
   line-height: 1;
   white-space: nowrap;
 }
+/* Deaf — белый, Suslik — бирюзовый. Знак делит имя ровно там же, где его делит смысл. */
+.ds-logo__deaf   { color: #FFFFFF; }
+.ds-logo__suslik { color: var(--ds-accent); }
+/* На акцентной подложке имя становится одноцветным */
+.ds-logo--mono .ds-logo__deaf,
+.ds-logo--mono .ds-logo__suslik { color: inherit; }
 
 /* ============================================================
    TYPOGRAPHY
    ============================================================ */
 .ds-hero-title {
   font-family: var(--ds-display);
-  font-weight: 700;
+  font-weight: 800;
   font-size: var(--ds-t-hero);
-  line-height: 0.94;
-  letter-spacing: -0.045em;
+  line-height: 0.98;
+  letter-spacing: -0.018em;
   text-wrap: balance;
   margin: 0;
 }
-.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.05; letter-spacing: -0.038em; margin: 0; text-wrap: balance; }
+.ds-d1 { font-family: var(--ds-display); font-weight: 700; font-size: var(--ds-t-d1); line-height: 1.1; letter-spacing: -0.012em; margin: 0; text-wrap: balance; }
 .ds-d2 { font-family: var(--ds-ui); font-weight: 700; font-size: var(--ds-t-d2); line-height: 1.15; letter-spacing: -0.028em; margin: 0; text-wrap: balance; }
 .ds-h1 { font-weight: 700; font-size: var(--ds-t-h1); line-height: 1.25; letter-spacing: -0.022em; margin: 0; }
 .ds-h2 { font-weight: 600; font-size: var(--ds-t-h2); line-height: 1.3;  letter-spacing: -0.016em; margin: 0; }
@@ -95,8 +100,8 @@ body {
 .ds-btn:active { transform: translateY(0) scale(.985); }
 .ds-btn svg { flex: none; }
 
-.ds-btn--primary { --_bg: var(--ds-blue); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
-.ds-btn--primary:hover { --_bg: var(--ds-blue-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+.ds-btn--primary { --_bg: var(--ds-accent); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--primary:hover { --_bg: var(--ds-accent-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
 
 .ds-btn--amber { --_bg: var(--ds-amber); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
 .ds-btn--amber:hover { --_bg: var(--ds-amber-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
@@ -152,8 +157,8 @@ body {
 .ds-badge--hd      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
 .ds-badge--offline { background: rgba(255,255,255,.08); color: var(--ds-ink); border-color: var(--ds-line-mid); }
 .ds-badge--ad      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
-.ds-badge--blue    { background: var(--ds-blue-dim); color: var(--ds-blue); border-color: var(--ds-blue-edge); }
-.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(61,220,151,.3); }
+.ds-badge--accent    { background: var(--ds-accent-dim); color: var(--ds-accent); border-color: var(--ds-accent-edge); }
+.ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(87,217,106,.3); }
 .ds-badge--warn    { background: var(--ds-warn-dim); color: var(--ds-warn); border-color: rgba(255,159,69,.3); }
 .ds-badge--err     { background: var(--ds-err-dim); color: var(--ds-err); border-color: rgba(255,92,92,.3); }
 .ds-badge--info    { background: var(--ds-info-dim); color: var(--ds-info); border-color: rgba(95,168,255,.3); }
@@ -312,7 +317,7 @@ body {
 .ds-tab[aria-selected="true"] { color: var(--ds-ink); }
 .ds-tab[aria-selected="true"]::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: var(--ds-blue); border-radius: 2px;
+  background: var(--ds-accent); border-radius: 2px;
 }
 
 /* Segmented */
@@ -326,7 +331,7 @@ body {
 
 /* Progress */
 .ds-prog { height: 3px; background: rgba(255,255,255,.16); border-radius: 99px; overflow: hidden; }
-.ds-prog__bar { height: 100%; background: var(--ds-blue); border-radius: 99px; }
+.ds-prog__bar { height: 100%; background: var(--ds-accent); border-radius: 99px; }
 .ds-prog--amber .ds-prog__bar { background: var(--ds-amber); }
 .ds-prog--thick { height: 6px; }
 
@@ -368,8 +373,8 @@ body {
 .ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,7,19,.92) 0%, rgba(3,7,19,.35) 42%, transparent 72%); }
 .ds-art__title {
   position: absolute; left: 10px; right: 10px; bottom: 10px;
-  font-family: var(--ds-display); font-weight: 700; letter-spacing: -0.03em;
-  line-height: .92; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
+  font-family: var(--ds-display); font-weight: 700; letter-spacing: 0.015em;
+  line-height: 1.02; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,.7);
   text-transform: uppercase;
 }
 
@@ -472,8 +477,8 @@ body {
 .ds-scrub { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; }
 .ds-scrub__track { position: absolute; left: 0; right: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.24); }
 .ds-scrub__buf   { position: absolute; left: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.38); }
-.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-blue); }
-.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-blue);
+.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-accent); }
+.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-accent);
   box-shadow: 0 0 0 4px rgba(255,194,75,.24), var(--ds-e2); transform: translateX(-50%); }
 .ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,11,24,.7); border-radius: 1px; }
 
@@ -528,9 +533,9 @@ body {
   transition: color var(--ds-m-micro) var(--ds-ease);
 }
 .ds-tabbar__item.is-on { color: var(--ds-ink); }
-.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-blue); }
+.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-accent); }
 .ds-tabbar__ico { display: flex; position: relative; }
-.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-blue); border: 2px solid var(--ds-panel); }
+.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-accent); border: 2px solid var(--ds-panel); }
 
 .ds-topbar {
   display: flex; align-items: center; gap: 18px;
@@ -609,7 +614,7 @@ body {
 .ds-g1 { gap: 4px; } .ds-g2 { gap: 8px; } .ds-g3 { gap: 12px; } .ds-g4 { gap: 16px; }
 .ds-g5 { gap: 20px; } .ds-g6 { gap: 24px; } .ds-g8 { gap: 32px; } .ds-g10 { gap: 40px; } .ds-g12 { gap: 48px; }
 .ds-mut { color: var(--ds-ink-2); } .ds-mut2 { color: var(--ds-ink-3); }
-.ds-blue-t { color: var(--ds-blue); } .ds-amber-t { color: var(--ds-amber); }
+.ds-accent-t { color: var(--ds-accent); } .ds-amber-t { color: var(--ds-amber); }
 .ds-center { text-align: center; }
 .ds-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
 .ds-sr {

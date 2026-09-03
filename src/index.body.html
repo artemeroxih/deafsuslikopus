@@ -1,4 +1,4 @@
-<!--TITLE: deafsuslik -->
+<!--TITLE: DeafSuslik -->
 <style>
   body { background: var(--ds-void); }
   .ix { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
@@ -27,7 +27,7 @@
   }
   .ix__card:hover { transform: translateY(-3px); border-color: var(--ds-line-strong); box-shadow: var(--ds-e3); }
   .ix__card__n {
-    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-blue);
+    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-accent);
   }
   .ix__thumb {
     position: relative; aspect-ratio: 16/9; border-radius: var(--ds-r-md);
@@ -55,7 +55,7 @@
     </p>
     <div class="ds-wrap ds-g2" style="margin-top:26px">
       <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
-      <span class="ds-badge ds-badge--lg ds-badge--blue">ВИП · 500 ₽ / месяц</span>
+      <span class="ds-badge ds-badge--lg ds-badge--accent">ВИП · 500 ₽ / месяц</span>
       <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
       <span class="ds-badge ds-badge--lg">108 экранов</span>
     </div>
@@ -100,7 +100,7 @@
           Обложки фильмов сгенерированы процедурно — каталог не использует чужие материалы.
         </p>
       </div>
-      <p class="ds-cap">© 2026 deafsuslik</p>
+      <p class="ds-cap">© 2026 DeafSuslik</p>
     </div>
   </footer>
 </main>
@@ -142,21 +142,21 @@
       '<p class="ds-sm">' + c[4] + '</p>' +
       '<div class="ds-wrap ds-g1" style="margin-top:14px">' +
         c[5].map(function (t) { return '<span class="ds-badge">' + t + '</span>'; }).join('') + '</div>' +
-      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-blue);font-weight:600;font-size:13.5px">' +
+      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-accent);font-weight:600;font-size:13.5px">' +
         'Открыть' + ic('chevR', 15) + '</div>' +
     '</a>';
   }).join('');
 
   var IDEAS = [
-    ['Два акцента, разделённых по смыслу', 'blue',
-     'Синий — всё, что запускает и продаёт. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
+    ['Два акцента, разделённых по смыслу', 'accent',
+     'Бирюза — всё, что запускает и продаёт, она же вторая половина логотипа. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
     ['CC+ как продукт, а не настройка', 'amber',
      'Бейдж на карточках, кнопка первого уровня в плеере, отдельный фильтр, отдельный раздел профиля и живой редактор внешнего вида. От плеера до нужного языка — одно касание.'],
-    ['Замкнутая петля поддержки', 'blue',
+    ['Замкнутая петля поддержки', 'accent',
      'Кнопка «Проблема?» прикладывает фильм, тайм-код и номер реплики. Редактор открывает ровно этот момент, публикует правку — зрителю приходит «исправлено».']
   ];
   $('ixIdeas').innerHTML = IDEAS.map(function (i) {
-    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-blue)';
+    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-accent)';
     return '<div class="ds-card">' +
       '<span style="display:block;width:28px;height:3px;border-radius:2px;background:' + col + '"></span>' +
       '<h3 class="ds-h2" style="margin-top:14px">' + i[0] + '</h3>' +

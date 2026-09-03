@@ -1,4 +1,4 @@
-<!--TITLE: deafsuslik Design System -->
+<!--TITLE: DeafSuslik Design System -->
 <style>
   html { scroll-behavior: smooth; }
   body { background: var(--ds-void); }
@@ -21,7 +21,7 @@
 
   .sec { padding: 56px 44px; border-bottom: 1px solid var(--ds-line); max-width: 1180px; }
   .sec__head { margin-bottom: 30px; }
-  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-blue); letter-spacing: .1em; }
+  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-accent); letter-spacing: .1em; }
 
   .demo { background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); padding: 26px; }
   .demo--grid { display: grid; gap: 18px; }
@@ -99,7 +99,7 @@
       <div style="position:absolute;inset:0;background:radial-gradient(70% 60% at 20% 0%, rgba(255,194,75,.10), transparent 60%),radial-gradient(50% 50% at 85% 20%, rgba(95,227,208,.08), transparent 60%);pointer-events:none"></div>
       <div style="position:relative">
         <div id="bigLogo" style="margin-bottom:26px"></div>
-        <h1 class="ds-hero-title" style="max-width:16ch">Дизайн-система deafsuslik</h1>
+        <h1 class="ds-hero-title" style="max-width:16ch">Дизайн-система DeafSuslik</h1>
         <p class="ds-body" style="margin-top:20px;font-size:1.0625rem;max-width:56ch">
           Единый язык для веба, iPhone, Android и админ-панели. Один набор токенов, один набор компонентов,
           одна логика навигации — от сплэша до редактора субтитров.
@@ -113,7 +113,7 @@
           </div>
         </div>
         <div class="ds-wrap ds-g2" style="margin-top:26px">
-          <span class="ds-badge ds-badge--lg ds-badge--blue">Тёмная тема — единственная</span>
+          <span class="ds-badge ds-badge--lg ds-badge--accent">Тёмная тема — единственная</span>
           <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
           <span class="ds-badge ds-badge--lg ds-badge--cc">WCAG 2.2 AA</span>
         </div>
@@ -183,7 +183,7 @@
           <p class="lbl">Охранное поле и фоны</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:var(--ds-void);border:1px solid var(--ds-line);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgA"></div>
-            <div style="background:var(--ds-blue);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
+            <div style="background:var(--ds-accent);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
           </div>
           <p class="ds-cap" style="margin-top:12px">Охранное поле — половина высоты знака со всех сторон. Знак не растягивается, не поворачивается,
           не перекрашивается вне трёх утверждённых вариантов.</p>
@@ -197,7 +197,7 @@
         <p class="sec__n">03</p>
         <h2 class="ds-d2" style="margin-top:6px">Цвет</h2>
         <p class="ds-body" style="margin-top:10px">
-          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Синий — всё, что запускает и продаёт.
+          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Бирюза — всё, что запускает и продаёт.
           Янтарь — всё, что читается: субтитры, CC, CC+, доступность. Тёплый акцент на холодном фоне — текст всегда виден первым.
         </p>
       </div>
@@ -229,14 +229,19 @@
         <p class="sec__n">04</p>
         <h2 class="ds-d2" style="margin-top:6px">Типографика</h2>
         <p class="ds-body" style="margin-top:10px">
-          Три гарнитуры, все с полной кириллицей. <strong>Unbounded</strong> — только логотип и самые крупные заголовки,
-          строго дозированно. <strong>Onest</strong> — весь интерфейс. <strong>JetBrains Mono</strong> — тайм-коды, размеры файлов,
+          Три гарнитуры, все с полной кириллицей. <strong>Playfair Display</strong> — высококонтрастная антиква
+          для названий фильмов и крупных заголовков: именно она даёт продукту киношную интонацию.
+          <strong>Onest</strong> — весь интерфейс. <strong>JetBrains Mono</strong> — тайм-коды, размеры файлов,
           номера обращений, редактор субтитров.
+          <br><br>
+          Субтитры набираются <strong>гротеском, а не антиквой</strong>. Тонкие штрихи антиквы разрушаются поверх
+          движущегося кадра, а для этой аудитории читаемость реплики важнее красоты строки. Красота уходит в заголовки,
+          надёжность остаётся в субтитрах.
         </p>
       </div>
       <div class="demo">
-        <div class="tscale"><span class="tscale__spec">Unbounded 700 · clamp(2.6–5.2rem) · -4.5%</span><span class="ds-hero-title" style="font-size:2.6rem">Год тишины</span></div>
-        <div class="tscale"><span class="tscale__spec">Unbounded 700 · 2rem · -3.8%</span><span class="ds-d1">Реальные события</span></div>
+        <div class="tscale"><span class="tscale__spec">Playfair Display 800 · clamp(2.6–5.2rem) · -1.8%</span><span class="ds-hero-title" style="font-size:2.6rem">Год тишины</span></div>
+        <div class="tscale"><span class="tscale__spec">Playfair Display 700 · 2rem · -1.2%</span><span class="ds-d1">Реальные события</span></div>
         <div class="tscale"><span class="tscale__spec">Onest 700 · 1.6rem · -2.8%</span><span class="ds-d2">Продолжить просмотр</span></div>
         <div class="tscale"><span class="tscale__spec">Onest 700 · 1.625rem</span><span class="ds-h1">Моя библиотека</span></div>
         <div class="tscale"><span class="tscale__spec">Onest 600 · 1.25rem</span><span class="ds-h2">Субтитры и CC+</span></div>
@@ -309,7 +314,7 @@
       <div class="sec__head">
         <p class="sec__n">07</p>
         <h2 class="ds-d2" style="margin-top:6px">Кнопки</h2>
-        <p class="ds-body" style="margin-top:10px">Одна синяя кнопка на экран. Янтарная кнопка появляется только там, где действие связано с субтитрами.</p>
+        <p class="ds-body" style="margin-top:10px">Одна бирюзовая кнопка на экран. Янтарная кнопка появляется только там, где действие связано с субтитрами.</p>
       </div>
       <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
         <div>
@@ -431,7 +436,7 @@
             <span class="ds-badge ds-badge--warn">Ожидает</span>
             <span class="ds-badge ds-badge--err">Ошибка</span>
             <span class="ds-badge ds-badge--info">В работе</span>
-            <span class="ds-badge ds-badge--blue">Premium</span>
+            <span class="ds-badge ds-badge--accent">Premium</span>
             <span class="ds-badge">Черновик</span>
           </div>
           <p class="lbl" style="margin-top:26px">Чипы фильтров</p>
@@ -707,7 +712,13 @@
   set('markScale', [64, 40, 28, 20, 16].map(function (s) { return dsLogoMark(s); }).join(''));
   set('logoLockups', [dsLogo(40, 25), dsLogo(28, 17), dsLogo(20, 12.5)].join(''));
   set('lgA', dsLogo(30, 19));
-  var lgB = $('lgB'); if (lgB) { lgB.innerHTML = dsLogo(30, 19, { flat: '#06070A', cut: '#FFC24B' }); lgB.querySelector('.ds-logo__word').style.color = '#06070A'; }
+  var lgB = $('lgB');
+  if (lgB) {
+    lgB.innerHTML = dsLogo(30, 19, { flat: '#060B18', cut: '#35E0CB' });
+    var w = lgB.querySelector('.ds-logo');
+    w.classList.add('ds-logo--mono');
+    w.querySelector('.ds-logo__word').style.color = '#060B18';
+  }
 
   /* ---- audit ---- */
   var AUDIT = [
@@ -738,8 +749,8 @@
       '<div class="sw__hex">' + hex + '</div><div class="sw__use">' + use + '</div></div></div>';
   }
   set('swAccent',
-    swatch('Полярный синий', '#5B9BFF', 'Основное действие, бренд, «Смотреть», подписка, прогресс просмотра') +
-    swatch('Синий · наведение', '#8CB9FF', 'Наведение и нажатие на основную кнопку') +
+    swatch('Бирюза', '#35E0CB', 'Основное действие, бренд, «Смотреть», подписка, прогресс просмотра. Она же — вторая половина логотипа') +
+    swatch('Бирюза · наведение', '#7BEEDF', 'Наведение и нажатие на основную кнопку') +
     swatch('Сигнальный янтарь', '#FFC24B', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
     swatch('Янтарь · наведение', '#FFD886', 'Наведение на янтарные элементы, описания звуков в CC+'));
   set('swSurface',
@@ -755,21 +766,21 @@
     swatch('Ink 3', '#6B7893', 'Подписи, метаданные — 4.4:1, только для крупного') +
     swatch('Ink 4', '#47536B', 'Плейсхолдеры и выключенные элементы'));
   set('swSem',
-    swatch('Success', '#3DDC97', 'Оплачено, загружено, подписка активна') +
+    swatch('Success', '#57D96A', 'Оплачено, загружено, подписка активна. Уведён в чистый зелёный, чтобы не путался с бирюзой') +
     swatch('Warning', '#FF9F45', 'Истекает срок, мало места, требует внимания') +
     swatch('Error', '#FF5C5C', 'Платёж отклонён, загрузка не удалась, видео недоступно') +
     swatch('Info', '#9B8CFF', 'Обращение в работе. Уведён в фиолетовый, чтобы не сливаться с основным синим'));
   set('swPlan',
-    swatch('Подписка ВИП', '#5B9BFF', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
+    swatch('Подписка ВИП', '#35E0CB', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
     swatch('Коллекция', '#E86FA9', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
 
   var CONTRAST = [
     ['#EEF3FB', 'Основной текст', '17.6:1', 'AAA'],
     ['#A3AFC4', 'Вторичный текст', '8.9:1', 'AAA'],
     ['#FFC24B', 'Сигнальный янтарь', '12.2:1', 'AAA'],
-    ['#5B9BFF', 'Полярный синий', '7.1:1', 'AAA'],
+    ['#35E0CB', 'Бирюза', '11.9:1', 'AAA'],
     ['#9B8CFF', 'Info', '7.1:1', 'AAA'],
-    ['#3DDC97', 'Success', '11.1:1', 'AAA'],
+    ['#57D96A', 'Success', '10.8:1', 'AAA'],
     ['#FF9F45', 'Warning', '9.6:1', 'AAA'],
     ['#FF5C5C', 'Error', '6.5:1', 'AA'],
     ['#6B7893', 'Ink 3 — только ≥18px', '4.4:1', 'AA Large']
@@ -784,7 +795,7 @@
   /* ---- space / radius / elevation ---- */
   set('spaceScale', [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96].map(function (n) {
     return '<div class="ds-row-f ds-g4"><span class="spec" style="width:42px">' + n + '</span>' +
-      '<div style="height:11px;width:' + n + 'px;background:var(--ds-blue);border-radius:3px"></div></div>';
+      '<div style="height:11px;width:' + n + 'px;background:var(--ds-accent);border-radius:3px"></div></div>';
   }).join(''));
   set('radScale', [6, 10, 14, 20, 28, 36].map(function (n) {
     return '<div style="text-align:center"><div style="width:58px;height:58px;background:var(--ds-raised-2);border:1px solid var(--ds-line-mid);border-radius:' + n + 'px"></div>' +
@@ -914,7 +925,7 @@
     '<div class="ds-grow"></div>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Поиск">' + ic('search') + '</button>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell') +
-    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-blue);border:2px solid var(--ds-void)"></span></button>' +
+    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-accent);border:2px solid var(--ds-void)"></span></button>' +
     '<div style="width:34px;height:34px;border-radius:99px;background:linear-gradient(140deg,#3E5C8C,#1B2A4A);border:1px solid var(--ds-line-mid);display:grid;place-items:center;font-size:12px;font-weight:700">А</div>');
 
   var TABS = [['home', 'Главная'], ['search', 'Поиск'], ['library', 'Библиотека'], ['download', 'Загрузки'], ['user', 'Профиль']];
@@ -1113,7 +1124,7 @@
   var HAND = [
     ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | amber | outline | ghost | danger · size: sm | md | lg · block · disabled'],
     ['.ds-iconbtn', '&lt;IconButton&gt;', 'icon · size: sm | md · variant: solid | bare · active · aria-label (обязателен)'],
-    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | blue'],
+    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | accent'],
     ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | amber · icon'],
     ['.ds-input / .ds-select / .ds-textarea', '&lt;Field&gt;', 'label · error · help · trailing · type'],
     ['.ds-search', '&lt;SearchBar&gt;', 'value · onChange · suggestions · voice'],

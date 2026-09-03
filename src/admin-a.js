@@ -1,5 +1,5 @@
 /* ============================================================
-   deafsuslik Admin — shell, login, dashboard, content
+   DeafSuslik Admin — shell, login, dashboard, content
    ============================================================ */
 var A = {};
 
@@ -33,7 +33,7 @@ function adminShell(active, title, sub, actions, body) {
             g[2].map(function (n) {
               var on = n[0] === active;
               return '<button data-ago="' + n[0] + '" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:var(--ds-r-sm);cursor:pointer;text-align:left;font-size:13px;font-weight:' + (on ? 600 : 500) + ';' +
-                'background:' + (on ? 'var(--ds-blue-dim)' : 'none') + ';color:' + (on ? 'var(--ds-blue)' : 'var(--ds-ink-3)') + '">' +
+                'background:' + (on ? 'var(--ds-accent-dim)' : 'none') + ';color:' + (on ? 'var(--ds-accent)' : 'var(--ds-ink-3)') + '">' +
                 '<span style="display:flex;flex:none">' + ic(n[2], 17) + '</span>' + n[1] + '</button>';
             }).join('');
         }).join('') + '</div>' +
@@ -74,7 +74,7 @@ function bars(data, h, color) {
       var last = i === data.length - 1;
       return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">' +
         '<div title="' + d[0] + ': ' + d[1] + '" style="width:100%;border-radius:4px 4px 2px 2px;height:' + Math.max(3, (d[1] / max) * 100) + '%;' +
-        'background:' + (last ? (color || 'var(--ds-blue)') : 'rgba(255,194,75,.30)') + '"></div>' +
+        'background:' + (last ? (color || 'var(--ds-accent)') : 'rgba(255,194,75,.30)') + '"></div>' +
         '<span class="ds-cap" style="font-size:9px">' + d[0] + '</span></div>';
     }).join('') + '</div>';
 }
@@ -246,7 +246,7 @@ A.movies = function () {
 
     '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-line-mid)">' +
       '<div class="ds-between"><div class="ds-row-f ds-g3">' +
-        '<span class="ds-badge ds-badge--blue ds-badge--lg">Выбрано 3</span>' +
+        '<span class="ds-badge ds-badge--accent ds-badge--lg">Выбрано 3</span>' +
         '<span class="ds-sm ds-mut">Массовые действия</span></div>' +
         '<div class="ds-row-f ds-g2">' +
           '<button class="ds-btn ds-btn--sm ds-btn--secondary">Опубликовать</button>' +
@@ -261,8 +261,8 @@ A.addMovie = function () {
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:820px">' +
       [['upload', 'Ручная загрузка', 'Загрузите один мастер-файл — система сама подготовит все качества от 360p до 4K. Метаданные, обложки и субтитры заполняются вручную.', 'manual-upload', 1],
        ['cloud', 'Импорт через API', 'Подтянуть метаданные из авторизованной интеграции. Импорт всегда создаёт черновик — публикация только после проверки.', 'api-import', 0]].map(function (c) {
-        return '<button class="ds-card" data-ago="' + c[3] + '" style="text-align:left;cursor:pointer;padding:26px' + (c[4] ? ';border-color:var(--ds-blue-edge)' : '') + '">' +
-          '<span style="color:' + (c[4] ? 'var(--ds-blue)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(c[0], 28) + '</span>' +
+        return '<button class="ds-card" data-ago="' + c[3] + '" style="text-align:left;cursor:pointer;padding:26px' + (c[4] ? ';border-color:var(--ds-accent-edge)' : '') + '">' +
+          '<span style="color:' + (c[4] ? 'var(--ds-accent)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(c[0], 28) + '</span>' +
           '<h3 class="ds-h1" style="margin-top:16px">' + c[1] + '</h3>' +
           '<p class="ds-sm" style="margin-top:8px">' + c[2] + '</p>' +
           '<span class="ds-btn ds-btn--sm ds-btn--secondary" style="margin-top:18px">Начать ' + ic('chevR', 13) + '</span></button>';
@@ -282,10 +282,10 @@ A.manualUpload = function () {
       var cur = i === 3;
       return '<div style="flex:1;display:flex;align-items:center;gap:8px">' +
         '<span style="width:26px;height:26px;border-radius:99px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:700;' +
-          'background:' + (s[1] ? 'var(--ds-ok)' : cur ? 'var(--ds-blue)' : 'var(--ds-raised-2)') + ';' +
+          'background:' + (s[1] ? 'var(--ds-ok)' : cur ? 'var(--ds-accent)' : 'var(--ds-raised-2)') + ';' +
           'color:' + (s[1] || cur ? 'var(--ds-ink-inv)' : 'var(--ds-ink-3)') + '">' +
           (s[1] ? ic('check', 14, 3) : (i + 1)) + '</span>' +
-        '<span class="ds-cap" style="color:' + (cur ? 'var(--ds-blue)' : s[1] ? 'var(--ds-ink-2)' : 'var(--ds-ink-4)') + ';font-weight:600">' + s[0] + '</span>' +
+        '<span class="ds-cap" style="color:' + (cur ? 'var(--ds-accent)' : s[1] ? 'var(--ds-ink-2)' : 'var(--ds-ink-4)') + ';font-weight:600">' + s[0] + '</span>' +
         (i < STEPS.length - 1 ? '<div style="flex:1;height:1px;background:' + (s[1] ? 'var(--ds-ok)' : 'var(--ds-line)') + '"></div>' : '') + '</div>';
     }).join('') + '</div>' +
 
@@ -396,7 +396,7 @@ A.apiImport = function () {
 '  }\n' +
 '}' + '</pre></div>' +
 
-      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Соответствие полям deafsuslik</h3>' +
+      '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Соответствие полям DeafSuslik</h3>' +
         '<div class="ds-stack ds-g1">' +
           [['title_ru', 'Название', 'Свидетели', 1], ['title_orig', 'Оригинальное название', 'The Witnesses', 1],
            ['year', 'Год', '2024', 1], ['runtime_min', 'Хронометраж', '1 ч 49 мин', 1],
