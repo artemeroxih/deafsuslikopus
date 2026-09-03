@@ -25,10 +25,10 @@ S.downloads = function () {
       '<div class="ds-between" style="margin-bottom:14px"><h3 class="ds-h2">Место на устройстве</h3>' +
         '<span class="ds-num ds-sm ds-mut">16.7 GB из 64 GB</span></div>' +
       '<div style="height:10px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-        '<div style="width:18%;background:var(--ds-gold)"></div><div style="width:8%;background:var(--ds-aqua)"></div>' +
+        '<div style="width:18%;background:var(--ds-blue)"></div><div style="width:8%;background:var(--ds-amber)"></div>' +
         '<div style="width:12%;background:var(--ds-raised-3);border-left:1px solid var(--ds-void)"></div></div>' +
       '<div class="ds-wrap ds-g5" style="margin-top:12px">' +
-        [['Фильмы', '11.4 GB', 'var(--ds-gold)'], ['Субтитры и CC+', '0.3 GB', 'var(--ds-aqua)'],
+        [['Фильмы', '11.4 GB', 'var(--ds-blue)'], ['Субтитры и CC+', '0.3 GB', 'var(--ds-amber)'],
          ['Другое', '5.0 GB', 'var(--ds-raised-3)'], ['Свободно', '47.3 GB', 'transparent']].map(function (s) {
           return '<div class="ds-row-f ds-g2"><span style="width:9px;height:9px;border-radius:3px;background:' + s[2] + ';border:1px solid var(--ds-line-mid)"></span>' +
             '<span class="ds-cap">' + s[0] + '</span><span class="ds-num ds-sm">' + s[1] + '</span></div>';
@@ -53,7 +53,7 @@ S.downloads = function () {
           '<span class="ds-badge">' + d.sub + '</span>' +
           (d.st === 'done' ? '<span class="ds-badge ds-badge--offline">' + ic('download', 9, 2.6) + ' Доступно офлайн</span>' : '') + '</div>' +
         (d.st === 'run' || d.st === 'paused' || d.st === 'failed'
-          ? '<div class="ds-prog ds-prog--thick' + (d.st === 'run' ? ' ds-prog--aqua' : '') + '"><div class="ds-prog__bar" style="width:' + d.p + '%' +
+          ? '<div class="ds-prog ds-prog--thick' + (d.st === 'run' ? ' ds-prog--amber' : '') + '"><div class="ds-prog__bar" style="width:' + d.p + '%' +
             (d.st === 'failed' ? ';background:var(--ds-err)' : d.st === 'paused' ? ';background:var(--ds-warn)' : '') + '"></div></div>' : '') +
         '<div class="ds-between" style="margin-top:auto"><span class="ds-cap">' + d.note + '</span>' +
           '<div class="ds-row-f ds-g2">' +
@@ -123,7 +123,7 @@ function landingPage(coll, idx) {
   return topbar(coll.nav) +
     '<section style="position:relative;min-height:620px;margin-top:-68px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(coll.name + 'land') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(6,7,10,.96) 12%,rgba(6,7,10,.5) 62%,transparent),linear-gradient(to top,var(--ds-void) 2%,transparent 44%)"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(100deg,rgba(6,11,24,.96) 12%,rgba(6,11,24,.5) 62%,transparent),linear-gradient(to top,var(--ds-void) 2%,transparent 44%)"></div>' +
       '<div style="position:absolute;inset:0;background:radial-gradient(60% 60% at 78% 32%, ' + coll.hex + '26, transparent 62%)"></div>' +
       '<div class="ds-container" style="position:relative;padding-top:140px;padding-bottom:52px;max-width:1180px">' +
         '<div style="max-width:600px">' +
@@ -165,7 +165,7 @@ S.checkout = function () {
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:16px">Способ оплаты</h3>' +
           '<div class="ds-stack ds-g2">' +
             [['Банковская карта', '•••• 4417 · Mir · до 09/28', 1], ['Новая карта', 'Добавить карту', 0], ['СБП', 'Оплата через приложение банка', 0]].map(function (r) {
-              return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:14px;border-radius:var(--ds-r-md);border:1px solid ' + (r[2] ? 'var(--ds-gold-edge)' : 'var(--ds-line)') + (r[2] ? ';background:var(--ds-gold-dim)' : '') + '">' +
+              return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:14px;border-radius:var(--ds-r-md);border:1px solid ' + (r[2] ? 'var(--ds-blue-edge)' : 'var(--ds-line)') + (r[2] ? ';background:var(--ds-blue-dim)' : '') + '">' +
                 '<span class="ds-opt__box ds-opt__box--radio"></span>' +
                 '<span class="ds-row__ico" style="color:var(--ds-ink-2)">' + ic('card', 19) + '</span>' +
                 '<span class="ds-grow"><span style="font-size:14px;font-weight:600">' + r[0] + '</span>' +
@@ -180,12 +180,12 @@ S.checkout = function () {
               return '<div class="ds-between"><span class="ds-sm ds-mut">' + r[0] + '</span>' +
                 '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
             }).join('') + '</div>' +
-          '<div class="ds-strip" style="margin-top:16px;background:var(--ds-gold-dim);border-left-color:var(--ds-gold)">' +
-            '<span class="ds-strip__label" style="color:var(--ds-gold)">Важно</span>' +
+          '<div class="ds-strip" style="margin-top:16px;background:var(--ds-blue-dim);border-left-color:var(--ds-blue)">' +
+            '<span class="ds-strip__label" style="color:var(--ds-blue)">Важно</span>' +
             '<p class="ds-cap" style="margin:0">Подписка продлевается автоматически каждый месяц, пока вы её не отмените. ' +
             'Отменить можно в любой момент — доступ сохранится до конца оплаченного периода.</p></div></div>' +
-        '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-aqua);background:var(--ds-aqua);margin-top:2px"></span>' +
-          '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-gold)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
+        '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
+          '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-blue)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
       '</div>' +
       '<aside style="position:sticky;top:92px">' +
         '<div class="ds-card" style="border-color:' + p.hex + '33">' +

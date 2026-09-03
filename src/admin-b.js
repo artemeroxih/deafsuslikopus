@@ -87,7 +87,7 @@ A.editor = function () {
   ];
   return adminShell('editor', 'Редактор субтитров', 'Год тишины · Русский CC+ · открыт на 01:22:18 из обращения #DS-10482',
     '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('search', 13) + ' Найти и заменить</button>' +
-    '<button class="ds-btn ds-btn--sm ds-btn--aqua">Опубликовать версию</button>',
+    '<button class="ds-btn ds-btn--sm ds-btn--amber">Опубликовать версию</button>',
     '<div class="ds-strip" style="margin-bottom:16px;border-left-color:var(--ds-warn);background:var(--ds-warn-dim)">' +
       '<span class="ds-strip__label" style="color:var(--ds-warn)">Из поддержки</span>' +
       '<p class="ds-sm" style="margin:0">Обращение <strong>#DS-10482</strong>: «в сцене дверь закрывают тихо, а в CC+ написано «резко захлопывается»». ' +
@@ -115,10 +115,10 @@ A.editor = function () {
                 Array.apply(null, Array(120)).map(function (_, i) {
                   var h = 12 + Math.abs(Math.sin(i * 0.7) * 26) + (i > 52 && i < 62 ? 14 : 0);
                   return '<div style="flex:1;height:' + h + 'px;border-radius:1px;background:' +
-                    (i > 52 && i < 62 ? 'var(--ds-aqua)' : 'var(--ds-raised-3)') + '"></div>';
+                    (i > 52 && i < 62 ? 'var(--ds-amber)' : 'var(--ds-raised-3)') + '"></div>';
                 }).join('') + '</div>' +
-              '<div style="position:absolute;top:0;bottom:0;left:46%;width:2px;background:var(--ds-gold)"></div>' +
-              '<div style="position:absolute;top:0;bottom:0;left:44%;width:8%;background:rgba(95,227,208,.14);border-left:1px solid var(--ds-aqua);border-right:1px solid var(--ds-aqua)"></div>' +
+              '<div style="position:absolute;top:0;bottom:0;left:46%;width:2px;background:var(--ds-blue)"></div>' +
+              '<div style="position:absolute;top:0;bottom:0;left:44%;width:8%;background:rgba(95,227,208,.14);border-left:1px solid var(--ds-amber);border-right:1px solid var(--ds-amber)"></div>' +
             '</div>' +
             '<div class="ds-between" style="margin-top:6px"><span class="ds-cap ds-num">01:22:10</span>' +
               '<span class="ds-cap ds-num">01:22:35</span></div></div></div>' +
@@ -134,18 +134,18 @@ A.editor = function () {
             '<thead><tr><th style="width:52px">№</th><th style="width:132px">Начало</th><th style="width:132px">Конец</th>' +
             '<th style="width:110px">Говорящий</th><th>Текст</th><th style="width:62px">Симв.</th><th style="width:44px"></th></tr></thead><tbody>' +
             CUES.map(function (c) {
-              return '<tr' + (c[6] ? ' style="background:var(--ds-aqua-dim)"' : '') + '>' +
+              return '<tr' + (c[6] ? ' style="background:var(--ds-amber-dim)"' : '') + '>' +
                 '<td class="ds-num" style="color:var(--ds-ink-3)">' + c[0] + '</td>' +
                 '<td class="ds-num" style="font-size:11.5px">' + c[1] + '</td>' +
                 '<td class="ds-num" style="font-size:11.5px">' + c[2] + '</td>' +
-                '<td>' + (c[3] ? '<span class="ds-badge" style="color:var(--ds-aqua);border-color:var(--ds-aqua-edge)">' + c[3] + '</span>' : '<span class="ds-mut2">—</span>') + '</td>' +
+                '<td>' + (c[3] ? '<span class="ds-badge" style="color:var(--ds-amber);border-color:var(--ds-amber-edge)">' + c[3] + '</span>' : '<span class="ds-mut2">—</span>') + '</td>' +
                 '<td>' + (c[5] ? '<span class="ds-cue__sound" style="display:inline;font-size:13px">' + c[4] + '</span>' : c[4]) + '</td>' +
                 '<td class="ds-num ds-mut2">' + c[4].length + '</td>' +
                 '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 14) + '</button></td></tr>';
             }).join('') + '</tbody></table></div></div></div>' +
 
       '<div class="ds-stack ds-g4" style="position:sticky;top:84px">' +
-        '<div class="ds-card" style="border-color:var(--ds-aqua-edge)">' +
+        '<div class="ds-card" style="border-color:var(--ds-amber-edge)">' +
           '<h3 class="ds-h2" style="margin-bottom:14px">Реплика #419</h3>' +
           '<div class="ds-stack ds-g3">' +
             '<div class="ds-row-f ds-g2">' +
@@ -159,7 +159,7 @@ A.editor = function () {
               '<button class="ds-btn ds-btn--sm ds-btn--secondary ds-grow">По курсору</button></div>' +
             '<div class="ds-field"><label class="ds-label">Тип реплики</label>' +
               '<div class="ds-wrap ds-g2">' + [['Реплика', 0], ['Описание звука', 1], ['Музыка', 0]].map(function (t) {
-                return '<button class="ds-chip ds-chip--aqua"' + (t[1] ? ' aria-pressed="true"' : '') + '>' + t[0] + '</button>'; }).join('') + '</div></div>' +
+                return '<button class="ds-chip ds-chip--amber"' + (t[1] ? ' aria-pressed="true"' : '') + '>' + t[0] + '</button>'; }).join('') + '</div></div>' +
             '<div class="ds-field"><label class="ds-label">Говорящий</label>' +
               '<select class="ds-select"><option>— не указан —</option><option>АННА</option><option>МАРК</option><option>РАДИСТ</option></select></div>' +
             '<div class="ds-field"><label class="ds-label">Текст</label>' +
@@ -172,7 +172,7 @@ A.editor = function () {
               '<span class="ds-cue__sound" style="font-size:12.5px;text-decoration:line-through;opacity:.55">[дверь резко захлопывается]</span></div>' +
             '<div class="ds-row-f ds-g2">' +
               '<button class="ds-btn ds-btn--ghost ds-grow">Отменить</button>' +
-              '<button class="ds-btn ds-btn--aqua ds-grow">Сохранить</button></div></div></div>' +
+              '<button class="ds-btn ds-btn--amber ds-grow">Сохранить</button></div></div></div>' +
 
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Проверка файла</h3>' +
           '<div class="ds-stack ds-g2">' +
@@ -186,7 +186,7 @@ A.editor = function () {
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Версии</h3>' +
           '<div class="ds-stack ds-g2">' +
             [['v4 · черновик', 'Мария Р. · сейчас', 1], ['v3', 'Мария Р. · 28 авг', 0], ['v2', 'Игорь С. · 12 авг', 0], ['v1 · импорт', 'Система · 4 авг', 0]].map(function (r) {
-              return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[2] ? 'var(--ds-gold-dim)' : 'var(--ds-void)') + ';border:1px solid ' + (r[2] ? 'var(--ds-gold-edge)' : 'var(--ds-line)') + '">' +
+              return '<div class="ds-between" style="padding:9px 11px;border-radius:var(--ds-r-sm);background:' + (r[2] ? 'var(--ds-blue-dim)' : 'var(--ds-void)') + ';border:1px solid ' + (r[2] ? 'var(--ds-blue-edge)' : 'var(--ds-line)') + '">' +
                 '<div><div class="ds-sm" style="font-weight:600">' + r[0] + '</div>' +
                 '<div class="ds-cap">' + r[1] + '</div></div>' +
                 (r[2] ? '' : '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сравнить</button>') + '</div>';
@@ -290,7 +290,7 @@ A.user = function () {
           '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Обращения</h3>' +
             '<div class="ds-stack ds-g2">' +
               [['#DS-10482', 'В работе', 'info'], ['#DS-10318', 'Решено', 'ok'], ['#DS-10240', 'Закрыто', '']].map(function (r) {
-                return '<div class="ds-between"><span class="ds-num ds-sm" style="color:var(--ds-gold)">' + r[0] + '</span>' +
+                return '<div class="ds-between"><span class="ds-num ds-sm" style="color:var(--ds-blue)">' + r[0] + '</span>' +
                   '<span class="ds-badge ' + (r[2] ? 'ds-badge--' + r[2] : '') + '">' + r[1] + '</span></div>';
               }).join('') + '</div></div></div></div></div>');
 };
@@ -340,7 +340,7 @@ A.analytics = function () {
         bars([['1', 38], ['5', 41], ['9', 44], ['13', 40], ['17', 47], ['21', 51], ['25', 49], ['29', 56]], 130) + '</div>' +
       '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Платформы</h3>' +
         '<div class="ds-stack ds-g4">' +
-          [['iPhone', 41, 'var(--ds-gold)'], ['Android', 34, 'var(--ds-gold-lo)'], ['Web', 25, 'var(--ds-raised-3)']].map(function (r) {
+          [['iPhone', 41, 'var(--ds-blue)'], ['Android', 34, 'var(--ds-blue-lo)'], ['Web', 25, 'var(--ds-raised-3)']].map(function (r) {
             return '<div><div class="ds-between" style="margin-bottom:5px"><span class="ds-sm">' + r[0] + '</span>' +
               '<span class="ds-num ds-sm" style="font-weight:700">' + r[1] + '%</span></div>' +
               '<div style="height:7px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
@@ -352,7 +352,7 @@ A.analytics = function () {
             return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
               '<div class="ds-row-f ds-g3" style="flex:1;margin-left:14px">' +
                 '<div style="flex:1;height:5px;border-radius:99px;background:var(--ds-raised);overflow:hidden">' +
-                '<div style="height:100%;width:' + (r[1] / 44 * 100) + '%;background:var(--ds-aqua-lo);border-radius:99px"></div></div>' +
+                '<div style="height:100%;width:' + (r[1] / 44 * 100) + '%;background:var(--ds-amber-lo);border-radius:99px"></div></div>' +
                 '<span class="ds-num ds-cap" style="width:28px;text-align:right">' + r[1] + '%</span></div></div>';
           }).join('') + '</div></div></div>' +
 
@@ -371,8 +371,8 @@ A.analytics = function () {
         }).join('') + '</div></div>' +
       '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Коллекции</h3>' +
         '<div class="ds-stack ds-g3">' +
-          [['Лучшее с CC+', '128 400', 'var(--ds-aqua)'], ['Реальные события', '96 100', 'var(--ds-coll)'],
-           ['Фильмы на вечер', '42 800', 'var(--ds-coll)'], ['Лучшее в 4K', '38 200', 'var(--ds-gold)']].map(function (r) {
+          [['Лучшее с CC+', '128 400', 'var(--ds-amber)'], ['Реальные события', '96 100', 'var(--ds-coll)'],
+           ['Фильмы на вечер', '42 800', 'var(--ds-coll)'], ['Лучшее в 4K', '38 200', 'var(--ds-blue)']].map(function (r) {
             return '<div class="ds-between"><div class="ds-row-f ds-g2">' +
               '<span style="width:18px;height:3px;border-radius:2px;background:' + r[2] + '"></span>' +
               '<span class="ds-cap">' + r[0] + '</span></div>' +
@@ -423,7 +423,7 @@ A.tickets = function () {
       '<thead><tr><th>Номер</th><th>Пользователь</th><th>Тема</th><th>Категория</th><th>Фильм</th><th>Приоритет</th><th>Исполнитель</th><th>Статус</th><th>Активность</th></tr></thead><tbody>' +
       T.map(function (t) {
         return '<tr style="cursor:pointer" data-ago="ticket"' + (t[11] ? ' style="background:rgba(255,92,92,.05);cursor:pointer"' : '') + '>' +
-          '<td class="ds-num" style="color:var(--ds-gold)">' + t[0] + (t[11] ? ' <span class="ds-badge ds-badge--err">SLA</span>' : '') + '</td>' +
+          '<td class="ds-num" style="color:var(--ds-blue)">' + t[0] + (t[11] ? ' <span class="ds-badge ds-badge--err">SLA</span>' : '') + '</td>' +
           '<td>' + t[1] + '</td><td style="font-weight:600">' + t[2] + '</td>' +
           '<td class="ds-mut2">' + t[3] + '</td><td class="ds-mut2">' + t[4] + '</td>' +
           '<td><span class="ds-badge ' + PR[t[5]] + '">' + t[6] + '</span></td>' +
@@ -452,7 +452,7 @@ A.tickets = function () {
 
 A.ticket = function () {
   return adminShell('tickets', '#DS-10482 · Описание звука не соответствует сцене', 'Ошибка CC+ · Год тишины · 01:22:18',
-    '<button class="ds-btn ds-btn--sm ds-btn--aqua" data-ago="editor">Открыть в редакторе субтитров</button>',
+    '<button class="ds-btn ds-btn--sm ds-btn--amber" data-ago="editor">Открыть в редакторе субтитров</button>',
     '<div style="display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:20px;align-items:start">' +
       '<div class="ds-card">' +
         '<div class="ds-between" style="padding-bottom:14px;border-bottom:1px solid var(--ds-line);margin-bottom:18px">' +
@@ -467,14 +467,14 @@ A.ticket = function () {
         ].map(function (m) {
           return '<div style="display:flex;gap:12px;flex-direction:' + (m[0] ? 'row' : 'row-reverse') + ';margin-bottom:16px">' +
             '<div style="width:32px;height:32px;border-radius:99px;flex:none;position:relative;overflow:hidden;' +
-              (m[0] ? '' : 'background:var(--ds-aqua-dim);border:1px solid var(--ds-aqua-edge);display:grid;place-items:center;color:var(--ds-aqua)') + '">' +
+              (m[0] ? '' : 'background:var(--ds-amber-dim);border:1px solid var(--ds-amber-edge);display:grid;place-items:center;color:var(--ds-amber)') + '">' +
               (m[0] ? art(m[1], '', 'position:absolute;inset:0') : ic('shield', 16)) + '</div>' +
             '<div style="max-width:78%">' +
               '<div class="ds-row-f ds-g2" style="margin-bottom:5px;' + (m[0] ? '' : 'justify-content:flex-end') + '">' +
                 '<span class="ds-sm" style="font-weight:600">' + m[1] + '</span>' +
                 '<span class="ds-cap ds-num">' + m[2] + '</span></div>' +
-              '<div style="padding:12px 15px;border-radius:var(--ds-r-md);background:' + (m[0] ? 'var(--ds-raised-2)' : 'var(--ds-aqua-dim)') +
-                ';border:1px solid ' + (m[0] ? 'var(--ds-line)' : 'var(--ds-aqua-edge)') + '">' +
+              '<div style="padding:12px 15px;border-radius:var(--ds-r-md);background:' + (m[0] ? 'var(--ds-raised-2)' : 'var(--ds-amber-dim)') +
+                ';border:1px solid ' + (m[0] ? 'var(--ds-line)' : 'var(--ds-amber-edge)') + '">' +
                 '<p class="ds-sm" style="color:var(--ds-ink)">' + m[3] + '</p></div></div></div>';
         }).join('') +
 
@@ -508,7 +508,7 @@ A.ticket = function () {
                 '<span class="ds-sm" style="font-weight:600">' + r[1] + '</span></div>';
             }).join('') + '</div></div>' +
 
-        '<div class="ds-card" style="border-color:var(--ds-aqua-edge)">' +
+        '<div class="ds-card" style="border-color:var(--ds-amber-edge)">' +
           '<h3 class="ds-h2" style="margin-bottom:12px">Данные из плеера</h3>' +
           '<div class="ds-stack ds-g2">' +
             [['Фильм', 'Год тишины'], ['ID', 'DS-M-04187'], ['Момент', '01:22:18'], ['Реплика', '#418–419'],
@@ -517,7 +517,7 @@ A.ticket = function () {
               return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
                 '<span class="ds-num" style="font-size:11.5px;color:var(--ds-ink-2)">' + r[1] + '</span></div>';
             }).join('') + '</div>' +
-          '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-btn--block" data-ago="editor" style="margin-top:14px">Открыть 01:22:18 в редакторе</button></div>' +
+          '<button class="ds-btn ds-btn--sm ds-btn--amber ds-btn--block" data-ago="editor" style="margin-top:14px">Открыть 01:22:18 в редакторе</button></div>' +
 
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:12px">Назначение</h3>' +
           '<div class="ds-field" style="margin-bottom:10px"><label class="ds-label">Исполнитель</label>' +
@@ -530,7 +530,7 @@ A.ticket = function () {
             [['Новое', '09:12'], ['Принято', '09:40'], ['В работе · Редактор субтитров', '10:40'],
              ['Субтитры исправлены, v4 опубликована', '14:42']].map(function (r, i, arr) {
               return '<div class="ds-row-f ds-g3"><span style="width:8px;height:8px;border-radius:99px;flex:none;background:' +
-                (i === arr.length - 1 ? 'var(--ds-gold)' : 'var(--ds-ok)') + '"></span>' +
+                (i === arr.length - 1 ? 'var(--ds-blue)' : 'var(--ds-ok)') + '"></span>' +
                 '<div class="ds-grow"><div class="ds-cap" style="color:var(--ds-ink-2)">' + r[0] + '</div>' +
                 '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>';
             }).join('') + '</div></div></div></div>');
@@ -579,7 +579,7 @@ A.roles = function () {
         return '<tr><td><div class="ds-row-f ds-g3">' +
           '<div style="width:28px;height:28px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art(r[0], '', 'position:absolute;inset:0') + '</div>' +
           '<div><div style="font-weight:600">' + r[0] + '</div><div class="ds-cap ds-num">' + r[1] + '</div></div></div></td>' +
-          '<td><span class="ds-badge ' + (r[2] === 'OWNER' ? 'ds-badge--gold' : '') + '">' + r[2] + '</span></td>' +
+          '<td><span class="ds-badge ' + (r[2] === 'OWNER' ? 'ds-badge--blue' : '') + '">' + r[2] + '</span></td>' +
           '<td>' + (r[3] ? '<span class="ds-badge ds-badge--ok">Включена</span>' : '<span class="ds-badge ds-badge--err">Выключена</span>') + '</td>' +
           '<td class="ds-num ds-mut2">' + r[4] + '</td>' +
           '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
@@ -632,11 +632,11 @@ A.storage = function () {
       '<div class="ds-between" style="margin-bottom:12px"><h3 class="ds-h2">Распределение</h3>' +
         '<span class="ds-num ds-sm ds-mut">3.9 / 5 TB</span></div>' +
       '<div style="height:14px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-        '<div style="width:48%;background:var(--ds-gold)"></div><div style="width:26%;background:var(--ds-gold-lo)"></div>' +
-        '<div style="width:3.3%;background:var(--ds-aqua)"></div><div style="width:0.6%;background:var(--ds-ok)"></div></div>' +
+        '<div style="width:48%;background:var(--ds-blue)"></div><div style="width:26%;background:var(--ds-blue-lo)"></div>' +
+        '<div style="width:3.3%;background:var(--ds-amber)"></div><div style="width:0.6%;background:var(--ds-ok)"></div></div>' +
       '<div class="ds-wrap ds-g6" style="margin-top:12px">' +
-        [['Мастер-файлы 2.4 TB', 'var(--ds-gold)'], ['Качества 1.28 TB', 'var(--ds-gold-lo)'],
-         ['Изображения 164 GB', 'var(--ds-aqua)'], ['Субтитры 2.1 GB', 'var(--ds-ok)'],
+        [['Мастер-файлы 2.4 TB', 'var(--ds-blue)'], ['Качества 1.28 TB', 'var(--ds-blue-lo)'],
+         ['Изображения 164 GB', 'var(--ds-amber)'], ['Субтитры 2.1 GB', 'var(--ds-ok)'],
          ['Свободно 1.1 TB', 'var(--ds-raised-3)']].map(function (s) {
           return '<div class="ds-row-f ds-g2"><span style="width:9px;height:9px;border-radius:3px;background:' + s[1] + '"></span>' +
             '<span class="ds-cap">' + s[0] + '</span></div>';
@@ -723,7 +723,7 @@ A.api = function () {
             '<div><div class="ds-h3">' + r[0] + '</div>' +
             '<div class="ds-cap ds-num">' + r[1] + '</div></div></div>' +
             '<div class="ds-row-f ds-g2">' +
-              '<span class="ds-badge ' + (r[2] === 'production' ? 'ds-badge--gold' : '') + '">' + r[2] + '</span>' +
+              '<span class="ds-badge ' + (r[2] === 'production' ? 'ds-badge--blue' : '') + '">' + r[2] + '</span>' +
               '<span class="ds-badge ds-badge--' + r[3] + '">' + r[4] + '</span></div></div>' +
           '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid var(--ds-line)">' +
             '<div><div class="ds-cap">Что импортирует</div><div class="ds-sm" style="margin-top:3px">' + r[5] + '</div></div>' +
@@ -746,13 +746,13 @@ A.api = function () {
 };
 
 A.collections = function () {
-  var C = [['Лучшее с CC+', 340, 'Опубликована', 'ok', 'var(--ds-aqua)'],
+  var C = [['Лучшее с CC+', 340, 'Опубликована', 'ok', 'var(--ds-amber)'],
     ['Основано на реальных событиях', 214, 'Опубликована', 'ok', 'var(--ds-coll)'],
     ['Медленное кино', 96, 'Опубликована', 'ok', 'var(--ds-coll)'],
-    ['Фильмы на вечер', 42, 'Опубликована', 'ok', 'var(--ds-gold)'],
-    ['Лучшее в 4K', 268, 'Опубликована', 'ok', 'var(--ds-gold)'],
+    ['Фильмы на вечер', 42, 'Опубликована', 'ok', 'var(--ds-blue)'],
+    ['Лучшее в 4K', 268, 'Опубликована', 'ok', 'var(--ds-blue)'],
     ['Кино для поездки', 88, 'Черновик', '', 'var(--ds-raised-3)'],
-    ['Новинки недели', 18, 'Запланирована на 5 сен', 'warn', 'var(--ds-gold)']];
+    ['Новинки недели', 18, 'Запланирована на 5 сен', 'warn', 'var(--ds-blue)']];
   return adminShell('collections', 'Коллекции', '7 редакционных подборок',
     '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('plus', 14) + ' Новая коллекция</button>',
     '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">' +

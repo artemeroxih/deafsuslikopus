@@ -6,16 +6,16 @@
 /* ---------- Brand mark ----------
    A squircle token. Inside, an upright suslik silhouette knocked
    out in negative space; its chest carries the play triangle.
-   Reads at 16px, works on gold or on graphite.                */
+   Reads at 16px, works on blue or on graphite.                */
 function dsLogoMark(size, opts) {
   opts = opts || {};
   var fill = opts.fill || 'url(#dsg)';
-  var cut  = opts.cut  || '#06070A';
+  var cut  = opts.cut  || '#060B18';
   var id   = 'dsg' + Math.random().toString(36).slice(2, 7);
   return '' +
   '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
     '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
-      '<stop stop-color="#FFD37B"/><stop offset=".55" stop-color="#FFC24B"/><stop offset="1" stop-color="#E0A430"/>' +
+      '<stop stop-color="#8CB9FF"/><stop offset=".55" stop-color="#5B9BFF"/><stop offset="1" stop-color="#3A78E0"/>' +
     '</linearGradient></defs>' +
     '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
     /* suslik: ears */
@@ -137,12 +137,12 @@ function dsHash(s) {
   return (h >>> 0);
 }
 var DS_PAL = [
-  ['#1B2A4A', '#3E5C8C', '#0A1020'], ['#4A1B2A', '#8C3E52', '#20080E'],
-  ['#1B4A3E', '#3E8C74', '#08201A'], ['#4A3A1B', '#8C6E3E', '#201808'],
-  ['#2A1B4A', '#5C3E8C', '#100820'], ['#4A2A1B', '#8C523E', '#200E08'],
-  ['#1B3A4A', '#3E748C', '#081820'], ['#3A4A1B', '#748C3E', '#182008'],
-  ['#4A1B4A', '#8C3E8C', '#200820'], ['#12232E', '#2E5468', '#060E14'],
-  ['#2E1212', '#68302E', '#140606'], ['#20304A', '#48688C', '#0C1220']
+  ['#1B2E5A', '#3E63A8', '#070D1E'], ['#16324F', '#2F6C96', '#060F1C'],
+  ['#232A5E', '#4A54B0', '#0A0C22'], ['#12384A', '#2A7590', '#061520'],
+  ['#2E2260', '#5B47B8', '#0C0A24'], ['#1A4A55', '#357F92', '#07181C'],
+  ['#1E2649', '#455495', '#080C1C'], ['#0F3A44', '#25798A', '#05161A'],
+  ['#3A2160', '#6E44B0', '#100A22'], ['#142744', '#33588F', '#060E1E'],
+  ['#4A2440', '#96487E', '#1A0A18'], ['#4A3520', '#96693A', '#1A1006']
 ];
 function dsArt(seed, opts) {
   opts = opts || {};
@@ -207,7 +207,7 @@ function badges(m, opts) {
   return out.join('');
 }
 function stars(r) {
-  return '<span class="ds-row-f ds-g1" style="color:var(--ds-gold)">' + ic('star', 11) +
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-blue)">' + ic('star', 11) +
     '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
 }
 

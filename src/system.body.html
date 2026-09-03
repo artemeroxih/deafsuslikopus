@@ -21,7 +21,7 @@
 
   .sec { padding: 56px 44px; border-bottom: 1px solid var(--ds-line); max-width: 1180px; }
   .sec__head { margin-bottom: 30px; }
-  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-gold); letter-spacing: .1em; }
+  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-blue); letter-spacing: .1em; }
 
   .demo { background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); padding: 26px; }
   .demo--grid { display: grid; gap: 18px; }
@@ -55,7 +55,7 @@
 
   .spec { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-ink-3); }
   code.k { font-family: var(--ds-mono); font-size: 11.5px; background: var(--ds-raised);
-    border: 1px solid var(--ds-line); border-radius: 5px; padding: 1.5px 6px; color: var(--ds-aqua); }
+    border: 1px solid var(--ds-line); border-radius: 5px; padding: 1.5px 6px; color: var(--ds-amber); }
 
   @media (max-width: 900px) {
     .sy { grid-template-columns: 1fr; }
@@ -113,7 +113,7 @@
           </div>
         </div>
         <div class="ds-wrap ds-g2" style="margin-top:26px">
-          <span class="ds-badge ds-badge--lg ds-badge--gold">Тёмная тема — единственная</span>
+          <span class="ds-badge ds-badge--lg ds-badge--blue">Тёмная тема — единственная</span>
           <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
           <span class="ds-badge ds-badge--lg ds-badge--cc">WCAG 2.2 AA</span>
         </div>
@@ -183,7 +183,7 @@
           <p class="lbl">Охранное поле и фоны</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:var(--ds-void);border:1px solid var(--ds-line);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgA"></div>
-            <div style="background:var(--ds-gold);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
+            <div style="background:var(--ds-blue);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
           </div>
           <p class="ds-cap" style="margin-top:12px">Охранное поле — половина высоты знака со всех сторон. Знак не растягивается, не поворачивается,
           не перекрашивается вне трёх утверждённых вариантов.</p>
@@ -197,8 +197,8 @@
         <p class="sec__n">03</p>
         <h2 class="ds-d2" style="margin-top:6px">Цвет</h2>
         <p class="ds-body" style="margin-top:10px">
-          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Золото — всё, что запускает и продаёт.
-          Аква — всё, что читается: субтитры, CC, CC+, доступность. Пользователь узнаёт назначение кнопки до того, как прочитал её.
+          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Синий — всё, что запускает и продаёт.
+          Янтарь — всё, что читается: субтитры, CC, CC+, доступность. Тёплый акцент на холодном фоне — текст всегда виден первым.
         </p>
       </div>
 
@@ -218,7 +218,7 @@
       <div class="grid2" id="swPlan"></div>
 
       <div class="demo" style="margin-top:26px">
-        <p class="lbl">Контраст на фоне <span class="spec">#06070A</span></p>
+        <p class="lbl">Контраст на фоне <span class="spec">#060B18</span></p>
         <div id="contrast" style="display:grid;gap:9px"></div>
       </div>
     </section>
@@ -309,7 +309,7 @@
       <div class="sec__head">
         <p class="sec__n">07</p>
         <h2 class="ds-d2" style="margin-top:6px">Кнопки</h2>
-        <p class="ds-body" style="margin-top:10px">Одна золотая кнопка на экран. Аква-кнопка появляется только там, где действие связано с субтитрами.</p>
+        <p class="ds-body" style="margin-top:10px">Одна синяя кнопка на экран. Янтарная кнопка появляется только там, где действие связано с субтитрами.</p>
       </div>
       <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
         <div>
@@ -324,7 +324,7 @@
         <div>
           <p class="lbl">Смысловые</p>
           <div class="ds-wrap ds-g3" style="align-items:center">
-            <button class="ds-btn ds-btn--aqua">Включить CC+</button>
+            <button class="ds-btn ds-btn--amber">Включить CC+</button>
             <button class="ds-btn ds-btn--danger">Удалить загрузку</button>
             <button class="ds-btn ds-btn--secondary" disabled>Недоступно</button>
           </div>
@@ -431,7 +431,7 @@
             <span class="ds-badge ds-badge--warn">Ожидает</span>
             <span class="ds-badge ds-badge--err">Ошибка</span>
             <span class="ds-badge ds-badge--info">В работе</span>
-            <span class="ds-badge ds-badge--gold">Premium</span>
+            <span class="ds-badge ds-badge--blue">Premium</span>
             <span class="ds-badge">Черновик</span>
           </div>
           <p class="lbl" style="margin-top:26px">Чипы фильтров</p>
@@ -738,40 +738,41 @@
       '<div class="sw__hex">' + hex + '</div><div class="sw__use">' + use + '</div></div></div>';
   }
   set('swAccent',
-    swatch('Suslik Gold', '#FFC24B', 'Основное действие, бренд, «Смотреть», подписки, прогресс просмотра') +
-    swatch('Gold Hover', '#FFD37B', 'Наведение и нажатие на золотую кнопку') +
-    swatch('Signal Aqua', '#5FE3D0', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
-    swatch('Aqua Hover', '#8FF0E2', 'Наведение на аква-элементы, описания звуков в CC+'));
+    swatch('Полярный синий', '#5B9BFF', 'Основное действие, бренд, «Смотреть», подписка, прогресс просмотра') +
+    swatch('Синий · наведение', '#8CB9FF', 'Наведение и нажатие на основную кнопку') +
+    swatch('Сигнальный янтарь', '#FFC24B', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
+    swatch('Янтарь · наведение', '#FFD886', 'Наведение на янтарные элементы, описания звуков в CC+'));
   set('swSurface',
-    swatch('Void', '#06070A', 'Основной фон приложения') +
-    swatch('Sunken', '#030407', 'Плеер, боковые панели, утопленные области') +
-    swatch('Panel', '#0D1016', 'Карточки, панели, шторки') +
-    swatch('Raised', '#14181F', 'Поля ввода, невыбранные состояния') +
-    swatch('Raised 2', '#1B2029', 'Вторичные кнопки, активные поля') +
-    swatch('Raised 3', '#242A35', 'Ползунки, дорожки, разделители блоков'));
+    swatch('Void', '#060B18', 'Основной фон приложения') +
+    swatch('Sunken', '#030713', 'Плеер, боковые панели, утопленные области') +
+    swatch('Panel', '#0C1424', 'Карточки, панели, шторки') +
+    swatch('Raised', '#121C30', 'Поля ввода, невыбранные состояния') +
+    swatch('Raised 2', '#1A2740', 'Вторичные кнопки, активные поля') +
+    swatch('Raised 3', '#24344F', 'Ползунки, дорожки, разделители блоков'));
   set('swInk',
-    swatch('Ink', '#F2F4F8', 'Заголовки и основной текст — 15.8:1') +
-    swatch('Ink 2', '#A8B0BF', 'Вторичный текст, описания — 7.6:1') +
-    swatch('Ink 3', '#6E7787', 'Подписи, метаданные — 3.9:1, только для крупного') +
-    swatch('Ink 4', '#4A515E', 'Плейсхолдеры и выключенные элементы'));
+    swatch('Ink', '#EEF3FB', 'Заголовки и основной текст — 17.6:1') +
+    swatch('Ink 2', '#A3AFC4', 'Вторичный текст, описания — 8.9:1') +
+    swatch('Ink 3', '#6B7893', 'Подписи, метаданные — 4.4:1, только для крупного') +
+    swatch('Ink 4', '#47536B', 'Плейсхолдеры и выключенные элементы'));
   set('swSem',
     swatch('Success', '#3DDC97', 'Оплачено, загружено, подписка активна') +
     swatch('Warning', '#FF9F45', 'Истекает срок, мало места, требует внимания') +
     swatch('Error', '#FF5C5C', 'Платёж отклонён, загрузка не удалась, видео недоступно') +
-    swatch('Info', '#5FA8FF', 'Обращение в работе, нейтральные уведомления'));
+    swatch('Info', '#9B8CFF', 'Обращение в работе. Уведён в фиолетовый, чтобы не сливаться с основным синим'));
   set('swPlan',
-    swatch('Подписка ВИП', '#FFC24B', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
-    swatch('Коллекция', '#C89BFF', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
+    swatch('Подписка ВИП', '#5B9BFF', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
+    swatch('Коллекция', '#E86FA9', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
 
   var CONTRAST = [
-    ['#F2F4F8', 'Основной текст', '15.8:1', 'AAA'],
-    ['#A8B0BF', 'Вторичный текст', '7.6:1', 'AAA'],
-    ['#FFC24B', 'Suslik Gold', '11.4:1', 'AAA'],
-    ['#5FE3D0', 'Signal Aqua', '11.9:1', 'AAA'],
-    ['#3DDC97', 'Success', '10.3:1', 'AAA'],
-    ['#FF9F45', 'Warning', '8.1:1', 'AAA'],
-    ['#FF5C5C', 'Error', '5.4:1', 'AA'],
-    ['#6E7787', 'Ink 3 — только ≥18px', '3.9:1', 'AA Large']
+    ['#EEF3FB', 'Основной текст', '17.6:1', 'AAA'],
+    ['#A3AFC4', 'Вторичный текст', '8.9:1', 'AAA'],
+    ['#FFC24B', 'Сигнальный янтарь', '12.2:1', 'AAA'],
+    ['#5B9BFF', 'Полярный синий', '7.1:1', 'AAA'],
+    ['#9B8CFF', 'Info', '7.1:1', 'AAA'],
+    ['#3DDC97', 'Success', '11.1:1', 'AAA'],
+    ['#FF9F45', 'Warning', '9.6:1', 'AAA'],
+    ['#FF5C5C', 'Error', '6.5:1', 'AA'],
+    ['#6B7893', 'Ink 3 — только ≥18px', '4.4:1', 'AA Large']
   ];
   set('contrast', CONTRAST.map(function (c) {
     return '<div class="ds-between" style="padding:8px 12px;background:var(--ds-void);border:1px solid var(--ds-line);border-radius:8px">' +
@@ -783,7 +784,7 @@
   /* ---- space / radius / elevation ---- */
   set('spaceScale', [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96].map(function (n) {
     return '<div class="ds-row-f ds-g4"><span class="spec" style="width:42px">' + n + '</span>' +
-      '<div style="height:11px;width:' + n + 'px;background:var(--ds-gold);border-radius:3px"></div></div>';
+      '<div style="height:11px;width:' + n + 'px;background:var(--ds-blue);border-radius:3px"></div></div>';
   }).join(''));
   set('radScale', [6, 10, 14, 20, 28, 36].map(function (n) {
     return '<div style="text-align:center"><div style="width:58px;height:58px;background:var(--ds-raised-2);border:1px solid var(--ds-line-mid);border-radius:' + n + 'px"></div>' +
@@ -833,7 +834,7 @@
   set('bOff2', ic('download', 9, 2.6) + ' OFFLINE');
   set('chipDemo', ['Все', 'Драма', 'Триллер', 'Документальные'].map(function (t, i) {
     return '<button class="ds-chip"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
-  }).join('') + '<button class="ds-chip ds-chip--aqua" aria-pressed="true">' + ic('cc', 14) + ' CC+</button>');
+  }).join('') + '<button class="ds-chip ds-chip--amber" aria-pressed="true">' + ic('cc', 14) + ' CC+</button>');
   document.querySelectorAll('.ds-chip').forEach(function (c) {
     c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
   });
@@ -895,7 +896,7 @@
       (done ? '<span class="ds-badge ds-badge--ok">' + ic('check', 9, 3) + ' Готово</span>'
             : '<span class="ds-badge ds-badge--info">78%</span>') + '</div>' +
       '<div class="ds-wrap ds-g1"><span class="ds-badge ds-badge--ccplus">CC+</span><span class="ds-badge">' + d.sub + '</span></div>' +
-      (done ? '' : '<div class="ds-prog ds-prog--aqua"><div class="ds-prog__bar" style="width:' + d.p + '%"></div></div>') +
+      (done ? '' : '<div class="ds-prog ds-prog--amber"><div class="ds-prog__bar" style="width:' + d.p + '%"></div></div>') +
       '<div class="ds-between"><span class="ds-cap">' + d.ex + '</span>' +
       '<div class="ds-row-f ds-g1">' +
       (done ? '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('play', 12) + ' Смотреть</button>'
@@ -913,7 +914,7 @@
     '<div class="ds-grow"></div>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Поиск">' + ic('search') + '</button>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell') +
-    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-gold);border:2px solid var(--ds-void)"></span></button>' +
+    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-blue);border:2px solid var(--ds-void)"></span></button>' +
     '<div style="width:34px;height:34px;border-radius:99px;background:linear-gradient(140deg,#3E5C8C,#1B2A4A);border:1px solid var(--ds-line-mid);display:grid;place-items:center;font-size:12px;font-weight:700">А</div>');
 
   var TABS = [['home', 'Главная'], ['search', 'Поиск'], ['library', 'Библиотека'], ['download', 'Загрузки'], ['user', 'Профиль']];
@@ -935,12 +936,12 @@
   set('sheetDemo', ['0.5×', '0.75×', 'Обычная', '1.25×', '1.5×', '2×'].map(function (t, i) {
     return '<button class="ds-row" style="border-radius:10px">' +
       '<span class="ds-row__main"><span class="ds-row__title">' + t + '</span></span>' +
-      (i === 2 ? '<span style="color:var(--ds-aqua);display:flex">' + ic('check', 18, 2.4) + '</span>' : '') + '</button>';
+      (i === 2 ? '<span style="color:var(--ds-amber);display:flex">' + ic('check', 18, 2.4) + '</span>' : '') + '</button>';
   }).join(''));
   set('toastDemo',
     '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-ok)">' + ic('checkc', 19) + '</span><div><strong>Загрузка завершена</strong><div class="ds-cap" style="margin-top:1px">Год тишины · 1080p · Русский CC+</div></div></div>' +
     '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-warn)">' + ic('alert', 19) + '</span><div><strong>Осталось 1.2 GB</strong><div class="ds-cap" style="margin-top:1px">Освободите место, чтобы продолжить</div></div></div>' +
-    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-aqua)">' + ic('cc', 19) + '</span><div><strong>CC+ включены</strong><div class="ds-cap" style="margin-top:1px">Русский · сохранено для всех фильмов</div></div></div>');
+    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-amber)">' + ic('cc', 19) + '</span><div><strong>CC+ включены</strong><div class="ds-cap" style="margin-top:1px">Русский · сохранено для всех фильмов</div></div></div>');
 
   /* ---- states ---- */
   set('skelDemo', [0, 1, 2].map(function () {
@@ -1013,7 +1014,7 @@
     '<div class="ds-between"><span class="ds-sm">Обводка текста</span>' +
       '<label class="ds-switch"><input type="checkbox" checked id="outlineSw"><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>' +
     '<div class="ds-row-f ds-g2" style="margin-top:4px"><button class="ds-btn ds-btn--sm ds-btn--ghost ds-grow" id="capReset">Сбросить</button>' +
-      '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-grow">Сохранить</button></div>');
+      '<button class="ds-btn ds-btn--sm ds-btn--amber ds-grow">Сохранить</button></div>');
   $('capControls').addEventListener('click', function (e) {
     var b = e.target.closest('.ds-chip'); if (!b) return;
     var g = b.parentNode.getAttribute('data-g');
@@ -1110,10 +1111,10 @@
 
   /* ---- handoff ---- */
   var HAND = [
-    ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | aqua | outline | ghost | danger · size: sm | md | lg · block · disabled'],
+    ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | amber | outline | ghost | danger · size: sm | md | lg · block · disabled'],
     ['.ds-iconbtn', '&lt;IconButton&gt;', 'icon · size: sm | md · variant: solid | bare · active · aria-label (обязателен)'],
-    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | gold'],
-    ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | aqua · icon'],
+    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | blue'],
+    ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | amber · icon'],
     ['.ds-input / .ds-select / .ds-textarea', '&lt;Field&gt;', 'label · error · help · trailing · type'],
     ['.ds-search', '&lt;SearchBar&gt;', 'value · onChange · suggestions · voice'],
     ['.ds-switch', '&lt;Switch&gt;', 'checked · onChange · label'],

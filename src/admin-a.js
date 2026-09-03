@@ -33,7 +33,7 @@ function adminShell(active, title, sub, actions, body) {
             g[2].map(function (n) {
               var on = n[0] === active;
               return '<button data-ago="' + n[0] + '" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:0;border-radius:var(--ds-r-sm);cursor:pointer;text-align:left;font-size:13px;font-weight:' + (on ? 600 : 500) + ';' +
-                'background:' + (on ? 'var(--ds-gold-dim)' : 'none') + ';color:' + (on ? 'var(--ds-gold)' : 'var(--ds-ink-3)') + '">' +
+                'background:' + (on ? 'var(--ds-blue-dim)' : 'none') + ';color:' + (on ? 'var(--ds-blue)' : 'var(--ds-ink-3)') + '">' +
                 '<span style="display:flex;flex:none">' + ic(n[2], 17) + '</span>' + n[1] + '</button>';
             }).join('');
         }).join('') + '</div>' +
@@ -74,7 +74,7 @@ function bars(data, h, color) {
       var last = i === data.length - 1;
       return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;height:100%;justify-content:flex-end">' +
         '<div title="' + d[0] + ': ' + d[1] + '" style="width:100%;border-radius:4px 4px 2px 2px;height:' + Math.max(3, (d[1] / max) * 100) + '%;' +
-        'background:' + (last ? (color || 'var(--ds-gold)') : 'rgba(255,194,75,.30)') + '"></div>' +
+        'background:' + (last ? (color || 'var(--ds-blue)') : 'rgba(255,194,75,.30)') + '"></div>' +
         '<span class="ds-cap" style="font-size:9px">' + d[0] + '</span></div>';
     }).join('') + '</div>';
 }
@@ -169,7 +169,7 @@ A.dash = function () {
 
       '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Использование субтитров</h3>' +
         '<div class="ds-stack ds-g4">' +
-          [['CC+ включены', 62, 'var(--ds-aqua)'], ['CC включены', 24, 'var(--ds-aqua-lo)'],
+          [['CC+ включены', 62, 'var(--ds-amber)'], ['CC включены', 24, 'var(--ds-amber-lo)'],
            ['Обычные субтитры', 9, 'var(--ds-raised-3)'], ['Без субтитров', 5, 'var(--ds-raised-3)']].map(function (r) {
             return '<div><div class="ds-between" style="margin-bottom:5px"><span class="ds-sm">' + r[0] + '</span>' +
               '<span class="ds-num ds-sm" style="font-weight:700">' + r[1] + '%</span></div>' +
@@ -232,7 +232,7 @@ A.movies = function () {
           '<td><span class="ds-badge ' + s[0] + '">' + s[1] + '</span></td>' +
           '<td>' + (r[2] === '4K' ? '<span class="ds-badge ds-badge--4k">4K</span>' : '<span class="ds-mut2 ds-num">' + r[2] + '</span>') + '</td>' +
           '<td>' + (r[3] === 'нет' ? '<span class="ds-badge ds-badge--warn">Нет</span>'
-            : '<span class="ds-num" style="font-size:11.5px;color:var(--ds-aqua)">' + r[3] + '</span>') + '</td>' +
+            : '<span class="ds-num" style="font-size:11.5px;color:var(--ds-amber)">' + r[3] + '</span>') + '</td>' +
           '<td>' + (r[4] === '—' ? '<span class="ds-mut2">—</span>'
             : '<span class="ds-badge" style="border-color:#C89BFF44;color:#C89BFF">' + r[4] + '</span>') + '</td>' +
           '<td class="ds-num">' + r[5] + '</td>' +
@@ -246,7 +246,7 @@ A.movies = function () {
 
     '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-line-mid)">' +
       '<div class="ds-between"><div class="ds-row-f ds-g3">' +
-        '<span class="ds-badge ds-badge--gold ds-badge--lg">Выбрано 3</span>' +
+        '<span class="ds-badge ds-badge--blue ds-badge--lg">Выбрано 3</span>' +
         '<span class="ds-sm ds-mut">Массовые действия</span></div>' +
         '<div class="ds-row-f ds-g2">' +
           '<button class="ds-btn ds-btn--sm ds-btn--secondary">Опубликовать</button>' +
@@ -261,8 +261,8 @@ A.addMovie = function () {
     '<div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:820px">' +
       [['upload', 'Ручная загрузка', 'Загрузите один мастер-файл — система сама подготовит все качества от 360p до 4K. Метаданные, обложки и субтитры заполняются вручную.', 'manual-upload', 1],
        ['cloud', 'Импорт через API', 'Подтянуть метаданные из авторизованной интеграции. Импорт всегда создаёт черновик — публикация только после проверки.', 'api-import', 0]].map(function (c) {
-        return '<button class="ds-card" data-ago="' + c[3] + '" style="text-align:left;cursor:pointer;padding:26px' + (c[4] ? ';border-color:var(--ds-gold-edge)' : '') + '">' +
-          '<span style="color:' + (c[4] ? 'var(--ds-gold)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(c[0], 28) + '</span>' +
+        return '<button class="ds-card" data-ago="' + c[3] + '" style="text-align:left;cursor:pointer;padding:26px' + (c[4] ? ';border-color:var(--ds-blue-edge)' : '') + '">' +
+          '<span style="color:' + (c[4] ? 'var(--ds-blue)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(c[0], 28) + '</span>' +
           '<h3 class="ds-h1" style="margin-top:16px">' + c[1] + '</h3>' +
           '<p class="ds-sm" style="margin-top:8px">' + c[2] + '</p>' +
           '<span class="ds-btn ds-btn--sm ds-btn--secondary" style="margin-top:18px">Начать ' + ic('chevR', 13) + '</span></button>';
@@ -282,10 +282,10 @@ A.manualUpload = function () {
       var cur = i === 3;
       return '<div style="flex:1;display:flex;align-items:center;gap:8px">' +
         '<span style="width:26px;height:26px;border-radius:99px;display:grid;place-items:center;flex:none;font-size:11px;font-weight:700;' +
-          'background:' + (s[1] ? 'var(--ds-ok)' : cur ? 'var(--ds-gold)' : 'var(--ds-raised-2)') + ';' +
+          'background:' + (s[1] ? 'var(--ds-ok)' : cur ? 'var(--ds-blue)' : 'var(--ds-raised-2)') + ';' +
           'color:' + (s[1] || cur ? 'var(--ds-ink-inv)' : 'var(--ds-ink-3)') + '">' +
           (s[1] ? ic('check', 14, 3) : (i + 1)) + '</span>' +
-        '<span class="ds-cap" style="color:' + (cur ? 'var(--ds-gold)' : s[1] ? 'var(--ds-ink-2)' : 'var(--ds-ink-4)') + ';font-weight:600">' + s[0] + '</span>' +
+        '<span class="ds-cap" style="color:' + (cur ? 'var(--ds-blue)' : s[1] ? 'var(--ds-ink-2)' : 'var(--ds-ink-4)') + ';font-weight:600">' + s[0] + '</span>' +
         (i < STEPS.length - 1 ? '<div style="flex:1;height:1px;background:' + (s[1] ? 'var(--ds-ok)' : 'var(--ds-line)') + '"></div>' : '') + '</div>';
     }).join('') + '</div>' +
 
@@ -312,11 +312,11 @@ A.manualUpload = function () {
              ['1440p / 2K', 'В очереди', 0, '', '~5.1 GB'], ['2160p / 4K UHD', 'В очереди', 0, '', '~8.7 GB']].map(function (q) {
               return '<div style="padding:12px 14px;border-radius:var(--ds-r-md);background:var(--ds-void);border:1px solid var(--ds-line)">' +
                 '<div class="ds-between"><div class="ds-row-f ds-g3">' +
-                  '<span class="ds-opt__box ds-opt__box--check is-on" style="width:17px;height:17px;border-color:var(--ds-aqua);background:var(--ds-aqua)"></span>' +
+                  '<span class="ds-opt__box ds-opt__box--check is-on" style="width:17px;height:17px;border-color:var(--ds-amber);background:var(--ds-amber)"></span>' +
                   '<span class="ds-sm" style="font-weight:600;color:var(--ds-ink)">' + q[0] + '</span></div>' +
                   '<div class="ds-row-f ds-g3"><span class="ds-num ds-cap">' + q[4] + '</span>' +
                   '<span class="ds-badge ' + (q[3] ? 'ds-badge--' + q[3] : '') + '">' + q[1] + (q[2] > 0 && q[2] < 100 ? ' ' + q[2] + '%' : '') + '</span></div></div>' +
-                (q[2] > 0 && q[2] < 100 ? '<div class="ds-prog ds-prog--aqua" style="margin-top:9px"><div class="ds-prog__bar" style="width:' + q[2] + '%"></div></div>' : '') +
+                (q[2] > 0 && q[2] < 100 ? '<div class="ds-prog ds-prog--amber" style="margin-top:9px"><div class="ds-prog__bar" style="width:' + q[2] + '%"></div></div>' : '') +
                 '</div>';
             }).join('') + '</div>' +
           '<p class="ds-cap" style="margin-top:12px">Оценка завершения — 34 минуты. Можно уйти со страницы, обработка идёт на сервере.</p></div>' +

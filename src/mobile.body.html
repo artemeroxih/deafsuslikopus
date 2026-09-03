@@ -14,9 +14,9 @@
     transition: background var(--ds-m-micro) var(--ds-ease), color var(--ds-m-micro) var(--ds-ease);
   }
   .mp__item:hover { background: rgba(255,255,255,.05); color: var(--ds-ink); }
-  .mp__item.is-on { background: var(--ds-gold-dim); color: var(--ds-gold); font-weight: 600; }
+  .mp__item.is-on { background: var(--ds-blue-dim); color: var(--ds-blue); font-weight: 600; }
   .mp__num { font-family: var(--ds-mono); font-size: 10.5px; color: var(--ds-ink-4); width: 20px; flex: none; }
-  .mp__item.is-on .mp__num { color: var(--ds-gold); }
+  .mp__item.is-on .mp__num { color: var(--ds-blue); }
 
   .mp__main { display: flex; flex-direction: column; min-width: 0; overflow: hidden; }
   .mp__bar { display: flex; align-items: center; gap: 14px; height: 54px; padding: 0 18px; border-bottom: 1px solid var(--ds-line); background: var(--ds-void); flex: none; }
@@ -25,7 +25,7 @@
   .mp__flow { display: flex; gap: 6px; flex-wrap: wrap; padding: 8px 10px 0; }
   .mp__flowbtn { padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ds-line); background: none; color: var(--ds-ink-3); font-size: 11px; font-weight: 600; cursor: pointer; }
   .mp__flowbtn:hover { background: rgba(255,255,255,.06); color: var(--ds-ink); }
-  .mp__flowbtn.is-on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+  .mp__flowbtn.is-on { background: var(--ds-amber-dim); border-color: var(--ds-amber-edge); color: var(--ds-amber); }
 </style>
 
 <div class="mp">
@@ -155,7 +155,7 @@
         n++;
         var inFlow = state.flow && FLOWS[state.flow].indexOf(s[0]) > -1;
         return '<button class="mp__item' + (s[0] === state.id ? ' is-on' : '') + '" data-id="' + s[0] + '"' +
-          (inFlow ? ' style="outline:1px solid var(--ds-aqua-edge)"' : '') + '>' +
+          (inFlow ? ' style="outline:1px solid var(--ds-amber-edge)"' : '') + '>' +
           '<span class="mp__num">' + String(n).padStart(2, '0') + '</span>' + s[1] + '</button>';
       }).join('');
     }).join('');

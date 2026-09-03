@@ -19,7 +19,7 @@ function topbar(active) {
     '<div class="ds-grow"></div>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" data-go="search" aria-label="Поиск">' + ic('search') + '</button>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" data-go="notifications" aria-label="Уведомления" style="position:relative">' +
-      ic('bell') + '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-gold);border:2px solid var(--ds-void)"></span></button>' +
+      ic('bell') + '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-blue);border:2px solid var(--ds-void)"></span></button>' +
     '<button data-go="profile" aria-label="Профиль" style="width:34px;height:34px;border-radius:99px;border:1px solid var(--ds-line-mid);background:linear-gradient(140deg,#3E5C8C,#1B2A4A);color:#fff;font-weight:700;font-size:12px;cursor:pointer">А</button>' +
   '</header>';
 }
@@ -93,11 +93,11 @@ function authFrame(inner, sideTitle, sideBody) {
   return '<div style="min-height:900px;display:grid;grid-template-columns:1.05fr .95fr">' +
     '<div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:56px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('auth-side') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(6,7,10,.4),rgba(6,7,10,.9))"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(6,11,24,.4),rgba(6,11,24,.9))"></div>' +
       '<div style="position:relative;z-index:2;max-width:440px">' +
         '<div class="ds-strip" style="margin-bottom:26px;background:rgba(95,227,208,.1)">' +
           '<span class="ds-strip__label">CC+</span>' +
-          '<p class="ds-sm" style="margin:0">АННА: Я скоро вернусь.<br><em style="color:var(--ds-aqua-hi)">[дверь резко захлопывается]</em></p></div>' +
+          '<p class="ds-sm" style="margin:0">АННА: Я скоро вернусь.<br><em style="color:var(--ds-amber-hi)">[дверь резко захлопывается]</em></p></div>' +
         '<h2 class="ds-d1">' + sideTitle + '</h2>' +
         '<p class="ds-body" style="margin-top:14px">' + sideBody + '</p>' +
       '</div>' +

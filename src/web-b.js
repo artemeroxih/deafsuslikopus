@@ -52,7 +52,7 @@ function playerChrome(panel, opts) {
 
 /* Right-hand overlay panel used by the player menus */
 function playerPanel(title, body, foot) {
-  return '<div style="position:absolute;inset:0;background:rgba(3,4,7,.55);backdrop-filter:blur(3px);z-index:20"></div>' +
+  return '<div style="position:absolute;inset:0;background:rgba(3,7,19,.55);backdrop-filter:blur(3px);z-index:20"></div>' +
     '<div class="ds-glass" style="position:absolute;top:0;right:0;bottom:0;width:400px;z-index:21;display:flex;flex-direction:column;border-radius:0;border-right:0;border-top:0;border-bottom:0">' +
       '<div class="ds-between" style="padding:22px 24px 16px;flex:none">' +
         '<h3 class="ds-h1">' + title + '</h3>' +
@@ -63,11 +63,11 @@ function playerPanel(title, body, foot) {
 }
 
 function optRow(label, sub, on, badge) {
-  return '<button class="ds-row" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:11px 12px' + (on ? ';background:var(--ds-aqua-dim)' : '') + '">' +
+  return '<button class="ds-row" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:11px 12px' + (on ? ';background:var(--ds-amber-dim)' : '') + '">' +
     '<span class="ds-row__main"><span class="ds-row__title">' + label + '</span>' +
     (sub ? '<span class="ds-row__sub">' + sub + '</span>' : '') + '</span>' +
     (badge || '') +
-    (on ? '<span style="color:var(--ds-aqua);display:flex;margin-left:8px">' + ic('check', 19, 2.4) + '</span>' : '') + '</button>';
+    (on ? '<span style="color:var(--ds-amber);display:flex;margin-left:8px">' + ic('check', 19, 2.4) + '</span>' : '') + '</button>';
 }
 
 /* 11 — Video Player */
@@ -86,8 +86,8 @@ S.problem = function () {
        ['Проблема с субтитрами', 'Ошибки, тайминг, пропуски', 'cc'],
        ['Проблема с CC+', 'Нет описаний звука или они неверные', 'cc'],
        ['Другое', 'Опишу своими словами', 'more']].map(function (r, i) {
-        return '<button class="ds-row" data-go="' + (i >= 4 && i <= 5 ? 'report-cc' : 'problem') + '" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:12px' + (i >= 4 && i <= 5 ? ';border:1px solid var(--ds-aqua-edge)' : '') + '">' +
-          '<span class="ds-row__ico"' + (i >= 4 && i <= 5 ? ' style="color:var(--ds-aqua)"' : '') + '>' + ic(r[2], 19) + '</span>' +
+        return '<button class="ds-row" data-go="' + (i >= 4 && i <= 5 ? 'report-cc' : 'problem') + '" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:12px' + (i >= 4 && i <= 5 ? ';border:1px solid var(--ds-amber-edge)' : '') + '">' +
+          '<span class="ds-row__ico"' + (i >= 4 && i <= 5 ? ' style="color:var(--ds-amber)"' : '') + '>' + ic(r[2], 19) + '</span>' +
           '<span class="ds-row__main"><span class="ds-row__title">' + r[0] + '</span><span class="ds-row__sub">' + r[1] + '</span></span>' +
           '<span class="ds-row__chev">' + ic('chevR', 16) + '</span></button>';
       }).join('') + '</div>' +
@@ -123,7 +123,7 @@ S.ccSelect = function () {
     optRow('Français', 'Перевод реплик', 0, '<span class="ds-badge">SUB</span>') +
     '<div class="ds-divider" style="margin:20px 0"></div>' +
     '<button class="ds-row" data-go="cc-settings" style="border-radius:var(--ds-r-sm);border-bottom:0;padding:12px">' +
-      '<span class="ds-row__ico" style="color:var(--ds-aqua)">' + ic('settings', 19) + '</span>' +
+      '<span class="ds-row__ico" style="color:var(--ds-amber)">' + ic('settings', 19) + '</span>' +
       '<span class="ds-row__main"><span class="ds-row__title">Внешний вид субтитров</span>' +
       '<span class="ds-row__sub">Размер, шрифт, цвет, фон, положение</span></span>' +
       '<span class="ds-row__chev">' + ic('chevR', 16) + '</span></button>' +
@@ -141,11 +141,13 @@ S.ccSelect = function () {
 /* 14/15 — Subtitle appearance (CC+ settings) */
 S.ccSettings = function () {
   var swatches = ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E', '#000000'];
-  function swRow(name, sel) {
-    return '<div><p class="ds-label" style="margin-bottom:8px">' + name + '</p><div class="ds-wrap ds-g2">' +
+  function swRow(name, sel, group) {
+    return '<div><p class="ds-label" style="margin-bottom:8px">' + name + '</p>' +
+      '<div class="ds-wrap ds-g2" data-cc="' + group + '">' +
       swatches.map(function (c, i) {
-        return '<button class="ds-chip" style="width:40px;padding:0;justify-content:center' + (i === sel ? ';border-color:var(--ds-aqua);border-width:2px' : '') + '">' +
-          '<span style="width:17px;height:17px;border-radius:99px;background:' + c + ';border:1px solid rgba(255,255,255,.2)"></span></button>';
+        return '<button class="ds-chip" data-v="' + c + '" aria-pressed="' + (i === sel) + '"' +
+          ' aria-label="' + c + '" style="width:40px;padding:0;justify-content:center">' +
+          '<span style="width:17px;height:17px;border-radius:99px;background:' + c + ';border:1px solid rgba(255,255,255,.25)"></span></button>';
       }).join('') + '</div></div>';
   }
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
@@ -160,7 +162,7 @@ S.ccSettings = function () {
         '<div class="ds-row-f ds-g3" style="margin-top:16px">' +
           '<button class="ds-btn ds-btn--ghost" id="ccResetBtn">Сбросить по умолчанию</button>' +
           '<div class="ds-grow"></div>' +
-          '<button class="ds-btn ds-btn--aqua">Сохранить</button></div>' +
+          '<button class="ds-btn ds-btn--amber">Сохранить</button></div>' +
         '<div class="ds-strip" style="margin-top:20px">' +
           '<span class="ds-strip__label">Живой просмотр</span>' +
           '<p class="ds-cap" style="margin:0">Пример содержит имя говорящего и описание звука — так вы сразу видите, ' +
@@ -182,11 +184,11 @@ S.ccSettings = function () {
             [['Обычная', 500], ['Полужирная', 600], ['Жирная', 800]].map(function (o, i) {
               return '<button class="ds-chip" data-v="' + o[1] + '"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + o[0] + '</button>';
             }).join('') + '</div></div>' +
-        swRow('Цвет текста', 0) +
+        swRow('Цвет текста', 0, 'color') +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность текста</span>' +
           '<span class="ds-num ds-sm" id="ccTxtOpVal">100%</span></div>' +
           '<input class="ds-slider" type="range" min="40" max="100" value="100" id="ccTxtOp" aria-label="Непрозрачность текста"></div>' +
-        swRow('Цвет плашки', 5) +
+        swRow('Цвет плашки', 5, 'bg') +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность плашки</span>' +
           '<span class="ds-num ds-sm" id="ccBgVal">62%</span></div>' +
           '<input class="ds-slider" type="range" min="0" max="100" value="62" id="ccBg" aria-label="Непрозрачность плашки"></div>' +
@@ -229,7 +231,7 @@ S.reportCc = function () {
        ['Неверный говорящий', 'Указано не то имя'],
        ['Неверное описание звука', 'Описание не соответствует происходящему'],
        ['Другое', '']].map(function (r, i) {
-        return '<label class="ds-opt' + (i === 6 ? ' is-on' : '') + '" style="padding:10px 12px;border-radius:var(--ds-r-sm)' + (i === 6 ? ';background:var(--ds-aqua-dim)' : '') + '">' +
+        return '<label class="ds-opt' + (i === 6 ? ' is-on' : '') + '" style="padding:10px 12px;border-radius:var(--ds-r-sm)' + (i === 6 ? ';background:var(--ds-amber-dim)' : '') + '">' +
           '<span class="ds-opt__box ds-opt__box--radio"></span>' +
           '<span><span style="font-size:14px">' + r[0] + '</span>' +
           (r[1] ? '<span class="ds-row__sub" style="display:block">' + r[1] + '</span>' : '') + '</span></label>';
@@ -243,7 +245,7 @@ S.reportCc = function () {
           return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
             '<span class="ds-num" style="font-size:11.5px;color:var(--ds-ink-2)">' + r[1] + '</span></div>';
         }).join('') + '</div></div>',
-    '<button class="ds-btn ds-btn--aqua ds-btn--block" data-go="tickets">Отправить</button>'));
+    '<button class="ds-btn ds-btn--amber ds-btn--block" data-go="tickets">Отправить</button>'));
 };
 
 /* Download sheet on web */
@@ -251,7 +253,7 @@ S.downloadWeb = function () {
   var QUAL = [['360p', '450 MB', 0], ['480p', '780 MB', 0], ['720p HD', '1.4 GB', 0], ['1080p Full HD', '2.8 GB', 1], ['2K', '5.1 GB', 0], ['4K UHD', '8.7 GB', 0]];
   return '<div style="position:relative;min-height:900px">' +
     '<div style="filter:blur(3px);opacity:.4;pointer-events:none">' + S.movie() + '</div>' +
-    '<div style="position:absolute;inset:0;background:rgba(3,4,7,.7);display:grid;place-items:center;padding:40px">' +
+    '<div style="position:absolute;inset:0;background:rgba(3,7,19,.7);display:grid;place-items:center;padding:40px">' +
       '<div class="ds-modal" style="width:min(520px,100%)">' +
         '<div class="ds-between" style="padding:24px 26px 0"><h3 class="ds-h1">Скачать фильм</h3>' +
           '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" data-go="movie" aria-label="Закрыть">' + ic('x', 17) + '</button></div>' +
@@ -261,7 +263,7 @@ S.downloadWeb = function () {
             '<div><div class="ds-h3">Год тишины</div><div class="ds-cap">2025 · 2 ч 12 мин</div></div></div>' +
           '<p class="ds-label" style="margin-bottom:10px">Качество</p>' +
           '<div class="ds-stack ds-g1">' + QUAL.map(function (q) {
-            return '<label class="ds-opt' + (q[2] ? ' is-on' : '') + '" style="padding:12px;border-radius:var(--ds-r-sm);border:1px solid ' + (q[2] ? 'var(--ds-aqua-edge)' : 'var(--ds-line)') + (q[2] ? ';background:var(--ds-aqua-dim)' : '') + '">' +
+            return '<label class="ds-opt' + (q[2] ? ' is-on' : '') + '" style="padding:12px;border-radius:var(--ds-r-sm);border:1px solid ' + (q[2] ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + (q[2] ? ';background:var(--ds-amber-dim)' : '') + '">' +
               '<span class="ds-opt__box ds-opt__box--radio"></span>' +
               '<span class="ds-grow">' + q[0] + '</span>' +
               '<span class="ds-num ds-sm ds-mut2">' + q[1] + '</span></label>';
@@ -269,7 +271,7 @@ S.downloadWeb = function () {
           '<p class="ds-label" style="margin:20px 0 10px">Субтитры в загрузке</p>' +
           '<div class="ds-stack ds-g1">' +
             [['Русский CC+', 'Реплики, говорящий, звук', 1], ['Русский', 'Только реплики', 0], ['English CC', 'Dialogue and sound', 0], ['Без субтитров', '', 0]].map(function (s) {
-              return '<label class="ds-opt' + (s[2] ? ' is-on' : '') + '" style="padding:12px;border-radius:var(--ds-r-sm);border:1px solid ' + (s[2] ? 'var(--ds-aqua-edge)' : 'var(--ds-line)') + (s[2] ? ';background:var(--ds-aqua-dim)' : '') + '">' +
+              return '<label class="ds-opt' + (s[2] ? ' is-on' : '') + '" style="padding:12px;border-radius:var(--ds-r-sm);border:1px solid ' + (s[2] ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + (s[2] ? ';background:var(--ds-amber-dim)' : '') + '">' +
                 '<span class="ds-opt__box ds-opt__box--check"></span>' +
                 '<span class="ds-grow"><span style="font-size:14px">' + s[0] + '</span>' +
                 (s[1] ? '<span class="ds-row__sub" style="display:block">' + s[1] + '</span>' : '') + '</span></label>';
@@ -386,7 +388,7 @@ S.lists = function () {
 S.createList = function () {
   return '<div style="position:relative;min-height:900px">' +
     '<div style="filter:blur(3px);opacity:.4;pointer-events:none">' + S.lists() + '</div>' +
-    '<div style="position:absolute;inset:0;background:rgba(3,4,7,.7);display:grid;place-items:center;padding:40px">' +
+    '<div style="position:absolute;inset:0;background:rgba(3,7,19,.7);display:grid;place-items:center;padding:40px">' +
       '<div class="ds-modal" style="width:min(480px,100%)">' +
         '<div class="ds-between" style="padding:24px 26px 0"><h3 class="ds-h1">Новый список</h3>' +
           '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" data-go="lists" aria-label="Закрыть">' + ic('x', 17) + '</button></div>' +
@@ -414,7 +416,7 @@ S.listDetail = function () {
         [0, 1, 2, 3, 4, 5].map(function (k) {
           return '<div style="position:relative;overflow:hidden">' + art('Посмотреть с друзьями' + k, '', 'position:absolute;inset:0') + '</div>';
         }).join('') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 8%,rgba(6,7,10,.72))"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 8%,rgba(6,11,24,.72))"></div>' +
       '<div class="ds-container" style="position:relative;height:330px;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:28px">' +
         '<div class="ds-row-f ds-g2" style="margin-bottom:10px">' +
           '<span class="ds-badge">' + ic('lock', 9, 2.6) + ' Приватный список</span>' +

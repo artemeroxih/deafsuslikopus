@@ -13,7 +13,7 @@
   .ix__scrim {
     position: absolute; inset: 0; pointer-events: none;
     background:
-      radial-gradient(78% 62% at 24% 26%, rgba(6,7,10,.62), rgba(6,7,10,.97) 66%),
+      radial-gradient(78% 62% at 24% 26%, rgba(6,11,24,.62), rgba(6,11,24,.97) 66%),
       linear-gradient(to bottom, transparent 40%, var(--ds-void) 96%);
   }
 
@@ -27,7 +27,7 @@
   }
   .ix__card:hover { transform: translateY(-3px); border-color: var(--ds-line-strong); box-shadow: var(--ds-e3); }
   .ix__card__n {
-    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-gold);
+    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-blue);
   }
   .ix__thumb {
     position: relative; aspect-ratio: 16/9; border-radius: var(--ds-r-md);
@@ -55,12 +55,12 @@
     </p>
     <div class="ds-wrap ds-g2" style="margin-top:26px">
       <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
-      <span class="ds-badge ds-badge--lg ds-badge--gold">ВИП · 500 ₽ / месяц</span>
+      <span class="ds-badge ds-badge--lg ds-badge--blue">ВИП · 500 ₽ / месяц</span>
       <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
       <span class="ds-badge ds-badge--lg">108 экранов</span>
     </div>
 
-    <div class="ds-strip" style="margin-top:34px;max-width:600px;background:rgba(20,24,31,.76);backdrop-filter:blur(20px)">
+    <div class="ds-strip" style="margin-top:34px;max-width:600px;background:rgba(18,28,48,.76);backdrop-filter:blur(20px)">
       <span class="ds-strip__label">CC+</span>
       <div>
         <p class="ds-cue" style="text-align:left;font-size:15px;text-shadow:none;margin:0">
@@ -134,7 +134,7 @@
   $('ixCards').innerHTML = CARDS.map(function (c) {
     return '<a class="ix__card" href="' + c[1] + '">' +
       '<div class="ix__thumb">' + art(c[3], '', 'position:absolute;inset:0') +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,4,7,.86),rgba(3,4,7,.14))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.86),rgba(3,7,19,.14))"></div>' +
         '<div style="position:absolute;left:16px;bottom:14px">' +
           '<div class="ix__card__n">' + c[0] + '</div>' +
           '<div style="font-family:var(--ds-display);font-weight:700;font-size:20px;letter-spacing:-.03em;margin-top:4px">' + c[2] + '</div>' +
@@ -142,21 +142,21 @@
       '<p class="ds-sm">' + c[4] + '</p>' +
       '<div class="ds-wrap ds-g1" style="margin-top:14px">' +
         c[5].map(function (t) { return '<span class="ds-badge">' + t + '</span>'; }).join('') + '</div>' +
-      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-gold);font-weight:600;font-size:13.5px">' +
+      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-blue);font-weight:600;font-size:13.5px">' +
         'Открыть' + ic('chevR', 15) + '</div>' +
     '</a>';
   }).join('');
 
   var IDEAS = [
-    ['Два акцента, разделённых по смыслу', 'gold',
-     'Золото — всё, что запускает и продаёт. Аква — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
-    ['CC+ как продукт, а не настройка', 'aqua',
+    ['Два акцента, разделённых по смыслу', 'blue',
+     'Синий — всё, что запускает и продаёт. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
+    ['CC+ как продукт, а не настройка', 'amber',
      'Бейдж на карточках, кнопка первого уровня в плеере, отдельный фильтр, отдельный раздел профиля и живой редактор внешнего вида. От плеера до нужного языка — одно касание.'],
-    ['Замкнутая петля поддержки', 'gold',
+    ['Замкнутая петля поддержки', 'blue',
      'Кнопка «Проблема?» прикладывает фильм, тайм-код и номер реплики. Редактор открывает ровно этот момент, публикует правку — зрителю приходит «исправлено».']
   ];
   $('ixIdeas').innerHTML = IDEAS.map(function (i) {
-    var col = i[1] === 'aqua' ? 'var(--ds-aqua)' : 'var(--ds-gold)';
+    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-blue)';
     return '<div class="ds-card">' +
       '<span style="display:block;width:28px;height:3px;border-radius:2px;background:' + col + '"></span>' +
       '<h3 class="ds-h2" style="margin-top:14px">' + i[0] + '</h3>' +

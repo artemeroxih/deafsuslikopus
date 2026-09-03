@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <meta name="description" content="Дизайн-система deafsuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%23FFC24B%27/%3E%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%2306070A%27/%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%235B9BFF%27/%3E%3Cpath d=%27M24 13c-5.4 0-9.4 3.9-9.4 9.4v9.9c0 5.4 4 9.3 9.4 9.3s9.4-3.9 9.4-9.3v-9.9c0-5.5-4-9.4-9.4-9.4Zm-2.6 8.6c0-.9.9-1.4 1.7-1l7 4.4c.7.4.7 1.4 0 1.9l-7 4.3c-.8.5-1.7 0-1.7-.9v-8.7Z%27 fill=%27%23060B18%27/%3E%3C/svg%3E">
 <style>html{color-scheme:dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 </head>
 <body>
@@ -22,13 +22,13 @@
 
 :root {
   /* ---- Ground & surfaces (blue-biased graphite, never pure grey) ---- */
-  --ds-void:        #06070A;
-  --ds-sunken:      #030407;
-  --ds-panel:       #0D1016;
-  --ds-raised:      #14181F;
-  --ds-raised-2:    #1B2029;
-  --ds-raised-3:    #242A35;
-  --ds-scrim:       rgba(6, 7, 10, 0.72);
+  --ds-void:        #060B18;
+  --ds-sunken:      #030713;
+  --ds-panel:       #0C1424;
+  --ds-raised:      #121C30;
+  --ds-raised-2:    #1A2740;
+  --ds-raised-3:    #24344F;
+  --ds-scrim:       rgba(6, 11, 24, 0.72);
 
   /* ---- Hairlines ---- */
   --ds-line:        rgba(255, 255, 255, 0.07);
@@ -36,25 +36,25 @@
   --ds-line-strong: rgba(255, 255, 255, 0.20);
 
   /* ---- Ink ---- */
-  --ds-ink:         #F2F4F8;
-  --ds-ink-2:       #A8B0BF;
-  --ds-ink-3:       #6E7787;
-  --ds-ink-4:       #4A515E;
-  --ds-ink-inv:     #06070A;
+  --ds-ink:         #EEF3FB;
+  --ds-ink-2:       #A3AFC4;
+  --ds-ink-3:       #6B7893;
+  --ds-ink-4:       #47536B;
+  --ds-ink-inv:     #060B18;
 
-  /* ---- Suslik Gold — play, brand, commerce ---- */
-  --ds-gold:        #FFC24B;
-  --ds-gold-hi:     #FFD37B;
-  --ds-gold-lo:     #E0A430;
-  --ds-gold-dim:    rgba(255, 194, 75, 0.14);
-  --ds-gold-edge:   rgba(255, 194, 75, 0.34);
+  /* ---- Polar Blue — play, brand, commerce ---- */
+  --ds-blue:        #5B9BFF;
+  --ds-blue-hi:     #8CB9FF;
+  --ds-blue-lo:     #3A78E0;
+  --ds-blue-dim:    rgba(91, 155, 255, 0.15);
+  --ds-blue-edge:   rgba(91, 155, 255, 0.36);
 
-  /* ---- Signal Aqua — captions, CC, CC+, accessibility ---- */
-  --ds-aqua:        #5FE3D0;
-  --ds-aqua-hi:     #8FF0E2;
-  --ds-aqua-lo:     #38BFAC;
-  --ds-aqua-dim:    rgba(95, 227, 208, 0.13);
-  --ds-aqua-edge:   rgba(95, 227, 208, 0.32);
+  /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
+  --ds-amber:        #FFC24B;
+  --ds-amber-hi:     #FFD886;
+  --ds-amber-lo:     #E0A430;
+  --ds-amber-dim:    rgba(255, 194, 75, 0.14);
+  --ds-amber-edge:   rgba(255, 194, 75, 0.34);
 
   /* ---- Semantic (separate from both accents) ---- */
   --ds-ok:          #3DDC97;
@@ -63,14 +63,14 @@
   --ds-warn-dim:    rgba(255, 159, 69, 0.14);
   --ds-err:         #FF5C5C;
   --ds-err-dim:     rgba(255, 92, 92, 0.14);
-  --ds-info:        #5FA8FF;
-  --ds-info-dim:    rgba(95, 168, 255, 0.14);
+  --ds-info:        #9B8CFF;
+  --ds-info-dim:    rgba(155, 140, 255, 0.15);
 
   /* ---- Subscription: one plan for everyone ---- */
-  --ds-vip:         #FFC24B;
-  --ds-vip-edge:    rgba(255, 194, 75, 0.34);
+  --ds-vip:         #5B9BFF;
+  --ds-vip-edge:    rgba(91, 155, 255, 0.36);
   /* Editorial collection accent — content, not a paid tier */
-  --ds-coll:        #C89BFF;
+  --ds-coll:        #E86FA9;
 
   /* ---- Type ---- */
   --ds-display: "Unbounded", "Onest", system-ui, -apple-system, sans-serif;
@@ -101,8 +101,8 @@
   --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
   --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
-  --ds-glow-gold: 0 0 0 1px var(--ds-gold-edge), 0 10px 40px -12px rgba(255,194,75,.42);
-  --ds-glow-aqua: 0 0 0 1px var(--ds-aqua-edge), 0 10px 40px -12px rgba(95,227,208,.36);
+  --ds-glow-blue: 0 0 0 1px var(--ds-blue-edge), 0 10px 40px -12px rgba(91,155,255,.45);
+  --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
 
   /* ---- Motion ---- */
   --ds-m-micro: 120ms;
@@ -143,12 +143,12 @@ body {
 :where(button, input, select, textarea) { font: inherit; color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--ds-aqua);
+  outline: 2px solid var(--ds-amber);
   outline-offset: 2px;
   border-radius: var(--ds-r-xs);
 }
 
-::selection { background: var(--ds-gold); color: var(--ds-ink-inv); }
+::selection { background: var(--ds-blue); color: var(--ds-ink-inv); }
 
 /* ---------- Scrollbars ---------- */
 .ds-scroll { scrollbar-width: thin; scrollbar-color: var(--ds-raised-3) transparent; }
@@ -218,11 +218,11 @@ body {
 .ds-btn:active { transform: translateY(0) scale(.985); }
 .ds-btn svg { flex: none; }
 
-.ds-btn--primary { --_bg: var(--ds-gold); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
-.ds-btn--primary:hover { --_bg: var(--ds-gold-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+.ds-btn--primary { --_bg: var(--ds-blue); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--primary:hover { --_bg: var(--ds-blue-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
 
-.ds-btn--aqua { --_bg: var(--ds-aqua); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
-.ds-btn--aqua:hover { --_bg: var(--ds-aqua-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
+.ds-btn--amber { --_bg: var(--ds-amber); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
+.ds-btn--amber:hover { --_bg: var(--ds-amber-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
 
 .ds-btn--secondary { --_bg: rgba(255,255,255,.07); --_bd: var(--ds-line-mid); }
 .ds-btn--secondary:hover { --_bg: rgba(255,255,255,.12); --_bd: var(--ds-line-strong); }
@@ -254,7 +254,7 @@ body {
 .ds-iconbtn--sm { width: 34px; height: 34px; }
 .ds-iconbtn--bare { background: transparent; border-color: transparent; color: var(--ds-ink-2); }
 .ds-iconbtn--bare:hover { background: rgba(255,255,255,.08); color: var(--ds-ink); }
-.ds-iconbtn--on { background: var(--ds-aqua-dim); border-color: var(--ds-aqua-edge); color: var(--ds-aqua); }
+.ds-iconbtn--on { background: var(--ds-amber-dim); border-color: var(--ds-amber-edge); color: var(--ds-amber); }
 
 /* ============================================================
    BADGES  — never colour-only: each carries a glyph or letters
@@ -269,13 +269,13 @@ body {
   border: 1px solid var(--ds-line-mid);
   font-family: var(--ds-ui);
 }
-.ds-badge--cc      { background: transparent; color: var(--ds-aqua); border-color: var(--ds-aqua-edge); }
-.ds-badge--ccplus  { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-badge--cc      { background: transparent; color: var(--ds-amber); border-color: var(--ds-amber-edge); }
+.ds-badge--ccplus  { background: var(--ds-amber); color: var(--ds-ink-inv); border-color: transparent; }
 .ds-badge--4k      { background: rgba(255,255,255,.14); color: #fff; border-color: var(--ds-line-strong); letter-spacing: .04em; }
 .ds-badge--hd      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
 .ds-badge--offline { background: rgba(255,255,255,.08); color: var(--ds-ink); border-color: var(--ds-line-mid); }
 .ds-badge--ad      { background: transparent; color: var(--ds-ink-2); border-color: var(--ds-line-mid); }
-.ds-badge--gold    { background: var(--ds-gold-dim); color: var(--ds-gold); border-color: var(--ds-gold-edge); }
+.ds-badge--blue    { background: var(--ds-blue-dim); color: var(--ds-blue); border-color: var(--ds-blue-edge); }
 .ds-badge--ok      { background: var(--ds-ok-dim); color: var(--ds-ok); border-color: rgba(61,220,151,.3); }
 .ds-badge--warn    { background: var(--ds-warn-dim); color: var(--ds-warn); border-color: rgba(255,159,69,.3); }
 .ds-badge--err     { background: var(--ds-err-dim); color: var(--ds-err); border-color: rgba(255,92,92,.3); }
@@ -298,7 +298,7 @@ body {
 .ds-chip[aria-pressed="true"], .ds-chip.is-on {
   background: var(--ds-ink); color: var(--ds-ink-inv); border-color: transparent; font-weight: 600;
 }
-.ds-chip--aqua[aria-pressed="true"], .ds-chip--aqua.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); }
+.ds-chip--amber[aria-pressed="true"], .ds-chip--amber.is-on { background: var(--ds-amber); color: var(--ds-ink-inv); }
 
 /* ============================================================
    INPUTS
@@ -315,7 +315,7 @@ body {
 .ds-textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
 .ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-4); }
 .ds-input:focus, .ds-select:focus, .ds-textarea:focus {
-  border-color: var(--ds-aqua-edge); background: var(--ds-raised-2);
+  border-color: var(--ds-amber-edge); background: var(--ds-raised-2);
   box-shadow: 0 0 0 3px rgba(95,227,208,.13); outline: none;
 }
 .ds-input[aria-invalid="true"], .ds-textarea[aria-invalid="true"] {
@@ -340,7 +340,7 @@ body {
   border-radius: var(--ds-r-pill);
   transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease);
 }
-.ds-search:focus-within { border-color: var(--ds-aqua-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
+.ds-search:focus-within { border-color: var(--ds-amber-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
 .ds-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: var(--ds-t-body); }
 .ds-search input::placeholder { color: var(--ds-ink-4); }
 
@@ -358,9 +358,9 @@ body {
   transition: transform var(--ds-m-base) var(--ds-ease), background var(--ds-m-base) var(--ds-ease);
   pointer-events: none;
 }
-.ds-switch input:checked ~ .ds-switch__track { background: var(--ds-aqua); border-color: transparent; }
+.ds-switch input:checked ~ .ds-switch__track { background: var(--ds-amber); border-color: transparent; }
 .ds-switch input:checked ~ .ds-switch__thumb { transform: translateX(19px); background: var(--ds-ink-inv); }
-.ds-switch input:focus-visible ~ .ds-switch__track { outline: 2px solid var(--ds-aqua); outline-offset: 2px; }
+.ds-switch input:focus-visible ~ .ds-switch__track { outline: 2px solid var(--ds-amber); outline-offset: 2px; }
 
 /* Radio & checkbox */
 .ds-opt { display: flex; align-items: center; gap: 11px; padding: 11px 0; cursor: pointer; min-height: 44px; }
@@ -372,7 +372,7 @@ body {
 .ds-opt__box--check { border-radius: 6px; }
 .ds-opt__box::after { content: ""; opacity: 0; transition: opacity var(--ds-m-micro) var(--ds-ease); }
 .ds-opt__box--radio::after { width: 9px; height: 9px; border-radius: 99px; background: var(--ds-ink-inv); }
-.ds-opt.is-on .ds-opt__box { border-color: var(--ds-aqua); background: var(--ds-aqua); }
+.ds-opt.is-on .ds-opt__box { border-color: var(--ds-amber); background: var(--ds-amber); }
 .ds-opt.is-on .ds-opt__box::after { opacity: 1; }
 .ds-opt__box--check::after {
   width: 11px; height: 11px;
@@ -397,7 +397,7 @@ body {
 }
 .ds-card--flush { padding: 0; overflow: hidden; }
 .ds-glass {
-  background: rgba(20, 24, 31, .72);
+  background: rgba(18, 28, 48, .72);
   backdrop-filter: blur(24px) saturate(150%);
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   border: 1px solid var(--ds-line-mid);
@@ -435,7 +435,7 @@ body {
 .ds-tab[aria-selected="true"] { color: var(--ds-ink); }
 .ds-tab[aria-selected="true"]::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: var(--ds-gold); border-radius: 2px;
+  background: var(--ds-blue); border-radius: 2px;
 }
 
 /* Segmented */
@@ -449,15 +449,15 @@ body {
 
 /* Progress */
 .ds-prog { height: 3px; background: rgba(255,255,255,.16); border-radius: 99px; overflow: hidden; }
-.ds-prog__bar { height: 100%; background: var(--ds-gold); border-radius: 99px; }
-.ds-prog--aqua .ds-prog__bar { background: var(--ds-aqua); }
+.ds-prog__bar { height: 100%; background: var(--ds-blue); border-radius: 99px; }
+.ds-prog--amber .ds-prog__bar { background: var(--ds-amber); }
 .ds-prog--thick { height: 6px; }
 
 /* Toast */
 .ds-toast {
   display: flex; align-items: center; gap: 12px;
   padding: 13px 16px; border-radius: var(--ds-r-md);
-  background: rgba(27,32,41,.92); backdrop-filter: blur(20px);
+  background: rgba(26,39,64,.92); backdrop-filter: blur(20px);
   border: 1px solid var(--ds-line-mid); box-shadow: var(--ds-e3);
   font-size: var(--ds-t-sm); max-width: 420px;
 }
@@ -488,7 +488,7 @@ body {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
 }
-.ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,4,7,.92) 0%, rgba(3,4,7,.35) 42%, transparent 72%); }
+.ds-art__vig { position: absolute; inset: 0; background: linear-gradient(to top, rgba(3,7,19,.92) 0%, rgba(3,7,19,.35) 42%, transparent 72%); }
 .ds-art__title {
   position: absolute; left: 10px; right: 10px; bottom: 10px;
   font-family: var(--ds-display); font-weight: 700; letter-spacing: -0.03em;
@@ -510,7 +510,7 @@ body {
 .ds-poster__badges { position: absolute; top: 8px; left: 8px; display: flex; gap: 4px; flex-wrap: wrap; z-index: 2; }
 .ds-poster__hover {
   position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 14px;
-  background: linear-gradient(to top, rgba(3,4,7,.94), rgba(3,4,7,.2) 60%, transparent);
+  background: linear-gradient(to top, rgba(3,7,19,.94), rgba(3,7,19,.2) 60%, transparent);
   opacity: 0; transition: opacity var(--ds-m-base) var(--ds-ease); z-index: 3;
 }
 .ds-poster:hover .ds-poster__hover { opacity: 1; }
@@ -525,9 +525,9 @@ body {
 .ds-cw__art { aspect-ratio: 16/9; position: relative; }
 .ds-cw__play {
   position: absolute; inset: 0; display: grid; place-items: center;
-  background: rgba(3,4,7,.28); transition: background var(--ds-m-base) var(--ds-ease);
+  background: rgba(3,7,19,.28); transition: background var(--ds-m-base) var(--ds-ease);
 }
-.ds-cw:hover .ds-cw__play { background: rgba(3,4,7,.5); }
+.ds-cw:hover .ds-cw__play { background: rgba(3,7,19,.5); }
 .ds-cw__playbtn {
   width: 48px; height: 48px; border-radius: 99px; display: grid; place-items: center;
   background: rgba(255,255,255,.94); color: var(--ds-ink-inv); box-shadow: var(--ds-e2);
@@ -560,8 +560,8 @@ body {
   color: #fff; text-align: center;
   text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
 }
-.ds-cue__speaker { color: var(--ds-aqua); font-weight: 700; letter-spacing: .04em; display: block; }
-.ds-cue__sound { color: var(--ds-aqua-hi); font-style: italic; font-weight: 500; display: block; }
+.ds-cue__speaker { color: var(--cue-color, var(--ds-amber)); font-weight: 800; letter-spacing: .06em; display: block; }
+.ds-cue__sound { color: var(--cue-color, var(--ds-amber-hi)); font-style: italic; font-weight: 500; opacity: .88; display: block; }
 .ds-cuebox {
   display: inline-block; padding: 7px 15px; border-radius: 8px;
   background: rgba(0,0,0,.62); backdrop-filter: blur(3px);
@@ -574,11 +574,11 @@ body {
 .ds-strip {
   display: flex; align-items: flex-start; gap: 14px;
   padding: 16px 20px; border-radius: var(--ds-r-md);
-  background: var(--ds-aqua-dim); border-left: 3px solid var(--ds-aqua);
+  background: var(--ds-amber-dim); border-left: 3px solid var(--ds-amber);
 }
 .ds-strip__label {
   font-family: var(--ds-mono); font-size: 10px; font-weight: 700; letter-spacing: .1em;
-  color: var(--ds-aqua); text-transform: uppercase; flex: none; padding-top: 3px;
+  color: var(--ds-amber); text-transform: uppercase; flex: none; padding-top: 3px;
 }
 
 /* ============================================================
@@ -587,7 +587,7 @@ body {
 .ds-player { position: relative; background: #000; overflow: hidden; }
 .ds-player__stage { position: absolute; inset: 0; }
 .ds-player__ui { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between;
-  background: linear-gradient(to bottom, rgba(3,4,7,.8) 0%, transparent 22%, transparent 55%, rgba(3,4,7,.88) 100%); }
+  background: linear-gradient(to bottom, rgba(3,7,19,.8) 0%, transparent 22%, transparent 55%, rgba(3,7,19,.88) 100%); }
 .ds-player__top { display: flex; align-items: center; gap: 12px; padding: 18px 22px; }
 .ds-player__bottom { padding: 0 22px 18px; display: flex; flex-direction: column; gap: 12px; }
 .ds-player__center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: 38px; }
@@ -595,10 +595,10 @@ body {
 .ds-scrub { position: relative; height: 22px; display: flex; align-items: center; cursor: pointer; }
 .ds-scrub__track { position: absolute; left: 0; right: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.24); }
 .ds-scrub__buf   { position: absolute; left: 0; height: 4px; border-radius: 99px; background: rgba(255,255,255,.38); }
-.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-gold); }
-.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-gold);
+.ds-scrub__fill  { position: absolute; left: 0; height: 4px; border-radius: 99px; background: var(--ds-blue); }
+.ds-scrub__knob  { position: absolute; width: 14px; height: 14px; border-radius: 99px; background: var(--ds-blue);
   box-shadow: 0 0 0 4px rgba(255,194,75,.24), var(--ds-e2); transform: translateX(-50%); }
-.ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,7,10,.7); border-radius: 1px; }
+.ds-scrub__chap  { position: absolute; top: 50%; width: 2px; height: 10px; transform: translate(-50%,-50%); background: rgba(6,11,24,.7); border-radius: 1px; }
 
 .ds-pbtn {
   display: grid; place-items: center; border-radius: 99px; cursor: pointer;
@@ -612,12 +612,12 @@ body {
 .ds-pbtn--skip { width: 58px; height: 58px; }
 .ds-pbtn--sm { width: 40px; height: 40px; background: transparent; border-color: transparent; }
 .ds-pbtn--cc { padding: 0 12px; height: 40px; width: auto; gap: 6px; font-size: 12px; font-weight: 700; letter-spacing: .06em; }
-.ds-pbtn--cc.is-on { background: var(--ds-aqua); color: var(--ds-ink-inv); border-color: transparent; }
+.ds-pbtn--cc.is-on { background: var(--ds-amber); color: var(--ds-ink-inv); border-color: transparent; }
 
 /* ============================================================
    SHEETS / MODALS
    ============================================================ */
-.ds-scrim-l { position: absolute; inset: 0; background: rgba(3,4,7,.72); backdrop-filter: blur(6px); }
+.ds-scrim-l { position: absolute; inset: 0; background: rgba(3,7,19,.72); backdrop-filter: blur(6px); }
 .ds-sheet {
   position: absolute; left: 0; right: 0; bottom: 0;
   background: var(--ds-panel); border-top: 1px solid var(--ds-line-mid);
@@ -640,7 +640,7 @@ body {
    ============================================================ */
 .ds-tabbar {
   display: flex; align-items: stretch;
-  background: rgba(13,16,22,.88); backdrop-filter: blur(28px) saturate(160%);
+  background: rgba(12,20,36,.88); backdrop-filter: blur(28px) saturate(160%);
   border-top: 1px solid var(--ds-line); flex: none;
   padding-bottom: env(safe-area-inset-bottom);
 }
@@ -651,14 +651,14 @@ body {
   transition: color var(--ds-m-micro) var(--ds-ease);
 }
 .ds-tabbar__item.is-on { color: var(--ds-ink); }
-.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-gold); }
+.ds-tabbar__item.is-on .ds-tabbar__ico { color: var(--ds-blue); }
 .ds-tabbar__ico { display: flex; position: relative; }
-.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-gold); border: 2px solid var(--ds-panel); }
+.ds-tabbar__dot { position: absolute; top: -2px; right: -5px; width: 7px; height: 7px; border-radius: 99px; background: var(--ds-blue); border: 2px solid var(--ds-panel); }
 
 .ds-topbar {
   display: flex; align-items: center; gap: 18px;
   height: 68px; padding: 0 28px;
-  background: rgba(6,7,10,.78); backdrop-filter: blur(26px) saturate(160%);
+  background: rgba(6,11,24,.78); backdrop-filter: blur(26px) saturate(160%);
   border-bottom: 1px solid var(--ds-line);
   position: sticky; top: 0; z-index: 50;
 }
@@ -732,7 +732,7 @@ body {
 .ds-g1 { gap: 4px; } .ds-g2 { gap: 8px; } .ds-g3 { gap: 12px; } .ds-g4 { gap: 16px; }
 .ds-g5 { gap: 20px; } .ds-g6 { gap: 24px; } .ds-g8 { gap: 32px; } .ds-g10 { gap: 40px; } .ds-g12 { gap: 48px; }
 .ds-mut { color: var(--ds-ink-2); } .ds-mut2 { color: var(--ds-ink-3); }
-.ds-gold-t { color: var(--ds-gold); } .ds-aqua-t { color: var(--ds-aqua); }
+.ds-blue-t { color: var(--ds-blue); } .ds-amber-t { color: var(--ds-amber); }
 .ds-center { text-align: center; }
 .ds-container { width: 100%; max-width: 1440px; margin: 0 auto; padding: 0 32px; }
 .ds-sr {
@@ -750,16 +750,16 @@ body {
 /* ---------- Brand mark ----------
    A squircle token. Inside, an upright suslik silhouette knocked
    out in negative space; its chest carries the play triangle.
-   Reads at 16px, works on gold or on graphite.                */
+   Reads at 16px, works on blue or on graphite.                */
 function dsLogoMark(size, opts) {
   opts = opts || {};
   var fill = opts.fill || 'url(#dsg)';
-  var cut  = opts.cut  || '#06070A';
+  var cut  = opts.cut  || '#060B18';
   var id   = 'dsg' + Math.random().toString(36).slice(2, 7);
   return '' +
   '<svg class="ds-logo__mark" width="' + size + '" height="' + size + '" viewBox="0 0 48 48" fill="none" aria-hidden="true">' +
     '<defs><linearGradient id="' + id + '" x1="6" y1="4" x2="42" y2="44" gradientUnits="userSpaceOnUse">' +
-      '<stop stop-color="#FFD37B"/><stop offset=".55" stop-color="#FFC24B"/><stop offset="1" stop-color="#E0A430"/>' +
+      '<stop stop-color="#8CB9FF"/><stop offset=".55" stop-color="#5B9BFF"/><stop offset="1" stop-color="#3A78E0"/>' +
     '</linearGradient></defs>' +
     '<path d="M24 1c9.6 0 14.4 0 18 3.1C45.3 7.5 47 12.9 47 24s-1.7 16.5-5 19.9C38.4 47 33.6 47 24 47S9.6 47 6 43.9C2.7 40.5 1 35.1 1 24S2.7 7.5 6 4.1C9.6 1 14.4 1 24 1Z" fill="' + (opts.flat ? opts.flat : 'url(#' + id + ')') + '"/>' +
     /* suslik: ears */
@@ -881,12 +881,12 @@ function dsHash(s) {
   return (h >>> 0);
 }
 var DS_PAL = [
-  ['#1B2A4A', '#3E5C8C', '#0A1020'], ['#4A1B2A', '#8C3E52', '#20080E'],
-  ['#1B4A3E', '#3E8C74', '#08201A'], ['#4A3A1B', '#8C6E3E', '#201808'],
-  ['#2A1B4A', '#5C3E8C', '#100820'], ['#4A2A1B', '#8C523E', '#200E08'],
-  ['#1B3A4A', '#3E748C', '#081820'], ['#3A4A1B', '#748C3E', '#182008'],
-  ['#4A1B4A', '#8C3E8C', '#200820'], ['#12232E', '#2E5468', '#060E14'],
-  ['#2E1212', '#68302E', '#140606'], ['#20304A', '#48688C', '#0C1220']
+  ['#1B2E5A', '#3E63A8', '#070D1E'], ['#16324F', '#2F6C96', '#060F1C'],
+  ['#232A5E', '#4A54B0', '#0A0C22'], ['#12384A', '#2A7590', '#061520'],
+  ['#2E2260', '#5B47B8', '#0C0A24'], ['#1A4A55', '#357F92', '#07181C'],
+  ['#1E2649', '#455495', '#080C1C'], ['#0F3A44', '#25798A', '#05161A'],
+  ['#3A2160', '#6E44B0', '#100A22'], ['#142744', '#33588F', '#060E1E'],
+  ['#4A2440', '#96487E', '#1A0A18'], ['#4A3520', '#96693A', '#1A1006']
 ];
 function dsArt(seed, opts) {
   opts = opts || {};
@@ -951,7 +951,7 @@ function badges(m, opts) {
   return out.join('');
 }
 function stars(r) {
-  return '<span class="ds-row-f ds-g1" style="color:var(--ds-gold)">' + ic('star', 11) +
+  return '<span class="ds-row-f ds-g1" style="color:var(--ds-blue)">' + ic('star', 11) +
     '<span class="ds-num" style="color:var(--ds-ink-2);font-size:11px">' + r.toFixed(1) + '</span></span>';
 }
 
@@ -999,7 +999,7 @@ var VIP = PLANS.vip;
 
   .sec { padding: 56px 44px; border-bottom: 1px solid var(--ds-line); max-width: 1180px; }
   .sec__head { margin-bottom: 30px; }
-  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-gold); letter-spacing: .1em; }
+  .sec__n { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-blue); letter-spacing: .1em; }
 
   .demo { background: var(--ds-panel); border: 1px solid var(--ds-line); border-radius: var(--ds-r-lg); padding: 26px; }
   .demo--grid { display: grid; gap: 18px; }
@@ -1033,7 +1033,7 @@ var VIP = PLANS.vip;
 
   .spec { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-ink-3); }
   code.k { font-family: var(--ds-mono); font-size: 11.5px; background: var(--ds-raised);
-    border: 1px solid var(--ds-line); border-radius: 5px; padding: 1.5px 6px; color: var(--ds-aqua); }
+    border: 1px solid var(--ds-line); border-radius: 5px; padding: 1.5px 6px; color: var(--ds-amber); }
 
   @media (max-width: 900px) {
     .sy { grid-template-columns: 1fr; }
@@ -1091,7 +1091,7 @@ var VIP = PLANS.vip;
           </div>
         </div>
         <div class="ds-wrap ds-g2" style="margin-top:26px">
-          <span class="ds-badge ds-badge--lg ds-badge--gold">Тёмная тема — единственная</span>
+          <span class="ds-badge ds-badge--lg ds-badge--blue">Тёмная тема — единственная</span>
           <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
           <span class="ds-badge ds-badge--lg ds-badge--cc">WCAG 2.2 AA</span>
         </div>
@@ -1161,7 +1161,7 @@ var VIP = PLANS.vip;
           <p class="lbl">Охранное поле и фоны</p>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
             <div style="background:var(--ds-void);border:1px solid var(--ds-line);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgA"></div>
-            <div style="background:var(--ds-gold);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
+            <div style="background:var(--ds-blue);border-radius:var(--ds-r-md);padding:22px;display:grid;place-items:center" id="lgB"></div>
           </div>
           <p class="ds-cap" style="margin-top:12px">Охранное поле — половина высоты знака со всех сторон. Знак не растягивается, не поворачивается,
           не перекрашивается вне трёх утверждённых вариантов.</p>
@@ -1175,8 +1175,8 @@ var VIP = PLANS.vip;
         <p class="sec__n">03</p>
         <h2 class="ds-d2" style="margin-top:6px">Цвет</h2>
         <p class="ds-body" style="margin-top:10px">
-          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Золото — всё, что запускает и продаёт.
-          Аква — всё, что читается: субтитры, CC, CC+, доступность. Пользователь узнаёт назначение кнопки до того, как прочитал её.
+          Два акцента, разделённых <em>по смыслу</em>, а не по настроению. Синий — всё, что запускает и продаёт.
+          Янтарь — всё, что читается: субтитры, CC, CC+, доступность. Тёплый акцент на холодном фоне — текст всегда виден первым.
         </p>
       </div>
 
@@ -1196,7 +1196,7 @@ var VIP = PLANS.vip;
       <div class="grid2" id="swPlan"></div>
 
       <div class="demo" style="margin-top:26px">
-        <p class="lbl">Контраст на фоне <span class="spec">#06070A</span></p>
+        <p class="lbl">Контраст на фоне <span class="spec">#060B18</span></p>
         <div id="contrast" style="display:grid;gap:9px"></div>
       </div>
     </section>
@@ -1287,7 +1287,7 @@ var VIP = PLANS.vip;
       <div class="sec__head">
         <p class="sec__n">07</p>
         <h2 class="ds-d2" style="margin-top:6px">Кнопки</h2>
-        <p class="ds-body" style="margin-top:10px">Одна золотая кнопка на экран. Аква-кнопка появляется только там, где действие связано с субтитрами.</p>
+        <p class="ds-body" style="margin-top:10px">Одна синяя кнопка на экран. Янтарная кнопка появляется только там, где действие связано с субтитрами.</p>
       </div>
       <div class="demo demo--grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
         <div>
@@ -1302,7 +1302,7 @@ var VIP = PLANS.vip;
         <div>
           <p class="lbl">Смысловые</p>
           <div class="ds-wrap ds-g3" style="align-items:center">
-            <button class="ds-btn ds-btn--aqua">Включить CC+</button>
+            <button class="ds-btn ds-btn--amber">Включить CC+</button>
             <button class="ds-btn ds-btn--danger">Удалить загрузку</button>
             <button class="ds-btn ds-btn--secondary" disabled>Недоступно</button>
           </div>
@@ -1409,7 +1409,7 @@ var VIP = PLANS.vip;
             <span class="ds-badge ds-badge--warn">Ожидает</span>
             <span class="ds-badge ds-badge--err">Ошибка</span>
             <span class="ds-badge ds-badge--info">В работе</span>
-            <span class="ds-badge ds-badge--gold">Premium</span>
+            <span class="ds-badge ds-badge--blue">Premium</span>
             <span class="ds-badge">Черновик</span>
           </div>
           <p class="lbl" style="margin-top:26px">Чипы фильтров</p>
@@ -1716,40 +1716,41 @@ var VIP = PLANS.vip;
       '<div class="sw__hex">' + hex + '</div><div class="sw__use">' + use + '</div></div></div>';
   }
   set('swAccent',
-    swatch('Suslik Gold', '#FFC24B', 'Основное действие, бренд, «Смотреть», подписки, прогресс просмотра') +
-    swatch('Gold Hover', '#FFD37B', 'Наведение и нажатие на золотую кнопку') +
-    swatch('Signal Aqua', '#5FE3D0', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
-    swatch('Aqua Hover', '#8FF0E2', 'Наведение на аква-элементы, описания звуков в CC+'));
+    swatch('Полярный синий', '#5B9BFF', 'Основное действие, бренд, «Смотреть», подписка, прогресс просмотра') +
+    swatch('Синий · наведение', '#8CB9FF', 'Наведение и нажатие на основную кнопку') +
+    swatch('Сигнальный янтарь', '#FFC24B', 'Субтитры, CC, CC+, доступность, фокус, имена говорящих') +
+    swatch('Янтарь · наведение', '#FFD886', 'Наведение на янтарные элементы, описания звуков в CC+'));
   set('swSurface',
-    swatch('Void', '#06070A', 'Основной фон приложения') +
-    swatch('Sunken', '#030407', 'Плеер, боковые панели, утопленные области') +
-    swatch('Panel', '#0D1016', 'Карточки, панели, шторки') +
-    swatch('Raised', '#14181F', 'Поля ввода, невыбранные состояния') +
-    swatch('Raised 2', '#1B2029', 'Вторичные кнопки, активные поля') +
-    swatch('Raised 3', '#242A35', 'Ползунки, дорожки, разделители блоков'));
+    swatch('Void', '#060B18', 'Основной фон приложения') +
+    swatch('Sunken', '#030713', 'Плеер, боковые панели, утопленные области') +
+    swatch('Panel', '#0C1424', 'Карточки, панели, шторки') +
+    swatch('Raised', '#121C30', 'Поля ввода, невыбранные состояния') +
+    swatch('Raised 2', '#1A2740', 'Вторичные кнопки, активные поля') +
+    swatch('Raised 3', '#24344F', 'Ползунки, дорожки, разделители блоков'));
   set('swInk',
-    swatch('Ink', '#F2F4F8', 'Заголовки и основной текст — 15.8:1') +
-    swatch('Ink 2', '#A8B0BF', 'Вторичный текст, описания — 7.6:1') +
-    swatch('Ink 3', '#6E7787', 'Подписи, метаданные — 3.9:1, только для крупного') +
-    swatch('Ink 4', '#4A515E', 'Плейсхолдеры и выключенные элементы'));
+    swatch('Ink', '#EEF3FB', 'Заголовки и основной текст — 17.6:1') +
+    swatch('Ink 2', '#A3AFC4', 'Вторичный текст, описания — 8.9:1') +
+    swatch('Ink 3', '#6B7893', 'Подписи, метаданные — 4.4:1, только для крупного') +
+    swatch('Ink 4', '#47536B', 'Плейсхолдеры и выключенные элементы'));
   set('swSem',
     swatch('Success', '#3DDC97', 'Оплачено, загружено, подписка активна') +
     swatch('Warning', '#FF9F45', 'Истекает срок, мало места, требует внимания') +
     swatch('Error', '#FF5C5C', 'Платёж отклонён, загрузка не удалась, видео недоступно') +
-    swatch('Info', '#5FA8FF', 'Обращение в работе, нейтральные уведомления'));
+    swatch('Info', '#9B8CFF', 'Обращение в работе. Уведён в фиолетовый, чтобы не сливаться с основным синим'));
   set('swPlan',
-    swatch('Подписка ВИП', '#FFC24B', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
-    swatch('Коллекция', '#C89BFF', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
+    swatch('Подписка ВИП', '#5B9BFF', '500 ₽ / месяц — единственный тариф, поэтому берёт основной акцент') +
+    swatch('Коллекция', '#E86FA9', 'Редакционные подборки: «Реальные события», «Фильмы на вечер». Контент, а не платный уровень'));
 
   var CONTRAST = [
-    ['#F2F4F8', 'Основной текст', '15.8:1', 'AAA'],
-    ['#A8B0BF', 'Вторичный текст', '7.6:1', 'AAA'],
-    ['#FFC24B', 'Suslik Gold', '11.4:1', 'AAA'],
-    ['#5FE3D0', 'Signal Aqua', '11.9:1', 'AAA'],
-    ['#3DDC97', 'Success', '10.3:1', 'AAA'],
-    ['#FF9F45', 'Warning', '8.1:1', 'AAA'],
-    ['#FF5C5C', 'Error', '5.4:1', 'AA'],
-    ['#6E7787', 'Ink 3 — только ≥18px', '3.9:1', 'AA Large']
+    ['#EEF3FB', 'Основной текст', '17.6:1', 'AAA'],
+    ['#A3AFC4', 'Вторичный текст', '8.9:1', 'AAA'],
+    ['#FFC24B', 'Сигнальный янтарь', '12.2:1', 'AAA'],
+    ['#5B9BFF', 'Полярный синий', '7.1:1', 'AAA'],
+    ['#9B8CFF', 'Info', '7.1:1', 'AAA'],
+    ['#3DDC97', 'Success', '11.1:1', 'AAA'],
+    ['#FF9F45', 'Warning', '9.6:1', 'AAA'],
+    ['#FF5C5C', 'Error', '6.5:1', 'AA'],
+    ['#6B7893', 'Ink 3 — только ≥18px', '4.4:1', 'AA Large']
   ];
   set('contrast', CONTRAST.map(function (c) {
     return '<div class="ds-between" style="padding:8px 12px;background:var(--ds-void);border:1px solid var(--ds-line);border-radius:8px">' +
@@ -1761,7 +1762,7 @@ var VIP = PLANS.vip;
   /* ---- space / radius / elevation ---- */
   set('spaceScale', [4, 8, 12, 16, 20, 24, 32, 40, 48, 64, 80, 96].map(function (n) {
     return '<div class="ds-row-f ds-g4"><span class="spec" style="width:42px">' + n + '</span>' +
-      '<div style="height:11px;width:' + n + 'px;background:var(--ds-gold);border-radius:3px"></div></div>';
+      '<div style="height:11px;width:' + n + 'px;background:var(--ds-blue);border-radius:3px"></div></div>';
   }).join(''));
   set('radScale', [6, 10, 14, 20, 28, 36].map(function (n) {
     return '<div style="text-align:center"><div style="width:58px;height:58px;background:var(--ds-raised-2);border:1px solid var(--ds-line-mid);border-radius:' + n + 'px"></div>' +
@@ -1811,7 +1812,7 @@ var VIP = PLANS.vip;
   set('bOff2', ic('download', 9, 2.6) + ' OFFLINE');
   set('chipDemo', ['Все', 'Драма', 'Триллер', 'Документальные'].map(function (t, i) {
     return '<button class="ds-chip"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
-  }).join('') + '<button class="ds-chip ds-chip--aqua" aria-pressed="true">' + ic('cc', 14) + ' CC+</button>');
+  }).join('') + '<button class="ds-chip ds-chip--amber" aria-pressed="true">' + ic('cc', 14) + ' CC+</button>');
   document.querySelectorAll('.ds-chip').forEach(function (c) {
     c.addEventListener('click', function () { c.setAttribute('aria-pressed', c.getAttribute('aria-pressed') === 'true' ? 'false' : 'true'); });
   });
@@ -1873,7 +1874,7 @@ var VIP = PLANS.vip;
       (done ? '<span class="ds-badge ds-badge--ok">' + ic('check', 9, 3) + ' Готово</span>'
             : '<span class="ds-badge ds-badge--info">78%</span>') + '</div>' +
       '<div class="ds-wrap ds-g1"><span class="ds-badge ds-badge--ccplus">CC+</span><span class="ds-badge">' + d.sub + '</span></div>' +
-      (done ? '' : '<div class="ds-prog ds-prog--aqua"><div class="ds-prog__bar" style="width:' + d.p + '%"></div></div>') +
+      (done ? '' : '<div class="ds-prog ds-prog--amber"><div class="ds-prog__bar" style="width:' + d.p + '%"></div></div>') +
       '<div class="ds-between"><span class="ds-cap">' + d.ex + '</span>' +
       '<div class="ds-row-f ds-g1">' +
       (done ? '<button class="ds-btn ds-btn--sm ds-btn--secondary">' + ic('play', 12) + ' Смотреть</button>'
@@ -1891,7 +1892,7 @@ var VIP = PLANS.vip;
     '<div class="ds-grow"></div>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Поиск">' + ic('search') + '</button>' +
     '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell') +
-    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-gold);border:2px solid var(--ds-void)"></span></button>' +
+    '<span style="position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:99px;background:var(--ds-blue);border:2px solid var(--ds-void)"></span></button>' +
     '<div style="width:34px;height:34px;border-radius:99px;background:linear-gradient(140deg,#3E5C8C,#1B2A4A);border:1px solid var(--ds-line-mid);display:grid;place-items:center;font-size:12px;font-weight:700">А</div>');
 
   var TABS = [['home', 'Главная'], ['search', 'Поиск'], ['library', 'Библиотека'], ['download', 'Загрузки'], ['user', 'Профиль']];
@@ -1913,12 +1914,12 @@ var VIP = PLANS.vip;
   set('sheetDemo', ['0.5×', '0.75×', 'Обычная', '1.25×', '1.5×', '2×'].map(function (t, i) {
     return '<button class="ds-row" style="border-radius:10px">' +
       '<span class="ds-row__main"><span class="ds-row__title">' + t + '</span></span>' +
-      (i === 2 ? '<span style="color:var(--ds-aqua);display:flex">' + ic('check', 18, 2.4) + '</span>' : '') + '</button>';
+      (i === 2 ? '<span style="color:var(--ds-amber);display:flex">' + ic('check', 18, 2.4) + '</span>' : '') + '</button>';
   }).join(''));
   set('toastDemo',
     '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-ok)">' + ic('checkc', 19) + '</span><div><strong>Загрузка завершена</strong><div class="ds-cap" style="margin-top:1px">Год тишины · 1080p · Русский CC+</div></div></div>' +
     '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-warn)">' + ic('alert', 19) + '</span><div><strong>Осталось 1.2 GB</strong><div class="ds-cap" style="margin-top:1px">Освободите место, чтобы продолжить</div></div></div>' +
-    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-aqua)">' + ic('cc', 19) + '</span><div><strong>CC+ включены</strong><div class="ds-cap" style="margin-top:1px">Русский · сохранено для всех фильмов</div></div></div>');
+    '<div class="ds-toast"><span class="ds-toast__ico" style="color:var(--ds-amber)">' + ic('cc', 19) + '</span><div><strong>CC+ включены</strong><div class="ds-cap" style="margin-top:1px">Русский · сохранено для всех фильмов</div></div></div>');
 
   /* ---- states ---- */
   set('skelDemo', [0, 1, 2].map(function () {
@@ -1991,7 +1992,7 @@ var VIP = PLANS.vip;
     '<div class="ds-between"><span class="ds-sm">Обводка текста</span>' +
       '<label class="ds-switch"><input type="checkbox" checked id="outlineSw"><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>' +
     '<div class="ds-row-f ds-g2" style="margin-top:4px"><button class="ds-btn ds-btn--sm ds-btn--ghost ds-grow" id="capReset">Сбросить</button>' +
-      '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-grow">Сохранить</button></div>');
+      '<button class="ds-btn ds-btn--sm ds-btn--amber ds-grow">Сохранить</button></div>');
   $('capControls').addEventListener('click', function (e) {
     var b = e.target.closest('.ds-chip'); if (!b) return;
     var g = b.parentNode.getAttribute('data-g');
@@ -2088,10 +2089,10 @@ var VIP = PLANS.vip;
 
   /* ---- handoff ---- */
   var HAND = [
-    ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | aqua | outline | ghost | danger · size: sm | md | lg · block · disabled'],
+    ['.ds-btn', '&lt;Button&gt;', 'variant: primary | secondary | amber | outline | ghost | danger · size: sm | md | lg · block · disabled'],
     ['.ds-iconbtn', '&lt;IconButton&gt;', 'icon · size: sm | md · variant: solid | bare · active · aria-label (обязателен)'],
-    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | gold'],
-    ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | aqua · icon'],
+    ['.ds-badge', '&lt;Badge&gt;', 'kind: cc | ccplus | 4k | hd | offline | ad | age | ok | warn | err | info | blue'],
+    ['.ds-chip', '&lt;FilterChip&gt;', 'pressed · tone: neutral | amber · icon'],
     ['.ds-input / .ds-select / .ds-textarea', '&lt;Field&gt;', 'label · error · help · trailing · type'],
     ['.ds-search', '&lt;SearchBar&gt;', 'value · onChange · suggestions · voice'],
     ['.ds-switch', '&lt;Switch&gt;', 'checked · onChange · label'],

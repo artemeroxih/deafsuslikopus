@@ -98,8 +98,8 @@ Mo.problem = function (os) {
         [['Проблема с видео', 'film'], ['Видео зависает', 'refresh'], ['Неверное качество', 'quality'],
          ['Проблема со звуком', 'volume'], ['Проблема с субтитрами', 'cc'], ['Проблема с CC+', 'cc'], ['Другое', 'more']].map(function (r, i) {
           return '<button class="ds-row" style="border-radius:var(--ds-r-md);border-bottom:0;padding:13px 14px' +
-            (i >= 4 && i <= 5 ? ';border:1px solid var(--ds-aqua-edge)' : '') + '">' +
-            '<span class="ds-row__ico"' + (i >= 4 && i <= 5 ? ' style="color:var(--ds-aqua)"' : '') + '>' + ic(r[1], 19) + '</span>' +
+            (i >= 4 && i <= 5 ? ';border:1px solid var(--ds-amber-edge)' : '') + '">' +
+            '<span class="ds-row__ico"' + (i >= 4 && i <= 5 ? ' style="color:var(--ds-amber)"' : '') + '>' + ic(r[1], 19) + '</span>' +
             '<span class="ds-row__main"><span class="ds-row__title">' + r[0] + '</span></span>' +
             '<span class="ds-row__chev">' + ic('chevR', 16) + '</span></button>';
         }).join('') + '</div>' +
@@ -152,7 +152,7 @@ Mo.ccSettings = function (os) {
           return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
         '<p class="ds-label" style="margin:18px 0 8px">Цвет текста</p>' +
         '<div class="ds-wrap ds-g2">' + ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E'].map(function (c, i) {
-          return '<button class="ds-chip" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-aqua);border-width:2px' : '') + '">' +
+          return '<button class="ds-chip" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-amber);border-width:2px' : '') + '">' +
             '<span style="width:18px;height:18px;border-radius:99px;background:' + c + '"></span></button>';
         }).join('') + '</div>' +
         '<div class="ds-between" style="margin:20px 0 8px"><span class="ds-label">Фон плашки</span><span class="ds-num ds-sm">62%</span></div>' +
@@ -168,7 +168,7 @@ Mo.ccSettings = function (os) {
           return '<button class="ds-chip ds-grow" style="justify-content:center"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
         '<div class="ds-row-f ds-g2" style="margin-top:24px">' +
           '<button class="ds-btn ds-btn--ghost ds-grow">Сбросить</button>' +
-          '<button class="ds-btn ds-btn--aqua ds-grow">Сохранить</button></div></div>'));
+          '<button class="ds-btn ds-btn--amber ds-grow">Сохранить</button></div></div>'));
 };
 
 /* 18 — Report subtitle error */
@@ -185,19 +185,19 @@ Mo.reportCc = function (os) {
         ['Ошибка текста', 'Ошибка перевода', 'Субтитры слишком рано', 'Субтитры слишком поздно',
          'Пропущена реплика', 'Неверный говорящий', 'Неверное описание звука', 'Другое'].map(function (t, i) {
           return '<label class="ds-opt' + (i === 6 ? ' is-on' : '') + '" style="padding:11px 13px;border-radius:var(--ds-r-md);border:1px solid ' +
-            (i === 6 ? 'var(--ds-aqua-edge);background:var(--ds-aqua-dim)' : 'var(--ds-line)') + '">' +
+            (i === 6 ? 'var(--ds-amber-edge);background:var(--ds-amber-dim)' : 'var(--ds-line)') + '">' +
             '<span class="ds-opt__box ds-opt__box--radio"></span><span style="font-size:14px">' + t + '</span></label>';
         }).join('') + '</div>' +
       '<div class="ds-field" style="margin-top:14px"><label class="ds-label">Комментарий</label>' +
         '<textarea class="ds-textarea" style="min-height:76px" placeholder="Дверь закрывают тихо"></textarea></div>',
-      '<button class="ds-btn ds-btn--aqua ds-btn--block">Отправить</button>', { h: '86%' }) }));
+      '<button class="ds-btn ds-btn--amber ds-btn--block">Отправить</button>', { h: '86%' }) }));
 };
 
 /* 19 — Video quality */
 Mo.quality = function (os) {
   return phone(os, mPlayer(os, { hideCue: 1, sheet:
     mSheet('Качество видео',
-      mRow('Авто', 'Сейчас 1080p · подстраивается под сеть', 1, '<span class="ds-badge ds-badge--gold">AUTO</span>') +
+      mRow('Авто', 'Сейчас 1080p · подстраивается под сеть', 1, '<span class="ds-badge ds-badge--blue">AUTO</span>') +
       '<div class="ds-divider" style="margin:12px 0"></div>' +
       mRow('4K UHD', '2160p · нужно 25 Мбит/с', 0, '<span class="ds-badge ds-badge--4k">4K</span>') +
       mRow('2K', '1440p · 16 Мбит/с', 0) +
@@ -240,7 +240,7 @@ Mo.download = function (os) {
         '<p class="ds-label" style="margin-bottom:8px">Качество</p>' +
         '<div class="ds-stack ds-g1">' + Q.map(function (q) {
           return '<label class="ds-opt' + (q[2] ? ' is-on' : '') + '" style="padding:12px 13px;border-radius:var(--ds-r-md);border:1px solid ' +
-            (q[2] ? 'var(--ds-aqua-edge);background:var(--ds-aqua-dim)' : 'var(--ds-line)') + '">' +
+            (q[2] ? 'var(--ds-amber-edge);background:var(--ds-amber-dim)' : 'var(--ds-line)') + '">' +
             '<span class="ds-opt__box ds-opt__box--radio"></span><span class="ds-grow" style="font-size:14px">' + q[0] + '</span>' +
             '<span class="ds-num ds-sm ds-mut2">' + q[1] + '</span></label>';
         }).join('') + '</div>' +
@@ -248,7 +248,7 @@ Mo.download = function (os) {
         '<div class="ds-stack ds-g1">' +
           [['Русский CC+', 1], ['Русский', 0], ['English CC', 0], ['Без субтитров', 0]].map(function (s) {
             return '<label class="ds-opt' + (s[1] ? ' is-on' : '') + '" style="padding:12px 13px;border-radius:var(--ds-r-md);border:1px solid ' +
-              (s[1] ? 'var(--ds-aqua-edge);background:var(--ds-aqua-dim)' : 'var(--ds-line)') + '">' +
+              (s[1] ? 'var(--ds-amber-edge);background:var(--ds-amber-dim)' : 'var(--ds-line)') + '">' +
               '<span class="ds-opt__box ds-opt__box--check"></span><span style="font-size:14px">' + s[0] + '</span></label>';
           }).join('') + '</div>' +
         '<div class="ds-between" style="margin-top:16px;padding:13px;border-radius:var(--ds-r-md);background:var(--ds-raised)">' +
@@ -284,9 +284,9 @@ Mo.downloads = function (os) {
         '<div class="ds-between" style="margin-bottom:10px"><span class="ds-sm" style="font-weight:600">Место на устройстве</span>' +
           '<span class="ds-num ds-cap">16.7 / 64 GB</span></div>' +
         '<div style="height:8px;border-radius:99px;background:var(--ds-raised-3);overflow:hidden;display:flex">' +
-          '<div style="width:18%;background:var(--ds-gold)"></div><div style="width:8%;background:var(--ds-aqua)"></div></div>' +
+          '<div style="width:18%;background:var(--ds-blue)"></div><div style="width:8%;background:var(--ds-amber)"></div></div>' +
         '<div class="ds-wrap ds-g3" style="margin-top:9px">' +
-          [['Фильмы 11.4 GB', 'var(--ds-gold)'], ['CC+ 0.3 GB', 'var(--ds-aqua)'], ['Свободно 47.3 GB', 'var(--ds-raised-3)']].map(function (s) {
+          [['Фильмы 11.4 GB', 'var(--ds-blue)'], ['CC+ 0.3 GB', 'var(--ds-amber)'], ['Свободно 47.3 GB', 'var(--ds-raised-3)']].map(function (s) {
             return '<div class="ds-row-f ds-g1"><span style="width:7px;height:7px;border-radius:2px;background:' + s[1] + '"></span>' +
               '<span class="ds-cap">' + s[0] + '</span></div>';
           }).join('') + '</div></div>' +
@@ -308,7 +308,7 @@ Mo.downloads = function (os) {
                                          : '<span class="ds-badge ds-badge--cc" style="height:17px;font-size:9px">CC</span>') +
               '<span class="ds-badge" style="height:17px;font-size:9px">' + d.sub + '</span></div>' +
             (d.st === 'run' || d.st === 'paused' || d.st === 'failed'
-              ? '<div class="ds-prog' + (d.st === 'run' ? ' ds-prog--aqua' : '') + '"><div class="ds-prog__bar" style="width:' + d.p + '%' +
+              ? '<div class="ds-prog' + (d.st === 'run' ? ' ds-prog--amber' : '') + '"><div class="ds-prog__bar" style="width:' + d.p + '%' +
                 (d.st === 'failed' ? ';background:var(--ds-err)' : d.st === 'paused' ? ';background:var(--ds-warn)' : '') + '"></div></div>' : '') +
             '<div class="ds-between"><span class="ds-cap">' + d.note + '</span>' +
               '<div class="ds-row-f ds-g1">' +
@@ -459,7 +459,7 @@ Mo.listDetail = function (os) {
       '<div style="position:relative;height:190px;margin-top:-46px">' +
         '<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(3,1fr)">' +
           [0, 1, 2].map(function (k) { return '<div style="position:relative;overflow:hidden">' + art('Посмотреть с друзьями' + k, '', 'position:absolute;inset:0') + '</div>'; }).join('') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 8%,rgba(6,7,10,.65))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 8%,rgba(6,11,24,.65))"></div>' +
         '<div class="ds-between" style="position:absolute;top:52px;left:14px;right:14px">' +
           '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Назад">' + ic('arrowL', 19) + '</button>' +
           '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Ещё">' + ic('moreH', 18) + '</button></div>' +
@@ -519,7 +519,7 @@ function mLanding(os, coll, idx) {
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:400px;margin-top:-46px">' +
         '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(coll.name + 'land') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,7,10,.35) 52%,rgba(6,7,10,.6))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,11,24,.35) 52%,rgba(6,11,24,.6))"></div>' +
         '<div style="position:absolute;inset:0;background:radial-gradient(70% 46% at 62% 34%, ' + coll.hex + '2E, transparent 66%)"></div>' +
         '<div style="position:absolute;top:52px;left:14px"><button class="ds-iconbtn ds-iconbtn--sm" aria-label="Назад">' + ic('arrowL', 19) + '</button></div>' +
         '<div style="position:absolute;left:20px;right:20px;bottom:8px">' +
@@ -544,7 +544,7 @@ function mLanding(os, coll, idx) {
               return '<li class="ds-row-f ds-g2" style="font-size:13px"><span style="color:var(--ds-vip);display:flex;flex:none">' + ic('check', 15, 2.4) + '</span>' + f + '</li>';
             }).join('') + '</ul></div>' +
       '</div></div>' +
-    '<div style="padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);background:rgba(13,16,22,.94);backdrop-filter:blur(20px);flex:none">' +
+    '<div style="padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);background:rgba(12,20,36,.94);backdrop-filter:blur(20px);flex:none">' +
       '<button class="ds-btn ds-btn--block" style="background:var(--ds-vip);color:var(--ds-ink-inv);border-color:transparent;font-weight:700;min-height:54px;flex-direction:column;gap:0">' +
         '<span>Подписаться и смотреть</span><span style="font-size:11.5px;font-weight:600;opacity:.72">500 ₽ / месяц</span></button>' +
       '<p class="ds-cap ds-center" style="margin-top:7px">Регулярное ежемесячное списание</p></div>');
@@ -572,7 +572,7 @@ Mo.checkout = function (os) {
           [['Банковская карта', '•••• 4417 · Mir', 1], ['Новая карта', 'Добавить', 0], ['СБП', 'Через приложение банка', 0],
            (os === 'ios' ? ['Apple Pay', 'Оплата через Apple', 0] : ['Google Pay', 'Оплата через Google', 0])].map(function (r) {
             return '<label class="ds-opt' + (r[2] ? ' is-on' : '') + '" style="padding:13px;border-radius:var(--ds-r-md);border:1px solid ' +
-              (r[2] ? 'var(--ds-gold-edge);background:var(--ds-gold-dim)' : 'var(--ds-line)') + '">' +
+              (r[2] ? 'var(--ds-blue-edge);background:var(--ds-blue-dim)' : 'var(--ds-line)') + '">' +
               '<span class="ds-opt__box ds-opt__box--radio"></span>' +
               '<span class="ds-row__ico">' + ic('card', 18) + '</span>' +
               '<span class="ds-grow"><span style="font-size:14px;font-weight:600">' + r[0] + '</span>' +
@@ -643,7 +643,7 @@ function mSettingsList(title, groups, back) {
         return '<p class="ds-eyebrow" style="margin:16px 0 8px">' + g[0] + '</p>' +
           '<div class="ds-card ds-card--flush">' + g[1].map(function (r) {
             return '<div class="ds-row" style="min-height:50px;padding:11px 14px">' +
-              (r[3] ? '<span class="ds-row__ico"' + (r[3] === 'cc' ? ' style="color:var(--ds-aqua)"' : '') + '>' + ic(r[3], 18) + '</span>' : '') +
+              (r[3] ? '<span class="ds-row__ico"' + (r[3] === 'cc' ? ' style="color:var(--ds-amber)"' : '') + '>' + ic(r[3], 18) + '</span>' : '') +
               '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + r[0] + '</span>' +
               (r[4] ? '<span class="ds-row__sub">' + r[4] + '</span>' : '') + '</span>' +
               (r[2] === 'sw' ? '<label class="ds-switch"><input type="checkbox"' + (r[1] ? ' checked' : '') + '><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label>'
@@ -659,7 +659,7 @@ Mo.profile = function (os) {
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:150px;margin-top:-46px">' +
         '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('profile-cover') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void),rgba(6,7,10,.5))"></div></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void),rgba(6,11,24,.5))"></div></div>' +
       '<div style="padding:0 20px 20px;margin-top:-42px;position:relative">' +
         '<div class="ds-row-f ds-g3" style="align-items:flex-end">' +
           '<div style="width:76px;height:76px;border-radius:24px;overflow:hidden;position:relative;flex:none;border:3px solid var(--ds-void)">' +
@@ -668,7 +668,7 @@ Mo.profile = function (os) {
             '<div class="ds-cap">anna.k@example.ru</div></div>' +
           '<button class="ds-iconbtn ds-iconbtn--sm" style="margin-bottom:4px" aria-label="Изменить профиль">' + ic('edit', 17) + '</button></div>' +
         '<div class="ds-wrap ds-g1" style="margin-top:12px">' +
-          '<span class="ds-badge ds-badge--gold ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
+          '<span class="ds-badge ds-badge--blue ds-badge--lg">ВИП · 500 ₽ / месяц</span>' +
           '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна до 12 октября</span></div>' +
         '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:16px">' +
           [['284', 'фильма'], ['512', 'часов'], ['78%', 'с CC+']].map(function (s) {
@@ -683,7 +683,7 @@ Mo.profile = function (os) {
           return '<p class="ds-eyebrow" style="margin:22px 0 8px">' + g[0] + '</p>' +
             '<div class="ds-card ds-card--flush">' + g[1].map(function (r) {
               return '<button class="ds-row" style="min-height:50px;padding:11px 14px">' +
-                '<span class="ds-row__ico"' + (r[2] === 'cc' ? ' style="color:var(--ds-aqua)"' : '') + '>' + ic(r[2], 18) + '</span>' +
+                '<span class="ds-row__ico"' + (r[2] === 'cc' ? ' style="color:var(--ds-amber)"' : '') + '>' + ic(r[2], 18) + '</span>' +
                 '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + r[0] + '</span></span>' +
                 (r[1] ? '<span class="ds-row__meta">' + r[1] + '</span>' : '') +
                 '<span class="ds-row__chev">' + ic('chevR', 15) + '</span></button>';
@@ -697,12 +697,12 @@ Mo.profile = function (os) {
 Mo.editProfile = function (os) {
   return phone(os,
     mHeader(os, 'Профиль', { back: 1, border: 1,
-      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-gold);font-weight:700">Готово</button>' }) +
+      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-blue);font-weight:700">Готово</button>' }) +
     mBody(
       '<div style="padding-top:18px;text-align:center">' +
         '<div style="width:96px;height:96px;border-radius:30px;overflow:hidden;position:relative;margin:0 auto;border:1px solid var(--ds-line-mid)">' +
           art('Анна Ковалёва', '', 'position:absolute;inset:0') + '</div>' +
-        '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="margin-top:10px;color:var(--ds-gold)">Изменить фото</button></div>' +
+        '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="margin-top:10px;color:var(--ds-blue)">Изменить фото</button></div>' +
       '<div class="ds-stack ds-g3" style="margin-top:18px">' +
         '<div class="ds-field"><label class="ds-label">Имя</label><input class="ds-input" value="Анна Ковалёва"></div>' +
         '<div class="ds-field"><label class="ds-label">Email</label>' +
@@ -760,7 +760,7 @@ Mo.devices = function (os) {
       '<p class="ds-sm" style="margin-bottom:14px">Одновременно можно смотреть на 5 устройствах.</p>' +
       '<div class="ds-card ds-card--flush">' + D.map(function (d) {
         return '<div class="ds-row" style="cursor:default;padding:14px;align-items:flex-start">' +
-          '<span class="ds-row__ico" style="color:' + (d[3] ? 'var(--ds-aqua)' : 'var(--ds-ink-3)') + ';margin-top:2px">' + ic(d[4], 19) + '</span>' +
+          '<span class="ds-row__ico" style="color:' + (d[3] ? 'var(--ds-amber)' : 'var(--ds-ink-3)') + ';margin-top:2px">' + ic(d[4], 19) + '</span>' +
           '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + d[0] + '</span>' +
           '<span class="ds-row__sub">' + d[1] + '</span>' +
           '<span class="ds-row__sub ds-num">' + d[2] + '</span>' +
@@ -795,20 +795,20 @@ Mo.a11y = mSettingsList('Субтитры и CC+', [
 Mo.notifications = function (os) {
   var N = [['sparkle', 'Новый фильм в «Реальных событиях»', '«Свидетели» — документальная драма с CC+.', 'Сегодня, 14:20', 1, 'var(--ds-coll)'],
     ['checkc', 'Загрузка завершена', 'Год тишины · 1080p · Русский CC+', 'Сегодня, 12:04', 1, 'var(--ds-ok)'],
-    ['ticket', 'Поддержка ответила · #DS-10482', 'Ошибка в субтитрах исправлена.', 'Сегодня, 09:51', 1, 'var(--ds-aqua)'],
-    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ спишутся с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-gold)'],
+    ['ticket', 'Поддержка ответила · #DS-10482', 'Ошибка в субтитрах исправлена.', 'Сегодня, 09:51', 1, 'var(--ds-amber)'],
+    ['card', 'Подписка ВИП продлится 12 октября', '500 ₽ спишутся с карты Mir •••• 4417.', 'Вчера, 18:00', 0, 'var(--ds-blue)'],
     ['alert', 'Срок загрузки истекает', '«Ночная смена» — через 3 дня.', '11 сентября', 0, 'var(--ds-warn)'],
-    ['cc', 'Добавлены CC+', '«Глубина» теперь с расширенными субтитрами.', '10 сентября', 0, 'var(--ds-aqua)']];
+    ['cc', 'Добавлены CC+', '«Глубина» теперь с расширенными субтитрами.', '10 сентября', 0, 'var(--ds-amber)']];
   return phone(os,
     mHeader(os, 'Уведомления', { back: 1,
-      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-gold)">Прочитать всё</button>' }) +
+      actions: '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="color:var(--ds-blue)">Прочитать всё</button>' }) +
     mBody('<div class="ds-card ds-card--flush">' + N.map(function (n) {
       return '<button class="ds-row" style="padding:14px;align-items:flex-start' + (n[4] ? ';background:rgba(255,255,255,.03)' : '') + '">' +
         '<span class="ds-row__ico" style="color:' + n[5] + ';margin-top:2px">' + ic(n[0], 18) + '</span>' +
         '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px;font-weight:' + (n[4] ? 600 : 500) + '">' + n[1] + '</span>' +
         '<span class="ds-row__sub" style="margin-top:2px;line-height:1.45">' + n[2] + '</span>' +
         '<span class="ds-cap ds-num" style="display:block;margin-top:5px">' + n[3] + '</span></span>' +
-        (n[4] ? '<span style="width:7px;height:7px;border-radius:99px;background:var(--ds-gold);flex:none;margin-top:5px"></span>' : '') + '</button>';
+        (n[4] ? '<span style="width:7px;height:7px;border-radius:99px;background:var(--ds-blue);flex:none;margin-top:5px"></span>' : '') + '</button>';
     }).join('') + '</div>') +
     mTabbar('user', 1));
 };
@@ -825,8 +825,8 @@ Mo.help = function (os) {
         '<input placeholder="Например «нет субтитров»" style="font-size:14px"></div>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
         T.map(function (t, i) {
-          return '<button class="ds-card" style="text-align:left;padding:14px' + (i === 1 ? ';border-color:var(--ds-aqua-edge)' : '') + '">' +
-            '<span style="color:' + (i === 1 ? 'var(--ds-aqua)' : 'var(--ds-gold)') + ';display:flex">' + ic(t[0], 19) + '</span>' +
+          return '<button class="ds-card" style="text-align:left;padding:14px' + (i === 1 ? ';border-color:var(--ds-amber-edge)' : '') + '">' +
+            '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex">' + ic(t[0], 19) + '</span>' +
             '<div class="ds-h3" style="margin-top:9px;font-size:13.5px">' + t[1] + '</div></button>';
         }).join('') + '</div>' +
       '<p class="ds-eyebrow" style="margin:22px 0 8px">Частые вопросы</p>' +
@@ -837,7 +837,7 @@ Mo.help = function (os) {
             '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">' + q + '</span></span>' +
             '<span class="ds-row__chev">' + ic('chevR', 15) + '</span></button>';
         }).join('') + '</div>' +
-      '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-gold-edge);background:var(--ds-gold-dim);padding:16px">' +
+      '<div class="ds-card" style="margin-top:16px;border-color:var(--ds-blue-edge);background:var(--ds-blue-dim);padding:16px">' +
         '<h3 class="ds-h3">Не нашли ответ?</h3>' +
         '<p class="ds-cap" style="margin-top:5px">Ответим за сутки, срочное — за час.</p>' +
         '<button class="ds-btn ds-btn--primary ds-btn--block" style="margin-top:12px">Обратиться в поддержку</button></div>') +
@@ -892,7 +892,7 @@ Mo.tickets = function (os) {
       '<div class="ds-stack ds-g2">' + T.map(function (t) {
         return '<button class="ds-card" style="text-align:left;padding:14px">' +
           '<div class="ds-between" style="align-items:flex-start">' +
-            '<span class="ds-num" style="font-size:11.5px;color:var(--ds-gold)">' + t[0] + '</span>' +
+            '<span class="ds-num" style="font-size:11.5px;color:var(--ds-blue)">' + t[0] + '</span>' +
             '<span class="ds-badge ' + (t[3] ? 'ds-badge--' + t[3] : '') + '">' + t[4] + '</span></div>' +
           '<div class="ds-h3" style="margin-top:7px;font-size:13.5px">' + t[1] + '</div>' +
           '<div class="ds-between" style="margin-top:6px"><span class="ds-cap">' + t[2] + '</span>' +
@@ -905,14 +905,14 @@ Mo.ticket = function (os) {
   function msg(mine, name, time, body, extra) {
     return '<div style="display:flex;gap:9px;flex-direction:' + (mine ? 'row-reverse' : 'row') + ';margin-bottom:14px">' +
       '<div style="width:28px;height:28px;border-radius:99px;flex:none;position:relative;overflow:hidden;' +
-        (mine ? '' : 'background:var(--ds-aqua-dim);border:1px solid var(--ds-aqua-edge);display:grid;place-items:center;color:var(--ds-aqua)') + '">' +
+        (mine ? '' : 'background:var(--ds-amber-dim);border:1px solid var(--ds-amber-edge);display:grid;place-items:center;color:var(--ds-amber)') + '">' +
         (mine ? art(name, '', 'position:absolute;inset:0') : ic('shield', 14)) + '</div>' +
       '<div style="max-width:80%">' +
         '<div class="ds-row-f ds-g2" style="margin-bottom:4px;' + (mine ? 'justify-content:flex-end' : '') + '">' +
           '<span class="ds-cap" style="font-weight:600;color:var(--ds-ink-2)">' + name + '</span>' +
           '<span class="ds-cap ds-num">' + time + '</span></div>' +
-        '<div style="padding:11px 13px;border-radius:var(--ds-r-md);background:' + (mine ? 'var(--ds-raised-2)' : 'var(--ds-aqua-dim)') +
-          ';border:1px solid ' + (mine ? 'var(--ds-line)' : 'var(--ds-aqua-edge)') + '">' +
+        '<div style="padding:11px 13px;border-radius:var(--ds-r-md);background:' + (mine ? 'var(--ds-raised-2)' : 'var(--ds-amber-dim)') +
+          ';border:1px solid ' + (mine ? 'var(--ds-line)' : 'var(--ds-amber-edge)') + '">' +
           '<p style="font-size:13px;color:var(--ds-ink);margin:0">' + body + '</p>' + (extra || '') + '</div></div></div>';
   }
   return phone(os,
@@ -942,5 +942,5 @@ Mo.ticket = function (os) {
     '<div style="padding:10px 14px calc(10px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);display:flex;gap:8px;align-items:center;flex:none">' +
       '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Прикрепить">' + ic('paperclip', 18) + '</button>' +
       '<input class="ds-input" placeholder="Сообщение" style="min-height:42px;border-radius:99px;padding:10px 16px">' +
-      '<button class="ds-iconbtn" style="background:var(--ds-gold);color:var(--ds-ink-inv);border-color:transparent;width:42px;height:42px" aria-label="Отправить">' + ic('send', 18) + '</button></div>');
+      '<button class="ds-iconbtn" style="background:var(--ds-blue);color:var(--ds-ink-inv);border-color:transparent;width:42px;height:42px" aria-label="Отправить">' + ic('send', 18) + '</button></div>');
 };

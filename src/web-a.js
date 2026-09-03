@@ -7,12 +7,12 @@ var S = {};
 S.landing = function () {
   return '<div style="position:relative;min-height:940px;overflow:hidden">' +
     '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('landing-hero') + '</div>' +
-    '<div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 18% 30%, rgba(6,7,10,.55), rgba(6,7,10,.95) 62%)"></div>' +
+    '<div style="position:absolute;inset:0;background:radial-gradient(120% 80% at 18% 30%, rgba(6,11,24,.55), rgba(6,11,24,.95) 62%)"></div>' +
     '<div style="position:absolute;right:-2%;top:0;bottom:0;width:52%;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;transform:rotate(-8deg) scale(1.18);opacity:.5">' +
       CAT.slice(0, 16).map(function (m, i) {
         return '<div style="border-radius:12px;overflow:hidden;aspect-ratio:2/3;margin-top:' + ((i % 4) * 22) + 'px">' + art(m.t, '', 'height:100%') + '</div>';
       }).join('') + '</div>' +
-    '<div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--ds-void) 22%,rgba(6,7,10,.55) 58%,rgba(6,7,10,.9))"></div>' +
+    '<div style="position:absolute;inset:0;background:linear-gradient(90deg,var(--ds-void) 22%,rgba(6,11,24,.55) 58%,rgba(6,11,24,.9))"></div>' +
 
     '<div style="position:relative;z-index:3">' +
       '<div class="ds-container ds-between" style="height:88px">' + dsLogo(30, 19) +
@@ -30,11 +30,11 @@ S.landing = function () {
             '<button class="ds-btn ds-btn--lg ds-btn--outline" data-go="login">Войти</button></div>' +
           '<div class="ds-wrap ds-g6" style="margin-top:44px">' +
             [['film', '1 200+ фильмов'], ['cc', 'CC+ на 340 фильмах'], ['download', 'Офлайн-просмотр'], ['quality', 'До 4K UHD']].map(function (f) {
-              return '<div class="ds-row-f ds-g2"><span style="color:var(--ds-aqua);display:flex">' + ic(f[0], 18) + '</span>' +
+              return '<div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic(f[0], 18) + '</span>' +
                 '<span class="ds-sm" style="color:var(--ds-ink)">' + f[1] + '</span></div>';
             }).join('') + '</div>' +
         '</div>' +
-        '<div class="ds-strip" style="margin-top:64px;max-width:560px;background:rgba(20,24,31,.72);backdrop-filter:blur(20px);border-left-color:var(--ds-aqua)">' +
+        '<div class="ds-strip" style="margin-top:64px;max-width:560px;background:rgba(18,28,48,.72);backdrop-filter:blur(20px);border-left-color:var(--ds-amber)">' +
           '<span class="ds-strip__label">CC+</span>' +
           '<div><p class="ds-cue" style="text-align:left;font-size:15px;text-shadow:none"><span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
           '<span class="ds-cue__sound">[дверь резко захлопывается]</span></p></div></div>' +
@@ -60,7 +60,7 @@ S.login = function () {
           '<input class="ds-input" id="lp" type="password" value="secretpass" style="padding-right:52px" autocomplete="current-password">' +
           '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" style="position:absolute;right:8px" data-pw="lp" aria-label="Показать пароль">' + ic('eye', 17) + '</button>' +
         '</div></div>' +
-      '<div class="ds-between"><label class="ds-opt" style="padding:0"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-aqua);background:var(--ds-aqua)"></span>' +
+      '<div class="ds-between"><label class="ds-opt" style="padding:0"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber)"></span>' +
         '<span class="ds-sm">Запомнить меня</span></label>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Забыли пароль?</button></div>' +
       '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-go="home">Войти</button>' +
@@ -68,7 +68,7 @@ S.login = function () {
       '<button class="ds-btn ds-btn--secondary ds-btn--block">' + ic('apple', 17) + ' Продолжить с Apple</button>' +
       '<button class="ds-btn ds-btn--secondary ds-btn--block">' + ic('google', 17) + ' Продолжить с Google</button>' +
     '</div>' +
-    '<p class="ds-sm ds-center" style="margin-top:26px">Нет аккаунта? <button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="register" style="color:var(--ds-gold)">Создать аккаунт</button></p>' +
+    '<p class="ds-sm ds-center" style="margin-top:26px">Нет аккаунта? <button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="register" style="color:var(--ds-blue)">Создать аккаунт</button></p>' +
 
     '<div style="margin-top:38px;padding-top:24px;border-top:1px solid var(--ds-line)">' +
       '<p class="ds-eyebrow" style="margin-bottom:12px">Состояния экрана</p>' +
@@ -107,15 +107,15 @@ S.register = function () {
         '<span class="ds-help">Надёжный пароль. Минимум 8 символов, есть цифра и заглавная буква.</span></div>' +
       '<div class="ds-field"><label class="ds-label" for="rp2">Повторите пароль</label>' +
         '<input class="ds-input" id="rp2" type="password" value="mypassword"></div>' +
-      '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-aqua);background:var(--ds-aqua);margin-top:2px"></span>' +
-        '<span class="ds-sm">Принимаю <span style="color:var(--ds-gold)">пользовательское соглашение</span> и <span style="color:var(--ds-gold)">политику конфиденциальности</span></span></label>' +
+      '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
+        '<span class="ds-sm">Принимаю <span style="color:var(--ds-blue)">пользовательское соглашение</span> и <span style="color:var(--ds-blue)">политику конфиденциальности</span></span></label>' +
       '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-go="plans">Создать аккаунт</button>' +
       '<div class="ds-row-f ds-g3"><div class="ds-divider ds-grow"></div><span class="ds-cap">или</span><div class="ds-divider ds-grow"></div></div>' +
       '<div class="ds-row-f ds-g3">' +
         '<button class="ds-btn ds-btn--secondary ds-grow">' + ic('apple', 17) + ' Apple</button>' +
         '<button class="ds-btn ds-btn--secondary ds-grow">' + ic('google', 17) + ' Google</button></div>' +
     '</div>' +
-    '<p class="ds-sm ds-center" style="margin-top:26px">Уже есть аккаунт? <button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="login" style="color:var(--ds-gold)">Войти</button></p>',
+    '<p class="ds-sm ds-center" style="margin-top:26px">Уже есть аккаунт? <button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="login" style="color:var(--ds-blue)">Войти</button></p>',
     'Субтитры под себя',
     'Размер, шрифт, цвет, фон и положение — настраиваются один раз и применяются ко всем фильмам.'
   );
@@ -127,10 +127,10 @@ S.home = function () {
   return topbar('home') +
     '<section style="position:relative;height:700px;margin-top:-68px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(h.t + 'hero') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,7,10,.96) 6%,rgba(6,7,10,.55) 52%,transparent),linear-gradient(to top,var(--ds-void) 2%,transparent 42%)"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.96) 6%,rgba(6,11,24,.55) 52%,transparent),linear-gradient(to top,var(--ds-void) 2%,transparent 42%)"></div>' +
       '<div class="ds-container" style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:52px">' +
         '<div style="max-width:600px">' +
-          '<p class="ds-eyebrow" style="color:var(--ds-gold)">Фильм недели</p>' +
+          '<p class="ds-eyebrow" style="color:var(--ds-blue)">Фильм недели</p>' +
           '<h1 class="ds-hero-title" style="margin-top:12px;font-size:clamp(2.4rem,4.6vw,4rem)">' + h.t + '</h1>' +
           '<div class="ds-wrap ds-g2" style="margin-top:16px;align-items:center">' +
             '<span class="ds-badge ds-badge--age ds-badge--lg">' + h.age + '</span>' +
@@ -203,7 +203,7 @@ S.search = function () {
         }).join('') + '</div></div>' +
       '<div><p class="ds-eyebrow" style="margin-bottom:14px">Сейчас ищут</p>' +
         '<div class="ds-stack">' + [['Год тишины', '+240%'], ['Реальные события 2025', '+118%'], ['Пепел и снег', '+96%'], ['CC+ подборка', '+74%'], ['Территория льда', '+51%']].map(function (q, i) {
-          return '<button class="ds-row" style="min-height:46px;padding:9px 0"><span class="ds-row__ico ds-num" style="color:var(--ds-gold);font-weight:700">' + (i + 1) + '</span>' +
+          return '<button class="ds-row" style="min-height:46px;padding:9px 0"><span class="ds-row__ico ds-num" style="color:var(--ds-blue);font-weight:700">' + (i + 1) + '</span>' +
             '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + q[0] + '</span></span>' +
             '<span class="ds-row__meta ds-num" style="color:var(--ds-ok)">' + q[1] + '</span></button>';
         }).join('') + '</div></div>' +
@@ -234,7 +234,7 @@ S.results = function () {
       '<div class="ds-wrap ds-g2">' +
         '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-go="filters">' + ic('filter', 14) + ' Фильтры · 3</button>' +
         '<button class="ds-chip" aria-pressed="true">Документальные ' + ic('x', 12) + '</button>' +
-        '<button class="ds-chip ds-chip--aqua" aria-pressed="true">CC+ ' + ic('x', 12) + '</button>' +
+        '<button class="ds-chip ds-chip--amber" aria-pressed="true">CC+ ' + ic('x', 12) + '</button>' +
         '<button class="ds-chip" aria-pressed="true">Можно скачать ' + ic('x', 12) + '</button>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Сбросить</button></div>' +
       '<div class="ds-row-f ds-g3">' +
@@ -275,9 +275,9 @@ S.filters = function () {
     return '<div style="padding:22px 0;border-bottom:1px solid var(--ds-line)">' +
       '<p class="ds-h3" style="margin-bottom:14px">' + label + '</p>' + body + '</div>';
   }
-  function chips(list, on, aqua) {
+  function chips(list, on, amber) {
     return '<div class="ds-wrap ds-g2">' + list.map(function (t, i) {
-      return '<button class="ds-chip' + (aqua ? ' ds-chip--aqua' : '') + '"' + (on.indexOf(i) > -1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
+      return '<button class="ds-chip' + (amber ? ' ds-chip--amber' : '') + '"' + (on.indexOf(i) > -1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
     }).join('') + '</div>';
   }
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px;max-width:900px">' +
@@ -296,8 +296,8 @@ S.filters = function () {
     group('Продолжительность', chips(['До 90 мин', '90–120 мин', '120–150 мин', 'Больше 150 мин'], [1])) +
     group('Качество', chips(['360p', '480p', '720p', '1080p', '2K', '4K'], [3, 5])) +
 
-    '<div style="padding:22px 0;border-bottom:1px solid var(--ds-line);background:var(--ds-aqua-dim);margin:0 -20px;padding-left:20px;padding-right:20px;border-radius:var(--ds-r-md)">' +
-      '<div class="ds-row-f ds-g2" style="margin-bottom:6px"><span style="color:var(--ds-aqua);display:flex">' + ic('cc', 18) + '</span>' +
+    '<div style="padding:22px 0;border-bottom:1px solid var(--ds-line);background:var(--ds-amber-dim);margin:0 -20px;padding-left:20px;padding-right:20px;border-radius:var(--ds-r-md)">' +
+      '<div class="ds-row-f ds-g2" style="margin-bottom:6px"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 18) + '</span>' +
         '<p class="ds-h3">Субтитры</p></div>' +
       '<p class="ds-cap" style="margin-bottom:14px">Главный фильтр сервиса — вынесен и подсвечен.</p>' +
       chips(['Любые', 'CC', 'CC+', 'SDH'], [2], true) + '</div>' +
@@ -332,11 +332,11 @@ S.categories = function () {
     '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px">' +
       CATS.map(function (c, i) {
         var special = i >= 13;
-        return '<button data-go="category" class="ds-land" style="padding:0;background:none;cursor:pointer;text-align:left;border-color:' + (special ? 'var(--ds-aqua-edge)' : 'var(--ds-line)') + '">' +
+        return '<button data-go="category" class="ds-land" style="padding:0;background:none;cursor:pointer;text-align:left;border-color:' + (special ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + '">' +
           '<div style="position:relative;aspect-ratio:16/10;overflow:hidden">' + art(c[0] + 'cat', '', 'position:absolute;inset:0') +
-          '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,4,7,.9),rgba(3,4,7,.15))"></div>' +
+          '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.9),rgba(3,7,19,.15))"></div>' +
           '<div style="position:absolute;inset:auto 0 0 0;padding:15px 17px">' +
-            '<span style="color:' + (special ? 'var(--ds-aqua)' : 'var(--ds-gold)') + ';display:flex;margin-bottom:8px">' + ic(c[2], 19) + '</span>' +
+            '<span style="color:' + (special ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex;margin-bottom:8px">' + ic(c[2], 19) + '</span>' +
             '<div class="ds-h3">' + c[0] + '</div>' +
             '<div class="ds-cap ds-num" style="margin-top:2px">' + c[1] + ' фильмов</div></div></div></button>';
       }).join('') + '</div></main>' + webFoot();
@@ -347,7 +347,7 @@ S.category = function () {
   return topbar('movies') +
     '<section style="position:relative;height:340px;margin-top:-68px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('cat-ccplus') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,7,10,.6))"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,11,24,.6))"></div>' +
       '<div class="ds-container" style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:32px">' +
         '<div class="ds-row-f ds-g2" style="margin-bottom:12px"><span class="ds-badge ds-badge--ccplus ds-badge--lg">CC+</span>' +
           '<span class="ds-cap ds-num">340 фильмов</span></div>' +
@@ -374,7 +374,7 @@ S.movie = function () {
   return topbar('movies') +
     '<section style="position:relative;min-height:620px;margin-top:-68px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(m.t + 'hero') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,7,10,.97) 8%,rgba(6,7,10,.6) 56%,rgba(6,7,10,.3)),linear-gradient(to top,var(--ds-void) 2%,transparent 46%)"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.97) 8%,rgba(6,11,24,.6) 56%,rgba(6,11,24,.3)),linear-gradient(to top,var(--ds-void) 2%,transparent 46%)"></div>' +
       '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;align-items:end">' +
         '<div style="border-radius:var(--ds-r-lg);overflow:hidden;border:1px solid var(--ds-line-mid);box-shadow:var(--ds-e4);position:relative;aspect-ratio:2/3">' +
           art(m.t, '', 'position:absolute;inset:0', m.t, 20) + '</div>' +
@@ -387,7 +387,7 @@ S.movie = function () {
             '<span class="ds-mut2">·</span><span class="ds-sm">' + m.g + '</span><span class="ds-mut2">·</span><span class="ds-sm">' + m.c + '</span>' +
             '<span style="width:8px"></span>' + badges(m, { offline: 1, ad: 1 }) + '</div>' +
           '<div class="ds-row-f ds-g4" style="margin-top:16px">' +
-            '<div class="ds-row-f ds-g2"><span style="color:var(--ds-gold);display:flex">' + ic('star', 20) + '</span>' +
+            '<div class="ds-row-f ds-g2"><span style="color:var(--ds-blue);display:flex">' + ic('star', 20) + '</span>' +
               '<span class="ds-num" style="font-size:1.35rem;font-weight:700">' + m.r.toFixed(1) + '</span>' +
               '<span class="ds-cap">deafsuslik · 4 218 оценок</span></div></div>' +
           '<p class="ds-body" style="margin-top:18px;font-size:0.98rem">Оператор северной станции теряет связь с материком и остаётся один на один с тишиной, ' +
@@ -437,7 +437,7 @@ S.movie = function () {
                 return '<div class="ds-card"><div class="ds-between" style="align-items:flex-start">' +
                   '<div class="ds-row-f ds-g3"><div style="width:36px;height:36px;border-radius:99px;position:relative;overflow:hidden;flex:none">' + art(r[0], '', 'position:absolute;inset:0') + '</div>' +
                   '<div><div class="ds-h3" style="font-size:14px">' + r[0] + '</div><div class="ds-cap">' + r[2] + '</div></div></div>' +
-                  '<div class="ds-row-f ds-g1" style="color:var(--ds-gold)">' + ic('star', 15) + '<span class="ds-num" style="font-weight:700;color:var(--ds-ink)">' + r[1] + '</span><span class="ds-cap">/10</span></div></div>' +
+                  '<div class="ds-row-f ds-g1" style="color:var(--ds-blue)">' + ic('star', 15) + '<span class="ds-num" style="font-weight:700;color:var(--ds-ink)">' + r[1] + '</span><span class="ds-cap">/10</span></div></div>' +
                   '<p class="ds-sm" style="margin-top:12px">' + r[3] + '</p></div>';
               }).join('') + '</div></section>' +
 
@@ -446,9 +446,9 @@ S.movie = function () {
         '</div>' +
 
         '<aside style="position:sticky;top:92px">' +
-          '<div class="ds-card ds-card--flush" style="border-color:var(--ds-aqua-edge)">' +
-            '<div style="padding:18px 20px;background:var(--ds-aqua-dim);border-bottom:1px solid var(--ds-aqua-edge)">' +
-              '<div class="ds-row-f ds-g2"><span style="color:var(--ds-aqua);display:flex">' + ic('cc', 19) + '</span>' +
+          '<div class="ds-card ds-card--flush" style="border-color:var(--ds-amber-edge)">' +
+            '<div style="padding:18px 20px;background:var(--ds-amber-dim);border-bottom:1px solid var(--ds-amber-edge)">' +
+              '<div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 19) + '</span>' +
               '<h3 class="ds-h2">Субтитры</h3></div></div>' +
             '<div style="padding:16px 20px" class="ds-stack ds-g3">' +
               [['Русский', 'CC+', 1], ['Русский', 'CC', 0], ['English', 'CC', 0], ['Deutsch', 'SUB', 0], ['Français', 'SUB', 0]].map(function (s) {
@@ -456,7 +456,7 @@ S.movie = function () {
                   '<span class="ds-badge ' + (s[1] === 'CC+' ? 'ds-badge--ccplus' : s[1] === 'CC' ? 'ds-badge--cc' : '') + '">' + s[1] + '</span></div>';
               }).join('') +
               '<div class="ds-divider"></div>' +
-              '<button class="ds-btn ds-btn--sm ds-btn--aqua ds-btn--block" data-go="cc-settings">Настроить внешний вид</button></div></div>' +
+              '<button class="ds-btn ds-btn--sm ds-btn--amber ds-btn--block" data-go="cc-settings">Настроить внешний вид</button></div></div>' +
 
           '<div class="ds-card" style="margin-top:16px">' +
             '<h3 class="ds-h2" style="margin-bottom:14px">Доступно</h3>' +
@@ -466,7 +466,7 @@ S.movie = function () {
               '<div class="ds-between"><span class="ds-sm ds-mut">Озвучка</span><span class="ds-sm">Русский, English</span></div>' +
               '<div class="ds-between"><span class="ds-sm ds-mut">Тифлокомментарий</span><span class="ds-badge ds-badge--ad">AD · Русский</span></div>' +
               '<div class="ds-between"><span class="ds-sm ds-mut">Скачивание</span><span class="ds-badge ds-badge--ok">Разрешено</span></div>' +
-              '<div class="ds-between"><span class="ds-sm ds-mut">Подписка</span><span class="ds-badge ds-badge--gold">Любой фильм</span></div>' +
+              '<div class="ds-between"><span class="ds-sm ds-mut">Подписка</span><span class="ds-badge ds-badge--blue">Любой фильм</span></div>' +
             '</div></div>' +
 
           '<div class="ds-card" style="margin-top:16px">' +

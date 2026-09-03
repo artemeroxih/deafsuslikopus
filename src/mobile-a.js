@@ -55,7 +55,7 @@ function mHeader(os, title, opts) {
   }
   return '<div style="flex:none' + (opts.border ? ';border-bottom:1px solid var(--ds-line)' : '') + '">' +
     (opts.back ? '<div style="display:flex;align-items:center;justify-content:space-between;padding:2px 10px 0">' +
-      '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0 6px;color:var(--ds-gold)">' + ic('chevL', 17) + ' Назад</button>' +
+      '<button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0 6px;color:var(--ds-blue)">' + ic('chevL', 17) + ' Назад</button>' +
       '<div class="ds-row-f ds-g1">' + (opts.actions || '') + '</div></div>' : '') +
     '<div style="padding:' + (opts.back ? '4px' : '10px') + ' 20px 12px;display:flex;align-items:flex-end;justify-content:space-between;gap:12px">' +
       '<h1 class="ds-d2" style="font-size:1.75rem">' + title + '</h1>' +
@@ -92,12 +92,12 @@ function mSheet(title, body, foot, opts) {
 
 function mRow(label, sub, on, badge, ico) {
   return '<button class="ds-row" style="border-radius:var(--ds-r-md);border-bottom:0;padding:13px 14px;min-height:52px' +
-    (on ? ';background:var(--ds-aqua-dim)' : '') + '">' +
+    (on ? ';background:var(--ds-amber-dim)' : '') + '">' +
     (ico ? '<span class="ds-row__ico">' + ic(ico, 19) + '</span>' : '') +
     '<span class="ds-row__main"><span class="ds-row__title">' + label + '</span>' +
     (sub ? '<span class="ds-row__sub">' + sub + '</span>' : '') + '</span>' +
     (badge || '') +
-    (on ? '<span style="color:var(--ds-aqua);display:flex;margin-left:8px">' + ic('check', 19, 2.4) + '</span>' : '') + '</button>';
+    (on ? '<span style="color:var(--ds-amber);display:flex;margin-left:8px">' + ic('check', 19, 2.4) + '</span>' : '') + '</button>';
 }
 
 /* Poster tuned for phone widths */
@@ -132,7 +132,7 @@ Mo.splash = function (os) {
         CAT.slice(0, 12).map(function (m, i) {
           return '<div style="border-radius:10px;overflow:hidden;aspect-ratio:2/3;margin-top:' + ((i % 4) * 16) + 'px">' + art(m.t, '', 'height:100%') + '</div>';
         }).join('') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 42%,rgba(6,7,10,.35) 72%,rgba(6,7,10,.7))"></div>' +
+      '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 42%,rgba(6,11,24,.35) 72%,rgba(6,11,24,.7))"></div>' +
       '<div style="position:relative;padding:0 24px 24px">' +
         '<div style="margin-bottom:20px">' + dsLogo(48, 30) + '</div>' +
         '<h1 class="ds-d2" style="font-size:1.9rem;line-height:1.1">Кино,<br>которое читается</h1>' +
@@ -140,7 +140,7 @@ Mo.splash = function (os) {
           'Онлайн и офлайн, на всех устройствах.</p>' +
         '<div class="ds-wrap ds-g3" style="margin-top:18px">' +
           [['film', '1 200+ фильмов'], ['cc', 'CC+ на 340'], ['download', 'Офлайн']].map(function (f) {
-            return '<div class="ds-row-f ds-g1"><span style="color:var(--ds-aqua);display:flex">' + ic(f[0], 15) + '</span>' +
+            return '<div class="ds-row-f ds-g1"><span style="color:var(--ds-amber);display:flex">' + ic(f[0], 15) + '</span>' +
               '<span class="ds-cap" style="color:var(--ds-ink-2)">' + f[1] + '</span></div>';
           }).join('') + '</div>' +
         '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:22px">Начать</button>' +
@@ -175,7 +175,7 @@ Mo.onboarding = function (os) {
         '<div class="ds-row-f ds-g2" style="justify-content:center;margin-bottom:20px">' +
           [0, 1, 2, 3].map(function (i) {
             return '<span style="height:6px;border-radius:99px;transition:all .3s;background:' +
-              (i === step ? 'var(--ds-gold);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
+              (i === step ? 'var(--ds-blue);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
           }).join('') + '</div>' +
         '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Далее</button></div>' +
     '</div>');
@@ -211,7 +211,7 @@ Mo.login = function (os) {
         '<div><strong style="font-size:13px">Неверный пароль</strong>' +
         '<div class="ds-cap">Осталось 4 попытки</div></div></div>' +
       '<div class="ds-grow"></div>' +
-      '<p class="ds-sm ds-center" style="padding-bottom:16px">Нет аккаунта? <span style="color:var(--ds-gold);font-weight:600">Создать</span></p>' +
+      '<p class="ds-sm ds-center" style="padding-bottom:16px">Нет аккаунта? <span style="color:var(--ds-blue);font-weight:600">Создать</span></p>' +
     '</div>');
 };
 
@@ -232,10 +232,10 @@ Mo.register = function (os) {
             }).join('') + '</div>' +
           '<span class="ds-help">Надёжный пароль</span></div>' +
         '<div class="ds-field"><label class="ds-label">Повторите пароль</label><input class="ds-input" type="password" value="mypassword"></div>' +
-        '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-aqua);background:var(--ds-aqua);margin-top:2px"></span>' +
-          '<span class="ds-sm">Принимаю <span style="color:var(--ds-gold)">соглашение</span> и <span style="color:var(--ds-gold)">политику конфиденциальности</span></span></label>' +
+        '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
+          '<span class="ds-sm">Принимаю <span style="color:var(--ds-blue)">соглашение</span> и <span style="color:var(--ds-blue)">политику конфиденциальности</span></span></label>' +
         '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:4px">Создать аккаунт</button>' +
-        '<p class="ds-sm ds-center" style="margin-top:6px">Уже есть аккаунт? <span style="color:var(--ds-gold);font-weight:600">Войти</span></p>' +
+        '<p class="ds-sm ds-center" style="margin-top:6px">Уже есть аккаунт? <span style="color:var(--ds-blue);font-weight:600">Войти</span></p>' +
       '</div>'));
 };
 
@@ -248,15 +248,15 @@ Mo.home = function (os) {
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:470px;margin-top:-46px">' +
         '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(h.t + 'hero') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,7,10,.35) 46%,rgba(6,7,10,.72))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,11,24,.35) 46%,rgba(6,11,24,.72))"></div>' +
         '<div style="position:absolute;top:52px;left:0;right:0;padding:0 18px;display:flex;align-items:center;justify-content:space-between">' +
           dsLogo(26, 16) +
           '<div class="ds-row-f ds-g1">' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Загрузки">' + ic('download', 20) + '</button>' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Уведомления" style="position:relative">' + ic('bell', 20) +
-              '<span style="position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:99px;background:var(--ds-gold)"></span></button></div></div>' +
+              '<span style="position:absolute;top:4px;right:5px;width:6px;height:6px;border-radius:99px;background:var(--ds-blue)"></span></button></div></div>' +
         '<div style="position:absolute;left:0;right:0;bottom:0;padding:0 20px 4px">' +
-          '<p class="ds-eyebrow" style="color:var(--ds-gold)">Фильм недели</p>' +
+          '<p class="ds-eyebrow" style="color:var(--ds-blue)">Фильм недели</p>' +
           '<h1 class="ds-hero-title" style="font-size:2.3rem;margin-top:8px">' + h.t + '</h1>' +
           '<div class="ds-wrap ds-g1" style="margin-top:10px;align-items:center">' +
             '<span class="ds-badge ds-badge--age">' + h.age + '</span>' +
@@ -320,18 +320,18 @@ Mo.search = function (os) {
       '<p class="ds-eyebrow" style="margin:24px 0 10px">Сейчас ищут</p>' +
       '<div class="ds-stack">' + [['Год тишины', '+240%'], ['Реальные события 2025', '+118%'], ['Пепел и снег', '+96%'], ['CC+ подборка', '+74%'], ['Территория льда', '+51%']].map(function (q, i) {
         return '<button class="ds-row" style="min-height:48px;padding:10px 0">' +
-          '<span class="ds-row__ico ds-num" style="color:var(--ds-gold);font-weight:700;width:18px">' + (i + 1) + '</span>' +
+          '<span class="ds-row__ico ds-num" style="color:var(--ds-blue);font-weight:700;width:18px">' + (i + 1) + '</span>' +
           '<span class="ds-row__main"><span class="ds-row__title" style="font-size:14px">' + q[0] + '</span></span>' +
           '<span class="ds-row__meta ds-num" style="color:var(--ds-ok);font-size:12px">' + q[1] + '</span></button>';
       }).join('') + '</div>' +
       '<p class="ds-eyebrow" style="margin:24px 0 10px">Категории</p>' +
       '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
         [['С субтитрами', 'cc'], ['CC+', 'cc'], ['4K', 'quality'], ['Офлайн', 'download']].map(function (c, i) {
-          return '<button style="position:relative;aspect-ratio:16/9;border-radius:var(--ds-r-md);overflow:hidden;border:1px solid ' + (i < 2 ? 'var(--ds-aqua-edge)' : 'var(--ds-line)') + ';padding:0;background:none">' +
+          return '<button style="position:relative;aspect-ratio:16/9;border-radius:var(--ds-r-md);overflow:hidden;border:1px solid ' + (i < 2 ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + ';padding:0;background:none">' +
             art(c[0] + 'sc', '', 'position:absolute;inset:0') +
-            '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,4,7,.86),transparent)"></div>' +
+            '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.86),transparent)"></div>' +
             '<div style="position:absolute;left:11px;bottom:9px;display:flex;align-items:center;gap:6px">' +
-            '<span style="color:' + (i < 2 ? 'var(--ds-aqua)' : 'var(--ds-gold)') + ';display:flex">' + ic(c[1], 15) + '</span>' +
+            '<span style="color:' + (i < 2 ? 'var(--ds-amber)' : 'var(--ds-blue)') + ';display:flex">' + ic(c[1], 15) + '</span>' +
             '<span style="font-size:13px;font-weight:600">' + c[0] + '</span></div></button>';
         }).join('') + '</div>') +
     mTabbar('search'));
@@ -361,11 +361,11 @@ Mo.results = function (os) {
    08 — Filters (full-height sheet)
    ============================================================ */
 Mo.filters = function (os) {
-  function grp(label, chips, on, aqua) {
+  function grp(label, chips, on, amber) {
     return '<div style="padding:16px 0;border-bottom:1px solid var(--ds-line)">' +
       '<p class="ds-h3" style="margin-bottom:10px;font-size:14px">' + label + '</p>' +
       '<div class="ds-wrap ds-g2">' + chips.map(function (t, i) {
-        return '<button class="ds-chip' + (aqua ? ' ds-chip--aqua' : '') + '" style="min-height:34px;font-size:12.5px"' +
+        return '<button class="ds-chip' + (amber ? ' ds-chip--amber' : '') + '" style="min-height:34px;font-size:12.5px"' +
           (on.indexOf(i) > -1 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
       }).join('') + '</div></div>';
   }
@@ -383,11 +383,11 @@ Mo.filters = function (os) {
           grp('Рейтинг', ['От 6', 'От 7', 'От 8', 'От 9'], [2]) +
           grp('Продолжительность', ['До 90 мин', '90–120', '120–150', '150+'], [1]) +
           grp('Качество', ['360p', '480p', '720p', '1080p', '2K', '4K'], [3, 5]) +
-          '<div style="padding:16px;margin:12px 0;border-radius:var(--ds-r-md);background:var(--ds-aqua-dim);border-left:3px solid var(--ds-aqua)">' +
-            '<div class="ds-row-f ds-g2" style="margin-bottom:8px"><span style="color:var(--ds-aqua);display:flex">' + ic('cc', 17) + '</span>' +
+          '<div style="padding:16px;margin:12px 0;border-radius:var(--ds-r-md);background:var(--ds-amber-dim);border-left:3px solid var(--ds-amber)">' +
+            '<div class="ds-row-f ds-g2" style="margin-bottom:8px"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 17) + '</span>' +
             '<p class="ds-h3" style="font-size:14px">Субтитры</p></div>' +
             '<div class="ds-wrap ds-g2">' + ['Любые', 'CC', 'CC+', 'SDH'].map(function (t, i) {
-              return '<button class="ds-chip ds-chip--aqua" style="min-height:34px;font-size:12.5px"' + (i === 2 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
+              return '<button class="ds-chip ds-chip--amber" style="min-height:34px;font-size:12.5px"' + (i === 2 ? ' aria-pressed="true"' : '') + '>' + t + '</button>';
             }).join('') + '</div></div>' +
           '<div style="padding:6px 0 16px;border-bottom:1px solid var(--ds-line)">' +
             [['Можно скачать', 1], ['Реальные события', 1], ['Есть AD', 0]].map(function (r) {
@@ -414,9 +414,9 @@ Mo.categories = function (os) {
     mBody('<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
       C.map(function (c, i) {
         var sp = i >= 9;
-        return '<button style="position:relative;aspect-ratio:4/3;border-radius:var(--ds-r-md);overflow:hidden;border:1px solid ' + (sp ? 'var(--ds-aqua-edge)' : 'var(--ds-line)') + ';padding:0;background:none;text-align:left">' +
+        return '<button style="position:relative;aspect-ratio:4/3;border-radius:var(--ds-r-md);overflow:hidden;border:1px solid ' + (sp ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + ';padding:0;background:none;text-align:left">' +
           art(c[0] + 'cat', '', 'position:absolute;inset:0') +
-          '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,4,7,.9),rgba(3,4,7,.1))"></div>' +
+          '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.9),rgba(3,7,19,.1))"></div>' +
           '<div style="position:absolute;left:12px;right:12px;bottom:11px">' +
             '<div style="font-size:13.5px;font-weight:600">' + c[0] + '</div>' +
             '<div class="ds-cap ds-num">' + c[1] + '</div></div></button>';
@@ -429,7 +429,7 @@ Mo.category = function (os) {
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:200px;margin-top:-46px">' +
         '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('cat-ccplus') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 6%,rgba(6,7,10,.5))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 6%,rgba(6,11,24,.5))"></div>' +
         '<div style="position:absolute;top:52px;left:14px"><button class="ds-iconbtn ds-iconbtn--sm" aria-label="Назад">' + ic('arrowL', 19) + '</button></div>' +
         '<div style="position:absolute;left:20px;right:20px;bottom:8px">' +
           '<span class="ds-badge ds-badge--ccplus ds-badge--lg">CC+</span>' +
@@ -454,7 +454,7 @@ Mo.movie = function (os) {
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:400px;margin-top:-46px">' +
         '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(m.t + 'hero') + '</div>' +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 3%,rgba(6,7,10,.3) 50%,rgba(6,7,10,.6))"></div>' +
+        '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 3%,rgba(6,11,24,.3) 50%,rgba(6,11,24,.6))"></div>' +
         '<div class="ds-between" style="position:absolute;top:52px;left:14px;right:14px">' +
           '<button class="ds-iconbtn ds-iconbtn--sm" aria-label="Назад">' + ic('arrowL', 19) + '</button>' +
           '<div class="ds-row-f ds-g1">' +
@@ -476,18 +476,18 @@ Mo.movie = function (os) {
         '<div class="ds-row-f" style="margin-top:14px;justify-content:space-around">' +
           [['plus', 'В библиотеку'], ['heart', 'Избранное'], ['cc', 'Субтитры'], ['share', 'Поделиться']].map(function (a, i) {
             return '<button style="background:none;border:0;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;min-width:64px;min-height:56px;justify-content:center">' +
-              '<span style="color:' + (i === 2 ? 'var(--ds-aqua)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(a[0], 21) + '</span>' +
+              '<span style="color:' + (i === 2 ? 'var(--ds-amber)' : 'var(--ds-ink-2)') + ';display:flex">' + ic(a[0], 21) + '</span>' +
               '<span class="ds-cap">' + a[1] + '</span></button>';
           }).join('') + '</div>' +
 
         '<p class="ds-sm" style="margin-top:18px">Оператор северной станции теряет связь с материком и остаётся один на один с тишиной, ' +
-          'которую он сам когда-то выбрал. <span style="color:var(--ds-gold)">Ещё</span></p>' +
+          'которую он сам когда-то выбрал. <span style="color:var(--ds-blue)">Ещё</span></p>' +
 
-        '<div class="ds-card" style="margin-top:18px;padding:14px;border-color:var(--ds-aqua-edge);background:var(--ds-aqua-dim)">' +
-          '<div class="ds-between"><div class="ds-row-f ds-g2"><span style="color:var(--ds-aqua);display:flex">' + ic('cc', 18) + '</span>' +
+        '<div class="ds-card" style="margin-top:18px;padding:14px;border-color:var(--ds-amber-edge);background:var(--ds-amber-dim)">' +
+          '<div class="ds-between"><div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 18) + '</span>' +
             '<div><div class="ds-h3" style="font-size:13.5px">Субтитры</div>' +
             '<div class="ds-cap">Русский CC+ · English CC · Deutsch</div></div></div>' +
-            '<span style="color:var(--ds-aqua);display:flex">' + ic('chevR', 17) + '</span></div></div>' +
+            '<span style="color:var(--ds-amber);display:flex">' + ic('chevR', 17) + '</span></div></div>' +
 
         '<div class="ds-card ds-card--flush" style="margin-top:12px">' +
           [['Качество', '1080p · 2K · 4K'], ['Озвучка', 'Русский, English'], ['Тифлокомментарий', 'AD · Русский'],
