@@ -151,9 +151,14 @@ Mo.ccSettings = function (os) {
         '<div class="ds-wrap ds-g2">' + ['Onest', 'Моно', 'С засечками'].map(function (t, i) {
           return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
         '<p class="ds-label" style="margin:18px 0 8px">Цвет текста</p>' +
-        '<div class="ds-wrap ds-g2">' + ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E'].map(function (c, i) {
-          return '<button class="ds-chip" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-amber);border-width:2px' : '') + '">' +
-            '<span style="width:18px;height:18px;border-radius:99px;background:' + c + '"></span></button>';
+        '<div class="ds-wrap ds-g2">' + [
+          ['#FFE81F', 'Ярко-жёлтый'],
+          ['linear-gradient(135deg,#B8860B,#FFD700 35%,#FFF6B0 50%,#FFD700 65%,#C9971B)', 'Золото'],
+          ['linear-gradient(135deg,#FFFFFF,#CFE8FF 30%,#FFFFFF 50%,#EADBFF 70%,#FFFFFF)', 'Бриллиант'],
+          ['#FFFFFF', 'Белый'], ['#7BE8A0', 'Мятный'], ['#FF8FB8', 'Розовый']
+        ].map(function (c, i) {
+          return '<button class="ds-chip" title="' + c[1] + '" aria-label="' + c[1] + '" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-amber);border-width:2px' : '') + '">' +
+            '<span style="width:19px;height:19px;border-radius:99px;background:' + c[0] + '"></span></button>';
         }).join('') + '</div>' +
         '<div class="ds-between" style="margin:20px 0 8px"><span class="ds-label">Фон плашки</span><span class="ds-num ds-sm">62%</span></div>' +
         '<input class="ds-slider" type="range" min="0" max="100" value="62" aria-label="Прозрачность фона">' +

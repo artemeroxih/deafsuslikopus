@@ -140,14 +140,31 @@ S.ccSelect = function () {
 
 /* 14/15 — Subtitle appearance (CC+ settings) */
 S.ccSettings = function () {
-  var swatches = ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E', '#000000'];
-  function swRow(name, sel, group) {
+  // Заливки текста: сплошные цвета плюс две градиентные — золото и бриллиант
+  var textFills = [
+    ['#FFFFFF', 'Белый',        '#FFFFFF'],
+    ['#FFE81F', 'Ярко-жёлтый',  '#FFE81F'],
+    ['gold',    'Золото',       'linear-gradient(135deg,#B8860B,#FFD700 35%,#FFF6B0 50%,#FFD700 65%,#C9971B)'],
+    ['diamond', 'Бриллиант',    'linear-gradient(135deg,#FFFFFF,#CFE8FF 30%,#FFFFFF 50%,#EADBFF 70%,#FFFFFF)'],
+    ['#7BE8A0', 'Мятный',       '#7BE8A0'],
+    ['#FF8FB8', 'Розовый',      '#FF8FB8'],
+    ['#000000', 'Чёрный',       '#000000']
+  ];
+  var plateFills = [
+    ['#000000', 'Чёрный',  '#000000'],
+    ['#0C1424', 'Ночной',  '#0C1424'],
+    ['#FFFFFF', 'Белый',   '#FFFFFF'],
+    ['#FFE81F', 'Жёлтый',  '#FFE81F'],
+    ['#4C8DFF', 'Синий',   '#4C8DFF']
+  ];
+  function swRow(name, sel, group, list) {
     return '<div><p class="ds-label" style="margin-bottom:8px">' + name + '</p>' +
       '<div class="ds-wrap ds-g2" data-cc="' + group + '">' +
-      swatches.map(function (c, i) {
-        return '<button class="ds-chip" data-v="' + c + '" aria-pressed="' + (i === sel) + '"' +
-          ' aria-label="' + c + '" style="width:40px;padding:0;justify-content:center">' +
-          '<span style="width:17px;height:17px;border-radius:99px;background:' + c + ';border:1px solid rgba(255,255,255,.25)"></span></button>';
+      list.map(function (f, i) {
+        return '<button class="ds-chip" data-v="' + f[0] + '" aria-pressed="' + (i === sel) + '"' +
+          ' aria-label="' + f[1] + '" title="' + f[1] + '" style="width:40px;padding:0;justify-content:center">' +
+          '<span style="width:19px;height:19px;border-radius:99px;background:' + f[2] +
+          ';border:1px solid rgba(255,255,255,.3)"></span></button>';
       }).join('') + '</div></div>';
   }
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
@@ -184,11 +201,11 @@ S.ccSettings = function () {
             [['Обычная', 500], ['Полужирная', 600], ['Жирная', 800]].map(function (o, i) {
               return '<button class="ds-chip" data-v="' + o[1] + '"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + o[0] + '</button>';
             }).join('') + '</div></div>' +
-        swRow('Цвет текста', 0, 'color') +
+        swRow('Цвет текста', 1, 'color', textFills) +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность текста</span>' +
           '<span class="ds-num ds-sm" id="ccTxtOpVal">100%</span></div>' +
           '<input class="ds-slider" type="range" min="40" max="100" value="100" id="ccTxtOp" aria-label="Непрозрачность текста"></div>' +
-        swRow('Цвет плашки', 5, 'bg') +
+        swRow('Цвет плашки', 0, 'bg', plateFills) +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность плашки</span>' +
           '<span class="ds-num ds-sm" id="ccBgVal">62%</span></div>' +
           '<input class="ds-slider" type="range" min="0" max="100" value="62" id="ccBg" aria-label="Непрозрачность плашки"></div>' +

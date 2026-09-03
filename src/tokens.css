@@ -34,11 +34,11 @@
   --ds-accent-edge:   rgba(76, 141, 255, 0.36);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
-  --ds-amber:        #FFC24B;
-  --ds-amber-hi:     #FFD886;
-  --ds-amber-lo:     #E0A430;
-  --ds-amber-dim:    rgba(255, 194, 75, 0.14);
-  --ds-amber-edge:   rgba(255, 194, 75, 0.34);
+  --ds-amber:        #FFD426;
+  --ds-amber-hi:     #FFE81F;
+  --ds-amber-lo:     #E8B310;
+  --ds-amber-dim:    rgba(255, 212, 38, 0.14);
+  --ds-amber-edge:   rgba(255, 212, 38, 0.34);
 
   /* ---- Semantic (separate from both accents) ---- */
   --ds-ok:          #57D96A;
@@ -87,6 +87,11 @@
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
   --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
+
+  /* ---- Заливки субтитров ----
+     Золото и бриллиант — градиентные, каждая строка получает свой блик. */
+  --fill-gold:    linear-gradient(100deg, #B8860B 0%, #FFD700 22%, #FFF6B0 42%, #FFD700 62%, #C9971B 100%);
+  --fill-diamond: linear-gradient(100deg, #FFFFFF 0%, #CFE8FF 26%, #FFFFFF 46%, #EADBFF 66%, #FFFFFF 100%);
 
   /* ---- Brand ----
      Цвет логотипа зафиксирован отдельно от акцента интерфейса:

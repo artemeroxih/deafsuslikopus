@@ -470,6 +470,15 @@ body {
   text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
 }
 .ds-cue__speaker { color: var(--cue-color, var(--ds-amber)); font-weight: 800; letter-spacing: .06em; display: block; }
+
+/* Золото и бриллиант заливают каждую строку отдельно — так у каждой свой блик */
+.ds-cue--fill,
+.ds-cue--fill .ds-cue__speaker,
+.ds-cue--fill .ds-cue__sound {
+  background-image: var(--cue-fill);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
 .ds-cue__sound { color: var(--cue-color, var(--ds-amber-hi)); font-style: italic; font-weight: 500; opacity: .88; display: block; }
 .ds-cuebox {
   display: inline-block; padding: 7px 15px; border-radius: 8px;

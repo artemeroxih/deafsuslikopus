@@ -50,11 +50,11 @@
   --ds-accent-edge:   rgba(76, 141, 255, 0.36);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
-  --ds-amber:        #FFC24B;
-  --ds-amber-hi:     #FFD886;
-  --ds-amber-lo:     #E0A430;
-  --ds-amber-dim:    rgba(255, 194, 75, 0.14);
-  --ds-amber-edge:   rgba(255, 194, 75, 0.34);
+  --ds-amber:        #FFD426;
+  --ds-amber-hi:     #FFE81F;
+  --ds-amber-lo:     #E8B310;
+  --ds-amber-dim:    rgba(255, 212, 38, 0.14);
+  --ds-amber-edge:   rgba(255, 212, 38, 0.34);
 
   /* ---- Semantic (separate from both accents) ---- */
   --ds-ok:          #57D96A;
@@ -103,6 +103,11 @@
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
   --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
+
+  /* ---- Заливки субтитров ----
+     Золото и бриллиант — градиентные, каждая строка получает свой блик. */
+  --fill-gold:    linear-gradient(100deg, #B8860B 0%, #FFD700 22%, #FFF6B0 42%, #FFD700 62%, #C9971B 100%);
+  --fill-diamond: linear-gradient(100deg, #FFFFFF 0%, #CFE8FF 26%, #FFFFFF 46%, #EADBFF 66%, #FFFFFF 100%);
 
   /* ---- Brand ----
      Цвет логотипа зафиксирован отдельно от акцента интерфейса:
@@ -611,6 +616,15 @@ body {
   text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
 }
 .ds-cue__speaker { color: var(--cue-color, var(--ds-amber)); font-weight: 800; letter-spacing: .06em; display: block; }
+
+/* Золото и бриллиант заливают каждую строку отдельно — так у каждой свой блик */
+.ds-cue--fill,
+.ds-cue--fill .ds-cue__speaker,
+.ds-cue--fill .ds-cue__sound {
+  background-image: var(--cue-fill);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
 .ds-cue__sound { color: var(--cue-color, var(--ds-amber-hi)); font-style: italic; font-weight: 500; opacity: .88; display: block; }
 .ds-cuebox {
   display: inline-block; padding: 7px 15px; border-radius: 8px;
@@ -1826,14 +1840,31 @@ S.ccSelect = function () {
 
 /* 14/15 — Subtitle appearance (CC+ settings) */
 S.ccSettings = function () {
-  var swatches = ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E', '#000000'];
-  function swRow(name, sel, group) {
+  // Заливки текста: сплошные цвета плюс две градиентные — золото и бриллиант
+  var textFills = [
+    ['#FFFFFF', 'Белый',        '#FFFFFF'],
+    ['#FFE81F', 'Ярко-жёлтый',  '#FFE81F'],
+    ['gold',    'Золото',       'linear-gradient(135deg,#B8860B,#FFD700 35%,#FFF6B0 50%,#FFD700 65%,#C9971B)'],
+    ['diamond', 'Бриллиант',    'linear-gradient(135deg,#FFFFFF,#CFE8FF 30%,#FFFFFF 50%,#EADBFF 70%,#FFFFFF)'],
+    ['#7BE8A0', 'Мятный',       '#7BE8A0'],
+    ['#FF8FB8', 'Розовый',      '#FF8FB8'],
+    ['#000000', 'Чёрный',       '#000000']
+  ];
+  var plateFills = [
+    ['#000000', 'Чёрный',  '#000000'],
+    ['#0C1424', 'Ночной',  '#0C1424'],
+    ['#FFFFFF', 'Белый',   '#FFFFFF'],
+    ['#FFE81F', 'Жёлтый',  '#FFE81F'],
+    ['#4C8DFF', 'Синий',   '#4C8DFF']
+  ];
+  function swRow(name, sel, group, list) {
     return '<div><p class="ds-label" style="margin-bottom:8px">' + name + '</p>' +
       '<div class="ds-wrap ds-g2" data-cc="' + group + '">' +
-      swatches.map(function (c, i) {
-        return '<button class="ds-chip" data-v="' + c + '" aria-pressed="' + (i === sel) + '"' +
-          ' aria-label="' + c + '" style="width:40px;padding:0;justify-content:center">' +
-          '<span style="width:17px;height:17px;border-radius:99px;background:' + c + ';border:1px solid rgba(255,255,255,.25)"></span></button>';
+      list.map(function (f, i) {
+        return '<button class="ds-chip" data-v="' + f[0] + '" aria-pressed="' + (i === sel) + '"' +
+          ' aria-label="' + f[1] + '" title="' + f[1] + '" style="width:40px;padding:0;justify-content:center">' +
+          '<span style="width:19px;height:19px;border-radius:99px;background:' + f[2] +
+          ';border:1px solid rgba(255,255,255,.3)"></span></button>';
       }).join('') + '</div></div>';
   }
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
@@ -1870,11 +1901,11 @@ S.ccSettings = function () {
             [['Обычная', 500], ['Полужирная', 600], ['Жирная', 800]].map(function (o, i) {
               return '<button class="ds-chip" data-v="' + o[1] + '"' + (i === 1 ? ' aria-pressed="true"' : '') + '>' + o[0] + '</button>';
             }).join('') + '</div></div>' +
-        swRow('Цвет текста', 0, 'color') +
+        swRow('Цвет текста', 1, 'color', textFills) +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность текста</span>' +
           '<span class="ds-num ds-sm" id="ccTxtOpVal">100%</span></div>' +
           '<input class="ds-slider" type="range" min="40" max="100" value="100" id="ccTxtOp" aria-label="Непрозрачность текста"></div>' +
-        swRow('Цвет плашки', 5, 'bg') +
+        swRow('Цвет плашки', 0, 'bg', plateFills) +
         '<div><div class="ds-between" style="margin-bottom:8px"><span class="ds-label">Непрозрачность плашки</span>' +
           '<span class="ds-num ds-sm" id="ccBgVal">62%</span></div>' +
           '<input class="ds-slider" type="range" min="0" max="100" value="62" id="ccBg" aria-label="Непрозрачность плашки"></div>' +
@@ -3190,7 +3221,7 @@ S.ticket = function () {
     }
 
     var chip = ev.target.closest('.ds-chip');
-    if (chip && !chip.dataset.cc) {
+    if (chip && !chip.closest('[data-cc]')) {
       chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
     }
     var seg = ev.target.closest('.ds-seg button');
@@ -3223,7 +3254,7 @@ S.ticket = function () {
   }
 
   function initCaptionEditor() {
-    var st = { size: 26, font: 'ui', weight: 600, color: '#FFFFFF', bgColor: '#000000', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
+    var st = { size: 26, font: 'ui', weight: 600, color: '#FFE81F', bgColor: '#000000', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
     var stage = document.getElementById('ccStage');
     stage.insertAdjacentHTML('afterbegin', dsArt('cc-editor-stage') + '<div class="ds-art__vig"></div>');
     var prev = document.getElementById('ccPreview');
@@ -3237,10 +3268,22 @@ S.ticket = function () {
       if (st.shadow) sh.push('0 4px 10px rgba(0,0,0,.85)');
       if (!sh.length) sh.push('none');
       var fam = st.font === 'mono' ? 'var(--ds-mono)' : st.font === 'serif' ? 'Georgia, serif' : 'var(--ds-ui)';
+      var GRAD = {
+        gold: 'linear-gradient(100deg,#B8860B 0%,#FFD700 22%,#FFF6B0 42%,#FFD700 62%,#C9971B 100%)',
+        diamond: 'linear-gradient(100deg,#FFFFFF 0%,#CFE8FF 26%,#FFFFFF 46%,#EADBFF 66%,#FFFFFF 100%)'
+      };
+      var isFill = !!GRAD[st.color];
+      // Градиентная заливка не сочетается с обводкой: обводка рисуется цветом
+      // текста, а он здесь прозрачный. Вместо неё — тень под строкой.
+      var paint = isFill
+        ? 'background-image:' + GRAD[st.color] + ';--cue-fill:' + GRAD[st.color] +
+          ';text-shadow:' + (st.outline || st.shadow ? '0 2px 6px rgba(0,0,0,.85)' : 'none')
+        : '--cue-color:' + st.color + ';color:' + st.color + ';text-shadow:' + sh.join(',');
+
       prev.innerHTML = '<span class="ds-cuebox" style="background:' + rgba(st.bgColor, st.bg) + ';max-width:40ch">' +
-        '<span class="ds-cue" style="--cue-color:' + st.color + ';font-size:' + st.size + 'px;font-weight:' + st.weight +
-        ';color:' + st.color + ';opacity:' + st.txtOp + ';line-height:' + st.lh +
-        ';text-shadow:' + sh.join(',') + ';font-family:' + fam + '">' +
+        '<span class="ds-cue' + (isFill ? ' ds-cue--fill' : '') + '" style="font-size:' + st.size +
+        'px;font-weight:' + st.weight + ';opacity:' + st.txtOp + ';line-height:' + st.lh +
+        ';font-family:' + fam + ';' + paint + '">' +
         '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
         '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span>';
     }
@@ -3266,7 +3309,7 @@ S.ticket = function () {
     });
     var rb = document.getElementById('ccResetBtn');
     if (rb) rb.addEventListener('click', function () {
-      st = { size: 26, font: 'ui', weight: 600, color: '#FFFFFF', bgColor: '#000000', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
+      st = { size: 26, font: 'ui', weight: 600, color: '#FFE81F', bgColor: '#000000', txtOp: 1, bg: .62, outline: 1, shadow: 0, lh: 1.34, pos: 'bottom' };
       document.getElementById('ccBg').value = 62; document.getElementById('ccBgVal').textContent = '62%';
       document.getElementById('ccTxtOp').value = 100; document.getElementById('ccTxtOpVal').textContent = '100%';
       document.getElementById('ccLh').value = 134; document.getElementById('ccLhVal').textContent = '1.34';

@@ -39,11 +39,11 @@
   --ds-accent-edge:   rgba(76, 141, 255, 0.36);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
-  --ds-amber:        #FFC24B;
-  --ds-amber-hi:     #FFD886;
-  --ds-amber-lo:     #E0A430;
-  --ds-amber-dim:    rgba(255, 194, 75, 0.14);
-  --ds-amber-edge:   rgba(255, 194, 75, 0.34);
+  --ds-amber:        #FFD426;
+  --ds-amber-hi:     #FFE81F;
+  --ds-amber-lo:     #E8B310;
+  --ds-amber-dim:    rgba(255, 212, 38, 0.14);
+  --ds-amber-edge:   rgba(255, 212, 38, 0.34);
 
   /* ---- Semantic (separate from both accents) ---- */
   --ds-ok:          #57D96A;
@@ -92,6 +92,11 @@
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
   --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
+
+  /* ---- Заливки субтитров ----
+     Золото и бриллиант — градиентные, каждая строка получает свой блик. */
+  --fill-gold:    linear-gradient(100deg, #B8860B 0%, #FFD700 22%, #FFF6B0 42%, #FFD700 62%, #C9971B 100%);
+  --fill-diamond: linear-gradient(100deg, #FFFFFF 0%, #CFE8FF 26%, #FFFFFF 46%, #EADBFF 66%, #FFFFFF 100%);
 
   /* ---- Brand ----
      Цвет логотипа зафиксирован отдельно от акцента интерфейса:
@@ -600,6 +605,15 @@ body {
   text-shadow: 0 2px 8px rgba(0,0,0,.9), 0 0 2px rgba(0,0,0,.8);
 }
 .ds-cue__speaker { color: var(--cue-color, var(--ds-amber)); font-weight: 800; letter-spacing: .06em; display: block; }
+
+/* Золото и бриллиант заливают каждую строку отдельно — так у каждой свой блик */
+.ds-cue--fill,
+.ds-cue--fill .ds-cue__speaker,
+.ds-cue--fill .ds-cue__sound {
+  background-image: var(--cue-fill);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+}
 .ds-cue__sound { color: var(--cue-color, var(--ds-amber-hi)); font-style: italic; font-weight: 500; opacity: .88; display: block; }
 .ds-cuebox {
   display: inline-block; padding: 7px 15px; border-radius: 8px;
@@ -1858,9 +1872,14 @@ Mo.ccSettings = function (os) {
         '<div class="ds-wrap ds-g2">' + ['Onest', 'Моно', 'С засечками'].map(function (t, i) {
           return '<button class="ds-chip"' + (i === 0 ? ' aria-pressed="true"' : '') + '>' + t + '</button>'; }).join('') + '</div>' +
         '<p class="ds-label" style="margin:18px 0 8px">Цвет текста</p>' +
-        '<div class="ds-wrap ds-g2">' + ['#FFFFFF', '#FFC24B', '#5FE3D0', '#FF8FB8', '#9BE37E'].map(function (c, i) {
-          return '<button class="ds-chip" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-amber);border-width:2px' : '') + '">' +
-            '<span style="width:18px;height:18px;border-radius:99px;background:' + c + '"></span></button>';
+        '<div class="ds-wrap ds-g2">' + [
+          ['#FFE81F', 'Ярко-жёлтый'],
+          ['linear-gradient(135deg,#B8860B,#FFD700 35%,#FFF6B0 50%,#FFD700 65%,#C9971B)', 'Золото'],
+          ['linear-gradient(135deg,#FFFFFF,#CFE8FF 30%,#FFFFFF 50%,#EADBFF 70%,#FFFFFF)', 'Бриллиант'],
+          ['#FFFFFF', 'Белый'], ['#7BE8A0', 'Мятный'], ['#FF8FB8', 'Розовый']
+        ].map(function (c, i) {
+          return '<button class="ds-chip" title="' + c[1] + '" aria-label="' + c[1] + '" style="width:44px;padding:0;justify-content:center' + (i === 0 ? ';border-color:var(--ds-amber);border-width:2px' : '') + '">' +
+            '<span style="width:19px;height:19px;border-radius:99px;background:' + c[0] + '"></span></button>';
         }).join('') + '</div>' +
         '<div class="ds-between" style="margin:20px 0 8px"><span class="ds-label">Фон плашки</span><span class="ds-num ds-sm">62%</span></div>' +
         '<input class="ds-slider" type="range" min="0" max="100" value="62" aria-label="Прозрачность фона">' +
