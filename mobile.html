@@ -22,12 +22,12 @@
 
 :root {
   /* ---- Ground & surfaces (accent-biased graphite, never pure grey) ---- */
-  --ds-void:        #070C1C;
-  --ds-sunken:      #040814;
-  --ds-panel:       #0C1424;
-  --ds-raised:      #121C30;
-  --ds-raised-2:    #1A2740;
-  --ds-raised-3:    #24344F;
+  --ds-void:        #0C1638;
+  --ds-sunken:      #081026;
+  --ds-panel:       #14224E;
+  --ds-raised:      #1B2C60;
+  --ds-raised-2:    #24386F;
+  --ds-raised-3:    #30477F;
   --ds-scrim:       rgba(6, 11, 24, 0.72);
 
   /* ---- Hairlines ---- */
@@ -40,7 +40,7 @@
   --ds-ink-2:       #A3AFC4;
   --ds-ink-3:       #6B7893;
   --ds-ink-4:       #47536B;
-  --ds-ink-inv:     #060B18;
+  --ds-ink-inv:     #081026;
 
   /* ---- Blue — play, brand, commerce ---- */
   --ds-accent:        #4C8DFF;
@@ -122,10 +122,10 @@
 
   /* ---- Ambient — фон дышит, а не лежит плоским пятном ---- */
   --ds-ambient:
-    radial-gradient(1200px 700px at 6% -10%, rgba(47,98,245,.32), transparent 58%),
-    radial-gradient(950px 600px at 96% 0%, rgba(88,66,236,.28), transparent 56%),
-    radial-gradient(1100px 680px at 46% 110%, rgba(70,182,245,.20), transparent 60%),
-    radial-gradient(700px 500px at 82% 62%, rgba(47,98,245,.14), transparent 62%);
+    radial-gradient(1300px 760px at 4% -12%, rgba(60,120,255,.42), transparent 60%),
+    radial-gradient(1000px 640px at 98% -4%, rgba(104,84,246,.36), transparent 58%),
+    radial-gradient(1200px 740px at 44% 112%, rgba(76,196,255,.30), transparent 62%),
+    radial-gradient(800px 560px at 84% 58%, rgba(53,224,203,.16), transparent 64%);
 
   /* ---- Motion ---- */
   --ds-m-micro: 120ms;
@@ -1085,10 +1085,11 @@ var VIP = PLANS.vip;
    Настоящую афишу использовать нельзя: чужие права. Поэтому кадр
    рисуется, а не заимствуется.
    ============================================================ */
-function heroStage(seed, cls) {
+function heroStage(seed, cls, bokehCount) {
   return '<div class="ds-hero-bg ' + (cls || '') + '">' +
     '<div class="ds-hero-bg__grad">' + dsArt(seed) + '</div>' +
-    '<canvas class="ds-hero-bg__aurora" data-aurora="' + seed + '"></canvas>' +
+    '<canvas class="ds-hero-bg__aurora" data-aurora="' + seed + '"' +
+      (bokehCount ? ' data-bokeh="' + bokehCount + '"' : '') + '></canvas>' +
     '<div class="ds-hero-bg__grain"></div>' +
   '</div>';
 }
@@ -1115,6 +1116,43 @@ var DSAurora = (function () {
     return out;
   }
 
+  // Бокэ: светящиеся круги, медленно оседающие вниз
+  function bokeh(seed, n) {
+    var h = dsHash(seed + 'bokeh'), out = [];
+    var cols = [[150, 200, 255], [90, 160, 255], [255, 255, 255], [53, 224, 203]];
+    for (var i = 0; i < n; i++) {
+      out.push({
+        c: cols[(h >>> (i % 20)) % cols.length],
+        x: ((h >>> (i % 26)) % 1000) / 1000,
+        y0: ((i * 137) % 1000) / 1000,
+        r: 0.006 + ((h >>> (i % 17)) % 55) / 1000,
+        a: 0.05 + ((h >>> (i % 13)) % 16) / 100,
+        v: 0.0000055 + ((i % 7) * 0.0000032)
+      });
+    }
+    return out;
+  }
+
+  function drawBokeh(item, t) {
+    var ctx = item.ctx, w = item.cv.width, hgt = item.cv.height;
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < item.bok.length; i++) {
+      var p = item.bok[i];
+      // движение строго вниз, с заворотом за нижний край
+      var y = ((p.y0 + t * p.v) % 1.16) - 0.08;
+      var cx = p.x * w, cy = y * hgt, rr = p.r * w;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr);
+      g.addColorStop(0, 'rgba(' + p.c.join(',') + ',' + p.a.toFixed(3) + ')');
+      g.addColorStop(0.55, 'rgba(' + p.c.join(',') + ',' + (p.a * 0.35).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + p.c.join(',') + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
   function draw(item, t) {
     var cv = item.cv, ctx = item.ctx;
     var w = cv.width, hgt = cv.height;
@@ -1134,6 +1172,8 @@ var DSAurora = (function () {
       ctx.ellipse(cx, hgt * 0.42, r.w * w * 1.6, hgt * 0.78, 0, 0, Math.PI * 2);
       ctx.fill();
     });
+
+    if (item.bok) drawBokeh(item, t);
 
     // Пылинки в луче — оживляют кадр, но почти не заметны по отдельности
     ctx.globalCompositeOperation = 'source-over';
@@ -1171,6 +1211,9 @@ var DSAurora = (function () {
         var item = {
           cv: cv, ctx: cv.getContext('2d'),
           rib: ribbons(cv.getAttribute('data-aurora')),
+          bok: cv.hasAttribute('data-bokeh')
+            ? bokeh(cv.getAttribute('data-aurora'), +cv.getAttribute('data-bokeh') || 26)
+            : null,
           dust: [], visible: true
         };
         var hh = dsHash(cv.getAttribute('data-aurora'));
@@ -1635,7 +1678,7 @@ Mo.home = function (os) {
   return phone(os,
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:470px;margin-top:-46px">' +
-        heroStage(h.t + 'hero') +
+        heroStage(h.t + 'hero', '', 14) +
         '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,11,24,.32) 46%,rgba(6,11,24,.68))"></div>' +
         '<div style="position:absolute;top:52px;left:0;right:0;padding:0 18px;display:flex;align-items:center;justify-content:space-between">' +
           dsLogo(26, 16) +

@@ -239,10 +239,11 @@ var VIP = PLANS.vip;
    Настоящую афишу использовать нельзя: чужие права. Поэтому кадр
    рисуется, а не заимствуется.
    ============================================================ */
-function heroStage(seed, cls) {
+function heroStage(seed, cls, bokehCount) {
   return '<div class="ds-hero-bg ' + (cls || '') + '">' +
     '<div class="ds-hero-bg__grad">' + dsArt(seed) + '</div>' +
-    '<canvas class="ds-hero-bg__aurora" data-aurora="' + seed + '"></canvas>' +
+    '<canvas class="ds-hero-bg__aurora" data-aurora="' + seed + '"' +
+      (bokehCount ? ' data-bokeh="' + bokehCount + '"' : '') + '></canvas>' +
     '<div class="ds-hero-bg__grain"></div>' +
   '</div>';
 }
@@ -269,6 +270,43 @@ var DSAurora = (function () {
     return out;
   }
 
+  // Бокэ: светящиеся круги, медленно оседающие вниз
+  function bokeh(seed, n) {
+    var h = dsHash(seed + 'bokeh'), out = [];
+    var cols = [[150, 200, 255], [90, 160, 255], [255, 255, 255], [53, 224, 203]];
+    for (var i = 0; i < n; i++) {
+      out.push({
+        c: cols[(h >>> (i % 20)) % cols.length],
+        x: ((h >>> (i % 26)) % 1000) / 1000,
+        y0: ((i * 137) % 1000) / 1000,
+        r: 0.006 + ((h >>> (i % 17)) % 55) / 1000,
+        a: 0.05 + ((h >>> (i % 13)) % 16) / 100,
+        v: 0.0000055 + ((i % 7) * 0.0000032)
+      });
+    }
+    return out;
+  }
+
+  function drawBokeh(item, t) {
+    var ctx = item.ctx, w = item.cv.width, hgt = item.cv.height;
+    ctx.globalCompositeOperation = 'lighter';
+    for (var i = 0; i < item.bok.length; i++) {
+      var p = item.bok[i];
+      // движение строго вниз, с заворотом за нижний край
+      var y = ((p.y0 + t * p.v) % 1.16) - 0.08;
+      var cx = p.x * w, cy = y * hgt, rr = p.r * w;
+      var g = ctx.createRadialGradient(cx, cy, 0, cx, cy, rr);
+      g.addColorStop(0, 'rgba(' + p.c.join(',') + ',' + p.a.toFixed(3) + ')');
+      g.addColorStop(0.55, 'rgba(' + p.c.join(',') + ',' + (p.a * 0.35).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + p.c.join(',') + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
   function draw(item, t) {
     var cv = item.cv, ctx = item.ctx;
     var w = cv.width, hgt = cv.height;
@@ -288,6 +326,8 @@ var DSAurora = (function () {
       ctx.ellipse(cx, hgt * 0.42, r.w * w * 1.6, hgt * 0.78, 0, 0, Math.PI * 2);
       ctx.fill();
     });
+
+    if (item.bok) drawBokeh(item, t);
 
     // Пылинки в луче — оживляют кадр, но почти не заметны по отдельности
     ctx.globalCompositeOperation = 'source-over';
@@ -325,6 +365,9 @@ var DSAurora = (function () {
         var item = {
           cv: cv, ctx: cv.getContext('2d'),
           rib: ribbons(cv.getAttribute('data-aurora')),
+          bok: cv.hasAttribute('data-bokeh')
+            ? bokeh(cv.getAttribute('data-aurora'), +cv.getAttribute('data-bokeh') || 26)
+            : null,
           dust: [], visible: true
         };
         var hh = dsHash(cv.getAttribute('data-aurora'));

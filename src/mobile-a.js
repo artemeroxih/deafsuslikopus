@@ -247,7 +247,7 @@ Mo.home = function (os) {
   return phone(os,
     '<div class="ds-scroll ds-noscroll" style="flex:1;overflow-y:auto">' +
       '<div style="position:relative;height:470px;margin-top:-46px">' +
-        heroStage(h.t + 'hero') +
+        heroStage(h.t + 'hero', '', 14) +
         '<div style="position:absolute;inset:0;background:linear-gradient(to top,var(--ds-void) 4%,rgba(6,11,24,.32) 46%,rgba(6,11,24,.68))"></div>' +
         '<div style="position:absolute;top:52px;left:0;right:0;padding:0 18px;display:flex;align-items:center;justify-content:space-between">' +
           dsLogo(26, 16) +
