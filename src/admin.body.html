@@ -25,6 +25,16 @@
     background: var(--ds-raised); border-bottom: 1px solid var(--ds-line);
   }
   .ap__dot { width: 9px; height: 9px; border-radius: 99px; }
+
+  @media (max-width: 900px) {
+    /* Панель в 918 px не помещалась в экран: убираем необязательное,
+       остальное прокручивается */
+    .ap__bar { overflow-x: auto; padding: 0 12px; gap: 10px; }
+    .ap__bar::-webkit-scrollbar { display: none; }
+    .ap__hideSm { display: none; }
+    .ap__pick { max-width: 190px; }
+    .ap__canvas { padding: 12px; }
+  }
   .ap__url {
     flex: 1; height: 22px; border-radius: 99px; background: var(--ds-void);
     border: 1px solid var(--ds-line); display: flex; align-items: center; gap: 6px;
@@ -35,14 +45,14 @@
 <div class="ap">
   <div class="ap__bar">
     <div id="apLogo"></div>
-    <span class="ds-badge ds-badge--err">Приватная панель</span>
-    <div style="width:1px;height:22px;background:var(--ds-line)"></div>
+    <span class="ds-badge ds-badge--err ap__hideSm">Приватная панель</span>
+    <div class="ap__hideSm" style="width:1px;height:22px;background:var(--ds-line)"></div>
     <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apPrev" aria-label="Предыдущий экран"></button>
     <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="apNext" aria-label="Следующий экран"></button>
     <select class="ap__pick" id="apPick"></select>
-    <div class="ds-cap" id="apSub">Экран 02 из 18</div>
+    <div class="ds-cap ap__hideSm" id="apSub">Экран 02 из 18</div>
     <div class="ds-grow"></div>
-    <div class="ds-seg" id="apVp"></div>
+    <div class="ds-seg ap__hideSm" id="apVp"></div>
   </div>
   <div class="ap__canvas ds-scroll" id="apCanvas">
     <div id="apWrap" style="margin:0 auto">

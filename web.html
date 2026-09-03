@@ -3222,9 +3222,38 @@ S.ticket = function () {
   }
   .pt__flowbtn:hover { background: rgba(255,255,255,.06); color: var(--ds-ink); }
   .pt__flowbtn.is-on { background: var(--ds-amber-dim); border-color: var(--ds-amber-edge); color: var(--ds-amber); }
+
+  /* Кнопка меню и затемнение нужны только на узком экране */
+  .pt__menu, .pt__scrim { display: none; }
+
+  @media (max-width: 900px) {
+    .pt { grid-template-columns: 1fr; }
+    .pt__side {
+      position: fixed; top: 0; bottom: 0; left: 0; width: 282px; z-index: 200;
+      transform: translateX(-100%);
+      transition: transform var(--ds-m-large) var(--ds-ease);
+      box-shadow: var(--ds-e4);
+    }
+    .pt.is-nav .pt__side { transform: none; }
+    .pt__scrim {
+      display: block; position: fixed; inset: 0; z-index: 199;
+      background: rgba(4,8,20,.62); backdrop-filter: blur(3px);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--ds-m-base) var(--ds-ease);
+    }
+    .pt.is-nav .pt__scrim { opacity: 1; pointer-events: auto; }
+    .pt__menu { display: inline-flex; }
+    .pt__bar { overflow-x: auto; padding: 0 12px; gap: 10px; }
+    .pt__bar::-webkit-scrollbar { display: none; }
+    .pt__canvas { padding: 12px; }
+    /* «Экран 04 из 43» ломался в три строки и налезал на переключатель */
+    .pt__label { flex: none; }
+    #ptSub { display: none; }
+  }
 </style>
 
-<div class="pt">
+<div class="pt" id="ptRoot">
+  <div class="pt__scrim" id="ptScrim"></div>
   <nav class="pt__side">
     <div class="pt__brand">
       <div id="ptLogo"></div>
@@ -3236,10 +3265,11 @@ S.ticket = function () {
 
   <div class="pt__main">
     <div class="pt__bar">
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare pt__menu" id="ptMenu" aria-label="Список экранов"></button>
       <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="ptPrev" aria-label="Предыдущий экран"></button>
       <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="ptNext" aria-label="Следующий экран"></button>
-      <div style="min-width:0">
-        <div class="ds-h3" id="ptTitle" style="font-size:14px">Главная</div>
+      <div class="pt__label" style="min-width:0">
+        <div class="ds-h3" id="ptTitle" style="font-size:14px;white-space:nowrap">Главная</div>
         <div class="ds-cap" id="ptSub">Экран 04 из 40</div>
       </div>
       <div class="ds-grow"></div>
@@ -3352,7 +3382,14 @@ S.ticket = function () {
 
   /* ---- sidebar ---- */
   $('ptLogo').innerHTML = dsLogo(24, 15);
+  $('ptMenu').innerHTML = ic('list', 18);
   $('ptPrev').innerHTML = ic('chevL', 17);
+
+  // На узком экране меню — выдвижная шторка, а не колонка в 268 px
+  var narrow = function () { return window.innerWidth <= 900; };
+  function nav(open) { $('ptRoot').classList.toggle('is-nav', open); }
+  $('ptMenu').addEventListener('click', function () { nav(!$('ptRoot').classList.contains('is-nav')); });
+  $('ptScrim').addEventListener('click', function () { nav(false); });
   $('ptNext').innerHTML = ic('chevR', 17);
   $('ptViewport').innerHTML = VP.map(function (v, i) {
     return '<button data-vw="' + v[1] + '" aria-selected="' + (i === 0) + '">' + v[0] + '</button>';
@@ -3404,7 +3441,7 @@ S.ticket = function () {
   /* ---- delegated navigation ---- */
   document.addEventListener('click', function (ev) {
     var item = ev.target.closest('.pt__item');
-    if (item) { go(item.dataset.id); return; }
+    if (item) { go(item.dataset.id); nav(false); return; }
 
     var flow = ev.target.closest('.pt__flowbtn');
     if (flow) {
@@ -3532,6 +3569,13 @@ S.ticket = function () {
       draw();
     });
     draw();
+  }
+
+  if (narrow()) {
+    state.vw = 420;
+    $('ptViewport').querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.vw === '420');
+    });
   }
 
   go('home');

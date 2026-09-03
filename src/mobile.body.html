@@ -26,9 +26,39 @@
   .mp__flowbtn { padding: 5px 10px; border-radius: 99px; border: 1px solid var(--ds-line); background: none; color: var(--ds-ink-3); font-size: 11px; font-weight: 600; cursor: pointer; }
   .mp__flowbtn:hover { background: rgba(255,255,255,.06); color: var(--ds-ink); }
   .mp__flowbtn.is-on { background: var(--ds-amber-dim); border-color: var(--ds-amber-edge); color: var(--ds-amber); }
+
+  .mp__menu, .mp__scrim { display: none; }
+
+  @media (max-width: 900px) {
+    .mp { grid-template-columns: 1fr; }
+    .mp__side {
+      position: fixed; top: 0; bottom: 0; left: 0; width: 274px; z-index: 200;
+      transform: translateX(-100%);
+      transition: transform var(--ds-m-large) var(--ds-ease);
+      box-shadow: var(--ds-e4);
+    }
+    .mp.is-nav .mp__side { transform: none; }
+    .mp__scrim {
+      display: block; position: fixed; inset: 0; z-index: 199;
+      background: rgba(4,8,20,.62); backdrop-filter: blur(3px);
+      opacity: 0; pointer-events: none;
+      transition: opacity var(--ds-m-base) var(--ds-ease);
+    }
+    .mp.is-nav .mp__scrim { opacity: 1; pointer-events: auto; }
+    .mp__menu { display: inline-flex; }
+    .mp__bar { overflow-x: auto; padding: 0 12px; gap: 10px; }
+    .mp__bar::-webkit-scrollbar { display: none; }
+    /* Телефон 372 px не влезает в экран 375 — уменьшаем макет целиком */
+    .mp__stage { padding: 16px 8px; gap: 20px; flex-direction: column; align-items: center; }
+    .mp__stage .ds-phone { transform: scale(.82); transform-origin: top center; margin-bottom: -110px; }
+    .mp__note { flex: none; width: 100%; max-width: 340px; }
+    .mp__label { flex: none; }
+    #mpSub { display: none; }
+  }
 </style>
 
-<div class="mp">
+<div class="mp" id="mpRoot">
+  <div class="mp__scrim" id="mpScrim"></div>
   <nav class="mp__side">
     <div class="mp__brand">
       <div id="mpLogo"></div>
@@ -40,10 +70,11 @@
 
   <div class="mp__main">
     <div class="mp__bar">
+      <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare mp__menu" id="mpMenu" aria-label="Список экранов"></button>
       <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="mpPrev" aria-label="Предыдущий экран"></button>
       <button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" id="mpNext" aria-label="Следующий экран"></button>
-      <div style="min-width:0">
-        <div class="ds-h3" id="mpTitle" style="font-size:14px">Главная</div>
+      <div class="mp__label" style="min-width:0">
+        <div class="ds-h3" id="mpTitle" style="font-size:14px;white-space:nowrap">Главная</div>
         <div class="ds-cap" id="mpSub">Экран 05 из 48</div>
       </div>
       <div class="ds-grow"></div>
@@ -142,7 +173,13 @@
   var state = { id: 'home', mode: 'both', flow: null };
 
   $('mpLogo').innerHTML = dsLogo(24, 15);
+  $('mpMenu').innerHTML = ic('list', 18);
   $('mpPrev').innerHTML = ic('chevL', 17);
+
+  var narrow = function () { return window.innerWidth <= 900; };
+  function nav(open) { $('mpRoot').classList.toggle('is-nav', open); }
+  $('mpMenu').addEventListener('click', function () { nav(!$('mpRoot').classList.contains('is-nav')); });
+  $('mpScrim').addEventListener('click', function () { nav(false); });
   $('mpNext').innerHTML = ic('chevR', 17);
   $('mpFlows').innerHTML = Object.keys(FLOWS).map(function (f) {
     return '<button class="mp__flowbtn" data-flow="' + f + '">' + f.split(' · ')[0] + '</button>';
@@ -186,7 +223,7 @@
 
   document.addEventListener('click', function (ev) {
     var item = ev.target.closest('.mp__item');
-    if (item) { go(item.dataset.id); return; }
+    if (item) { go(item.dataset.id); nav(false); return; }
 
     var flow = ev.target.closest('.mp__flowbtn');
     if (flow) {
@@ -212,6 +249,13 @@
 
   $('mpPrev').addEventListener('click', function () { go(FLAT[Math.max(0, BY[state.id].i - 1)][0]); });
   $('mpNext').addEventListener('click', function () { go(FLAT[Math.min(FLAT.length - 1, BY[state.id].i + 1)][0]); });
+
+  if (narrow()) {
+    state.mode = 'ios';
+    $('mpMode').querySelectorAll('button').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.mode === 'ios');
+    });
+  }
 
   go('home');
 })();
