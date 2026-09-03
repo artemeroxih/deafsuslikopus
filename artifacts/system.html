@@ -794,6 +794,43 @@ body {
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 
+/* ============================================================
+   HERO — живой кинематографический фон
+   ============================================================ */
+.ds-hero-bg { position: absolute; inset: 0; overflow: hidden; isolation: isolate; }
+
+/* Медленный наплыв: кадр дышит, а не стоит */
+.ds-hero-bg__grad {
+  position: absolute; inset: -6%;
+  animation: ds-kenburns 34s ease-in-out infinite alternate;
+}
+@keyframes ds-kenburns {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(1.12) translate3d(-2%, -1.5%, 0); }
+}
+
+.ds-hero-bg__aurora {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  display: block; opacity: .85; pointer-events: none;
+}
+
+.ds-hero-bg__grain {
+  position: absolute; inset: 0; pointer-events: none;
+  opacity: .16; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: ds-grain 1.1s steps(3) infinite;
+}
+@keyframes ds-grain {
+  0%   { transform: translate(0, 0); }
+  33%  { transform: translate(-3px, 2px); }
+  66%  { transform: translate(2px, -3px); }
+  100% { transform: translate(0, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-hero-bg__grad, .ds-hero-bg__grain { animation: none; }
+}
+
 </style>
 <script>
 /* ============================================================
@@ -947,9 +984,9 @@ function dsArt(seed, opts) {
   opts = opts || {};
   var h = dsHash(seed);
   var p = DS_PAL[h % DS_PAL.length];
-  var a = (h >> 4) % 360, x1 = 12 + ((h >> 7) % 70), y1 = 8 + ((h >> 11) % 50);
-  var x2 = 25 + ((h >> 13) % 60), y2 = 45 + ((h >> 17) % 45);
-  var rot = ((h >> 19) % 60) - 30;
+  var a = (h >>> 4) % 360, x1 = 12 + ((h >>> 7) % 70), y1 = 8 + ((h >>> 11) % 50);
+  var x2 = 25 + ((h >>> 13) % 60), y2 = 45 + ((h >>> 17) % 45);
+  var rot = ((h >>> 19) % 60) - 30;
   return '' +
     '<div class="ds-art__grad" style="background:' +
       'radial-gradient(60% 46% at ' + x1 + '% ' + y1 + '%, ' + p[1] + 'DD 0%, transparent 62%),' +
@@ -1030,6 +1067,140 @@ var PLANS = {
   }
 };
 var VIP = PLANS.vip;
+
+/* ============================================================
+   Кинематографический герой — живой фон вместо статичной плашки
+   Северное сияние на холсте, медленный наплыв, плёночное зерно.
+   Настоящую афишу использовать нельзя: чужие права. Поэтому кадр
+   рисуется, а не заимствуется.
+   ============================================================ */
+function heroStage(seed, cls) {
+  return '<div class="ds-hero-bg ' + (cls || '') + '">' +
+    '<div class="ds-hero-bg__grad">' + dsArt(seed) + '</div>' +
+    '<canvas class="ds-hero-bg__aurora" data-aurora="' + seed + '"></canvas>' +
+    '<div class="ds-hero-bg__grain"></div>' +
+  '</div>';
+}
+
+var DSAurora = (function () {
+  var running = [], raf = null;
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ribbons(seed) {
+    var h = dsHash(seed), out = [];
+    // Полосы света: три холодные и одна брендовая бирюзовая
+    var cols = [[47, 98, 245], [88, 66, 236], [53, 224, 203], [70, 182, 245]];
+    for (var i = 0; i < 4; i++) {
+      out.push({
+        c: cols[i],
+        x: 0.12 + ((h >>> (i * 3)) % 70) / 100,
+        w: 0.10 + ((h >>> (i * 5)) % 16) / 100,
+        amp: 0.05 + ((h >>> (i * 7)) % 9) / 100,
+        speed: 0.00006 + i * 0.000021,
+        phase: ((h >>> (i * 4)) % 100) / 16,
+        alpha: 0.30 - i * 0.045
+      });
+    }
+    return out;
+  }
+
+  function draw(item, t) {
+    var cv = item.cv, ctx = item.ctx;
+    var w = cv.width, hgt = cv.height;
+    ctx.clearRect(0, 0, w, hgt);
+    ctx.globalCompositeOperation = 'lighter';
+
+    item.rib.forEach(function (r) {
+      // Лента строится как вертикальный градиент, гуляющий по синусоиде
+      var cx = r.x * w + Math.sin(t * r.speed + r.phase) * r.amp * w;
+      var g = ctx.createLinearGradient(cx - r.w * w, 0, cx + r.w * w, hgt);
+      var a = r.alpha * (0.72 + 0.28 * Math.sin(t * r.speed * 2.1 + r.phase));
+      g.addColorStop(0, 'rgba(' + r.c.join(',') + ',0)');
+      g.addColorStop(0.5, 'rgba(' + r.c.join(',') + ',' + a.toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + r.c.join(',') + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.ellipse(cx, hgt * 0.42, r.w * w * 1.6, hgt * 0.78, 0, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    // Пылинки в луче — оживляют кадр, но почти не заметны по отдельности
+    ctx.globalCompositeOperation = 'source-over';
+    for (var i = 0; i < item.dust.length; i++) {
+      var d = item.dust[i];
+      var y = (d.y + t * d.v) % 1;
+      ctx.fillStyle = 'rgba(200,225,255,' + d.a + ')';
+      ctx.fillRect(d.x * w, y * hgt, d.s, d.s);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  function size(item) {
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var r = item.cv.getBoundingClientRect();
+    if (!r.width || !r.height) return false;
+    item.cv.width = Math.round(r.width * dpr);
+    item.cv.height = Math.round(r.height * dpr);
+    return true;
+  }
+
+  function tick(now) {
+    for (var i = 0; i < running.length; i++) {
+      if (running[i].visible) draw(running[i], now);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+
+  return {
+    mount: function (root) {
+      this.stop();
+      var list = (root || document).querySelectorAll('canvas[data-aurora]');
+      for (var i = 0; i < list.length; i++) {
+        var cv = list[i];
+        var item = {
+          cv: cv, ctx: cv.getContext('2d'),
+          rib: ribbons(cv.getAttribute('data-aurora')),
+          dust: [], visible: true
+        };
+        var hh = dsHash(cv.getAttribute('data-aurora'));
+        for (var k = 0; k < 34; k++) {
+          item.dust.push({
+            x: ((hh >>> (k % 24)) % 1000) / 1000,
+            y: (k * 37 % 100) / 100,
+            v: 0.000004 + (k % 5) * 0.0000021,
+            s: 1 + (k % 3),
+            a: 0.05 + (k % 4) * 0.03
+          });
+        }
+        if (!size(item)) continue;
+        running.push(item);
+        if (window.IntersectionObserver) {
+          new IntersectionObserver(function (es) {
+            es.forEach(function (e) {
+              for (var j = 0; j < running.length; j++) {
+                if (running[j].cv === e.target) running[j].visible = e.isIntersecting;
+              }
+            });
+          }, { threshold: 0 }).observe(cv);
+        }
+      }
+      if (!running.length) return;
+      // Первый кадр рисуем синхронно: если анимация приостановлена
+      // (скрытая вкладка, экономия энергии, reduced-motion) — кадр всё равно
+      // на месте, а не пустой холст.
+      running.forEach(function (it) { draw(it, 0); });
+      if (reduced) return;
+      raf = requestAnimationFrame(tick);
+    },
+    stop: function () {
+      if (raf) cancelAnimationFrame(raf);
+      raf = null; running = [];
+    },
+    resize: function () { running.forEach(size); }
+  };
+})();
+
+window.addEventListener('resize', function () { DSAurora.resize(); });
 
 </script>
 <style>

@@ -126,8 +126,8 @@ S.home = function () {
   var h = M(9);
   return topbar('home') +
     '<section style="position:relative;height:700px;margin-top:-68px">' +
-      '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(h.t + 'hero') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.96) 6%,rgba(6,11,24,.55) 52%,transparent),linear-gradient(to top,var(--ds-void) 2%,transparent 42%)"></div>' +
+      heroStage(h.t + 'hero') +
+      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.94) 4%,rgba(6,11,24,.5) 50%,transparent 78%),linear-gradient(to top,var(--ds-void) 2%,transparent 44%)"></div>' +
       '<div class="ds-container" style="position:relative;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:52px">' +
         '<div style="max-width:600px">' +
           '<p class="ds-eyebrow" style="color:var(--ds-accent)">Фильм недели</p>' +
@@ -373,8 +373,8 @@ S.movie = function () {
   var m = M(9);
   return topbar('movies') +
     '<section style="position:relative;min-height:620px;margin-top:-68px">' +
-      '<div class="ds-art" style="position:absolute;inset:0">' + dsArt(m.t + 'hero') + '</div>' +
-      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.97) 8%,rgba(6,11,24,.6) 56%,rgba(6,11,24,.3)),linear-gradient(to top,var(--ds-void) 2%,transparent 46%)"></div>' +
+      heroStage(m.t + 'hero') +
+      '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.95) 6%,rgba(6,11,24,.55) 54%,rgba(6,11,24,.28)),linear-gradient(to top,var(--ds-void) 2%,transparent 48%)"></div>' +
       '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;align-items:end">' +
         '<div style="border-radius:var(--ds-r-lg);overflow:hidden;border:1px solid var(--ds-line-mid);box-shadow:var(--ds-e4);position:relative;aspect-ratio:2/3">' +
           art(m.t, '', 'position:absolute;inset:0', m.t, 20) + '</div>' +

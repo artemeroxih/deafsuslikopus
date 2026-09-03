@@ -285,6 +285,7 @@
 
   /* ---- per-screen wiring ---- */
   function afterRender() {
+    DSAurora.mount(document.getElementById('ptScreen'));
     var stage = document.getElementById('ccStage');
     if (stage) initCaptionEditor();
     var a11yPrev = document.getElementById('a11yPrev');

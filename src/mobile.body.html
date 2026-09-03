@@ -180,6 +180,7 @@
     $('mpTitle').textContent = s[1];
     $('mpSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + FLAT.length;
     $('mpStage').scrollTop = 0;
+    DSAurora.mount($('mpStage'));
     renderList();
   }
 

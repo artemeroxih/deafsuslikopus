@@ -44,6 +44,7 @@
 </style>
 
 <header class="ix__hero">
+  <canvas class="ds-hero-bg__aurora" data-aurora="deafsuslik-cover" style="z-index:0"></canvas>
   <div class="ix__wall" id="ixWall"></div>
   <div class="ix__scrim"></div>
   <div class="ix" style="position:relative">
@@ -108,6 +109,8 @@
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
+
+  DSAurora.mount(document);
 
   $('ixLogo').innerHTML = dsLogo(46, 29);
   $('ixFootLogo').innerHTML = dsLogo(24, 15);
