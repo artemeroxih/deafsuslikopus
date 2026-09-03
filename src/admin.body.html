@@ -26,7 +26,17 @@
   }
   .ap__dot { width: 9px; height: 9px; border-radius: 99px; }
 
+  .ap__desktopOnly { display: none; }
+
   @media (max-width: 900px) {
+    /* Админка — рабочий инструмент, её место на компьютере.
+       Не прячем панель совсем, но предупреждаем честно. */
+    .ap__desktopOnly {
+      display: flex; align-items: flex-start; gap: 12px;
+      margin: 12px 12px 0; padding: 14px 16px;
+      border-radius: var(--ds-r-md);
+      background: var(--ds-amber-dim); border: 1px solid var(--ds-amber-edge);
+    }
     /* Панель в 918 px не помещалась в экран: убираем необязательное,
        остальное прокручивается */
     .ap__bar { overflow-x: auto; padding: 0 12px; gap: 10px; }
@@ -53,6 +63,14 @@
     <div class="ds-cap ap__hideSm" id="apSub">Экран 02 из 18</div>
     <div class="ds-grow"></div>
     <div class="ds-seg ap__hideSm" id="apVp"></div>
+  </div>
+  <div class="ap__desktopOnly">
+    <span style="color:var(--ds-amber);display:flex;flex:none" id="apWarnIcon"></span>
+    <div>
+      <p class="ds-sm" style="color:var(--ds-ink);font-weight:600">Админ-панель рассчитана на компьютер</p>
+      <p class="ds-cap" style="margin-top:4px">Таблицы, таймлайн субтитров и загрузка мастер-файлов требуют широкого экрана
+      и мыши. С телефона можно посмотреть, но работать — с ноутбука или десктопа.</p>
+    </div>
   </div>
   <div class="ap__canvas ds-scroll" id="apCanvas">
     <div id="apWrap" style="margin:0 auto">
@@ -112,6 +130,7 @@
   $('apPrev').innerHTML = ic('chevL', 17);
   $('apNext').innerHTML = ic('chevR', 17);
   $('apLock').innerHTML = ic('lock', 10, 2.6);
+  $('apWarnIcon').innerHTML = ic('devices', 18);
   $('apVp').innerHTML = VP.map(function (v, i) {
     return '<button data-vw="' + v[1] + '" aria-selected="' + (i === 1) + '">' + v[0] + '</button>';
   }).join('');
@@ -140,6 +159,7 @@
     $('apSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + SCREENS.length;
     $('apUrl').textContent = 'admin.deafsuslik.ru' + e.s[3];
     $('apCanvas').scrollTop = 0;
+    fit();
     requestAnimationFrame(fit);
   }
 

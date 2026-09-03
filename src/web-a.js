@@ -193,7 +193,7 @@ S.search = function () {
       '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Голосовой поиск">' + ic('mic', 18) + '</button>' +
       '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-go="filters">' + ic('filter', 14) + ' Фильтры</button></div>' +
 
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:40px">' +
+    '<div style="margin-top:40px" class="ds-grid ds-grid--2">' +
       '<div><div class="ds-between" style="margin-bottom:14px"><p class="ds-eyebrow">Недавние запросы</p>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Очистить</button></div>' +
         '<div class="ds-stack">' + ['год тишины', 'документальные 2025', 'исландия драма', 'фильмы с CC+', 'полярная станция'].map(function (q) {
@@ -243,7 +243,7 @@ S.results = function () {
           '<option>По популярности</option><option>По рейтингу</option><option>Сначала новые</option><option>Сначала старые</option><option>A–Z</option></select>' +
         '<div class="ds-seg"><button aria-selected="true">' + ic('grid', 14) + '</button><button aria-selected="false">' + ic('list', 14) + '</button></div></div></div>' +
 
-    '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:28px">' +
+    '<div class="ds-grid ds-grid--posters" style="margin-top:28px">' +
       [5, 10, 14, 18, 1, 6, 0, 9, 11, 3, 16, 19].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
 
     '<div style="margin-top:52px"><p class="ds-eyebrow" style="margin-bottom:14px">Тот же запрос в виде списка</p>' +
@@ -329,7 +329,7 @@ S.categories = function () {
   return topbar('movies') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
     '<h1 class="ds-d1">Категории</h1>' +
     '<p class="ds-body" style="margin-top:10px">Жанры, коллекции и то, чего нет у других: подборки по субтитрам, качеству и офлайн-доступу.</p>' +
-    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px">' +
+    '<div class="ds-grid ds-grid--4" style=";margin-top:32px">' +
       CATS.map(function (c, i) {
         var special = i >= 13;
         return '<button data-go="category" class="ds-land" style="padding:0;background:none;cursor:pointer;text-align:left;border-color:' + (special ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + '">' +
@@ -362,7 +362,7 @@ S.category = function () {
           '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-go="filters">' + ic('filter', 14) + ' Фильтры</button>' +
           '<select class="ds-select" style="min-height:38px;padding:7px 38px 7px 14px;width:auto;font-size:13px"><option>По популярности</option><option>По рейтингу</option><option>Сначала новые</option></select>' +
           '<div class="ds-seg"><button aria-selected="true">' + ic('grid', 14) + '</button><button aria-selected="false">' + ic('list', 14) + '</button></div></div></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">' +
+      '<div class="ds-grid ds-grid--posters">' +
         [0, 1, 3, 5, 6, 7, 10, 12, 14, 16, 17, 18, 2, 4, 8, 9, 11, 13].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
       '<div class="ds-center" style="margin-top:36px"><button class="ds-btn ds-btn--secondary">Показать ещё 18</button></div>' +
     '</main>' + webFoot();
@@ -375,7 +375,7 @@ S.movie = function () {
     '<section style="position:relative;min-height:620px;margin-top:-68px">' +
       heroStage(m.t + 'hero', '', 18) +
       '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.95) 6%,rgba(6,11,24,.55) 54%,rgba(6,11,24,.28)),linear-gradient(to top,var(--ds-void) 2%,transparent 48%)"></div>' +
-      '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;align-items:end">' +
+      '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;align-items:end" class="ds-split ds-split--poster">' +
         '<div style="border-radius:var(--ds-r-lg);overflow:hidden;border:1px solid var(--ds-line-mid);box-shadow:var(--ds-e4);position:relative;aspect-ratio:2/3">' +
           art(m.t, '', 'position:absolute;inset:0', m.t, 20) + '</div>' +
         '<div>' +
@@ -402,7 +402,7 @@ S.movie = function () {
         '</div></div></section>' +
 
     '<main class="ds-container" style="padding-bottom:64px">' +
-      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 328px;gap:56px;align-items:start">' +
+      '<div class="ds-split ds-split--right" style="gap:56px">' +
         '<div>' +
           '<section><h2 class="ds-h1">Описание</h2>' +
             '<p class="ds-body" style="margin-top:12px">Пятый год Марк работает на метеостанции у кромки льда. Радиосвязь оборвалась в ноябре, ' +

@@ -160,7 +160,7 @@ S.checkout = function () {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px;max-width:1080px">' +
     '<button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="plans" style="padding-left:0">' + ic('arrowL', 15) + ' К тарифам</button>' +
     '<h1 class="ds-d1" style="margin-top:14px">Оформление подписки</h1>' +
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;margin-top:28px;align-items:start">' +
+    '<div class="ds-split ds-split--right-lg" style="margin-top:28px">' +
       '<div class="ds-stack ds-g4">' +
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:16px">Способ оплаты</h3>' +
           '<div class="ds-stack ds-g2">' +

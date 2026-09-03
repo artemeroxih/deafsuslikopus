@@ -24,12 +24,12 @@ S.profile = function () {
             '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна до 12 октября</span></div></div>' +
         '<button class="ds-btn ds-btn--secondary" data-go="edit-profile" style="margin-bottom:8px">' + ic('edit', 16) + ' Изменить профиль</button></div>' +
 
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:32px">' +
         [['Просмотрено фильмов', '284'], ['Часов просмотра', '512'], ['Скачано', '6'], ['С CC+', '78%']].map(function (s) {
           return '<div class="ds-stat"><div class="ds-stat__k">' + s[0] + '</div><div class="ds-stat__v">' + s[1] + '</div></div>';
         }).join('') + '</div>' +
 
-      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;align-items:start">' +
+      '<div class="ds-grid ds-grid--3" style="gap:20px;;margin-top:32px;align-items:start">' +
         [['Смотреть', [['history', 'История просмотра', 'clock', '284 фильма'], ['favorites', 'Избранное', 'heart', '32 фильма'],
                        ['library', 'Моя библиотека', 'library', '5 списков'], ['downloads', 'Загрузки', 'download', '6 · 16.7 GB']]],
          ['Настройки', [['a11y', 'Субтитры и CC+', 'cc', 'Русский CC+, крупный'], ['settings', 'Качество видео', 'quality', 'Авто · до 4K'],
@@ -94,7 +94,7 @@ S.subs = function () {
           '<div><div class="ds-h1">ВИП</div>' +
           '<div class="ds-num ds-sm ds-mut" style="margin-top:3px">500 ₽ / месяц · регулярное списание</div></div></div>' +
         '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна</span></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;padding-top:18px;border-top:1px solid var(--ds-line)">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:20px;padding-top:18px;border-top:1px solid var(--ds-line)">' +
         [['Следующее списание', '12 октября 2026'], ['Осталось дней', '40'],
          ['Подключена', '12 марта 2026'], ['Способ оплаты', 'Mir •••• 4417']].map(function (r) {
           return '<div><div class="ds-cap">' + r[0] + '</div><div class="ds-sm" style="font-weight:600;margin-top:3px">' + r[1] + '</div></div>';
@@ -137,7 +137,7 @@ S.subDetail = function () {
         '<span style="width:4px;height:46px;border-radius:2px;background:var(--ds-vip)"></span>' +
         '<div><div class="ds-h1">' + p.name + '</div><div class="ds-num ds-sm ds-mut" style="margin-top:3px">500 ₽ / месяц · регулярное списание</div></div></div>' +
         '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна</span></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:22px">' +
         [['Следующее списание', '12 октября 2026'], ['Осталось дней', '40'],
          ['Подключена', '12 марта 2026'], ['Всего списаний', '7']].map(function (r) {
           return '<div class="ds-stat" style="background:var(--ds-void)"><div class="ds-stat__k">' + r[0] + '</div>' +
@@ -152,7 +152,7 @@ S.subDetail = function () {
         '<button class="ds-btn ds-btn--sm ds-btn--secondary">Изменить</button></div></div>' +
 
     '<div class="ds-card" style="margin-top:16px"><h3 class="ds-h2" style="margin-bottom:14px">Что открывает подписка</h3>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+      '<div style="gap:12px" class="ds-grid ds-grid--2">' +
         p.feats.map(function (f) {
           return '<div class="ds-row-f ds-g2"><span style="color:var(--ds-vip);display:flex;flex:none">' + ic('check', 16, 2.4) + '</span>' +
             '<span class="ds-sm">' + f + '</span></div>';
@@ -337,7 +337,7 @@ S.help = function () {
     '<div class="ds-search" style="min-height:56px;margin-bottom:24px">' +
       '<span style="color:var(--ds-ink-3);display:flex">' + ic('search', 20) + '</span>' +
       '<input placeholder="Поиск по помощи — например «нет субтитров»"></div>' +
-    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">' +
+    '<div class="ds-grid ds-grid--3" style="gap:14px;">' +
       TOPICS.map(function (t, i) {
         return '<button class="ds-card" style="text-align:left;cursor:pointer' + (i === 1 ? ';border-color:var(--ds-amber-edge)' : '') + '">' +
           '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-accent)') + ';display:flex">' + ic(t[0], 22) + '</span>' +
@@ -398,7 +398,7 @@ S.support = function () {
         '<div class="ds-card" style="padding:16px;background:var(--ds-void)">' +
           '<div class="ds-between" style="margin-bottom:12px"><p class="ds-eyebrow">Технические данные</p>' +
             '<label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>' +
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+          '<div style="gap:8px" class="ds-grid ds-grid--2">' +
             [['Фильм', 'Год тишины'], ['ID', 'DS-M-04187'], ['Момент', '01:22:18'], ['Качество', '1080p'],
              ['Субтитры', 'Русский CC+'], ['Реплика', '#418'], ['Платформа', 'Web · Chrome 141'], ['Версия', '4.8.2']].map(function (r) {
               return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
@@ -454,7 +454,7 @@ S.ticket = function () {
           '<p class="ds-sm" style="color:var(--ds-ink)">' + body + '</p>' + (extra || '') + '</div></div></div>';
   }
   return settingsPage('#DS-10482 · Описание звука не соответствует сцене', '',
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start">' +
+    '<div class="ds-split ds-split--right" style="gap:24px">' +
       '<div class="ds-card">' +
         '<div class="ds-between" style="padding-bottom:16px;border-bottom:1px solid var(--ds-line);margin-bottom:20px">' +
           '<div class="ds-row-f ds-g2"><span class="ds-badge ds-badge--info ds-badge--lg">В работе</span>' +

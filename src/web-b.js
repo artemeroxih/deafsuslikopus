@@ -172,7 +172,7 @@ S.ccSettings = function () {
       '<div><h1 class="ds-d2">Внешний вид субтитров</h1>' +
       '<p class="ds-sm" style="margin-top:6px">Настройки применяются ко всем фильмам на всех ваших устройствах.</p></div></div>' +
 
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;margin-top:30px;align-items:start">' +
+    '<div class="ds-split ds-split--right-lg" style="margin-top:30px">' +
       '<div style="position:sticky;top:92px">' +
         '<div class="ds-art" id="ccStage" style="aspect-ratio:16/9;border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
           '<div id="ccPreview" class="ds-cuetrack" style="position:relative;z-index:3;padding-bottom:7%"></div></div>' +
@@ -323,7 +323,7 @@ function libraryPage(tab, body) {
 /* 17 — Library / continue watching */
 S.library = function () {
   return libraryPage('library',
-    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">' +
+    '<div class="ds-grid ds-grid--4" style="">' +
       [[0, 78, '1:37:04', '2:08:00'], [12, 47, '47:12', '1:36:00'], [6, 22, '27:40', '2:04:00'],
        [10, 61, '1:29:15', '2:26:00'], [3, 8, '08:22', '1:47:00'], [15, 94, '1:34:40', '1:42:00'],
        [18, 35, '56:18', '2:41:00'], [7, 12, '14:55', '1:58:00']].map(function (it) {
@@ -342,7 +342,7 @@ S.library = function () {
 /* 18 — Favorites */
 S.favorites = function () {
   return libraryPage('favorites',
-    '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">' +
+    '<div class="ds-grid ds-grid--posters">' +
       [9, 6, 0, 13, 17, 2, 11, 4, 15, 8, 19, 1].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
     '<div style="margin-top:52px;max-width:460px"><p class="ds-eyebrow" style="margin-bottom:12px">Пустое состояние</p>' +
       '<div class="ds-card"><div class="ds-empty" style="padding:30px 16px">' +
@@ -385,7 +385,7 @@ S.lists = function () {
     ['На один вечер', 6, '9 ч 05 мин', 0], ['Для дороги — скачано', 4, '6 ч 48 мин', 1],
     ['Пересмотреть', 9, '17 ч 22 мин', 0]];
   return libraryPage('lists',
-    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">' +
+    '<div class="ds-grid ds-grid--3" style="gap:20px;">' +
       '<button class="ds-card" data-go="create-list" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:230px;border-style:dashed;border-color:var(--ds-line-strong);background:none">' +
         '<span class="ds-empty__ico" style="width:52px;height:52px;border-radius:16px">' + ic('plus', 22) + '</span>' +
         '<span class="ds-h3">Новый список</span></button>' +
@@ -429,7 +429,7 @@ S.createList = function () {
 S.listDetail = function () {
   return topbar('library') +
     '<section style="position:relative;min-height:330px;margin-top:-68px">' +
-      '<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr)">' +
+      '<div class="ds-collage" style="position:absolute;inset:0;display:grid">' +
         [0, 1, 2, 3, 4, 5].map(function (k) {
           return '<div style="position:relative;overflow:hidden">' + art('Посмотреть с друзьями' + k, '', 'position:absolute;inset:0') + '</div>';
         }).join('') + '</div>' +

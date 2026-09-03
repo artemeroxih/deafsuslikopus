@@ -842,6 +842,81 @@ body {
   .ds-hero-bg__grad, .ds-hero-bg__grain { animation: none; }
 }
 
+/* ============================================================
+   АДАПТИВНОСТЬ — веб работает от 1600 до 360 px
+   Числа колонок и боковые колонки меняются с шириной,
+   а не сжимаются до нечитаемого.
+   ============================================================ */
+.ds-grid { display: grid; gap: 18px; }
+.ds-grid--posters { grid-template-columns: repeat(6, 1fr); }
+.ds-grid--4 { grid-template-columns: repeat(4, 1fr); }
+.ds-grid--3 { grid-template-columns: repeat(3, 1fr); }
+.ds-grid--2 { grid-template-columns: repeat(2, 1fr); }
+
+/* Контент плюс боковая колонка */
+.ds-split { display: grid; gap: 36px; align-items: start; }
+.ds-split--right { grid-template-columns: minmax(0, 1fr) 328px; }
+.ds-split--right-lg { grid-template-columns: minmax(0, 1fr) 380px; }
+.ds-split--left { grid-template-columns: 246px minmax(0, 1fr); gap: 44px; }
+.ds-split--poster { grid-template-columns: 264px minmax(0, 1fr); gap: 44px; }
+
+@media (max-width: 1279px) {
+  .ds-grid--posters { grid-template-columns: repeat(5, 1fr); }
+}
+
+@media (max-width: 1023px) {
+  .ds-grid--posters { grid-template-columns: repeat(4, 1fr); }
+  .ds-grid--4, .ds-grid--3 { grid-template-columns: repeat(2, 1fr); }
+  .ds-split--right, .ds-split--right-lg, .ds-split--left { grid-template-columns: 1fr; gap: 26px; }
+  .ds-split--right aside, .ds-split--right-lg aside, .ds-split--left aside { position: static !important; }
+  .ds-split--poster { grid-template-columns: 200px minmax(0, 1fr); gap: 28px; }
+}
+
+@media (max-width: 767px) {
+  .ds-container { padding: 0 20px; }
+  .ds-grid--posters { grid-template-columns: repeat(3, 1fr); }
+  /* Верхнее меню уходит: мобильный веб живёт на нижнем таббаре */
+  .ds-topbar .ds-topnav { display: none; }
+  .ds-topbar { gap: 10px; padding: 0 16px; height: 60px; }
+  .ds-topbar__menu { display: inline-flex !important; }
+  .ds-split--poster { grid-template-columns: 150px minmax(0, 1fr); gap: 20px; }
+}
+
+@media (max-width: 519px) {
+  .ds-container { padding: 0 16px; }
+  .ds-grid { gap: 12px; }
+  .ds-grid--posters { grid-template-columns: repeat(2, 1fr); }
+  .ds-grid--4, .ds-grid--3, .ds-grid--2 { grid-template-columns: 1fr; }
+  .ds-split--poster { grid-template-columns: 1fr; }
+  .ds-split--poster > :first-child { max-width: 200px; }
+  .ds-hero-title { font-size: clamp(2rem, 9vw, 2.6rem); }
+}
+
+/* Кнопка меню в шапке — только на узком экране */
+.ds-topbar__menu { display: none; }
+
+/* Декоративный коллаж в шапке списка */
+.ds-collage { grid-template-columns: repeat(6, 1fr); }
+@media (max-width: 767px) { .ds-collage { grid-template-columns: repeat(3, 1fr); } }
+
+/* Вход и регистрация: на телефоне картинка уходит, остаётся форма */
+.ds-authsplit { grid-template-columns: 1.05fr .95fr; }
+@media (max-width: 899px) {
+  .ds-authsplit { grid-template-columns: 1fr; }
+  .ds-authsplit > :first-child { display: none; }
+}
+
+/* Элемент грида по умолчанию не сжимается меньше своего содержимого.
+   Внутри колонок лежат рельсы с постерами min-width:172px — без этого
+   правила колонка раздувалась до 993 px и ломала страницу на телефоне. */
+.ds-split > *, .ds-grid > * { min-width: 0; }
+
+@media (max-width: 767px) {
+  /* Панели инструментов переносятся, а не уезжают за край */
+  .ds-between, .ds-row-f { flex-wrap: wrap; }
+  .ds-railhead { flex-wrap: nowrap; }
+}
+
 </style>
 <script>
 /* ============================================================
@@ -1270,6 +1345,7 @@ var NAV = [
 /* Persistent top navigation */
 function topbar(active) {
   return '<header class="ds-topbar">' +
+    '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare ds-topbar__menu" aria-label="Меню">' + ic('list', 19) + '</button>' +
     dsLogo(28, 17) +
     '<nav class="ds-topnav" style="margin-left:16px">' +
       NAV.map(function (n) {
@@ -1350,7 +1426,7 @@ function wContinue() {
 
 /* Auth page frame — split hero + form */
 function authFrame(inner, sideTitle, sideBody) {
-  return '<div style="min-height:900px;display:grid;grid-template-columns:1.05fr .95fr">' +
+  return '<div style="min-height:900px;display:grid" class="ds-authsplit">' +
     '<div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:56px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('auth-side') + '</div>' +
       '<div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(6,11,24,.4),rgba(6,11,24,.9))"></div>' +
@@ -1370,7 +1446,7 @@ function authFrame(inner, sideTitle, sideBody) {
 /* Settings-style two-column page */
 function settingsPage(title, sub, body, nav) {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
-    '<div style="display:grid;grid-template-columns:246px minmax(0,1fr);gap:44px;align-items:start">' +
+    '<div class="ds-split ds-split--left">' +
       '<aside style="position:sticky;top:92px">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Аккаунт</p>' +
         '<div class="ds-stack">' + (nav || ACCOUNT_NAV).map(function (n) {
@@ -1407,13 +1483,13 @@ var ACCOUNT_NAV = [
 function planCard(p, opts) {
   opts = opts || {};
   return '<div class="ds-card" style="border-color:var(--ds-vip-edge);background:linear-gradient(135deg,rgba(255,194,75,.10),transparent 52%),var(--ds-panel);padding:32px">' +
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:center">' +
+    '<div style="align-items:center" class="ds-split ds-split--right">' +
       '<div>' +
         '<div class="ds-row-f ds-g2"><span style="width:34px;height:3px;border-radius:2px;background:var(--ds-vip)"></span>' +
           '<span class="ds-eyebrow" style="color:var(--ds-vip)">' + p.tag + '</span></div>' +
         '<h3 class="ds-d2" style="margin-top:14px">' + p.name + '</h3>' +
         '<p class="ds-body" style="margin-top:10px">' + p.desc + '</p>' +
-        '<ul style="list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:11px">' +
+        '<ul style="list-style:none;padding:0;margin:22px 0 0;gap:11px" class="ds-grid ds-grid--2">' +
           p.feats.map(function (f) {
             return '<li class="ds-row-f ds-g2" style="font-size:13.5px"><span style="color:var(--ds-vip);display:flex;flex:none">' + ic('check', 16, 2.4) + '</span>' + f + '</li>';
           }).join('') + '</ul></div>' +
@@ -1624,7 +1700,7 @@ S.search = function () {
       '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Голосовой поиск">' + ic('mic', 18) + '</button>' +
       '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-go="filters">' + ic('filter', 14) + ' Фильтры</button></div>' +
 
-    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:44px;margin-top:40px">' +
+    '<div style="margin-top:40px" class="ds-grid ds-grid--2">' +
       '<div><div class="ds-between" style="margin-bottom:14px"><p class="ds-eyebrow">Недавние запросы</p>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Очистить</button></div>' +
         '<div class="ds-stack">' + ['год тишины', 'документальные 2025', 'исландия драма', 'фильмы с CC+', 'полярная станция'].map(function (q) {
@@ -1674,7 +1750,7 @@ S.results = function () {
           '<option>По популярности</option><option>По рейтингу</option><option>Сначала новые</option><option>Сначала старые</option><option>A–Z</option></select>' +
         '<div class="ds-seg"><button aria-selected="true">' + ic('grid', 14) + '</button><button aria-selected="false">' + ic('list', 14) + '</button></div></div></div>' +
 
-    '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px;margin-top:28px">' +
+    '<div class="ds-grid ds-grid--posters" style="margin-top:28px">' +
       [5, 10, 14, 18, 1, 6, 0, 9, 11, 3, 16, 19].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
 
     '<div style="margin-top:52px"><p class="ds-eyebrow" style="margin-bottom:14px">Тот же запрос в виде списка</p>' +
@@ -1760,7 +1836,7 @@ S.categories = function () {
   return topbar('movies') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
     '<h1 class="ds-d1">Категории</h1>' +
     '<p class="ds-body" style="margin-top:10px">Жанры, коллекции и то, чего нет у других: подборки по субтитрам, качеству и офлайн-доступу.</p>' +
-    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:32px">' +
+    '<div class="ds-grid ds-grid--4" style=";margin-top:32px">' +
       CATS.map(function (c, i) {
         var special = i >= 13;
         return '<button data-go="category" class="ds-land" style="padding:0;background:none;cursor:pointer;text-align:left;border-color:' + (special ? 'var(--ds-amber-edge)' : 'var(--ds-line)') + '">' +
@@ -1793,7 +1869,7 @@ S.category = function () {
           '<button class="ds-btn ds-btn--sm ds-btn--secondary" data-go="filters">' + ic('filter', 14) + ' Фильтры</button>' +
           '<select class="ds-select" style="min-height:38px;padding:7px 38px 7px 14px;width:auto;font-size:13px"><option>По популярности</option><option>По рейтингу</option><option>Сначала новые</option></select>' +
           '<div class="ds-seg"><button aria-selected="true">' + ic('grid', 14) + '</button><button aria-selected="false">' + ic('list', 14) + '</button></div></div></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">' +
+      '<div class="ds-grid ds-grid--posters">' +
         [0, 1, 3, 5, 6, 7, 10, 12, 14, 16, 17, 18, 2, 4, 8, 9, 11, 13].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
       '<div class="ds-center" style="margin-top:36px"><button class="ds-btn ds-btn--secondary">Показать ещё 18</button></div>' +
     '</main>' + webFoot();
@@ -1806,7 +1882,7 @@ S.movie = function () {
     '<section style="position:relative;min-height:620px;margin-top:-68px">' +
       heroStage(m.t + 'hero', '', 18) +
       '<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,11,24,.95) 6%,rgba(6,11,24,.55) 54%,rgba(6,11,24,.28)),linear-gradient(to top,var(--ds-void) 2%,transparent 48%)"></div>' +
-      '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;grid-template-columns:264px minmax(0,1fr);gap:44px;align-items:end">' +
+      '<div class="ds-container" style="position:relative;padding-top:130px;padding-bottom:44px;display:grid;align-items:end" class="ds-split ds-split--poster">' +
         '<div style="border-radius:var(--ds-r-lg);overflow:hidden;border:1px solid var(--ds-line-mid);box-shadow:var(--ds-e4);position:relative;aspect-ratio:2/3">' +
           art(m.t, '', 'position:absolute;inset:0', m.t, 20) + '</div>' +
         '<div>' +
@@ -1833,7 +1909,7 @@ S.movie = function () {
         '</div></div></section>' +
 
     '<main class="ds-container" style="padding-bottom:64px">' +
-      '<div style="display:grid;grid-template-columns:minmax(0,1fr) 328px;gap:56px;align-items:start">' +
+      '<div class="ds-split ds-split--right" style="gap:56px">' +
         '<div>' +
           '<section><h2 class="ds-h1">Описание</h2>' +
             '<p class="ds-body" style="margin-top:12px">Пятый год Марк работает на метеостанции у кромки льда. Радиосвязь оборвалась в ноябре, ' +
@@ -2086,7 +2162,7 @@ S.ccSettings = function () {
       '<div><h1 class="ds-d2">Внешний вид субтитров</h1>' +
       '<p class="ds-sm" style="margin-top:6px">Настройки применяются ко всем фильмам на всех ваших устройствах.</p></div></div>' +
 
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;margin-top:30px;align-items:start">' +
+    '<div class="ds-split ds-split--right-lg" style="margin-top:30px">' +
       '<div style="position:sticky;top:92px">' +
         '<div class="ds-art" id="ccStage" style="aspect-ratio:16/9;border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
           '<div id="ccPreview" class="ds-cuetrack" style="position:relative;z-index:3;padding-bottom:7%"></div></div>' +
@@ -2237,7 +2313,7 @@ function libraryPage(tab, body) {
 /* 17 — Library / continue watching */
 S.library = function () {
   return libraryPage('library',
-    '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px">' +
+    '<div class="ds-grid ds-grid--4" style="">' +
       [[0, 78, '1:37:04', '2:08:00'], [12, 47, '47:12', '1:36:00'], [6, 22, '27:40', '2:04:00'],
        [10, 61, '1:29:15', '2:26:00'], [3, 8, '08:22', '1:47:00'], [15, 94, '1:34:40', '1:42:00'],
        [18, 35, '56:18', '2:41:00'], [7, 12, '14:55', '1:58:00']].map(function (it) {
@@ -2256,7 +2332,7 @@ S.library = function () {
 /* 18 — Favorites */
 S.favorites = function () {
   return libraryPage('favorites',
-    '<div style="display:grid;grid-template-columns:repeat(6,1fr);gap:18px">' +
+    '<div class="ds-grid ds-grid--posters">' +
       [9, 6, 0, 13, 17, 2, 11, 4, 15, 8, 19, 1].map(function (i) { return wPoster(M(i), { offline: 1, w: 0 }); }).join('') + '</div>' +
     '<div style="margin-top:52px;max-width:460px"><p class="ds-eyebrow" style="margin-bottom:12px">Пустое состояние</p>' +
       '<div class="ds-card"><div class="ds-empty" style="padding:30px 16px">' +
@@ -2299,7 +2375,7 @@ S.lists = function () {
     ['На один вечер', 6, '9 ч 05 мин', 0], ['Для дороги — скачано', 4, '6 ч 48 мин', 1],
     ['Пересмотреть', 9, '17 ч 22 мин', 0]];
   return libraryPage('lists',
-    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px">' +
+    '<div class="ds-grid ds-grid--3" style="gap:20px;">' +
       '<button class="ds-card" data-go="create-list" style="cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:230px;border-style:dashed;border-color:var(--ds-line-strong);background:none">' +
         '<span class="ds-empty__ico" style="width:52px;height:52px;border-radius:16px">' + ic('plus', 22) + '</span>' +
         '<span class="ds-h3">Новый список</span></button>' +
@@ -2343,7 +2419,7 @@ S.createList = function () {
 S.listDetail = function () {
   return topbar('library') +
     '<section style="position:relative;min-height:330px;margin-top:-68px">' +
-      '<div style="position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr)">' +
+      '<div class="ds-collage" style="position:absolute;inset:0;display:grid">' +
         [0, 1, 2, 3, 4, 5].map(function (k) {
           return '<div style="position:relative;overflow:hidden">' + art('Посмотреть с друзьями' + k, '', 'position:absolute;inset:0') + '</div>';
         }).join('') + '</div>' +
@@ -2545,7 +2621,7 @@ S.checkout = function () {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px;max-width:1080px">' +
     '<button class="ds-btn ds-btn--sm ds-btn--ghost" data-go="plans" style="padding-left:0">' + ic('arrowL', 15) + ' К тарифам</button>' +
     '<h1 class="ds-d1" style="margin-top:14px">Оформление подписки</h1>' +
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:36px;margin-top:28px;align-items:start">' +
+    '<div class="ds-split ds-split--right-lg" style="margin-top:28px">' +
       '<div class="ds-stack ds-g4">' +
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:16px">Способ оплаты</h3>' +
           '<div class="ds-stack ds-g2">' +
@@ -2677,12 +2753,12 @@ S.profile = function () {
             '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна до 12 октября</span></div></div>' +
         '<button class="ds-btn ds-btn--secondary" data-go="edit-profile" style="margin-bottom:8px">' + ic('edit', 16) + ' Изменить профиль</button></div>' +
 
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:32px">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:32px">' +
         [['Просмотрено фильмов', '284'], ['Часов просмотра', '512'], ['Скачано', '6'], ['С CC+', '78%']].map(function (s) {
           return '<div class="ds-stat"><div class="ds-stat__k">' + s[0] + '</div><div class="ds-stat__v">' + s[1] + '</div></div>';
         }).join('') + '</div>' +
 
-      '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;align-items:start">' +
+      '<div class="ds-grid ds-grid--3" style="gap:20px;;margin-top:32px;align-items:start">' +
         [['Смотреть', [['history', 'История просмотра', 'clock', '284 фильма'], ['favorites', 'Избранное', 'heart', '32 фильма'],
                        ['library', 'Моя библиотека', 'library', '5 списков'], ['downloads', 'Загрузки', 'download', '6 · 16.7 GB']]],
          ['Настройки', [['a11y', 'Субтитры и CC+', 'cc', 'Русский CC+, крупный'], ['settings', 'Качество видео', 'quality', 'Авто · до 4K'],
@@ -2747,7 +2823,7 @@ S.subs = function () {
           '<div><div class="ds-h1">ВИП</div>' +
           '<div class="ds-num ds-sm ds-mut" style="margin-top:3px">500 ₽ / месяц · регулярное списание</div></div></div>' +
         '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна</span></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:20px;padding-top:18px;border-top:1px solid var(--ds-line)">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:20px;padding-top:18px;border-top:1px solid var(--ds-line)">' +
         [['Следующее списание', '12 октября 2026'], ['Осталось дней', '40'],
          ['Подключена', '12 марта 2026'], ['Способ оплаты', 'Mir •••• 4417']].map(function (r) {
           return '<div><div class="ds-cap">' + r[0] + '</div><div class="ds-sm" style="font-weight:600;margin-top:3px">' + r[1] + '</div></div>';
@@ -2790,7 +2866,7 @@ S.subDetail = function () {
         '<span style="width:4px;height:46px;border-radius:2px;background:var(--ds-vip)"></span>' +
         '<div><div class="ds-h1">' + p.name + '</div><div class="ds-num ds-sm ds-mut" style="margin-top:3px">500 ₽ / месяц · регулярное списание</div></div></div>' +
         '<span class="ds-badge ds-badge--ok ds-badge--lg">Активна</span></div>' +
-      '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px">' +
+      '<div class="ds-grid ds-grid--4" style=";margin-top:22px">' +
         [['Следующее списание', '12 октября 2026'], ['Осталось дней', '40'],
          ['Подключена', '12 марта 2026'], ['Всего списаний', '7']].map(function (r) {
           return '<div class="ds-stat" style="background:var(--ds-void)"><div class="ds-stat__k">' + r[0] + '</div>' +
@@ -2805,7 +2881,7 @@ S.subDetail = function () {
         '<button class="ds-btn ds-btn--sm ds-btn--secondary">Изменить</button></div></div>' +
 
     '<div class="ds-card" style="margin-top:16px"><h3 class="ds-h2" style="margin-bottom:14px">Что открывает подписка</h3>' +
-      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">' +
+      '<div style="gap:12px" class="ds-grid ds-grid--2">' +
         p.feats.map(function (f) {
           return '<div class="ds-row-f ds-g2"><span style="color:var(--ds-vip);display:flex;flex:none">' + ic('check', 16, 2.4) + '</span>' +
             '<span class="ds-sm">' + f + '</span></div>';
@@ -2990,7 +3066,7 @@ S.help = function () {
     '<div class="ds-search" style="min-height:56px;margin-bottom:24px">' +
       '<span style="color:var(--ds-ink-3);display:flex">' + ic('search', 20) + '</span>' +
       '<input placeholder="Поиск по помощи — например «нет субтитров»"></div>' +
-    '<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">' +
+    '<div class="ds-grid ds-grid--3" style="gap:14px;">' +
       TOPICS.map(function (t, i) {
         return '<button class="ds-card" style="text-align:left;cursor:pointer' + (i === 1 ? ';border-color:var(--ds-amber-edge)' : '') + '">' +
           '<span style="color:' + (i === 1 ? 'var(--ds-amber)' : 'var(--ds-accent)') + ';display:flex">' + ic(t[0], 22) + '</span>' +
@@ -3051,7 +3127,7 @@ S.support = function () {
         '<div class="ds-card" style="padding:16px;background:var(--ds-void)">' +
           '<div class="ds-between" style="margin-bottom:12px"><p class="ds-eyebrow">Технические данные</p>' +
             '<label class="ds-switch"><input type="checkbox" checked><span class="ds-switch__track"></span><span class="ds-switch__thumb"></span></label></div>' +
-          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+          '<div style="gap:8px" class="ds-grid ds-grid--2">' +
             [['Фильм', 'Год тишины'], ['ID', 'DS-M-04187'], ['Момент', '01:22:18'], ['Качество', '1080p'],
              ['Субтитры', 'Русский CC+'], ['Реплика', '#418'], ['Платформа', 'Web · Chrome 141'], ['Версия', '4.8.2']].map(function (r) {
               return '<div class="ds-between"><span class="ds-cap">' + r[0] + '</span>' +
@@ -3107,7 +3183,7 @@ S.ticket = function () {
           '<p class="ds-sm" style="color:var(--ds-ink)">' + body + '</p>' + (extra || '') + '</div></div></div>';
   }
   return settingsPage('#DS-10482 · Описание звука не соответствует сцене', '',
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;align-items:start">' +
+    '<div class="ds-split ds-split--right" style="gap:24px">' +
       '<div class="ds-card">' +
         '<div class="ds-between" style="padding-bottom:16px;border-bottom:1px solid var(--ds-line);margin-bottom:20px">' +
           '<div class="ds-row-f ds-g2"><span class="ds-badge ds-badge--info ds-badge--lg">В работе</span>' +
@@ -3435,6 +3511,7 @@ S.ticket = function () {
     $('ptCanvas').scrollTop = 0;
     renderList();
     afterRender();
+    fit();
     requestAnimationFrame(fit);
   }
 

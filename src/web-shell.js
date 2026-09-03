@@ -10,6 +10,7 @@ var NAV = [
 /* Persistent top navigation */
 function topbar(active) {
   return '<header class="ds-topbar">' +
+    '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare ds-topbar__menu" aria-label="Меню">' + ic('list', 19) + '</button>' +
     dsLogo(28, 17) +
     '<nav class="ds-topnav" style="margin-left:16px">' +
       NAV.map(function (n) {
@@ -90,7 +91,7 @@ function wContinue() {
 
 /* Auth page frame — split hero + form */
 function authFrame(inner, sideTitle, sideBody) {
-  return '<div style="min-height:900px;display:grid;grid-template-columns:1.05fr .95fr">' +
+  return '<div style="min-height:900px;display:grid" class="ds-authsplit">' +
     '<div style="position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:56px">' +
       '<div class="ds-art" style="position:absolute;inset:0">' + dsArt('auth-side') + '</div>' +
       '<div style="position:absolute;inset:0;background:linear-gradient(115deg,rgba(6,11,24,.4),rgba(6,11,24,.9))"></div>' +
@@ -110,7 +111,7 @@ function authFrame(inner, sideTitle, sideBody) {
 /* Settings-style two-column page */
 function settingsPage(title, sub, body, nav) {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
-    '<div style="display:grid;grid-template-columns:246px minmax(0,1fr);gap:44px;align-items:start">' +
+    '<div class="ds-split ds-split--left">' +
       '<aside style="position:sticky;top:92px">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Аккаунт</p>' +
         '<div class="ds-stack">' + (nav || ACCOUNT_NAV).map(function (n) {
@@ -147,13 +148,13 @@ var ACCOUNT_NAV = [
 function planCard(p, opts) {
   opts = opts || {};
   return '<div class="ds-card" style="border-color:var(--ds-vip-edge);background:linear-gradient(135deg,rgba(255,194,75,.10),transparent 52%),var(--ds-panel);padding:32px">' +
-    '<div style="display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:40px;align-items:center">' +
+    '<div style="align-items:center" class="ds-split ds-split--right">' +
       '<div>' +
         '<div class="ds-row-f ds-g2"><span style="width:34px;height:3px;border-radius:2px;background:var(--ds-vip)"></span>' +
           '<span class="ds-eyebrow" style="color:var(--ds-vip)">' + p.tag + '</span></div>' +
         '<h3 class="ds-d2" style="margin-top:14px">' + p.name + '</h3>' +
         '<p class="ds-body" style="margin-top:10px">' + p.desc + '</p>' +
-        '<ul style="list-style:none;padding:0;margin:22px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:11px">' +
+        '<ul style="list-style:none;padding:0;margin:22px 0 0;gap:11px" class="ds-grid ds-grid--2">' +
           p.feats.map(function (f) {
             return '<li class="ds-row-f ds-g2" style="font-size:13.5px"><span style="color:var(--ds-vip);display:flex;flex:none">' + ic('check', 16, 2.4) + '</span>' + f + '</li>';
           }).join('') + '</ul></div>' +
