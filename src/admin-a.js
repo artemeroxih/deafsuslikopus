@@ -22,7 +22,7 @@ var ANAV = [
 
 /* Admin chrome: fixed sidebar + top bar + content region */
 function adminShell(active, title, sub, actions, body) {
-  return '<div style="display:grid;grid-template-columns:240px minmax(0,1fr);min-height:900px;background:var(--ds-void)">' +
+  return '<div style="display:grid;grid-template-columns:240px minmax(0,1fr);min-height:900px;background-color:var(--ds-void);background-image:var(--ds-ambient)">' +
     '<aside style="border-right:1px solid var(--ds-line);background:var(--ds-sunken);display:flex;flex-direction:column">' +
       '<div style="padding:18px 18px 16px;border-bottom:1px solid var(--ds-line)">' +
         dsLogo(26, 16) +

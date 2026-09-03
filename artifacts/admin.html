@@ -11,8 +11,8 @@
 
 :root {
   /* ---- Ground & surfaces (accent-biased graphite, never pure grey) ---- */
-  --ds-void:        #060B18;
-  --ds-sunken:      #030713;
+  --ds-void:        #070C1C;
+  --ds-sunken:      #040814;
   --ds-panel:       #0C1424;
   --ds-raised:      #121C30;
   --ds-raised-2:    #1A2740;
@@ -31,12 +31,12 @@
   --ds-ink-4:       #47536B;
   --ds-ink-inv:     #060B18;
 
-  /* ---- Polar Blue — play, brand, commerce ---- */
-  --ds-accent:        #35E0CB;
-  --ds-accent-hi:     #7BEEDF;
-  --ds-accent-lo:     #1FB9A5;
-  --ds-accent-dim:    rgba(53, 224, 203, 0.14);
-  --ds-accent-edge:   rgba(53, 224, 203, 0.34);
+  /* ---- Blue — play, brand, commerce ---- */
+  --ds-accent:        #4C8DFF;
+  --ds-accent-hi:     #7FB0FF;
+  --ds-accent-lo:     #2F62F5;
+  --ds-accent-dim:    rgba(76, 141, 255, 0.15);
+  --ds-accent-edge:   rgba(76, 141, 255, 0.36);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
   --ds-amber:        #FFC24B;
@@ -56,8 +56,8 @@
   --ds-info-dim:    rgba(155, 140, 255, 0.15);
 
   /* ---- Subscription: one plan for everyone ---- */
-  --ds-vip:         #35E0CB;
-  --ds-vip-edge:    rgba(53, 224, 203, 0.34);
+  --ds-vip:         #4C8DFF;
+  --ds-vip-edge:    rgba(76, 141, 255, 0.36);
   /* Editorial collection accent — content, not a paid tier */
   --ds-coll:        #E86FA9;
 
@@ -90,8 +90,21 @@
   --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
   --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
-  --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(53,224,203,.45);
+  --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
+
+  /* ---- Signature gradient ----
+     Светлый край стоит на 100%: под подписью кнопки он не оказывается,
+     иначе белый текст на нём падает до 1.75:1. */
+  --ds-grad: linear-gradient(100deg, #2F62F5 0%, #5842EC 38%, #3A7FF0 76%, #46B6F5 100%);
+  --ds-grad-soft: linear-gradient(100deg, rgba(47,98,245,.16), rgba(88,66,236,.14) 45%, rgba(70,182,245,.12));
+
+  /* ---- Ambient — фон дышит, а не лежит плоским пятном ---- */
+  --ds-ambient:
+    radial-gradient(1200px 700px at 6% -10%, rgba(47,98,245,.32), transparent 58%),
+    radial-gradient(950px 600px at 96% 0%, rgba(88,66,236,.28), transparent 56%),
+    radial-gradient(1100px 680px at 46% 110%, rgba(70,182,245,.20), transparent 60%),
+    radial-gradient(700px 500px at 82% 62%, rgba(47,98,245,.14), transparent 62%);
 
   /* ---- Motion ---- */
   --ds-m-micro: 120ms;
@@ -119,7 +132,9 @@
 
 body {
   margin: 0;
-  background: var(--ds-void);
+  background-color: var(--ds-void);
+  background-image: var(--ds-ambient);
+  background-attachment: fixed;
   color: var(--ds-ink);
   font-family: var(--ds-ui);
   font-size: var(--ds-t-body);
@@ -162,6 +177,14 @@ body {
 /* Deaf — белый, Suslik — бирюзовый. Знак делит имя ровно там же, где его делит смысл. */
 .ds-logo__deaf   { color: #FFFFFF; }
 .ds-logo__suslik { color: var(--ds-accent); }
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .ds-logo--mono .ds-logo__suslik { background-image: none; color: inherit; }
+  .ds-logo__suslik {
+    background-image: var(--ds-grad);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent;
+  }
+}
 /* На акцентной подложке имя становится одноцветным */
 .ds-logo--mono .ds-logo__deaf,
 .ds-logo--mono .ds-logo__suslik { color: inherit; }
@@ -212,8 +235,33 @@ body {
 .ds-btn:active { transform: translateY(0) scale(.985); }
 .ds-btn svg { flex: none; }
 
-.ds-btn--primary { --_bg: var(--ds-accent); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
-.ds-btn--primary:hover { --_bg: var(--ds-accent-hi); box-shadow: 0 10px 34px -12px rgba(255,194,75,.55); }
+.ds-btn--primary {
+  --_bg: transparent; --_fg: #fff; --_bd: transparent;
+  background-image: var(--ds-grad);
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(7, 12, 28, .45);
+  box-shadow: 0 6px 22px -8px rgba(47,98,245,.62),
+              inset 0 1px 0 rgba(255,255,255,.24);
+}
+.ds-btn--primary:hover {
+  filter: brightness(1.07);
+  box-shadow: 0 12px 34px -10px rgba(47,98,245,.75),
+              inset 0 1px 0 rgba(255,255,255,.32);
+}
+/* Крупная CTA — как в референсе: прописные, разрядка, широкое свечение */
+.ds-btn--hero {
+  min-height: 60px; padding: 0 34px;
+  font-size: 1.0625rem; font-weight: 800;
+  text-transform: uppercase; letter-spacing: .06em;
+  box-shadow: 0 10px 34px -8px rgba(47,98,245,.7),
+              0 0 0 1px rgba(120,170,255,.28),
+              inset 0 1px 0 rgba(255,255,255,.28);
+}
+.ds-btn--hero:hover {
+  box-shadow: 0 16px 46px -10px rgba(47,98,245,.85),
+              0 0 0 1px rgba(150,190,255,.4),
+              inset 0 1px 0 rgba(255,255,255,.36);
+}
 
 .ds-btn--amber { --_bg: var(--ds-amber); --_fg: var(--ds-ink-inv); --_bd: transparent; font-weight: 700; }
 .ds-btn--amber:hover { --_bg: var(--ds-amber-hi); box-shadow: 0 10px 34px -12px rgba(95,227,208,.5); }
@@ -674,7 +722,8 @@ body {
 }
 .ds-phone__screen {
   position: relative; width: 372px; height: 806px; border-radius: 36px; overflow: hidden;
-  background: var(--ds-void); display: flex; flex-direction: column;
+  background-color: var(--ds-void); background-image: var(--ds-ambient);
+  display: flex; flex-direction: column;
 }
 .ds-phone--sm .ds-phone__screen { width: 320px; height: 692px; }
 .ds-phone--land .ds-phone__screen { width: 806px; height: 372px; }
@@ -997,7 +1046,7 @@ var ANAV = [
 
 /* Admin chrome: fixed sidebar + top bar + content region */
 function adminShell(active, title, sub, actions, body) {
-  return '<div style="display:grid;grid-template-columns:240px minmax(0,1fr);min-height:900px;background:var(--ds-void)">' +
+  return '<div style="display:grid;grid-template-columns:240px minmax(0,1fr);min-height:900px;background-color:var(--ds-void);background-image:var(--ds-ambient)">' +
     '<aside style="border-right:1px solid var(--ds-line);background:var(--ds-sunken);display:flex;flex-direction:column">' +
       '<div style="padding:18px 18px 16px;border-bottom:1px solid var(--ds-line)">' +
         dsLogo(26, 16) +
@@ -2216,7 +2265,7 @@ A.collections = function () {
   }
   .ap__canvas { flex: 1; overflow: auto; background: var(--ds-sunken); padding: 22px; }
   .ap__frame {
-    margin: 0 auto; background: var(--ds-void); border: 1px solid var(--ds-line-mid);
+    margin: 0 auto; background-color: var(--ds-void); background-image: var(--ds-ambient); border: 1px solid var(--ds-line-mid);
     border-radius: var(--ds-r-lg); overflow: hidden; box-shadow: var(--ds-e4);
     transform-origin: top left;
   }

@@ -138,7 +138,7 @@ function landingPage(coll, idx) {
                 '<div class="ds-cap">' + s[1] + '</div></div>';
             }).join('') + '</div>' +
           '<div class="ds-row-f ds-g3" style="margin-top:32px">' +
-            '<button class="ds-btn ds-btn--lg ds-btn--primary" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
+            '<button class="ds-btn ds-btn--primary ds-btn--hero" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--outline">Смотреть трейлеры</button></div>' +
           '<p class="ds-cap" style="margin-top:14px">Входит в подписку ВИП — 500 ₽ / месяц, без доплат.</p>' +
         '</div></div></section>' +
@@ -229,7 +229,7 @@ S.payOk = function () {
             '<span class="ds-sm ds-num" style="font-weight:600">' + r[1] + '</span></div>';
         }).join('') + '</div></div>' +
     '<div class="ds-row-f ds-g3" style="margin-top:24px">' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-grow" data-go="home">Начать смотреть</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-grow" data-go="home">Начать смотреть</button>' +
       '<button class="ds-btn ds-btn--lg ds-btn--secondary" data-go="subs">Моя подписка</button></div>' +
     '<p class="ds-cap ds-center" style="margin-top:18px">Чек отправлен на anna.k@example.ru</p>' +
     '</main>' + webFoot();
@@ -254,7 +254,7 @@ S.payErr = function () {
             '<span class="ds-row__sub">' + r[1] + '</span></span></div>';
         }).join('') + '</div></div>' +
     '<div class="ds-row-f ds-g3" style="margin-top:24px">' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-grow" data-go="checkout">Повторить оплату</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-grow" data-go="checkout">Повторить оплату</button>' +
       '<button class="ds-btn ds-btn--lg ds-btn--secondary" data-go="checkout">Другой способ</button></div>' +
     '<button class="ds-btn ds-btn--ghost ds-btn--block" data-go="support" style="margin-top:10px">Написать в поддержку</button>' +
     '<div class="ds-strip" style="margin-top:24px">' +

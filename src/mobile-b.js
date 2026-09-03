@@ -509,7 +509,7 @@ Mo.plans = function (os) {
         '<span class="ds-strip__label">Тариф</span>' +
         '<p class="ds-cap" style="margin:0">Уровней подписки нет. Коллекции, 4K, скачивание, CC и CC+ входят в эти 500 ₽ без доплат.</p></div>') +
     '<div style="padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);flex:none">' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="min-height:56px;flex-direction:column;gap:0">' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="min-height:56px;flex-direction:column;gap:0">' +
         '<span>Подписаться</span><span style="font-size:11.5px;font-weight:600;opacity:.72">' + p.price + ' ₽ / месяц</span></button>' +
       '<p class="ds-cap ds-center" style="margin-top:7px">Регулярное ежемесячное списание. Отмена в любой момент.</p></div>');
 };
@@ -589,7 +589,7 @@ Mo.checkout = function (os) {
         '<div class="ds-row-f ds-g2" style="margin-top:14px;justify-content:center;color:var(--ds-ok)">' + ic('shield', 14) +
           '<span class="ds-cap">Защищённый платёж · 3-D Secure</span></div></div>') +
     '<div style="padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);flex:none">' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Оплатить ' + p.price + ' ₽</button></div>');
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Оплатить ' + p.price + ' ₽</button></div>');
 };
 
 Mo.payOk = function (os) {
@@ -609,7 +609,7 @@ Mo.payOk = function (os) {
           return '<div class="ds-between" style="padding:3px 0"><span class="ds-cap">' + r[0] + '</span>' +
             '<span class="ds-num" style="font-size:12px">' + r[1] + '</span></div>';
         }).join('') + '</div>' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:22px">Начать смотреть</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="margin-top:22px">Начать смотреть</button>' +
       '<button class="ds-btn ds-btn--ghost ds-btn--block" style="margin-top:8px">Мои подписки</button>' +
       '<p class="ds-cap" style="margin-top:14px">Чек отправлен на anna.k@example.ru</p></div>');
 };
@@ -629,7 +629,7 @@ Mo.payErr = function (os) {
             '<span class="ds-row__main"><span class="ds-row__title" style="font-size:13.5px">' + r[0] + '</span>' +
             '<span class="ds-row__sub">' + r[1] + '</span></span></div>';
         }).join('') + '</div>' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:18px">Повторить оплату</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="margin-top:18px">Повторить оплату</button>' +
       '<button class="ds-btn ds-btn--secondary ds-btn--block" style="margin-top:8px">Другой способ</button>' +
       '<button class="ds-btn ds-btn--ghost ds-btn--block" style="margin-top:8px">Написать в поддержку</button></div>');
 };
@@ -872,7 +872,7 @@ Mo.support = function (os) {
               '<span class="ds-num" style="font-size:11px;color:var(--ds-ink-2)">' + r[1] + '</span></div>';
           }).join('') + '</div></div>') +
     '<div style="padding:12px 20px calc(12px + env(safe-area-inset-bottom));border-top:1px solid var(--ds-line);flex:none">' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Отправить</button></div>');
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Отправить</button></div>');
 };
 
 Mo.tickets = function (os) {

@@ -6,8 +6,8 @@
 
 :root {
   /* ---- Ground & surfaces (accent-biased graphite, never pure grey) ---- */
-  --ds-void:        #060B18;
-  --ds-sunken:      #030713;
+  --ds-void:        #070C1C;
+  --ds-sunken:      #040814;
   --ds-panel:       #0C1424;
   --ds-raised:      #121C30;
   --ds-raised-2:    #1A2740;
@@ -26,12 +26,12 @@
   --ds-ink-4:       #47536B;
   --ds-ink-inv:     #060B18;
 
-  /* ---- Polar Blue — play, brand, commerce ---- */
-  --ds-accent:        #35E0CB;
-  --ds-accent-hi:     #7BEEDF;
-  --ds-accent-lo:     #1FB9A5;
-  --ds-accent-dim:    rgba(53, 224, 203, 0.14);
-  --ds-accent-edge:   rgba(53, 224, 203, 0.34);
+  /* ---- Blue — play, brand, commerce ---- */
+  --ds-accent:        #4C8DFF;
+  --ds-accent-hi:     #7FB0FF;
+  --ds-accent-lo:     #2F62F5;
+  --ds-accent-dim:    rgba(76, 141, 255, 0.15);
+  --ds-accent-edge:   rgba(76, 141, 255, 0.36);
 
   /* ---- Signal Amber — captions, CC, CC+, accessibility ---- */
   --ds-amber:        #FFC24B;
@@ -51,8 +51,8 @@
   --ds-info-dim:    rgba(155, 140, 255, 0.15);
 
   /* ---- Subscription: one plan for everyone ---- */
-  --ds-vip:         #35E0CB;
-  --ds-vip-edge:    rgba(53, 224, 203, 0.34);
+  --ds-vip:         #4C8DFF;
+  --ds-vip-edge:    rgba(76, 141, 255, 0.36);
   /* Editorial collection accent — content, not a paid tier */
   --ds-coll:        #E86FA9;
 
@@ -85,8 +85,21 @@
   --ds-e2: 0 6px 20px -6px rgba(0,0,0,.6);
   --ds-e3: 0 18px 48px -12px rgba(0,0,0,.72);
   --ds-e4: 0 36px 90px -20px rgba(0,0,0,.82);
-  --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(53,224,203,.45);
+  --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
+
+  /* ---- Signature gradient ----
+     Светлый край стоит на 100%: под подписью кнопки он не оказывается,
+     иначе белый текст на нём падает до 1.75:1. */
+  --ds-grad: linear-gradient(100deg, #2F62F5 0%, #5842EC 38%, #3A7FF0 76%, #46B6F5 100%);
+  --ds-grad-soft: linear-gradient(100deg, rgba(47,98,245,.16), rgba(88,66,236,.14) 45%, rgba(70,182,245,.12));
+
+  /* ---- Ambient — фон дышит, а не лежит плоским пятном ---- */
+  --ds-ambient:
+    radial-gradient(1200px 700px at 6% -10%, rgba(47,98,245,.32), transparent 58%),
+    radial-gradient(950px 600px at 96% 0%, rgba(88,66,236,.28), transparent 56%),
+    radial-gradient(1100px 680px at 46% 110%, rgba(70,182,245,.20), transparent 60%),
+    radial-gradient(700px 500px at 82% 62%, rgba(47,98,245,.14), transparent 62%);
 
   /* ---- Motion ---- */
   --ds-m-micro: 120ms;

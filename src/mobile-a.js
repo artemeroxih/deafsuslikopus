@@ -143,7 +143,7 @@ Mo.splash = function (os) {
             return '<div class="ds-row-f ds-g1"><span style="color:var(--ds-amber);display:flex">' + ic(f[0], 15) + '</span>' +
               '<span class="ds-cap" style="color:var(--ds-ink-2)">' + f[1] + '</span></div>';
           }).join('') + '</div>' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:22px">Начать</button>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="margin-top:22px">Начать</button>' +
         '<button class="ds-btn ds-btn--lg ds-btn--ghost ds-btn--block" style="margin-top:8px">Войти</button>' +
       '</div></div>');
 };
@@ -177,7 +177,7 @@ Mo.onboarding = function (os) {
             return '<span style="height:6px;border-radius:99px;transition:all .3s;background:' +
               (i === step ? 'var(--ds-accent);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
           }).join('') + '</div>' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Далее</button></div>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Далее</button></div>' +
     '</div>');
 };
 
@@ -198,7 +198,7 @@ Mo.login = function (os) {
             '<input class="ds-input" type="password" value="secretpass" style="padding-right:50px">' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" style="position:absolute;right:7px" aria-label="Показать пароль">' + ic('eye', 17) + '</button></div></div>' +
         '<div style="display:flex;justify-content:flex-end"><button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0">Забыли пароль?</button></div>' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">Войти</button>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Войти</button>' +
         '<div class="ds-row-f ds-g3" style="margin:2px 0"><div class="ds-divider ds-grow"></div><span class="ds-cap">или</span><div class="ds-divider ds-grow"></div></div>' +
         (os === 'android'
           ? '<button class="ds-btn ds-btn--secondary ds-btn--block">' + ic('google', 17) + ' Продолжить с Google</button>'
@@ -234,7 +234,7 @@ Mo.register = function (os) {
         '<div class="ds-field"><label class="ds-label">Повторите пароль</label><input class="ds-input" type="password" value="mypassword"></div>' +
         '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
           '<span class="ds-sm">Принимаю <span style="color:var(--ds-accent)">соглашение</span> и <span style="color:var(--ds-accent)">политику конфиденциальности</span></span></label>' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" style="margin-top:4px">Создать аккаунт</button>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="margin-top:4px">Создать аккаунт</button>' +
         '<p class="ds-sm ds-center" style="margin-top:6px">Уже есть аккаунт? <span style="color:var(--ds-accent);font-weight:600">Войти</span></p>' +
       '</div>'));
 };
@@ -469,7 +469,7 @@ Mo.movie = function (os) {
           '<div class="ds-wrap ds-g1" style="margin-top:8px">' + badges(m, { offline: 1, ad: 1 }) + '</div></div></div>' +
 
       '<div style="padding:14px 20px 20px">' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block">' + ic('play', 17) + ' Смотреть</button>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">' + ic('play', 17) + ' Смотреть</button>' +
         '<div class="ds-row-f ds-g2" style="margin-top:10px">' +
           '<button class="ds-btn ds-btn--secondary ds-grow">Трейлер</button>' +
           '<button class="ds-btn ds-btn--secondary ds-grow">' + ic('download', 15) + ' Скачать</button></div>' +

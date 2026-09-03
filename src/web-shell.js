@@ -161,7 +161,7 @@ function planCard(p, opts) {
         '<div style="display:flex;align-items:baseline;gap:6px;justify-content:center">' +
           '<span class="ds-num" style="font-size:3rem;font-weight:700;letter-spacing:-.04em">' + p.price + ' ₽</span></div>' +
         '<p class="ds-sm ds-mut2" style="margin-top:2px">в месяц</p>' +
-        '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-go="checkout" style="margin-top:20px;min-height:60px;flex-direction:column;gap:1px">' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" data-go="checkout" style="margin-top:20px;min-height:60px;flex-direction:column;gap:1px">' +
           '<span>Подписаться</span><span style="font-size:12px;font-weight:600;opacity:.72">' + p.price + ' ₽ / месяц</span></button>' +
         '<p class="ds-cap" style="margin-top:12px">Регулярное списание раз в месяц.<br>Отмена в любой момент.</p></div>' +
     '</div></div>';

@@ -26,7 +26,7 @@ S.landing = function () {
             'Фильмы с обычными субтитрами, с CC и с расширенными CC+ — где написано не только что говорят, ' +
             'но и что звучит. Онлайн и офлайн, на всех ваших устройствах.</p>' +
           '<div class="ds-row-f ds-g3" style="margin-top:34px">' +
-            '<button class="ds-btn ds-btn--lg ds-btn--primary" data-go="register">Начать</button>' +
+            '<button class="ds-btn ds-btn--primary ds-btn--hero" data-go="register">Начать</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--outline" data-go="login">Войти</button></div>' +
           '<div class="ds-wrap ds-g6" style="margin-top:44px">' +
             [['film', '1 200+ фильмов'], ['cc', 'CC+ на 340 фильмах'], ['download', 'Офлайн-просмотр'], ['quality', 'До 4K UHD']].map(function (f) {
@@ -63,7 +63,7 @@ S.login = function () {
       '<div class="ds-between"><label class="ds-opt" style="padding:0"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber)"></span>' +
         '<span class="ds-sm">Запомнить меня</span></label>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Забыли пароль?</button></div>' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-go="home">Войти</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" data-go="home">Войти</button>' +
       '<div class="ds-row-f ds-g3"><div class="ds-divider ds-grow"></div><span class="ds-cap">или</span><div class="ds-divider ds-grow"></div></div>' +
       '<button class="ds-btn ds-btn--secondary ds-btn--block">' + ic('apple', 17) + ' Продолжить с Apple</button>' +
       '<button class="ds-btn ds-btn--secondary ds-btn--block">' + ic('google', 17) + ' Продолжить с Google</button>' +
@@ -109,7 +109,7 @@ S.register = function () {
         '<input class="ds-input" id="rp2" type="password" value="mypassword"></div>' +
       '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
         '<span class="ds-sm">Принимаю <span style="color:var(--ds-accent)">пользовательское соглашение</span> и <span style="color:var(--ds-accent)">политику конфиденциальности</span></span></label>' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary ds-btn--block" data-go="plans">Создать аккаунт</button>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" data-go="plans">Создать аккаунт</button>' +
       '<div class="ds-row-f ds-g3"><div class="ds-divider ds-grow"></div><span class="ds-cap">или</span><div class="ds-divider ds-grow"></div></div>' +
       '<div class="ds-row-f ds-g3">' +
         '<button class="ds-btn ds-btn--secondary ds-grow">' + ic('apple', 17) + ' Apple</button>' +
@@ -141,7 +141,7 @@ S.home = function () {
           '<p class="ds-body" style="margin-top:16px">Оператор северной станции теряет связь с материком и остаётся один на один с тишиной, ' +
             'которую он сам когда-то выбрал. Расширенные субтитры CC+ передают то, что герой перестал слышать.</p>' +
           '<div class="ds-row-f ds-g3" style="margin-top:26px">' +
-            '<button class="ds-btn ds-btn--lg ds-btn--primary" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
+            '<button class="ds-btn ds-btn--primary ds-btn--hero" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--secondary">Трейлер</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--outline">' + ic('plus', 17) + ' В библиотеку</button>' +
             '<button class="ds-iconbtn" style="width:54px;height:54px" aria-label="В избранное">' + ic('heart', 21) + '</button></div>' +
@@ -163,7 +163,7 @@ S.home = function () {
             '<div class="ds-row-f ds-g4" style="flex:none">' +
               '<div style="text-align:right"><div class="ds-num" style="font-size:2.2rem;font-weight:700;letter-spacing:-.03em">500 ₽</div>' +
               '<div class="ds-cap">в месяц</div></div>' +
-              '<span class="ds-btn ds-btn--lg ds-btn--primary">Подписаться</span></div>' +
+              '<span class="ds-btn ds-btn--primary ds-btn--hero">Подписаться</span></div>' +
           '</div></button></section>' +
       wRail('С субтитрами', [1, 4, 8, 13, 16, 2, 11]) +
       '<section style="margin-top:52px">' + railHead('Лучшее с CC+') +
@@ -312,7 +312,7 @@ S.filters = function () {
 
     '<div class="ds-between" style="position:sticky;bottom:0;background:var(--ds-void);padding:22px 0;margin-top:8px;border-top:1px solid var(--ds-line)">' +
       '<button class="ds-btn ds-btn--ghost">Сбросить всё</button>' +
-      '<button class="ds-btn ds-btn--lg ds-btn--primary" data-go="results">Показать 24 фильма</button></div>' +
+      '<button class="ds-btn ds-btn--primary ds-btn--hero" data-go="results">Показать 24 фильма</button></div>' +
     '</main>';
 };
 
@@ -393,7 +393,7 @@ S.movie = function () {
           '<p class="ds-body" style="margin-top:18px;font-size:0.98rem">Оператор северной станции теряет связь с материком и остаётся один на один с тишиной, ' +
             'которую он сам когда-то выбрал. Год без единого слова — и один звук, который меняет всё.</p>' +
           '<div class="ds-wrap ds-g3" style="margin-top:28px">' +
-            '<button class="ds-btn ds-btn--lg ds-btn--primary" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
+            '<button class="ds-btn ds-btn--primary ds-btn--hero" data-go="player">' + ic('play', 17) + ' Смотреть</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--secondary">Трейлер</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--outline" data-go="download-web">' + ic('download', 17) + ' Скачать</button>' +
             '<button class="ds-btn ds-btn--lg ds-btn--outline">' + ic('plus', 17) + ' В библиотеку</button>' +
