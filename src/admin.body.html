@@ -72,19 +72,26 @@
     ['api-import',   'Импорт через API',          A.apiImport,    '/content/movies/new/import'],
     ['subs-list',    'Субтитры и CC+',            A.subsList,     '/media/subtitles/DS-M-04187'],
     ['editor',       'Редактор субтитров',        A.editor,       '/media/subtitles/DS-M-04187/ru-ccplus?t=01:22:18'],
-    ['collections',  'Коллекции и главная',       A.collections,  '/content/collections'],
+    ['homepage',     'Главная страница',          A.homepage,     '/content/homepage'],
+    ['collections',  'Коллекции',                 A.collections,  '/content/collections'],
+    ['series',       'Сериалы',                   A.series,       '/content/series'],
     ['rights',       'Права и лицензии',          A.rights,       '/content/rights'],
+    ['processing',   'Обработка видео',           A.processing,   '/media/processing'],
     ['storage',      'Хранилище',                 A.storage,      '/media/storage'],
     ['users',        'Пользователи',              A.users,        '/people/users'],
     ['user',         'Карточка пользователя',     A.user,         '/people/users/DS-U-48211'],
+    ['subs-admin',   'Подписки',                  A.subsAdmin,    '/money/subscriptions'],
     ['payments',     'Платежи',                   A.payments,     '/money/payments'],
-    ['analytics',    'Аналитика',                 A.analytics,    '/analytics/views'],
+    ['analytics',    'Аналитика просмотров',      A.analytics,    '/analytics/views'],
+    ['revenue',      'Выручка',                   A.revenue,      '/analytics/revenue'],
+    ['searchan',     'Поиск',                     A.searchan,     '/analytics/search'],
     ['tickets',      'Обращения',                 A.tickets,      '/support/tickets'],
     ['ticket',       'Обращение · CC+',           A.ticket,       '/support/tickets/DS-10482'],
     ['roles',        'Роли и доступы',            A.roles,        '/system/roles'],
     ['audit',        'Журнал действий',           A.audit,        '/system/audit'],
     ['api',          'API и интеграции',          A.api,          '/system/api'],
-    ['trash',        'Корзина',                   A.trash,        '/system/trash']
+    ['trash',        'Корзина',                   A.trash,        '/system/trash'],
+    ['asettings',    'Настройки',                 A.asettings,    '/system/settings']
   ];
   var BY = {}; SCREENS.forEach(function (s, i) { BY[s[0]] = { s: s, i: i }; });
 

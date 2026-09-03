@@ -33,7 +33,7 @@ FONTS = (
 EXTRA = {
     'web': ['web-shell.js', 'web-a.js', 'web-b.js', 'web-c.js', 'web-d.js'],
     'mobile': ['web-shell.js', 'mobile-a.js', 'mobile-b.js'],
-    'admin': ['admin-a.js', 'admin-b.js'],
+    'admin': ['admin-a.js', 'admin-b.js', 'admin-c.js'],
 }
 
 # The standalone build supplies what the Artifact host would otherwise inject.
