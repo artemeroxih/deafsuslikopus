@@ -51,15 +51,7 @@ body {
 }
 /* Deaf — белый, Suslik — бирюзовый. Знак делит имя ровно там же, где его делит смысл. */
 .ds-logo__deaf   { color: #FFFFFF; }
-.ds-logo__suslik { color: var(--ds-accent); }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .ds-logo--mono .ds-logo__suslik { background-image: none; color: inherit; }
-  .ds-logo__suslik {
-    background-image: var(--ds-grad);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent;
-  }
-}
+.ds-logo__suslik { color: var(--ds-suslik); }
 /* На акцентной подложке имя становится одноцветным */
 .ds-logo--mono .ds-logo__deaf,
 .ds-logo--mono .ds-logo__suslik { color: inherit; }

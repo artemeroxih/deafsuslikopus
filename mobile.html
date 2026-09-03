@@ -104,6 +104,11 @@
   --ds-glow-accent: 0 0 0 1px var(--ds-accent-edge), 0 10px 40px -12px rgba(76,141,255,.5);
   --ds-glow-amber: 0 0 0 1px var(--ds-amber-edge), 0 10px 40px -12px rgba(255,194,75,.40);
 
+  /* ---- Brand ----
+     Цвет логотипа зафиксирован отдельно от акцента интерфейса:
+     меняя акцент, логотип не трогаем. */
+  --ds-suslik:      #35E0CB;
+
   /* ---- Signature gradient ----
      Светлый край стоит на 100%: под подписью кнопки он не оказывается,
      иначе белый текст на нём падает до 1.75:1. */
@@ -187,15 +192,7 @@ body {
 }
 /* Deaf — белый, Suslik — бирюзовый. Знак делит имя ровно там же, где его делит смысл. */
 .ds-logo__deaf   { color: #FFFFFF; }
-.ds-logo__suslik { color: var(--ds-accent); }
-@supports ((-webkit-background-clip: text) or (background-clip: text)) {
-  .ds-logo--mono .ds-logo__suslik { background-image: none; color: inherit; }
-  .ds-logo__suslik {
-    background-image: var(--ds-grad);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent;
-  }
-}
+.ds-logo__suslik { color: var(--ds-suslik); }
 /* На акцентной подложке имя становится одноцветным */
 .ds-logo--mono .ds-logo__deaf,
 .ds-logo--mono .ds-logo__suslik { color: inherit; }
