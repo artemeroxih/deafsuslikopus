@@ -1658,35 +1658,118 @@ Mo.splash = function (os) {
 /* ============================================================
    02 — Onboarding
    ============================================================ */
-Mo.onboarding = function (os) {
-  var step = 1;
+/* Онбординг — четыре шага между сплэшем и регистрацией.
+   Каждый шаг отвечает на один вопрос «зачем мне это», и последний
+   ведёт к созданию аккаунта. Пропустить можно на любом шаге. */
+var ONB = [
+  {
+    badge: '', badgeCls: '',
+    title: 'Всё кино —<br>с субтитрами',
+    body: '1 200 фильмов, и у каждого есть субтитры. Не у части каталога, не «когда-нибудь» — сразу и у всех.',
+    visual: 'grid'
+  },
+  {
+    badge: 'CC+', badgeCls: 'ds-badge--ccplus',
+    title: 'Субтитры, которые<br>рассказывают больше',
+    body: 'CC+ показывают не только реплики: кто говорит, какая звучит музыка, что происходит вокруг. Каждый текст вычитан редактором.',
+    visual: 'cue'
+  },
+  {
+    badge: 'Офлайн', badgeCls: '',
+    title: 'Скачайте и смотрите<br>без интернета',
+    body: 'Фильм сохраняется на телефон вместе с субтитрами. В метро, в самолёте, в деревне — всё работает.',
+    visual: 'download'
+  },
+  {
+    badge: '', badgeCls: '',
+    title: 'Продолжайте<br>с той же секунды',
+    body: 'Остановились на компьютере — телефон продолжит с этого места. Избранное, списки и настройки субтитров тоже переезжают.',
+    visual: 'sync'
+  }
+];
+
+function onbVisual(kind) {
+  if (kind === 'grid') {
+    // сетка заполняет весь квадрат, а не прижимается к низу как остальные врезки
+    return '<div style="position:absolute;inset:0;z-index:3;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;padding:20px;align-content:center">' +
+      [0, 6, 9, 12, 3, 17].map(function (i) {
+        var m = M(i);
+        return '<div style="position:relative;aspect-ratio:2/3;border-radius:12px;overflow:hidden;border:1px solid var(--ds-line)">' +
+          art(m.t, '', 'position:absolute;inset:0') +
+          '<span class="ds-badge ds-badge--ccplus" style="position:absolute;top:5px;left:5px;height:15px;font-size:8px;padding:0 4px">CC+</span>' +
+          '</div>';
+      }).join('') + '</div>';
+  }
+  if (kind === 'cue') {
+    return '<div class="ds-cuetrack" style="position:relative;z-index:3;padding-bottom:34px">' +
+      '<span class="ds-cuebox"><span class="ds-cue" style="font-size:15px">' +
+      '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь.' +
+      '<span class="ds-cue__sound">[дверь тихо закрывается]</span></span></span></div>';
+  }
+  if (kind === 'download') {
+    return '<div style="position:relative;z-index:3;padding:0 22px 26px;width:100%">' +
+      '<div class="ds-dl" style="padding:12px;background:rgba(12,22,56,.86);backdrop-filter:blur(12px)">' +
+        '<div class="ds-dl__art" style="width:52px;position:relative">' + art('Год тишины', '', 'position:absolute;inset:0') + '</div>' +
+        '<div class="ds-dl__main" style="gap:6px">' +
+          '<div style="font-size:13px;font-weight:600">Год тишины</div>' +
+          '<div class="ds-cap ds-num">1080p · 2.8 GB · Русский CC+</div>' +
+          '<div class="ds-prog ds-prog--accent"><div class="ds-prog__bar" style="width:64%"></div></div>' +
+          '<div class="ds-between"><span class="ds-cap ds-num">64% · осталось 3 мин</span>' +
+          '<span class="ds-badge ds-badge--offline" style="height:16px;font-size:8px">' + ic('download', 8, 2.6) + ' Офлайн</span></div>' +
+        '</div></div></div>';
+  }
+  /* sync */
+  return '<div style="position:relative;z-index:3;width:100%;padding:0 20px 26px">' +
+    '<div class="ds-row-f ds-g2" style="justify-content:center">' +
+      [['globe', 'Компьютер', '47:12', 0], ['devices', 'iPhone', '47:12', 1]].map(function (d) {
+        return '<div style="flex:1;padding:13px 11px;border-radius:var(--ds-r-md);text-align:center;' +
+          'background:rgba(12,22,56,.86);backdrop-filter:blur(12px);border:1px solid ' +
+          (d[3] ? 'var(--ds-accent-edge)' : 'var(--ds-line)') + '">' +
+          '<span style="color:var(--ds-' + (d[3] ? 'accent' : 'ink-3') + ');display:flex;justify-content:center">' + ic(d[0], 20) + '</span>' +
+          '<div class="ds-cap" style="margin-top:7px">' + d[1] + '</div>' +
+          '<div class="ds-num" style="font-size:15px;font-weight:700;margin-top:3px;color:var(--ds-accent)">' + d[2] + '</div></div>';
+      }).join('') + '</div>' +
+    '<p class="ds-cap ds-center" style="margin-top:10px">Один и тот же момент на обоих устройствах</p></div>';
+}
+
+function onboarding(os, step) {
+  var o = ONB[step], last = step === ONB.length - 1;
   return phone(os,
     '<div style="flex:1;display:flex;flex-direction:column">' +
       '<div class="ds-between" style="padding:6px 16px">' +
         '<span style="opacity:0">' + dsLogo(22, 14) + '</span>' +
         '<button class="ds-btn ds-btn--sm ds-btn--ghost">Пропустить</button></div>' +
+
       '<div style="flex:1;display:flex;flex-direction:column;justify-content:center;padding:0 24px">' +
-        '<div class="ds-art" style="aspect-ratio:1/1;border-radius:var(--ds-r-2xl);position:relative;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding-bottom:34px">' +
-          dsArt('onb-2') + '<div class="ds-art__vig"></div>' +
-          '<div class="ds-cuetrack" style="position:relative;z-index:3">' +
-            '<span class="ds-cuebox"><span class="ds-cue" style="font-size:15px">' +
-            '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь.' +
-            '<span class="ds-cue__sound">[дверь тихо закрывается]</span></span></span></div></div>' +
-        '<div style="margin-top:32px">' +
-          '<span class="ds-badge ds-badge--ccplus ds-badge--lg">CC+</span>' +
-          '<h2 class="ds-d2" style="font-size:1.6rem;margin-top:14px">Субтитры, которые<br>рассказывают больше</h2>' +
-          '<p class="ds-body" style="margin-top:10px;font-size:0.9375rem">CC+ показывают не только реплики: кто говорит, ' +
-          'какая звучит музыка, что происходит вокруг. Каждый текст вычитан редактором.</p></div>' +
+        '<div class="ds-art" style="aspect-ratio:1/1;border-radius:var(--ds-r-2xl);position:relative;overflow:hidden;' +
+          'display:flex;align-items:flex-end;justify-content:center">' +
+          dsArt('onb-' + step) + '<div class="ds-art__vig"></div>' +
+          onbVisual(o.visual) + '</div>' +
+
+        '<div style="margin-top:30px">' +
+          (o.badge ? '<span class="ds-badge ds-badge--lg ' + o.badgeCls + '">' + o.badge + '</span>' : '') +
+          '<h2 class="ds-d2" style="font-size:1.55rem;margin-top:' + (o.badge ? '14' : '0') + 'px">' + o.title + '</h2>' +
+          '<p class="ds-body" style="margin-top:10px;font-size:0.9375rem">' + o.body + '</p></div>' +
       '</div>' +
+
       '<div style="padding:0 24px 20px">' +
         '<div class="ds-row-f ds-g2" style="justify-content:center;margin-bottom:20px">' +
-          [0, 1, 2, 3].map(function (i) {
+          ONB.map(function (_, i) {
             return '<span style="height:6px;border-radius:99px;transition:all .3s;background:' +
               (i === step ? 'var(--ds-accent);width:22px' : 'var(--ds-raised-3);width:6px') + '"></span>';
           }).join('') + '</div>' +
-        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Далее</button></div>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">' +
+          (last ? 'Создать аккаунт' : 'Далее') + '</button>' +
+        (last ? '<p class="ds-sm ds-center" style="margin-top:12px">Уже есть аккаунт? ' +
+          '<span style="color:var(--ds-accent);font-weight:600">Войти</span></p>' : '') +
+      '</div>' +
     '</div>');
-};
+}
+
+Mo.onb1 = function (os) { return onboarding(os, 0); };
+Mo.onb2 = function (os) { return onboarding(os, 1); };
+Mo.onb3 = function (os) { return onboarding(os, 2); };
+Mo.onb4 = function (os) { return onboarding(os, 3); };
 
 /* ============================================================
    03 / 04 — Login and Registration
@@ -3036,7 +3119,7 @@ Mo.ticket = function (os) {
   <nav class="mp__side">
     <div class="mp__brand">
       <div id="mpLogo"></div>
-      <p class="ds-cap" style="margin-top:8px">iPhone и Android · 44 экрана</p>
+      <p class="ds-cap" style="margin-top:8px">iPhone и Android · 47 экранов</p>
       <div class="mp__flow" id="mpFlows"></div>
     </div>
     <div class="mp__list ds-scroll" id="mpList"></div>
@@ -3070,7 +3153,10 @@ Mo.ticket = function (os) {
   var SCREENS = [
     ['Вход', [
       ['splash',     'Сплэш',                Mo.splash,     'Стена постеров под углом. Оффер называет ровно то, чем продукт отличается.'],
-      ['onboarding', 'Онбординг',            Mo.onboarding, 'Четыре экрана, второй — про CC+. Пропустить доступно всегда.'],
+      ['onb1', 'Онбординг 1 · Каталог',   Mo.onb1, 'Первый вопрос зрителя — «а что тут есть». Отвечаем сразу: субтитры у всех 1 200 фильмов, а не у части.'],
+      ['onb2', 'Онбординг 2 · CC+',       Mo.onb2, 'Главное отличие продукта. Показываем не словами, а самой репликой с описанием звука.'],
+      ['onb3', 'Онбординг 3 · Офлайн',    Mo.onb3, 'Карточка загрузки прямо в макете: видно, что скачивается фильм вместе с субтитрами.'],
+      ['onb4', 'Онбординг 4 · Синхро',    Mo.onb4, 'Один тайм-код на двух устройствах. Последний шаг ведёт к созданию аккаунта.'],
       ['login',      'Вход',                 Mo.login,      'iOS первым предлагает Apple, Android — Google. Порядок кнопок меняется, вёрстка нет.'],
       ['register',   'Регистрация',          Mo.register,   'Индикатор надёжности пароля вместо списка требований.']
     ]],
