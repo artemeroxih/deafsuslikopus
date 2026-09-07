@@ -14,6 +14,9 @@
 | 03 | [`mobile.html`](mobile.html) | iPhone и Android — 47 экранов бок о бок |
 | 04 | [`admin.html`](admin.html) | Админ-панель — 28 экранов. Инструмент для компьютера, не для телефона |
 | 05 | [`flow.html`](flow.html) | Путь зрителя от А до Я — 10 актов, 58 шагов и веток, ссылки во все 118 экранов |
+| 06 | [`all.html`](all.html) | Все страницы в одном файле — для показа по одной ссылке |
+
+**Живой сайт:** https://artemeroxih.github.io/deafsuslikopus/
 
 Точка входа — [`index.html`](index.html).
 
@@ -87,8 +90,17 @@ build.py            сборка
 
 ## Деплой
 
-Статика без шага сборки. Vercel: **Add New → Project → Import** этот репозиторий,
-Framework Preset — **Other**, Build Command и Output Directory оставить пустыми.
+Статика без шага сборки — ни Node, ни установки зависимостей.
+
+**GitHub Pages** отдаёт `main` из корня; `.nojekyll` не даёт Jekyll трогать файлы.
+Это основной адрес.
+
+**Vercel** (`vercel.json`) настроен на те же файлы: Framework Preset — **Other**,
+Build Command и Output Directory пустые.
+
+`all.html` собирает шесть страниц в один файл: одна ссылка вместо шести, работает
+и как локальный файл, и как артефакт. Внутренние ссылки вида `web.html#player`
+там ведут на нужную вкладку, а адрес пишется как `#mobile/onb2`.
 
 Страницы отдаются с `X-Robots-Tag: noindex` — прототип не попадёт в поисковую
 выдачу.
