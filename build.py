@@ -55,12 +55,46 @@ HEAD = (
 )
 
 DESCRIPTIONS = {
+    'flow': 'Путь зрителя DeafSuslik от первого запуска до переписки с поддержкой — каждый шаг со ссылкой в прототип.',
     'index': 'DeafSuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.',
     'system': 'Дизайн-система DeafSuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.',
     'web': 'Кликабельный прототип веб-приложения DeafSuslik.',
     'mobile': 'Мобильные приложения DeafSuslik для iPhone и Android.',
     'admin': 'Приватная админ-панель DeafSuslik.',
 }
+
+
+
+# Карта пути ссылается на конкретные экраны прототипов. Список собирается из
+# самих прототипов, а не переписывается руками, — разойтись они не могут.
+DEFAULT_GROUP = {'admin': 'Админ-панель'}
+
+
+def screens_index():
+    import json
+    out = {}
+    for page in ('web', 'mobile', 'admin'):
+        src = read(page + '.body.html')
+        body = re.search(r'var SCREENS\s*=\s*\[(.*?)\n\s*\];', src, re.S).group(1)
+        groups, cur = [], None
+        for line in body.splitlines():
+            t = line.strip()
+            g = re.match(r"\['([^']*)',\s*\[\s*$", t)
+            if g:
+                cur = [g.group(1), []]
+                groups.append(cur)
+                continue
+            r = re.match(r"\[\s*'([a-zA-Z0-9_-]+)',\s*'([^']*)',", t)
+            if r:
+                if cur is None:
+                    cur = [DEFAULT_GROUP.get(page, 'Экраны'), []]
+                    groups.append(cur)
+                cur[1].append([r.group(1), r.group(2)])
+        out[page] = groups
+    return 'var ALLSCREENS = ' + json.dumps(out, ensure_ascii=False) + ';\n'
+
+
+GENERATED = {'flow': screens_index}
 
 
 def check_syntax():
@@ -91,6 +125,7 @@ def build(name):
         + FONTS + '\n'
         + '<style>\n' + read('tokens.css') + '\n' + read('components.css') + '\n</style>\n'
         + '<script>\n' + read('core.js') + '\n</script>\n'
+        + (('<script>\n' + GENERATED[name]() + '</script>\n') if name in GENERATED else '')
         + ''.join('<script>\n' + read(x) + '\n</script>\n' for x in EXTRA.get(name, []))
         + body
     )

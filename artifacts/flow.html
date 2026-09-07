@@ -1,4 +1,4 @@
-<title>DeafSuslik</title>
+<title>Путь зрителя · DeafSuslik</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
@@ -1321,109 +1321,177 @@ var DSAurora = (function () {
 window.addEventListener('resize', function () { DSAurora.resize(); });
 
 </script>
+<script>
+var ALLSCREENS = {"web": [["Вход", [["landing", "Лендинг / сплэш"], ["login", "Вход"], ["register", "Регистрация"]]], ["Каталог", [["home", "Главная"], ["search", "Поиск"], ["results", "Результаты поиска"], ["filters", "Фильтры"], ["categories", "Категории"], ["category", "Категория"], ["movie", "Страница фильма"], ["movies", "Фильмы"], ["real", "Реальные события"], ["collections", "Подборки"]]], ["Плеер и субтитры", [["player", "Видеоплеер"], ["problem", "Меню «Проблема?»"], ["cc-select", "Выбор субтитров"], ["cc-settings", "Внешний вид субтитров"], ["report-cc", "Ошибка в субтитрах"]]], ["Библиотека", [["library", "Продолжить просмотр"], ["favorites", "Избранное"], ["lists", "Мои списки"], ["create-list", "Новый список"], ["list-detail", "Список"], ["history", "История просмотра"], ["download-web", "Скачать фильм"], ["downloads", "Загрузки и офлайн"]]], ["Подписки", [["plans", "Подписка ВИП"], ["landing-real", "Коллекция «Реальные события»"], ["checkout", "Оплата"], ["pay-ok", "Оплата прошла"], ["pay-err", "Оплата не прошла"]]], ["Аккаунт", [["profile", "Профиль"], ["edit-profile", "Изменить профиль"], ["subs", "Мои подписки"], ["sub-detail", "Подписка"], ["devices", "Устройства"], ["settings", "Настройки"], ["a11y", "Субтитры и CC+"], ["notifications", "Уведомления"]]], ["Поддержка", [["help", "Помощь"], ["support", "Написать в поддержку"], ["tickets", "Мои обращения"], ["ticket", "Переписка по обращению"]]]], "mobile": [["Вход", [["splash", "Сплэш"], ["onb1", "Онбординг 1 · Каталог"], ["onb2", "Онбординг 2 · CC+"], ["onb3", "Онбординг 3 · Офлайн"], ["onb4", "Онбординг 4 · Синхро"], ["login", "Вход"], ["register", "Регистрация"]]], ["Каталог", [["home", "Главная"], ["search", "Поиск"], ["results", "Результаты поиска"], ["filters", "Фильтры"], ["categories", "Категории"], ["category", "Категория"], ["movie", "Страница фильма"]]], ["Плеер", [["player", "Плеер · портрет"], ["playerLand", "Плеер · ландшафт"], ["problem", "Меню «Проблема?»"], ["ccSelect", "Выбор субтитров"], ["ccSettings", "Внешний вид субтитров"], ["reportCc", "Ошибка в субтитрах"], ["quality", "Качество видео"], ["speed", "Скорость"]]], ["Загрузки", [["download", "Скачать фильм"], ["downloads", "Загрузки"], ["offline", "Офлайн-режим"]]], ["Библиотека", [["library", "Продолжить просмотр"], ["favorites", "Избранное"], ["lists", "Мои списки"], ["createList", "Новый список"], ["listDetail", "Список"], ["history", "История"]]], ["Подписки", [["plans", "Подписка ВИП"], ["landingReal", "Коллекция «Реальные события»"], ["checkout", "Оплата"], ["payOk", "Оплата прошла"], ["payErr", "Оплата не прошла"]]], ["Аккаунт", [["profile", "Профиль"], ["editProfile", "Изменить профиль"], ["subs", "Мои подписки"], ["devices", "Устройства"], ["settings", "Настройки"], ["a11y", "Субтитры и CC+"], ["notifications", "Уведомления"]]], ["Поддержка", [["help", "Помощь"], ["support", "Написать в поддержку"], ["tickets", "Мои обращения"], ["ticket", "Переписка"]]]], "admin": [["Админ-панель", [["login", "Вход в админ-панель"], ["dash", "Дашборд"], ["movies", "Фильмы"], ["add-movie", "Добавить фильм"], ["manual-upload", "Ручная загрузка"], ["api-import", "Импорт через API"], ["subs-list", "Субтитры и CC+"], ["editor", "Редактор субтитров"], ["homepage", "Главная страница"], ["collections", "Коллекции"], ["series", "Сериалы"], ["rights", "Права и лицензии"], ["processing", "Обработка видео"], ["storage", "Хранилище"], ["users", "Пользователи"], ["user", "Карточка пользователя"], ["subs-admin", "Подписки"], ["payments", "Платежи"], ["analytics", "Аналитика просмотров"], ["revenue", "Выручка"], ["searchan", "Поиск"], ["tickets", "Обращения"], ["ticket", "Обращение · CC+"], ["roles", "Роли и доступы"], ["audit", "Журнал действий"], ["api", "API и интеграции"], ["trash", "Корзина"], ["asettings", "Настройки"]]]]};
+</script>
 <style>
   body { background: var(--ds-void); }
-  .ix { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
+  .fl { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
 
-  .ix__hero { position: relative; overflow: hidden; padding: 76px 0 64px; }
-  .ix__wall {
-    position: absolute; inset: -8% -14% auto -14%; height: 130%;
-    display: grid; grid-template-columns: repeat(9, 1fr); gap: 14px;
-    transform: rotate(-8deg); opacity: .30; pointer-events: none;
-  }
-  .ix__wall > div { border-radius: 12px; overflow: hidden; aspect-ratio: 2/3; }
-  .ix__scrim {
+  .fl__hero { position: relative; overflow: hidden; padding: 68px 0 56px; }
+  .fl__scrim {
     position: absolute; inset: 0; pointer-events: none;
-    background:
-      radial-gradient(74% 58% at 20% 22%, rgba(12,22,56,.10), rgba(12,22,56,.68) 72%),
-      linear-gradient(to bottom, transparent 52%, rgba(12,22,56,.82) 100%);
+    background: linear-gradient(to bottom, transparent 46%, rgba(12,22,56,.88) 100%);
   }
 
-  .ix__cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-  .ix__card {
-    display: block; padding: 26px; border-radius: var(--ds-r-lg);
+  /* Объяснение термина стоит раньше самой карты: сначала слово, потом схема. */
+  .fl__explain {
+    padding: 26px; border-radius: var(--ds-r-lg);
     background: var(--ds-panel); border: 1px solid var(--ds-line);
-    transition: transform var(--ds-m-base) var(--ds-ease),
-                border-color var(--ds-m-base) var(--ds-ease),
-                box-shadow var(--ds-m-base) var(--ds-ease);
   }
-  .ix__card:hover { transform: translateY(-3px); border-color: var(--ds-line-strong); box-shadow: var(--ds-e3); }
-  .ix__card__n {
-    font-family: var(--ds-mono); font-size: 11px; letter-spacing: .1em; color: var(--ds-accent);
+  .fl__explain--amber { border-color: var(--ds-amber-edge); }
+
+  .fl__mini { display: flex; align-items: stretch; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+  .fl__mini b {
+    display: flex; align-items: center; padding: 10px 14px; border-radius: 999px;
+    background: var(--ds-raised); border: 1px solid var(--ds-line);
+    font-size: 13px; font-weight: 600; color: var(--ds-ink);
   }
-  .ix__thumb {
-    position: relative; aspect-ratio: 16/9; border-radius: var(--ds-r-md);
-    overflow: hidden; border: 1px solid var(--ds-line); margin-bottom: 18px;
+  .fl__mini b.is-on { background: var(--ds-raised-3); border-color: var(--ds-amber-edge); color: var(--ds-amber); }
+  .fl__mini i { display: flex; align-items: center; color: var(--ds-ink-3); font-style: normal; }
+
+  .fl__act { padding: 46px 0 8px; border-top: 1px solid var(--ds-line); margin-top: 46px; }
+  .fl__actnum {
+    font-family: var(--ds-mono); font-size: 12px; letter-spacing: .14em;
+    color: var(--ds-accent); text-transform: uppercase;
   }
 
-  /* Карта пути — пятая, лишняя в паре: пусть занимает ряд целиком. */
-  .ix__card--wide { grid-column: 1 / -1; }
+  .fl__steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+  .fl__step {
+    position: relative; padding: 20px 20px 18px; border-radius: var(--ds-r-lg);
+    background: var(--ds-panel); border: 1px solid var(--ds-line);
+  }
+  .fl__step--branch {
+    background: transparent; border-style: dashed; border-color: var(--ds-line-strong);
+  }
+  .fl__n {
+    font-family: var(--ds-mono); font-size: 12px; font-weight: 700; letter-spacing: .08em;
+    color: var(--ds-amber);
+  }
+  .fl__step--branch .fl__n { color: var(--ds-ink-3); }
+  .fl__name {
+    font-family: var(--ds-display); font-weight: 700; font-size: 19px;
+    letter-spacing: -.02em; margin: 4px 0 12px; color: var(--ds-ink);
+  }
 
-  .ix__sec { padding: 56px 0; border-top: 1px solid var(--ds-line); }
+  .fl__lines { display: grid; gap: 8px; }
+  .fl__line { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 10px; align-items: baseline; }
+  .fl__k {
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ds-ink-3);
+  }
+  .fl__v { font-size: 13.5px; line-height: 1.5; color: var(--ds-ink-2); }
+  .fl__v b { color: var(--ds-ink); font-weight: 600; }
 
-  @media (max-width: 860px) {
-    .ix { padding: 0 20px; }
-    .ix__cards { grid-template-columns: 1fr; }
-    .ix__wall { grid-template-columns: repeat(5, 1fr); }
+  .fl__links { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 14px; }
+  .fl__link {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 11px; border-radius: 999px; font-size: 12px; font-weight: 600;
+    background: var(--ds-raised); border: 1px solid var(--ds-line);
+    color: var(--ds-ink-2); text-decoration: none;
+    transition: border-color var(--ds-m-base) var(--ds-ease), color var(--ds-m-base) var(--ds-ease);
+  }
+  .fl__link:hover { border-color: var(--ds-accent); color: var(--ds-ink); }
+
+  /* Полный список — обещание «ничего не пропущено», проверяемое глазами. */
+  .fl__index { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 26px; }
+  .fl__idxgroup { break-inside: avoid; }
+  .fl__idxhead {
+    font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--ds-ink-3); padding-bottom: 8px; border-bottom: 1px solid var(--ds-line);
+  }
+  .fl__idxlist { list-style: none; margin: 8px 0 0; padding: 0; }
+  .fl__idxlist a {
+    display: flex; gap: 9px; padding: 5px 0; font-size: 13px;
+    color: var(--ds-ink-2); text-decoration: none;
+  }
+  .fl__idxlist a:hover { color: var(--ds-amber); }
+  .fl__idxlist span { font-family: var(--ds-mono); font-size: 11px; color: var(--ds-ink-4); min-width: 24px; }
+
+  @media (max-width: 900px) {
+    .fl__steps { grid-template-columns: 1fr; }
+    .fl__index { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) {
+    .fl { padding: 0 20px; }
+    .fl__index { grid-template-columns: 1fr; }
+    .fl__line { grid-template-columns: 1fr; gap: 2px; }
   }
 </style>
 
-<header class="ix__hero">
-  <canvas class="ds-hero-bg__aurora" data-aurora="DeafSuslik-cover" data-bokeh="34" style="z-index:0;opacity:1"></canvas>
-  <div class="ix__wall" id="ixWall"></div>
-  <div class="ix__scrim"></div>
-  <div class="ix" style="position:relative">
-    <div id="ixLogo"></div>
-    <h1 class="ds-hero-title" style="margin-top:30px;max-width:14ch">Кино, которое читается</h1>
-    <p class="ds-body" style="margin-top:20px;font-size:1.0625rem;max-width:56ch">
-      Дизайн премиального стримингового сервиса, где субтитры — не опция, а продукт.
-      Веб, iPhone, Android и приватная админ-панель на одной дизайн-системе.
+<header class="fl__hero">
+  <canvas class="ds-hero-bg__aurora" data-aurora="DeafSuslik-flow" data-bokeh="30" style="z-index:0;opacity:1"></canvas>
+  <div class="fl__scrim"></div>
+  <div class="fl" style="position:relative">
+    <div id="flLogo"></div>
+    <p class="ds-eyebrow" style="margin-top:26px">Карта пути</p>
+    <h1 class="ds-hero-title" style="margin-top:10px;max-width:16ch">От первого запуска до ответа поддержки</h1>
+    <p class="ds-body" style="margin-top:18px;font-size:1.0625rem;max-width:58ch">
+      Каждый шаг зрителя по порядку: что он видит, что делает и куда попадает дальше.
+      Ни один экран не пропущен — в конце страницы полный список всех
+      <b id="flTotal">118</b> экранов со ссылками.
     </p>
-    <div class="ds-wrap ds-g2" style="margin-top:26px">
-      <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
+    <div class="ds-wrap ds-g2" style="margin-top:24px">
       <span class="ds-badge ds-badge--lg ds-badge--accent">ВИП · 500 ₽ / месяц</span>
-      <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
-      <span class="ds-badge ds-badge--lg">118 экранов</span>
-    </div>
-
-    <div class="ds-strip" style="margin-top:34px;max-width:600px;background:rgba(18,28,48,.76);backdrop-filter:blur(20px)">
-      <span class="ds-strip__label">CC+</span>
-      <div>
-        <p class="ds-cue" style="text-align:left;font-size:15px;text-shadow:none;margin:0">
-          <span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.
-          <span class="ds-cue__sound">[дверь тихо закрывается]</span>
-        </p>
-      </div>
+      <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
+      <span class="ds-badge ds-badge--lg">10 актов пути</span>
     </div>
   </div>
 </header>
 
-<main class="ix">
-  <section style="padding-bottom:56px">
-    <div class="ix__cards" id="ixCards"></div>
-  </section>
+<main class="fl">
 
-  <section class="ix__sec">
-    <h2 class="ds-d2">Три решения, на которых держится система</h2>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:26px" id="ixIdeas"></div>
-  </section>
-
-  <section class="ix__sec">
-    <h2 class="ds-d2">Что было в исходных материалах</h2>
-    <p class="ds-body" style="margin-top:12px">
-      25 экранов существующего продукта. Субтитры упоминались в них ровно один раз — строкой
-      «Audio&nbsp;&amp;&nbsp;subtitle» четвёртым пунктом в глубине аккаунта. Для сервиса, чья аудитория —
-      глухие и слабослышащие зрители, это и стало точкой пересборки.
+  <section class="fl__explain fl__explain--amber">
+    <p class="ds-eyebrow" style="color:var(--ds-amber)">Сначала одно слово</p>
+    <h2 class="ds-h1" style="margin-top:8px">Онбординг — это что?</h2>
+    <p class="ds-body" style="margin-top:12px;max-width:66ch">
+      Онбординг — это несколько экранов, которые показываются <b>при самом первом запуске
+      приложения</b>, ещё до аккаунта. Они ничего не спрашивают и ничего не требуют.
+      Их работа — за четыре шага объяснить, чем этот сервис отличается от других,
+      чтобы зритель понимал, ради чего он сейчас будет заводить аккаунт и платить.
     </p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px" id="ixStats"></div>
+    <p class="ds-body" style="margin-top:12px;max-width:66ch">
+      Проще говоря — это <b>знакомство</b>. Как когда человек заходит в кинотеатр
+      и сначала видит, какие залы есть, а уже потом идёт в кассу.
+    </p>
+
+    <p class="ds-eyebrow" style="margin-top:24px">При регистрации? Нет — до неё</p>
+    <div class="fl__mini">
+      <b>Сплэш</b><i>→</i>
+      <b class="is-on">Онбординг 1</b><i>→</i>
+      <b class="is-on">Онбординг 2</b><i>→</i>
+      <b class="is-on">Онбординг 3</b><i>→</i>
+      <b class="is-on">Онбординг 4</b><i>→</i>
+      <b>Регистрация</b><i>→</i>
+      <b>Подписка</b>
+    </div>
+    <p class="ds-sm" style="margin-top:14px;max-width:66ch">
+      Онбординг стоит <b>перед</b> регистрацией: он объясняет, зачем заводить аккаунт,
+      а не поздравляет с уже заведённым. Показывается один раз — при первом запуске.
+      Дальше приложение открывается сразу на главной. На каждом шаге есть
+      «Пропустить»: онбординг объясняет, но не задерживает.
+    </p>
   </section>
 
-  <footer class="ix__sec" style="padding-bottom:72px">
+  <div id="flActs"></div>
+
+  <section class="fl__act">
+    <p class="fl__actnum">Ничего не пропущено</p>
+    <h2 class="ds-d2" style="margin-top:8px">Все экраны, все <span id="flTotal2">118</span></h2>
+    <p class="ds-body" style="margin-top:12px;max-width:64ch">
+      Список собирается прямо из прототипов при сборке страницы — он не может
+      разойтись с тем, что открывается по ссылке. Любая строка открывает
+      прототип сразу на нужном экране.
+    </p>
+    <div id="flIndex"></div>
+  </section>
+
+  <footer class="fl__act" style="padding-bottom:72px">
     <div class="ds-between" style="align-items:flex-end;flex-wrap:wrap;gap:20px">
       <div>
-        <div id="ixFootLogo"></div>
+        <div id="flFootLogo"></div>
         <p class="ds-cap" style="margin-top:10px">
-          Обложки фильмов сгенерированы процедурно — каталог не использует чужие материалы.
+          <a href="index.html" style="color:var(--ds-accent);text-decoration:none">← Ко всем материалам</a>
         </p>
       </div>
       <p class="ds-cap">© 2026 DeafSuslik</p>
@@ -1434,74 +1502,154 @@ window.addEventListener('resize', function () { DSAurora.resize(); });
 <script>
 (function () {
   var $ = function (id) { return document.getElementById(id); };
-
   DSAurora.mount(document);
+  $('flLogo').innerHTML = dsLogo(42, 26);
+  $('flFootLogo').innerHTML = dsLogo(24, 15);
 
-  $('ixLogo').innerHTML = dsLogo(46, 29);
-  $('ixFootLogo').innerHTML = dsLogo(24, 15);
+  /* Шаг: [номер, название, что видит, что делает, что дальше, ссылки, вид]
+     Ссылки: w — веб, m — iPhone и Android, a — админ-панель. */
+  var ACTS = [
+    ['Акт I', 'Первый запуск', 'Зритель ещё ничего не знает. Эти экраны показываются один раз и объясняют, ради чего заводить аккаунт.', [
+      ['01', 'Сплэш', 'Логотип и стена постеров под углом. Одна фраза о том, чем сервис отличается.', 'Ничего — экран уходит сам за секунду.', 'Онбординг, шаг 1', { m: 'splash', w: 'landing' }],
+      ['02', 'Онбординг 1 · Каталог', 'Сетка постеров, на каждом бейдж CC или CC+.', 'Читает: субтитры есть у всех 1 200 фильмов, а не у части.', 'Шаг 2', { m: 'onb1' }],
+      ['03', 'Онбординг 2 · CC+', 'Живая реплика: имя говорящего, сама фраза и описание звука в скобках.', 'Видит своими глазами, чем CC+ отличается от обычных субтитров.', 'Шаг 3', { m: 'onb2' }],
+      ['04', 'Онбординг 3 · Офлайн', 'Карточка загрузки: фильм сохраняется вместе с субтитрами.', 'Понимает, что смотреть можно без интернета.', 'Шаг 4', { m: 'onb3' }],
+      ['05', 'Онбординг 4 · Синхро', 'Два устройства на одном тайм-коде 47:12.', 'Нажимает «Создать аккаунт».', 'Регистрация', { m: 'onb4' }],
+      ['ветка', 'Если нажать «Пропустить»', 'Кнопка есть в углу на каждом из четырёх шагов.', 'Пропускает знакомство.', 'Сразу главная. Каталог видно, но «Смотреть» попросит войти.', { m: 'home', w: 'home' }, 'branch']
+    ]],
 
-  $('ixWall').innerHTML = CAT.concat(CAT).slice(0, 27).map(function (m, i) {
-    return '<div style="margin-top:' + ((i % 9) * 16) + 'px">' + art(m.t, '', 'height:100%') + '</div>';
-  }).join('');
+    ['Акт II', 'Аккаунт', 'Два экрана и одна развилка: новый зритель или вернувшийся.', [
+      ['06', 'Регистрация', 'Почта, пароль и полоска надёжности вместо списка требований.', 'Заводит аккаунт.', 'Подписка ВИП', { m: 'register', w: 'register' }],
+      ['ветка', 'Если аккаунт уже есть', 'Вход. На iPhone первой стоит кнопка Apple, на Android — Google.', 'Входит.', 'Главная, если подписка активна. Иначе — подписка.', { m: 'login', w: 'login' }, 'branch']
+    ]],
 
-  var CARDS = [
-    ['01', 'system.html', 'Дизайн-система', 'ds-system',
-     'Аудит 25 исходных экранов, токены, компоненты, бейджи CC и CC+, правила записи расширенных субтитров, плеер и передача в разработку.',
-     ['Аудит референсов', 'Цвет и типографика', 'Компоненты', 'Доступность']],
-    ['02', 'web.html', 'Веб-приложение', 'ds-web',
-     'Кликабельный прототип: от лендинга до переписки с поддержкой. Переключение ширины от десктопа 1440 до мобильного 420.',
-     ['43 экрана', '7 сценариев', 'Плеер', 'Редактор субтитров']],
-    ['03', 'mobile.html', 'iPhone и Android', 'ds-mobile',
-     'Настоящий мобильный UX, а не сжатый веб: шторки, жесты, safe area, FAB на Android и крупные заголовки на iOS.',
-     ['47 экранов', 'Две платформы рядом', 'Портрет и ландшафт', 'Офлайн']],
-    ['04', 'admin.html', 'Админ-панель', 'ds-admin',
-     'Приватный контур: загрузка мастер-файла, автоматическая подготовка качеств, таймлайн-редактор субтитров, поддержка, роли и журнал действий.',
-     ['28 экранов', 'Редактор CC+', 'Роли и доступы', 'Права и лицензии']],
-    ['05', 'flow.html', 'Путь зрителя', 'ds-flow',
-     'Каждый шаг по порядку: что зритель видит, что делает и куда попадает дальше. От первого запуска до ответа поддержки, со ссылками прямо в прототипы.',
-     ['10 актов', 'Все 118 экранов', 'Ветки и отказы', 'Онбординг']]
+    ['Акт III', 'Подписка и оплата', 'Один тариф. Никакого выбора между уровнями — выбирать тут нечего.', [
+      ['07', 'Подписка ВИП', 'Один тариф: 500 ₽ в месяц, доступ одинаковый для всех.', 'Нажимает «Оформить за 500 ₽».', 'Оплата', { m: 'plans', w: 'plans' }],
+      ['08', 'Оплата', 'Карта или Apple Pay / Google Pay. Словами написано, когда спишется в следующий раз.', 'Платит.', 'Оплата прошла', { m: 'checkout', w: 'checkout' }],
+      ['09', 'Оплата прошла', 'Дата следующего списания видна сразу, без захода в настройки.', 'Нажимает «Смотреть».', 'Главная', { m: 'payOk', w: 'pay-ok' }],
+      ['ветка', 'Если оплата не прошла', 'Код отказа банка переведён на человеческий язык.', 'Пробует другую карту.', 'Обратно на оплату', { m: 'payErr', w: 'pay-err' }, 'branch']
+    ]],
+
+    ['Акт IV', 'Найти фильм', 'От главной до страницы фильма. Субтитры участвуют в поиске наравне с жанром.', [
+      ['10', 'Главная', 'Герой во всю ширину, под ним ряды подборок. Внизу таббар из пяти пунктов.', 'Листает или идёт в поиск.', 'Поиск или страница фильма', { m: 'home', w: 'home' }],
+      ['11', 'Поиск', 'История запросов, тренды и плитки категорий — две из них про субтитры.', 'Вводит название.', 'Результаты', { m: 'search', w: 'search' }],
+      ['12', 'Результаты поиска', 'Активные фильтры показаны чипами с крестиком.', 'Снимает лишний фильтр одним касанием.', 'Страница фильма', { m: 'results', w: 'results' }],
+      ['13', 'Фильтры', 'Блок «Субтитры» вынесен из общего списка и подсвечен.', 'Оставляет только фильмы с CC+.', 'Результаты', { m: 'filters', w: 'filters' }],
+      ['14', 'Категории', 'Плитки. Последние четыре — про доступность и качество.', 'Выбирает категорию.', 'Категория', { m: 'categories', w: 'categories' }],
+      ['15', 'Категория', 'Шапка коллекции с бейджем CC+ и счётчиком фильмов.', 'Выбирает фильм.', 'Страница фильма', { m: 'category', w: 'category' }],
+      ['16', 'Страница фильма', 'Блок субтитров — отдельной карточкой сразу под кнопками, а не в конце страницы.', 'Нажимает «Смотреть» или «Скачать».', 'Плеер или загрузка', { m: 'movie', w: 'movie' }],
+      ['ветка', 'Коллекция «Реальные события»', 'Отдельная посадочная страница со своим цветом.', 'Смотрит подборку.', 'Коллекция — это контент, а не платный уровень: кнопка ведёт к той же единой подписке.', { m: 'landingReal', w: 'landing-real' }, 'branch']
+    ]],
+
+    ['Акт V', 'Смотреть', 'Ради этого всё и затевалось. CC+ — кнопка первого уровня, а не пункт в глубине настроек.', [
+      ['17', 'Плеер', 'Крупные цели касания. CC+ слева, там, где до неё дотягивается большой палец.', 'Смотрит. Нажимает CC+.', 'Выбор субтитров', { m: 'player', w: 'player' }],
+      ['18', 'Плеер · ландшафт', 'Полный экран: главы на таймлайне, подпись «CC+ · Русский» целиком, блокировка управления.', 'Поворачивает телефон.', 'Тот же фильм, больше кадра', { m: 'playerLand' }],
+      ['19', 'Выбор субтитров', 'CC+ вверху списка, отдельной группой от обычных дорожек.', 'Выбирает язык.', 'Два касания от плеера до нужного языка', { m: 'ccSelect', w: 'cc-select' }],
+      ['20', 'Внешний вид субтитров', 'Размер, шрифт, цвет — включая ярко-жёлтый, золото и бриллиант, — фон, обводка. Предпросмотр живой.', 'Настраивает под себя один раз.', 'Настройка запоминается на всех устройствах', { m: 'ccSettings', w: 'cc-settings' }],
+      ['21', 'Качество видео', 'Показаны только доступные качества, рядом — требования к скорости сети.', 'Выбирает качество.', 'Обратно в плеер', { m: 'quality' }],
+      ['22', 'Скорость', 'На высокой скорости субтитры держатся дольше минимального времени чтения.', 'Ускоряет или замедляет.', 'Обратно в плеер', { m: 'speed' }]
+    ]],
+
+    ['Акт VI', 'Без интернета', 'Фильм играет офлайн. Файл при этом не достаётся наружу — «смотреть без сети» есть, «скачать себе на диск» нет.', [
+      ['23', 'Скачать фильм', 'Качество и субтитры выбираются в одной шторке, размер считается на лету.', 'Ставит фильм в загрузку.', 'Загрузки', { m: 'download', w: 'download-web' }],
+      ['24', 'Загрузки', 'Все состояния: в очереди, качается, пауза, ошибка, готово, истекает. Плюс шкала занятого места.', 'Ждёт или ставит на паузу.', 'Готово — можно смотреть', { m: 'downloads', w: 'downloads' }],
+      ['25', 'Офлайн-режим', 'Полоса сверху. Скачанное — обычным цветом, остальное приглушено и не нажимается.', 'Смотрит без интернета.', 'Плеер', { m: 'offline' }]
+    ]],
+
+    ['Акт VII', 'Вернуться', 'Зритель приходит второй раз. Всё, что он начал, ждёт его на месте.', [
+      ['26', 'Продолжить просмотр', 'Вкладки библиотеки, прогресс прямо на обложке.', 'Досматривает.', 'Плеер с того же места', { m: 'library', w: 'library' }],
+      ['27', 'Избранное', 'Сетка по два в ряд — плотность, при которой обложка ещё читается.', 'Открывает отложенное.', 'Страница фильма', { m: 'favorites', w: 'favorites' }],
+      ['28', 'Мои списки', 'На Android — круглая кнопка в углу, на iOS — кнопка в шапке.', 'Создаёт список.', 'Новый список', { m: 'lists', w: 'lists' }],
+      ['29', 'Новый список', 'Шторка на 58% высоты: клавиатура помещается, фон остаётся виден.', 'Называет список.', 'Список', { m: 'createList', w: 'create-list' }],
+      ['30', 'Список', 'Коллаж из трёх обложек, порядок меняется перетаскиванием.', 'Складывает фильмы.', 'Страница фильма', { m: 'listDetail', w: 'list-detail' }],
+      ['31', 'История просмотра', 'Сгруппирована по времени, прогресс на миниатюре.', 'Ищет, что смотрел на прошлой неделе.', 'Страница фильма', { m: 'history', w: 'history' }],
+      ['32', 'Уведомления', 'Непрочитанные помечены фоном и точкой — не только цветом.', 'Читает про новинки и правки субтитров.', 'Туда, куда ведёт уведомление', { m: 'notifications', w: 'notifications' }]
+    ]],
+
+    ['Акт VIII', 'Свой аккаунт', 'Подписка, устройства и субтитры. Субтитры здесь — раздел верхнего уровня, а не подпункт настроек видео.', [
+      ['33', 'Профиль', 'Подписка бейджем под именем. Субтитры и CC+ — первый пункт настроек.', 'Заходит в настройки.', 'Любой раздел ниже', { m: 'profile', w: 'profile' }],
+      ['34', 'Изменить профиль', 'Имя, почта, аватар.', 'Правит данные.', 'Обратно в профиль', { m: 'editProfile', w: 'edit-profile' }],
+      ['35', 'Мои подписки', 'Активная подписка, история платежей и дата следующего списания.', 'Проверяет, за что списали.', 'Подписка', { m: 'subs', w: 'subs' }],
+      ['36', 'Подписка · детали', 'Отмена, возобновление, чеки.', 'Может отменить в два нажатия, без письма в поддержку.', 'Мои подписки', { w: 'sub-detail' }],
+      ['37', 'Устройства', 'Текущее устройство помечено и не имеет кнопки выхода.', 'Отключает чужой телефон.', 'Обратно в профиль', { m: 'devices', w: 'devices' }],
+      ['38', 'Настройки', 'Сгруппированные списки в стиле платформы.', 'Меняет язык, тему, уведомления.', 'Любой раздел', { m: 'settings', w: 'settings' }],
+      ['39', 'Субтитры и CC+', 'Раздел верхнего уровня: внешний вид, язык по умолчанию, автовключение CC+.', 'Настраивает один раз — работает везде.', 'Плеер откроется уже настроенным', { m: 'a11y', w: 'a11y' }]
+    ]],
+
+    ['Акт IX', 'Если что-то не так', 'Замкнутая петля: жалоба уходит с тайм-кодом, а обратно приходит «исправлено».', [
+      ['40', 'Проблема?', 'Меню прямо в плеере. Момент фильма и данные устройства прикладываются сами.', 'Выбирает, что именно не так.', 'Ошибка в субтитрах', { m: 'problem', w: 'problem' }],
+      ['41', 'Ошибка в субтитрах', 'Реплика показана целиком — видно, о какой именно строке речь.', 'Пишет, что не так.', 'Обращение уходит редактору', { m: 'reportCc', w: 'report-cc' }],
+      ['42', 'Помощь', 'Плитка «Субтитры и CC+» выделена — самая частая причина обращения.', 'Ищет ответ сам.', 'Ответ или письмо в поддержку', { m: 'help', w: 'help' }],
+      ['43', 'Написать в поддержку', 'Технические данные прикладываются с явного согласия. Поле видно целиком.', 'Пишет письмо.', 'Мои обращения', { m: 'support', w: 'support' }],
+      ['44', 'Мои обращения', 'Карточки вместо таблицы — статус читается с одного взгляда.', 'Следит за ответом.', 'Переписка', { m: 'tickets', w: 'tickets' }],
+      ['45', 'Переписка', 'Правка субтитров показана как сравнение: видно, что именно изменилось.', 'Читает «исправлено».', 'Обратно в фильм — уже с верной репликой', { m: 'ticket', w: 'ticket' }]
+    ]],
+
+    ['Акт X', 'По ту сторону', 'Этого зритель не видит. Здесь фильм появляется в каталоге, а жалоба превращается в правку.', [
+      ['46', 'Вход в админку', 'Приватный контур, отдельный адрес, двухфакторный вход.', 'Входит редактор или админ.', 'Сводка', { a: 'login' }],
+      ['47', 'Сводка', 'Что сейчас обрабатывается, что ждёт проверки, что сломано.', 'Смотрит очередь.', 'Любой раздел', { a: 'dash' }],
+      ['48', 'Добавить фильм', 'Два пути: залить мастер-файл руками или импортировать через API.', 'Выбирает путь.', 'Загрузка или импорт', { a: 'add-movie' }],
+      ['49', 'Загрузка и импорт', 'Ручная загрузка мастер-файла или подтягивание карточки из внешнего каталога.', 'Отдаёт файл.', 'Обработка', { a: 'manual-upload' }],
+      ['50', 'Обработка', 'Автоматическая нарезка качеств, извлечение дорожек, проверка субтитров.', 'Ждёт.', 'Субтитры и CC+', { a: 'processing' }],
+      ['51', 'Субтитры и CC+', 'Список дорожек: что готово, что черновик, что требует правки.', 'Открывает нужную.', 'Редактор', { a: 'subs-list' }],
+      ['52', 'Редактор субтитров', 'Таймлайн, волна звука, реплики. Жалоба зрителя открывает ровно тот момент, на который он пожаловался.', 'Правит реплику, публикует.', 'Зрителю уходит уведомление «исправлено»', { a: 'editor' }],
+      ['53', 'Обращения', 'Очередь поддержки. У обращения из плеера уже есть фильм, тайм-код и номер реплики.', 'Отвечает.', 'Переписка у зрителя обновляется', { a: 'tickets' }],
+      ['54', 'Главная страница сайта', 'Редактор собирает витрину: подборки, порядок рядов, акцент. Шрифт и название сервиса заблокированы, цвет — из четырёх проверенных на контраст.', 'Публикует витрину.', 'Зритель видит новую главную', { a: 'homepage' }]
+    ]]
   ];
 
-  $('ixCards').innerHTML = CARDS.map(function (c) {
-    return '<a class="ix__card' + (c[0] === '05' ? ' ix__card--wide' : '') + '" href="' + c[1] + '">' +
-      '<div class="ix__thumb">' + art(c[3], '', 'position:absolute;inset:0') +
-        '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.86),rgba(3,7,19,.14))"></div>' +
-        '<div style="position:absolute;left:16px;bottom:14px">' +
-          '<div class="ix__card__n">' + c[0] + '</div>' +
-          '<div style="font-family:var(--ds-display);font-weight:700;font-size:20px;letter-spacing:-.03em;margin-top:4px">' + c[2] + '</div>' +
-        '</div></div>' +
-      '<p class="ds-sm">' + c[4] + '</p>' +
-      '<div class="ds-wrap ds-g1" style="margin-top:14px">' +
-        c[5].map(function (t) { return '<span class="ds-badge">' + t + '</span>'; }).join('') + '</div>' +
-      '<div class="ds-row-f ds-g2" style="margin-top:18px;color:var(--ds-accent);font-weight:600;font-size:13.5px">' +
-        'Открыть' + ic('chevR', 15) + '</div>' +
-    '</a>';
+  var LABEL = { w: 'Веб', m: 'iPhone и Android', a: 'Админ' };
+  var FILE = { w: 'web.html', m: 'mobile.html', a: 'admin.html' };
+
+  function links(l) {
+    return ['w', 'm', 'a'].filter(function (k) { return l[k]; }).map(function (k) {
+      return '<a class="fl__link" href="' + FILE[k] + '#' + l[k] + '">' +
+        ic('chevR', 13) + LABEL[k] + '</a>';
+    }).join('');
+  }
+
+  function line(k, v) {
+    return '<div class="fl__line"><div class="fl__k">' + k + '</div><div class="fl__v">' + v + '</div></div>';
+  }
+
+  $('flActs').innerHTML = ACTS.map(function (a) {
+    return '<section class="fl__act">' +
+      '<p class="fl__actnum">' + a[0] + '</p>' +
+      '<h2 class="ds-d2" style="margin-top:8px">' + a[1] + '</h2>' +
+      '<p class="ds-body" style="margin-top:12px;max-width:64ch">' + a[2] + '</p>' +
+      '<div class="fl__steps">' + a[3].map(function (s) {
+        return '<article class="fl__step' + (s[6] === 'branch' ? ' fl__step--branch' : '') + '">' +
+          '<div class="fl__n">' + s[0] + '</div>' +
+          '<h3 class="fl__name">' + s[1] + '</h3>' +
+          '<div class="fl__lines">' +
+            line('Видит', s[2]) + line('Делает', s[3]) + line('Дальше', s[4]) +
+          '</div>' +
+          '<div class="fl__links">' + links(s[5]) + '</div>' +
+        '</article>';
+      }).join('') + '</div>' +
+    '</section>';
   }).join('');
 
-  var IDEAS = [
-    ['Два акцента, разделённых по смыслу', 'accent',
-     'Синий градиент — всё, что запускает и продаёт. Янтарь — только субтитры, CC, CC+, доступность и фокус. Назначение кнопки понятно до того, как прочитан текст.'],
-    ['CC+ как продукт, а не настройка', 'amber',
-     'Бейдж на карточках, кнопка первого уровня в плеере, отдельный фильтр, отдельный раздел профиля и живой редактор внешнего вида. От плеера до нужного языка — одно касание.'],
-    ['Замкнутая петля поддержки', 'accent',
-     'Кнопка «Проблема?» прикладывает фильм, тайм-код и номер реплики. Редактор открывает ровно этот момент, публикует правку — зрителю приходит «исправлено».']
-  ];
-  $('ixIdeas').innerHTML = IDEAS.map(function (i) {
-    var col = i[1] === 'amber' ? 'var(--ds-amber)' : 'var(--ds-accent)';
-    return '<div class="ds-card">' +
-      '<span style="display:block;width:28px;height:3px;border-radius:2px;background:' + col + '"></span>' +
-      '<h3 class="ds-h2" style="margin-top:14px">' + i[0] + '</h3>' +
-      '<p class="ds-sm" style="margin-top:9px">' + i[2] + '</p></div>';
-  }).join('');
-
-  $('ixStats').innerHTML = [
-    ['25', 'исходных экранов разобрано'],
-    ['118', 'экранов спроектировано'],
-    ['1', 'подписка — 500 ₽ / месяц'],
-    ['0', 'чужих постеров в макетах']
-  ].map(function (s) {
-    return '<div class="ds-stat"><div class="ds-stat__v" style="font-size:2rem">' + s[0] + '</div>' +
-      '<div class="ds-stat__k" style="margin-top:6px;text-transform:none;letter-spacing:0;font-weight:500">' + s[1] + '</div></div>';
-  }).join('');
+  /* ---- полный список экранов ---- */
+  var PAGE = [['mobile', 'iPhone и Android'], ['web', 'Веб'], ['admin', 'Админ-панель']];
+  var total = 0, html = '';
+  PAGE.forEach(function (p) {
+    var groups = ALLSCREENS[p[0]] || [];
+    var n = 0;
+    groups.forEach(function (g) { n += g[1].length; });
+    total += n;
+    html += '<h3 class="ds-h1" style="margin-top:34px">' + p[1] +
+      ' <span class="ds-cap" style="font-weight:500">· ' + n + '</span></h3>' +
+      '<div class="fl__index">' + groups.map(function (g) {
+        return '<div class="fl__idxgroup"><div class="fl__idxhead">' + g[0] + '</div>' +
+          '<ul class="fl__idxlist">' + g[1].map(function (s, i) {
+            return '<li><a href="' + p[0] + '.html#' + s[0] + '">' +
+              '<span>' + String(i + 1).padStart(2, '0') + '</span>' + s[1] + '</a></li>';
+          }).join('') + '</ul></div>';
+      }).join('') + '</div>';
+  });
+  $('flIndex').innerHTML = html;
+  $('flTotal').textContent = total;
+  $('flTotal2').textContent = total;
 })();
 </script>

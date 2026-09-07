@@ -1367,6 +1367,9 @@ window.addEventListener('resize', function () { DSAurora.resize(); });
     overflow: hidden; border: 1px solid var(--ds-line); margin-bottom: 18px;
   }
 
+  /* Карта пути — пятая, лишняя в паре: пусть занимает ряд целиком. */
+  .ix__card--wide { grid-column: 1 / -1; }
+
   .ix__sec { padding: 56px 0; border-top: 1px solid var(--ds-line); }
 
   @media (max-width: 860px) {
@@ -1391,7 +1394,7 @@ window.addEventListener('resize', function () { DSAurora.resize(); });
       <span class="ds-badge ds-badge--lg ds-badge--cc">CC и CC+</span>
       <span class="ds-badge ds-badge--lg ds-badge--accent">ВИП · 500 ₽ / месяц</span>
       <span class="ds-badge ds-badge--lg">Web · iOS · Android · Admin</span>
-      <span class="ds-badge ds-badge--lg">108 экранов</span>
+      <span class="ds-badge ds-badge--lg">118 экранов</span>
     </div>
 
     <div class="ds-strip" style="margin-top:34px;max-width:600px;background:rgba(18,28,48,.76);backdrop-filter:blur(20px)">
@@ -1461,14 +1464,17 @@ window.addEventListener('resize', function () { DSAurora.resize(); });
      ['43 экрана', '7 сценариев', 'Плеер', 'Редактор субтитров']],
     ['03', 'mobile.html', 'iPhone и Android', 'ds-mobile',
      'Настоящий мобильный UX, а не сжатый веб: шторки, жесты, safe area, FAB на Android и крупные заголовки на iOS.',
-     ['44 экрана', 'Две платформы рядом', 'Портрет и ландшафт', 'Офлайн']],
+     ['47 экранов', 'Две платформы рядом', 'Портрет и ландшафт', 'Офлайн']],
     ['04', 'admin.html', 'Админ-панель', 'ds-admin',
      'Приватный контур: загрузка мастер-файла, автоматическая подготовка качеств, таймлайн-редактор субтитров, поддержка, роли и журнал действий.',
-     ['21 экран', 'Редактор CC+', 'Роли и доступы', 'Права и лицензии']]
+     ['28 экранов', 'Редактор CC+', 'Роли и доступы', 'Права и лицензии']],
+    ['05', 'flow.html', 'Путь зрителя', 'ds-flow',
+     'Каждый шаг по порядку: что зритель видит, что делает и куда попадает дальше. От первого запуска до ответа поддержки, со ссылками прямо в прототипы.',
+     ['10 актов', 'Все 118 экранов', 'Ветки и отказы', 'Онбординг']]
   ];
 
   $('ixCards').innerHTML = CARDS.map(function (c) {
-    return '<a class="ix__card" href="' + c[1] + '">' +
+    return '<a class="ix__card' + (c[0] === '05' ? ' ix__card--wide' : '') + '" href="' + c[1] + '">' +
       '<div class="ix__thumb">' + art(c[3], '', 'position:absolute;inset:0') +
         '<div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(3,7,19,.86),rgba(3,7,19,.14))"></div>' +
         '<div style="position:absolute;left:16px;bottom:14px">' +
@@ -1501,7 +1507,7 @@ window.addEventListener('resize', function () { DSAurora.resize(); });
 
   $('ixStats').innerHTML = [
     ['25', 'исходных экранов разобрано'],
-    ['108', 'экранов спроектировано'],
+    ['118', 'экранов спроектировано'],
     ['1', 'подписка — 500 ₽ / месяц'],
     ['0', 'чужих постеров в макетах']
   ].map(function (s) {

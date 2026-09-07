@@ -3064,6 +3064,7 @@ A.asettings = function () {
   function go(id) {
     var e = BY[id]; if (!e) return;
     state.id = id;
+    setHash(id);
     $('apScreen').innerHTML = e.s[2]();
     $('apPick').value = id;
     $('apSub').textContent = 'Экран ' + String(e.i + 1).padStart(2, '0') + ' из ' + SCREENS.length;
@@ -3093,6 +3094,21 @@ A.asettings = function () {
     if (seg && !seg.dataset.vw) seg.parentNode.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-selected', b === seg); });
   });
 
-  go('dash');
+
+  // Адрес вида #dash открывает прототип сразу на нужном экране —
+  // карта пути ведёт не «в прототип», а точно в тот шаг, о котором говорит.
+  function setHash(id) {
+    if (decodeURIComponent(location.hash.slice(1)) === id) return;
+    try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
+  }
+  function fromHash() {
+    var h = decodeURIComponent(location.hash.slice(1));
+    return BY[h] ? h : null;
+  }
+  window.addEventListener('hashchange', function () {
+    var h = fromHash();
+    if (h && h !== state.id) go(h);
+  });
+  go(fromHash() || 'dash');
 })();
 </script>
