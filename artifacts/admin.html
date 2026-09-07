@@ -3098,6 +3098,9 @@ A.asettings = function () {
   // Адрес вида #dash открывает прототип сразу на нужном экране —
   // карта пути ведёт не «в прототип», а точно в тот шаг, о котором говорит.
   function setHash(id) {
+    // В сводной сборке все три прототипа живут на одной странице и делили бы
+    // один адрес: пусть адресом занимается только оболочка.
+    if (window.DS_COMBINED) return;
     if (decodeURIComponent(location.hash.slice(1)) === id) return;
     try { history.replaceState(null, '', '#' + id); } catch (e) { location.hash = id; }
   }
@@ -3110,5 +3113,6 @@ A.asettings = function () {
     if (h && h !== state.id) go(h);
   });
   go(fromHash() || 'dash');
+  (window.DSGO = window.DSGO || {})['admin'] = go;
 })();
 </script>

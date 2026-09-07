@@ -34,7 +34,14 @@ EXTRA = {
     'web': ['web-shell.js', 'web-a.js', 'web-b.js', 'web-c.js', 'web-d.js'],
     'mobile': ['web-shell.js', 'mobile-a.js', 'mobile-b.js'],
     'admin': ['admin-a.js', 'admin-b.js', 'admin-c.js'],
+    # Сводная сборка держит все прототипы сразу, поэтому берёт все скрипты.
+    'all': ['web-shell.js', 'web-a.js', 'web-b.js', 'web-c.js', 'web-d.js',
+            'mobile-a.js', 'mobile-b.js',
+            'admin-a.js', 'admin-b.js', 'admin-c.js'],
 }
+
+# Порядок вкладок в сводной сборке.
+COMBINED = ['index', 'flow', 'system', 'web', 'mobile', 'admin']
 
 # The standalone build supplies what the Artifact host would otherwise inject.
 HEAD = (
@@ -55,6 +62,7 @@ HEAD = (
 )
 
 DESCRIPTIONS = {
+    'all': 'DeafSuslik целиком: обзор, путь зрителя, дизайн-система и три кликабельных прототипа в одном файле.',
     'flow': 'Путь зрителя DeafSuslik от первого запуска до переписки с поддержкой — каждый шаг со ссылкой в прототип.',
     'index': 'DeafSuslik — премиальный стриминг с субтитрами CC и CC+. Дизайн-система, веб, мобильные приложения и админ-панель.',
     'system': 'Дизайн-система DeafSuslik: аудит референсов, токены, компоненты, правила CC+ и передача в разработку.',
@@ -94,7 +102,7 @@ def screens_index():
     return 'var ALLSCREENS = ' + json.dumps(out, ensure_ascii=False) + ';\n'
 
 
-GENERATED = {'flow': screens_index}
+GENERATED = {'flow': screens_index, 'all': screens_index}
 
 
 def check_syntax():
@@ -113,12 +121,25 @@ def read(p):
         return f.read()
 
 
-def build(name):
-    body = read(name + '.body.html')
+def strip_title(body):
     m = re.match(r'<!--TITLE:\s*(.*?)\s*-->\s*', body)
-    title = m.group(1) if m else 'DeafSuslik'
-    if m:
-        body = body[m.end():]
+    return (m.group(1) if m else 'DeafSuslik'), (body[m.end():] if m else body)
+
+
+def combined_pages():
+    """Шесть страниц в одном файле: одна ссылка вместо шести."""
+    out = []
+    for page in COMBINED:
+        _, body = strip_title(read(page + '.body.html'))
+        out.append('<section class="al__page" data-page="%s" hidden>\n%s\n</section>\n'
+                   % (page, body))
+    return ''.join(out)
+
+
+def build(name):
+    title, body = strip_title(read(name + '.body.html'))
+    if name == 'all':
+        body = body.replace('<!--PAGES-->', combined_pages())
 
     inner = (
         '<title>' + title + '</title>\n'

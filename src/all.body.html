@@ -1,0 +1,120 @@
+<!--TITLE: DeafSuslik -->
+<script>
+  /* Флаг должен встать раньше, чем стартуют роутеры страниц: иначе каждый из
+     трёх перепишет общий адрес под свой экран, и последний затрёт остальных. */
+  window.DS_COMBINED = true;
+  window.DS_BOOT_HASH = decodeURIComponent(location.hash.slice(1));
+</script>
+
+<style>
+  /* Оболочка сводной сборки: шесть страниц в одном файле, одна ссылка на всё.
+     Собственные стили страниц не трогаются — у оболочки свой префикс. */
+
+  /* Хост артефактов подставляет свою светлую подложку: фон и схему полей
+     страница должна назвать сама, иначе одолжит чужую. */
+  :root { color-scheme: dark; }
+  body { background: var(--ds-void); color: var(--ds-ink); }
+
+  .al__bar {
+    position: sticky; top: 0; z-index: 900;
+    display: flex; align-items: center; gap: 16px;
+    padding: 10px 20px;
+    background: rgba(8,16,38,.88); backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--ds-line);
+  }
+  .al__logo { display: flex; align-items: center; flex: 0 0 auto; }
+  .al__tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+  .al__tabs::-webkit-scrollbar { display: none; }
+  .al__tab {
+    flex: 0 0 auto; padding: 8px 14px; border-radius: 999px;
+    border: 1px solid transparent; background: transparent;
+    font: inherit; font-size: 13px; font-weight: 600; color: var(--ds-ink-2);
+    cursor: pointer; white-space: nowrap;
+    transition: background var(--ds-m-base) var(--ds-ease), color var(--ds-m-base) var(--ds-ease);
+  }
+  .al__tab:hover { color: var(--ds-ink); background: var(--ds-raised); }
+  .al__tab[aria-selected="true"] {
+    background: var(--ds-raised-3); border-color: var(--ds-amber-edge); color: var(--ds-amber);
+  }
+  .al__page[hidden] { display: none !important; }
+
+  @media (max-width: 760px) {
+    .al__bar { padding: 8px 12px; gap: 10px; }
+    .al__logo { display: none; }
+  }
+</style>
+
+<nav class="al__bar">
+  <span class="al__logo" id="alLogo"></span>
+  <div class="al__tabs" id="alTabs" role="tablist"></div>
+</nav>
+
+<!--PAGES-->
+
+<script>
+(function () {
+  var TABS = [
+    ['index',  'Обзор'],
+    ['flow',   'Путь зрителя'],
+    ['system', 'Дизайн-система'],
+    ['web',    'Веб'],
+    ['mobile', 'iPhone и Android'],
+    ['admin',  'Админ-панель']
+  ];
+
+  var bar = document.getElementById('alTabs');
+  document.getElementById('alLogo').innerHTML = dsLogo(22, 14);
+  bar.innerHTML = TABS.map(function (t) {
+    return '<button class="al__tab" role="tab" data-page="' + t[0] + '" aria-selected="false">' + t[1] + '</button>';
+  }).join('');
+
+  function section(name) { return document.querySelector('.al__page[data-page="' + name + '"]'); }
+
+  function show(name, screen) {
+    var found = false;
+    TABS.forEach(function (t) {
+      var el = section(t[0]);
+      if (!el) return;
+      var on = t[0] === name;
+      el.hidden = !on;
+      if (on) found = true;
+    });
+    if (!found) return;
+
+    bar.querySelectorAll('.al__tab').forEach(function (b) {
+      b.setAttribute('aria-selected', b.dataset.page === name);
+    });
+
+    // Прототип, который был скрыт, мерил себя по нулевой ширине —
+    // после показа пересчитываем размеры и перезапускаем фон.
+    window.dispatchEvent(new Event('resize'));
+    var el = section(name);
+    if (window.DSAurora) DSAurora.mount(el);
+
+    if (screen && window.DSGO && DSGO[name]) DSGO[name](screen);
+
+    try { history.replaceState(null, '', '#' + name + (screen ? '/' + screen : '')); } catch (e) {}
+    window.scrollTo(0, 0);
+  }
+
+  bar.addEventListener('click', function (ev) {
+    var b = ev.target.closest('.al__tab');
+    if (b) show(b.dataset.page);
+  });
+
+  // Внутренние ссылки вида web.html#player раньше вели на соседний файл.
+  // В одном файле соседних файлов нет — ведём их на нужную вкладку и экран.
+  document.addEventListener('click', function (ev) {
+    var a = ev.target.closest('a[href]');
+    if (!a) return;
+    var m = /^([a-z-]+)\.html(?:#(.+))?$/.exec(a.getAttribute('href') || '');
+    if (!m) return;
+    if (!section(m[1])) return;
+    ev.preventDefault();
+    show(m[1], m[2] ? decodeURIComponent(m[2]) : null);
+  });
+
+  var h = (window.DS_BOOT_HASH || '').split('/');
+  show(section(h[0]) ? h[0] : 'index', h[1] || null);
+})();
+</script>
