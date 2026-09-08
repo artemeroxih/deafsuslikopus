@@ -252,9 +252,9 @@ A.user = function () {
           '<div style="padding:11px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
             '<p class="ds-cap">Пользуется CC+ постоянно, даёт подробную обратную связь по субтитрам. ' +
             'Стоит приглашать в бета-тесты новых языков.</p>' +
-            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-4)">Мария Р. · 14 сентября</p></div>' +
+            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-3)">Мария Р. · 14 сентября</p></div>' +
           '<button class="ds-btn ds-btn--sm ds-btn--ghost ds-btn--block" style="margin-top:10px">' + ic('plus', 13) + ' Добавить заметку</button>' +
-          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-4)">Заметки никогда не видны пользователю.</p></div></div>' +
+          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-3)">Заметки никогда не видны пользователю.</p></div></div>' +
 
       '<div class="ds-stack ds-g4">' +
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Подписка</h3>' +

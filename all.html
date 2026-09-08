@@ -19,7 +19,7 @@
 <title>DeafSuslik</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* ============================================================
    deafsuslik — Design Tokens
@@ -45,7 +45,9 @@
   /* ---- Ink ---- */
   --ds-ink:         #EEF3FB;
   --ds-ink-2:       #A3AFC4;
-  --ds-ink-3:       #6B7893;
+  --ds-ink-3:       #7A87A1;
+  /* ink-4 — только неинтерактивная графика: шевроны, ручки, выключенные
+     значки. Для текста не годится: 2.3:1 на фоне приложения. */
   --ds-ink-4:       #47536B;
   --ds-ink-inv:     #081026;
 
@@ -375,7 +377,8 @@ body {
   transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease);
 }
 .ds-textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
-.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-4); }
+/* Подсказка в поле — читаемый текст, а не украшение: ink-4 даёт 2.3:1. */
+.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-3); }
 .ds-input:focus, .ds-select:focus, .ds-textarea:focus {
   border-color: var(--ds-amber-edge); background: var(--ds-raised-2);
   box-shadow: 0 0 0 3px rgba(95,227,208,.13); outline: none;
@@ -404,7 +407,7 @@ body {
 }
 .ds-search:focus-within { border-color: var(--ds-amber-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
 .ds-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: var(--ds-t-body); }
-.ds-search input::placeholder { color: var(--ds-ink-4); }
+.ds-search input::placeholder { color: var(--ds-ink-3); }
 
 /* Switch */
 .ds-switch { position: relative; display: inline-flex; align-items: center; width: 46px; height: 27px; flex: none; cursor: pointer; }
@@ -5499,9 +5502,9 @@ A.user = function () {
           '<div style="padding:11px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
             '<p class="ds-cap">Пользуется CC+ постоянно, даёт подробную обратную связь по субтитрам. ' +
             'Стоит приглашать в бета-тесты новых языков.</p>' +
-            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-4)">Мария Р. · 14 сентября</p></div>' +
+            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-3)">Мария Р. · 14 сентября</p></div>' +
           '<button class="ds-btn ds-btn--sm ds-btn--ghost ds-btn--block" style="margin-top:10px">' + ic('plus', 13) + ' Добавить заметку</button>' +
-          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-4)">Заметки никогда не видны пользователю.</p></div></div>' +
+          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-3)">Заметки никогда не видны пользователю.</p></div></div>' +
 
       '<div class="ds-stack ds-g4">' +
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Подписка</h3>' +
@@ -7563,7 +7566,7 @@ A.asettings = function () {
       <div class="demo" style="margin-top:16px">
         <p class="lbl">Правила записи CC+</p>
         <table class="aud"><tbody>
-          <tr><td style="width:210px"><span class="ds-cue__speaker" style="display:inline">АННА:</span></td><td>Имя говорящего — прописные, аква, отдельной строкой. Ставится при смене говорящего и когда говорящий вне кадра.</td></tr>
+          <tr><td style="width:210px"><span class="ds-cue__speaker" style="display:inline">АННА:</span></td><td>Имя говорящего — прописные, цветом реплики, отдельной строкой. Отличается весом 800 и разрядкой, а не цветом: цвет субтитров выбирает зритель. Ставится при смене говорящего и когда говорящий вне кадра.</td></tr>
           <tr><td><span class="ds-cue__sound" style="display:inline">[стук в дверь]</span></td><td>Звук в квадратных скобках, курсив, строчными. Описывается источник, а не эмоция.</td></tr>
           <tr><td><span class="ds-cue__sound" style="display:inline">[тревожная музыка нарастает]</span></td><td>Музыка описывается только когда несёт сюжет. Фоновая — нет.</td></tr>
           <tr><td><span class="ds-cue__sound" style="display:inline">[гром заглушает разговор]</span></td><td>Если звук перекрывает речь — это важнее самой речи. Пишем обязательно.</td></tr>
@@ -7628,14 +7631,14 @@ A.asettings = function () {
       </div>
       <div class="demo">
         <table class="aud"><tbody>
-          <tr><td style="width:230px">Контраст</td><td>Основной текст ≥ 7:1. Вторичный ≥ 4.5:1. Границы интерактивных элементов ≥ 3:1. Проверено на <span class="spec">#06070A</span>.</td></tr>
+          <tr><td style="width:230px">Контраст</td><td>Основной текст ≥ 7:1. Вторичный ≥ 4.5:1. Границы интерактивных элементов ≥ 3:1. Проверено на <span class="spec">#0C1638</span> — фоне приложения.</td></tr>
           <tr><td>Никогда только цветом</td><td>Каждый статус несёт текст или глиф. CC и CC+ различаются заливкой и символом «+».</td></tr>
           <tr><td>Цели касания</td><td>Минимум 44×44. В плеере — 58×58, основная кнопка 76×76.</td></tr>
           <tr><td>Фокус</td><td>Обводка 2 px аквой со смещением 2 px. Видна на всех поверхностях, никогда не снимается.</td></tr>
           <tr><td>Клавиатура</td><td>Полный обход всего веба, включая плеер и редактор субтитров. Логичный порядок, ловушки фокуса в модалках.</td></tr>
           <tr><td>Скринридер</td><td>Семантические заголовки, <code class="k">aria-live</code> для прогресса загрузки и статусов оплаты, подписи у всех иконочных кнопок.</td></tr>
           <tr><td>Путь до субтитров</td><td>Из плеера — одно касание до языка, два до CC+. Из профиля — один пункт верхнего уровня.</td></tr>
-          <tr style="border-bottom:0"><td>Движение</td><td><code class="k">prefers-reduced-motion</code> отключает параллакс, автопрокрутку рельсов и все декоративные переходы.</td></tr>
+          <tr style="border-bottom:0"><td>Движение</td><td><code class="k">prefers-reduced-motion</code> отключает параллакс, ambient-движение в героях и декоративные переходы. Переходы между экранами остаются, но сокращаются до 120 мс и теряют смещение.</td></tr>
         </tbody></table>
       </div>
     </section>
@@ -8690,7 +8693,7 @@ A.asettings = function () {
       ['offline',    'Офлайн-режим',         Mo.offline,    'Полоса сверху, доступное — обычным цветом, недоступное — приглушено и не нажимается.']
     ]],
     ['Библиотека', [
-      ['library',    'Продолжить просмотр',  Mo.library,    'Вкладки прокручиваются горизонтально, активная подчёркнута золотом.'],
+      ['library',    'Продолжить просмотр',  Mo.library,    'Вкладки прокручиваются горизонтально, активная подчёркнута янтарём.'],
       ['favorites',  'Избранное',            Mo.favorites,  'Сетка два в ряд — плотность, при которой обложка ещё читается.'],
       ['lists',      'Мои списки',           Mo.lists,      'На Android — FAB в правом нижнем углу, на iOS — кнопка в шапке и в контенте.'],
       ['createList', 'Новый список',         Mo.createList, 'Шторка на 58% высоты — клавиатура помещается, фон остаётся виден.'],

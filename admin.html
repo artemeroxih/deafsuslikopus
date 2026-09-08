@@ -12,7 +12,7 @@
 <title>DeafSuslik Admin Panel</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;0,700;0,800;0,900;1,600;1,700&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&family=Playfair+Display:wght@500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
 <style>
 /* ============================================================
    deafsuslik — Design Tokens
@@ -38,7 +38,9 @@
   /* ---- Ink ---- */
   --ds-ink:         #EEF3FB;
   --ds-ink-2:       #A3AFC4;
-  --ds-ink-3:       #6B7893;
+  --ds-ink-3:       #7A87A1;
+  /* ink-4 — только неинтерактивная графика: шевроны, ручки, выключенные
+     значки. Для текста не годится: 2.3:1 на фоне приложения. */
   --ds-ink-4:       #47536B;
   --ds-ink-inv:     #081026;
 
@@ -368,7 +370,8 @@ body {
   transition: border-color var(--ds-m-micro) var(--ds-ease), background var(--ds-m-micro) var(--ds-ease), box-shadow var(--ds-m-base) var(--ds-ease);
 }
 .ds-textarea { min-height: 110px; resize: vertical; line-height: 1.55; }
-.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-4); }
+/* Подсказка в поле — читаемый текст, а не украшение: ink-4 даёт 2.3:1. */
+.ds-input::placeholder, .ds-textarea::placeholder { color: var(--ds-ink-3); }
 .ds-input:focus, .ds-select:focus, .ds-textarea:focus {
   border-color: var(--ds-amber-edge); background: var(--ds-raised-2);
   box-shadow: 0 0 0 3px rgba(95,227,208,.13); outline: none;
@@ -397,7 +400,7 @@ body {
 }
 .ds-search:focus-within { border-color: var(--ds-amber-edge); background: var(--ds-raised-2); box-shadow: 0 0 0 3px rgba(95,227,208,.12); }
 .ds-search input { flex: 1; min-width: 0; background: none; border: 0; outline: none; font-size: var(--ds-t-body); }
-.ds-search input::placeholder { color: var(--ds-ink-4); }
+.ds-search input::placeholder { color: var(--ds-ink-3); }
 
 /* Switch */
 .ds-switch { position: relative; display: inline-flex; align-items: center; width: 46px; height: 27px; flex: none; cursor: pointer; }
@@ -2024,9 +2027,9 @@ A.user = function () {
           '<div style="padding:11px;border-radius:var(--ds-r-sm);background:var(--ds-void);border:1px solid var(--ds-line)">' +
             '<p class="ds-cap">Пользуется CC+ постоянно, даёт подробную обратную связь по субтитрам. ' +
             'Стоит приглашать в бета-тесты новых языков.</p>' +
-            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-4)">Мария Р. · 14 сентября</p></div>' +
+            '<p class="ds-cap ds-num" style="margin-top:7px;color:var(--ds-ink-3)">Мария Р. · 14 сентября</p></div>' +
           '<button class="ds-btn ds-btn--sm ds-btn--ghost ds-btn--block" style="margin-top:10px">' + ic('plus', 13) + ' Добавить заметку</button>' +
-          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-4)">Заметки никогда не видны пользователю.</p></div></div>' +
+          '<p class="ds-cap" style="margin-top:8px;color:var(--ds-ink-3)">Заметки никогда не видны пользователю.</p></div></div>' +
 
       '<div class="ds-stack ds-g4">' +
         '<div class="ds-card"><h3 class="ds-h2" style="margin-bottom:14px">Подписка</h3>' +
