@@ -9052,6 +9052,14 @@ A.asettings = function () {
     ['admin',  'Админ-панель']
   ];
 
+  // Установленное приложение — витрина продукта. Админ-панель в него не входит:
+  // таймлайн субтитров, очередь обработки и таблицы прав рассчитаны на большой
+  // экран и мышь. Ссылки на неё из карты пути остаются — они объясняют почему.
+  var STANDALONE = matchMedia('(display-mode: standalone)').matches ||
+                   matchMedia('(display-mode: fullscreen)').matches ||
+                   navigator.standalone === true;
+  if (STANDALONE) TABS = TABS.filter(function (t) { return t[0] !== 'admin'; });
+
   var bar = document.getElementById('alTabs');
   document.getElementById('alLogo').innerHTML = dsLogo(22, 14);
   bar.innerHTML = TABS.map(function (t) {
@@ -9061,16 +9069,15 @@ A.asettings = function () {
   function section(name) { return document.querySelector('.al__page[data-page="' + name + '"]'); }
 
   function show(name, screen) {
-    var found = false;
-    TABS.forEach(function (t) {
-      var el = section(t[0]);
-      if (!el) return;
-      var on = t[0] === name;
-      el.hidden = !on;
-      if (on) found = true;
-    });
-    if (!found) return;
+    // Перебираем разделы, а не вкладки: у раздела вкладки может не быть —
+    // в установленном приложении админка живёт без неё, чтобы ссылка из
+    // карты пути приводила к объяснению, а не в тишину.
+    var target = section(name);
+    if (!target) return;
 
+    document.querySelectorAll('.al__page').forEach(function (el) {
+      el.hidden = el !== target;
+    });
     bar.querySelectorAll('.al__tab').forEach(function (b) {
       b.setAttribute('aria-selected', b.dataset.page === name);
     });
@@ -9078,8 +9085,7 @@ A.asettings = function () {
     // Прототип, который был скрыт, мерил себя по нулевой ширине —
     // после показа пересчитываем размеры и перезапускаем фон.
     window.dispatchEvent(new Event('resize'));
-    var el = section(name);
-    if (window.DSAurora) DSAurora.mount(el);
+    if (window.DSAurora) DSAurora.mount(target);
 
     if (screen && window.DSGO && DSGO[name]) DSGO[name](screen);
 
@@ -9103,6 +9109,30 @@ A.asettings = function () {
     ev.preventDefault();
     show(m[1], m[2] ? decodeURIComponent(m[2]) : null);
   });
+
+  if (STANDALONE) {
+    var adm = document.querySelector('.al__page[data-page="admin"]');
+    if (adm) {
+      var here = location.href.replace(/[^\/]*(?:[?#].*)?$/, 'admin.html');
+      // Разметку не удаляем, а прячем: роутер админки слушает resize и на
+      // каждом переключении вкладки полез бы в элементы, которых уже нет.
+      Array.prototype.forEach.call(adm.children, function (c) { c.hidden = true; });
+      adm.insertAdjacentHTML('beforeend',
+        '<div style="max-width:560px;margin:0 auto;padding:72px 24px">' +
+          '<div class="ds-card">' +
+            '<span class="ds-badge">Только для компьютера</span>' +
+            '<h2 class="ds-h1" style="margin-top:14px">Админ-панель не входит в приложение</h2>' +
+            '<p class="ds-body" style="margin-top:12px">Таймлайн-редактор субтитров, очередь ' +
+              'обработки видео и таблицы прав рассчитаны на большой экран и мышь. Уместить их ' +
+              'в телефон можно, но работать в них станет нельзя — поэтому мы этого не делаем.</p>' +
+            '<p class="ds-sm" style="margin-top:14px">Откройте на компьютере:<br>' +
+              '<a href="' + here + '" style="color:var(--ds-accent);word-break:break-all">' + here + '</a></p>' +
+          '</div></div>');
+      // Разметки админки больше нет — её роутер трогать нельзя, иначе
+      // ссылка из карты пути упадёт в консоль вместо объяснения.
+      if (window.DSGO) delete DSGO.admin;
+    }
+  }
 
   var h = (window.DS_BOOT_HASH || '').split('/');
   show(section(h[0]) ? h[0] : 'index', h[1] || null);

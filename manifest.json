@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "DeafSuslik",
+  "short_name": "DeafSuslik",
+  "description": "Дизайн премиального стриминга, где субтитры — не опция, а продукт.",
+  "lang": "ru",
+  "start_url": "all.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0C1638",
+  "theme_color": "#0C1638",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Путь зрителя", "short_name": "Путь", "url": "all.html#flow" },
+    { "name": "iPhone и Android", "short_name": "Мобильные", "url": "all.html#mobile" },
+    { "name": "Веб-приложение", "short_name": "Веб", "url": "all.html#web" }
+  ]
+}

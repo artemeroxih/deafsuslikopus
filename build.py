@@ -50,6 +50,7 @@ HEAD = (
     '<meta name="viewport" content="width=device-width,initial-scale=1">\n'
     '<meta name="robots" content="noindex">\n'
     '<meta name="description" content="{desc}">\n'
+    '{pwa}'
     '<link rel="icon" href="data:image/svg+xml,'
     '%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 48 48%27%3E'
     '%3Crect width=%2748%27 height=%2748%27 rx=%2712%27 fill=%27%2335E0CB%27/%3E'
@@ -60,6 +61,21 @@ HEAD = (
     '[hidden]{{display:none!important}}</style>\n'
     '</head>\n<body>\n'
 )
+
+
+# Витрину можно поставить на телефон как приложение. Админ-панель — нельзя:
+# это инструмент для компьютера, и в установленном приложении ей нечего делать.
+PWA = (
+    '<link rel="manifest" href="manifest.json">\n'
+    '<meta name="theme-color" content="#0C1638">\n'
+    '<link rel="apple-touch-icon" href="apple-touch-icon.png">\n'
+    '<meta name="apple-mobile-web-app-capable" content="yes">\n'
+    '<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">\n'
+    '<meta name="apple-mobile-web-app-title" content="DeafSuslik">\n'
+    '<script>if("serviceWorker"in navigator)addEventListener("load",function(){'
+    'navigator.serviceWorker.register("sw.js").catch(function(){})});</script>\n'
+)
+NO_PWA = {'admin'}
 
 DESCRIPTIONS = {
     'all': 'DeafSuslik целиком: обзор, путь зрителя, дизайн-система и три кликабельных прототипа в одном файле.',
@@ -156,8 +172,9 @@ def build(name):
         f.write(inner)
 
     desc = DESCRIPTIONS.get(name, DESCRIPTIONS['index'])
+    pwa = '' if name in NO_PWA else PWA
     with open(os.path.join(ROOT, name + '.html'), 'w', encoding='utf-8') as f:
-        f.write(HEAD.format(desc=desc) + inner + '\n</body>\n</html>\n')
+        f.write(HEAD.format(desc=desc, pwa=pwa) + inner + '\n</body>\n</html>\n')
 
     kb = os.path.getsize(os.path.join(ROOT, name + '.html')) / 1024
     print('%-14s %7.1f KB' % (name + '.html', kb))
