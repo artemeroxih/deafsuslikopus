@@ -1787,7 +1787,7 @@ Mo.login = function (os) {
           '<div style="position:relative;display:flex;align-items:center">' +
             '<input class="ds-input" type="password" value="secretpass" style="padding-right:50px">' +
             '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" style="position:absolute;right:7px" aria-label="Показать пароль">' + ic('eye', 17) + '</button></div></div>' +
-        '<div style="display:flex;justify-content:flex-end"><button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0">Забыли пароль?</button></div>' +
+        '<div style="display:flex;justify-content:flex-end"><button class="ds-btn ds-btn--sm ds-btn--ghost" style="padding:0" data-go="forgot">Забыли пароль?</button></div>' +
         '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Войти</button>' +
         '<div class="ds-row-f ds-g3" style="margin:2px 0"><div class="ds-divider ds-grow"></div><span class="ds-cap">или</span><div class="ds-divider ds-grow"></div></div>' +
         (os === 'android'
@@ -1802,6 +1802,89 @@ Mo.login = function (os) {
         '<div class="ds-cap">Осталось 4 попытки</div></div></div>' +
       '<div class="ds-grow"></div>' +
       '<p class="ds-sm ds-center" style="padding-bottom:16px">Нет аккаунта? <span style="color:var(--ds-accent);font-weight:600">Создать</span></p>' +
+    '</div>');
+};
+
+/* ---------- Восстановление пароля ---------- */
+
+/** Шапка трёх экранов восстановления: логотип и стрелка назад. */
+function recoverHead(title, sub) {
+  return '<div style="padding-top:30px;display:flex;align-items:center;gap:12px">' +
+      '<button class="ds-iconbtn ds-iconbtn--bare" aria-label="Назад">' + ic('arrowL', 20) + '</button>' +
+      dsLogo(28, 18) + '</div>' +
+    '<h1 class="ds-d2" style="font-size:1.55rem;margin-top:22px">' + title + '</h1>' +
+    '<p class="ds-sm" style="margin-top:6px">' + sub + '</p>';
+}
+
+Mo.forgot = function (os) {
+  return phone(os,
+    '<div style="flex:1;display:flex;flex-direction:column;padding:0 24px">' +
+      recoverHead('Восстановление пароля',
+        'Введите почту, на которую заведён аккаунт. Пришлём ссылку для смены пароля.') +
+      '<div class="ds-stack ds-g3" style="margin-top:24px">' +
+        '<div class="ds-field"><label class="ds-label">Email</label>' +
+          '<input class="ds-input" type="email" value="anna.k@example.ru" inputmode="email"></div>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block">Отправить ссылку</button>' +
+      '</div>' +
+      // Отвечаем одинаково независимо от того, есть такая почта или нет:
+      // иначе экран превращается в способ узнать, кто зарегистрирован.
+      '<div class="ds-card" style="margin-top:18px;padding:14px">' +
+        '<p class="ds-cap" style="line-height:1.5">Письмо придёт, только если аккаунт с такой почтой существует. ' +
+        'Мы не сообщаем, заведён он или нет, — иначе по этому экрану можно было бы узнать чужую почту.</p></div>' +
+      '<div class="ds-grow"></div>' +
+      '<p class="ds-sm ds-center" style="padding-bottom:16px">Вспомнили пароль? <span style="color:var(--ds-accent);font-weight:600">Войти</span></p>' +
+    '</div>');
+};
+
+Mo.forgotSent = function (os) {
+  return phone(os,
+    '<div style="flex:1;display:flex;flex-direction:column;padding:0 24px">' +
+      recoverHead('Проверьте почту', 'Отправили ссылку на <b style="color:var(--ds-ink)">anna.k@example.ru</b>. Она действует час.') +
+      '<div class="ds-center" style="margin-top:34px">' +
+        '<span style="display:grid;place-items:center;width:72px;height:72px;border-radius:99px;' +
+          'background:var(--ds-raised);color:var(--ds-accent);margin:0 auto">' + ic('send', 30) + '</span></div>' +
+      '<div class="ds-stack ds-g3" style="margin-top:30px">' +
+        '<button class="ds-btn ds-btn--secondary ds-btn--block">Открыть почту</button>' +
+        // Кнопка выключена и честно говорит, сколько ждать: «отправить ещё раз»
+        // без счётчика заставляет жать вслепую и слать письма пачками.
+        '<button class="ds-btn ds-btn--ghost ds-btn--block" disabled style="opacity:.55">Отправить ещё раз через 0:47</button>' +
+      '</div>' +
+      '<div class="ds-card" style="margin-top:18px;padding:14px">' +
+        '<div class="ds-row-f ds-g2" style="align-items:flex-start">' +
+          '<span style="color:var(--ds-ink-3);display:flex;flex:none;margin-top:1px">' + ic('info', 16) + '</span>' +
+          '<p class="ds-cap" style="line-height:1.5">Письма нет через пару минут — загляните в «Спам» и «Промоакции». ' +
+          'Если и там пусто, напишите нам: ответим и восстановим доступ вручную.</p></div></div>' +
+      '<div class="ds-grow"></div>' +
+      '<p class="ds-sm ds-center" style="padding-bottom:16px">Ошиблись почтой? <span style="color:var(--ds-accent);font-weight:600">Ввести другую</span></p>' +
+    '</div>');
+};
+
+Mo.reset = function (os) {
+  return phone(os,
+    '<div style="flex:1;display:flex;flex-direction:column;padding:0 24px">' +
+      recoverHead('Новый пароль', 'Придумайте пароль, которым будете входить дальше.') +
+      '<div class="ds-stack ds-g3" style="margin-top:24px">' +
+        '<div class="ds-field"><label class="ds-label">Новый пароль</label>' +
+          '<div style="position:relative;display:flex;align-items:center">' +
+            '<input class="ds-input" type="password" value="mypassword" style="padding-right:50px">' +
+            '<button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" style="position:absolute;right:7px" aria-label="Показать пароль">' + ic('eye', 17) + '</button></div>' +
+          '<div class="ds-row-f ds-g1" style="margin-top:7px">' +
+            [1, 1, 1, 0].map(function (on) {
+              return '<div style="height:3px;flex:1;border-radius:2px;background:' + (on ? 'var(--ds-ok)' : 'var(--ds-raised-3)') + '"></div>';
+            }).join('') + '</div>' +
+          '<span class="ds-help">Надёжный пароль</span></div>' +
+        '<div class="ds-field"><label class="ds-label">Повторите пароль</label>' +
+          '<input class="ds-input" type="password" value="mypassword"></div>' +
+        '<button class="ds-btn ds-btn--primary ds-btn--hero ds-btn--block" style="margin-top:4px">Сохранить и войти</button>' +
+      '</div>' +
+      // Смена пароля выкидывает чужие сессии — об этом надо предупредить
+      // заранее, а не показывать список устройств, потерявших доступ.
+      '<div class="ds-card" style="margin-top:18px;padding:14px;border-color:var(--ds-amber-edge)">' +
+        '<div class="ds-row-f ds-g2" style="align-items:flex-start">' +
+          '<span style="color:var(--ds-amber);display:flex;flex:none;margin-top:1px">' + ic('shield', 16) + '</span>' +
+          '<p class="ds-cap" style="line-height:1.5">После смены пароля вход останется только на этом устройстве. ' +
+          'На остальных — телефоне, планшете, компьютере — придётся войти заново.</p></div></div>' +
+      '<div class="ds-grow"></div>' +
     '</div>');
 };
 
@@ -3119,7 +3202,7 @@ Mo.ticket = function (os) {
   <nav class="mp__side">
     <div class="mp__brand">
       <div id="mpLogo"></div>
-      <p class="ds-cap" style="margin-top:8px">iPhone и Android · 47 экранов</p>
+      <p class="ds-cap" style="margin-top:8px">iPhone и Android · 50 экранов</p>
       <div class="mp__flow" id="mpFlows"></div>
     </div>
     <div class="mp__list ds-scroll" id="mpList"></div>
@@ -3158,7 +3241,10 @@ Mo.ticket = function (os) {
       ['onb3', 'Онбординг 3 · Офлайн',    Mo.onb3, 'Карточка загрузки прямо в макете: видно, что скачивается фильм вместе с субтитрами.'],
       ['onb4', 'Онбординг 4 · Синхро',    Mo.onb4, 'Один тайм-код на двух устройствах. Последний шаг ведёт к созданию аккаунта.'],
       ['login',      'Вход',                 Mo.login,      'iOS первым предлагает Apple, Android — Google. Порядок кнопок меняется, вёрстка нет. <b>Сообщение об ошибке — это состояние, а не часть экрана:</b> оно появляется только после неудачной попытки и считает попытки от пяти.'],
-      ['register',   'Регистрация',          Mo.register,   'Индикатор надёжности пароля вместо списка требований.']
+      ['register',   'Регистрация',          Mo.register,   'Индикатор надёжности пароля вместо списка требований.'],
+      ['forgot',     'Забыли пароль',        Mo.forgot,     'Отвечаем одинаково, есть такая почта или нет: иначе экран превращается в способ узнать, кто зарегистрирован.'],
+      ['forgotSent', 'Письмо отправлено',    Mo.forgotSent, 'Повтор с обратным отсчётом: без него человек жмёт вслепую и шлёт письма пачками.'],
+      ['reset',      'Новый пароль',         Mo.reset,      'Предупреждаем заранее, что вход слетит на остальных устройствах, — а не показываем потом список потерявших доступ.']
     ]],
     ['Каталог', [
       ['home',       'Главная',              Mo.home,       'Герой во всю ширину под статус-баром. Таббар из пяти пунктов, «Загрузки» — отдельный.'],
