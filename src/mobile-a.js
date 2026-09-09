@@ -69,10 +69,18 @@ function mBody(inner, pad) {
 }
 
 /* Bottom tab bar */
-var MTABS = [['home', 'Главная'], ['search', 'Поиск'], ['library', 'Библиотека'], ['download', 'Загрузки'], ['user', 'Профиль']];
+// Третий элемент — экран, на который ведёт пункт. Без него меню нарисовано,
+// но не нажимается, и человек, которому показывают прототип, первым делом
+// тыкает именно в него.
+var MTABS = [
+  ['home', 'Главная', 'home'], ['search', 'Поиск', 'search'],
+  ['library', 'Библиотека', 'library'], ['download', 'Загрузки', 'downloads'],
+  ['user', 'Профиль', 'profile']
+];
 function mTabbar(active, badge) {
   return '<div class="ds-tabbar" style="padding-bottom:0">' + MTABS.map(function (t, i) {
-    return '<button class="ds-tabbar__item' + (t[0] === active ? ' is-on' : '') + '">' +
+    return '<button class="ds-tabbar__item' + (t[0] === active ? ' is-on' : '') +
+      '" data-go="' + t[2] + '">' +
       '<span class="ds-tabbar__ico">' + ic(t[0], 22) +
       (i === 3 && badge ? '<span class="ds-tabbar__dot"></span>' : '') + '</span>' + t[1] + '</button>';
   }).join('') + '</div>';

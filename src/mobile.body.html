@@ -245,6 +245,10 @@
       go(state.id); return;
     }
 
+    // Нижнее меню внутри макета телефона — такая же навигация, как список слева.
+    var go2 = ev.target.closest('[data-go]');
+    if (go2 && go2.dataset.go) { go(go2.dataset.go); return; }
+
     var chip = ev.target.closest('.ds-chip');
     if (chip) chip.setAttribute('aria-pressed', chip.getAttribute('aria-pressed') === 'true' ? 'false' : 'true');
     var tab = ev.target.closest('.ds-tab');
