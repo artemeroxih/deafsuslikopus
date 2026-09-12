@@ -234,7 +234,7 @@ A.movies = function () {
           '<td>' + (r[3] === 'нет' ? '<span class="ds-badge ds-badge--warn">Нет</span>'
             : '<span class="ds-num" style="font-size:11.5px;color:var(--ds-amber)">' + r[3] + '</span>') + '</td>' +
           '<td>' + (r[4] === '—' ? '<span class="ds-mut2">—</span>'
-            : '<span class="ds-badge" style="border-color:#C89BFF44;color:#C89BFF">' + r[4] + '</span>') + '</td>' +
+            : '<span class="ds-badge ds-badge--coll">' + r[4] + '</span>') + '</td>' +
           '<td class="ds-num">' + r[5] + '</td>' +
           '<td class="ds-num ds-mut2">' + r[6] + '</td>' +
           '<td><button class="ds-iconbtn ds-iconbtn--sm ds-iconbtn--bare" aria-label="Действия">' + ic('moreH', 15) + '</button></td></tr>';
