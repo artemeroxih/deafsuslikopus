@@ -393,6 +393,9 @@ body {
    POSTER / ARTWORK  (procedural — no third-party imagery)
    ============================================================ */
 .ds-art { position: relative; overflow: hidden; background: var(--ds-raised); isolation: isolate; }
+
+/* Кадр, на котором показан пример субтитров. */
+.ds-ccstage { aspect-ratio: 16/9; }
 .ds-art__grad { position: absolute; inset: 0; }
 .ds-art::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: overlay;
@@ -488,6 +491,14 @@ body {
 }
 /* Full-width centring track the cue box sits in */
 .ds-cuetrack { width: 100%; text-align: center; padding: 0 5%; }
+
+/* Дорожка субтитров поверх кадра.
+   Классом, а не inline-стилем: на телефоне панель управления становится
+   выше, и реплику надо поднимать вместе с ней — а inline медиазапросом
+   не перебить. Кегль тоже отсюда: на узком экране 26 px даёт четыре
+   строки, они вылезают на тайм-код. */
+.ds-cuetrack--player { position: absolute; left: 0; right: 0; bottom: 17%; z-index: 2; }
+.ds-cuetrack--player .ds-cue { font-size: clamp(15px, 3.2vw, 26px); }
 
 /* Caption strip — recurring structural device */
 .ds-strip {
@@ -713,6 +724,10 @@ body {
 .ds-split--right { grid-template-columns: minmax(0, 1fr) 328px; }
 .ds-split--right-lg { grid-template-columns: minmax(0, 1fr) 380px; }
 .ds-split--left { grid-template-columns: 246px minmax(0, 1fr); gap: 44px; }
+
+/* Боковая колонка липнет к верху при прокрутке. Тоже классом: на телефоне
+   липкость надо снимать, иначе колонка занимает экран и не отпускает. */
+.ds-aside { position: sticky; top: 92px; }
 .ds-split--poster { grid-template-columns: 264px minmax(0, 1fr); gap: 44px; }
 
 @media (max-width: 1279px) {
@@ -770,4 +785,43 @@ body {
   /* Панели инструментов переносятся, а не уезжают за край */
   .ds-between, .ds-row-f { flex-wrap: wrap; }
   .ds-railhead { flex-wrap: nowrap; }
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+
+   Веб смотрят с телефона, и наша аудитория — в первую очередь. Правила
+   ниже чинят то, что на широком экране незаметно: субтитры, налезающие
+   на панель плеера, и меню кабинета, закрывающее собой настройки.
+   ============================================================ */
+
+@media (max-width: 899px) {
+  /* Липкость отпускает: на коротком экране прилипшая колонка не даёт
+     добраться до содержимого */
+  .ds-aside { position: static; }
+
+  /* Кабинет: сначала то, зачем пришли, и только потом список разделов.
+     Двенадцать пунктов до заголовка означают, что до настроек человек
+     не доберётся — он решит, что открыл не тот экран. */
+  .ds-split--left { grid-template-columns: 1fr; gap: 28px; }
+  .ds-split--left > .ds-aside { order: 2; }
+}
+
+@media (max-width: 767px) {
+  /* Панель плеера собирается компактнее, чтобы не отнимать кадр */
+  .ds-player__top { padding: 12px 14px; gap: 8px; }
+  .ds-player__bottom { padding: 0 14px 14px; gap: 8px; }
+  .ds-player__center { gap: 20px; }
+  .ds-pbtn--main { width: 62px; height: 62px; }
+  .ds-pbtn--skip { width: 46px; height: 46px; }
+  .ds-pbtn--sm { width: 34px; height: 34px; }
+  .ds-pbtn--cc { height: 34px; padding: 0 10px; }
+
+  /* Реплика поднимается над панелью: субтитры на этой панели — не
+     украшение, а то, ради чего человек включил фильм */
+  .ds-cuetrack--player { bottom: 27%; }
+
+  /* Кадр предпросмотра растёт под текст. При крупном кегле реплика в
+     16:9 не помещается, и обрезается ровно то, что проверяют. */
+  .ds-ccstage { aspect-ratio: auto; min-height: 190px; }
 }

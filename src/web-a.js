@@ -445,7 +445,7 @@ S.movie = function () {
           wRail('Вам также понравится', [3, 11, 15, 19, 4, 8, 12], { mt: 44 }) +
         '</div>' +
 
-        '<aside style="position:sticky;top:92px">' +
+        '<aside class="ds-aside">' +
           '<div class="ds-card ds-card--flush" style="border-color:var(--ds-amber-edge)">' +
             '<div style="padding:18px 20px;background:var(--ds-amber-dim);border-bottom:1px solid var(--ds-amber-edge)">' +
               '<div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 19) + '</span>' +

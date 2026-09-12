@@ -492,7 +492,7 @@ S.ticket = function () {
             '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('send', 14) + ' Отправить</button></div></div></div>' +
       '</div>' +
 
-      '<aside class="ds-card" style="position:sticky;top:92px">' +
+      '<aside class="ds-card ds-aside">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Данные обращения</p>' +
         '<div class="ds-stack ds-g3">' +
           [['Номер', '#DS-10482'], ['Категория', 'Ошибка CC+'], ['Приоритет', 'Обычный'],

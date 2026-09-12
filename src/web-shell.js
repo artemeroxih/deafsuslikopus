@@ -112,7 +112,7 @@ function authFrame(inner, sideTitle, sideBody) {
 function settingsPage(title, sub, body, nav) {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
     '<div class="ds-split ds-split--left">' +
-      '<aside style="position:sticky;top:92px">' +
+      '<aside class="ds-aside">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Аккаунт</p>' +
         '<div class="ds-stack">' + (nav || ACCOUNT_NAV).map(function (n) {
           return '<button class="ds-row" style="min-height:42px;padding:8px 12px;border-radius:var(--ds-r-sm);border-bottom:0' +

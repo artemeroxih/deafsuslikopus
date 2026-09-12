@@ -8,8 +8,8 @@ function playerChrome(panel, opts) {
   return '<div class="ds-player" style="height:900px">' +
     '<div class="ds-player__stage">' + dsArt('player-main') + '</div>' +
     (opts.hideCue ? '' :
-      '<div class="ds-cuetrack" style="position:absolute;left:0;right:0;bottom:17%;z-index:2">' +
-        '<span class="ds-cuebox" style="max-width:44ch"><span class="ds-cue" style="font-size:26px">' +
+      '<div class="ds-cuetrack ds-cuetrack--player">' +
+        '<span class="ds-cuebox" style="max-width:44ch"><span class="ds-cue">' +
         '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
         '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span></div>') +
     '<div class="ds-player__ui">' +
@@ -173,8 +173,8 @@ S.ccSettings = function () {
       '<p class="ds-sm" style="margin-top:6px">Настройки применяются ко всем фильмам на всех ваших устройствах.</p></div></div>' +
 
     '<div class="ds-split ds-split--right-lg" style="margin-top:30px">' +
-      '<div style="position:sticky;top:92px">' +
-        '<div class="ds-art" id="ccStage" style="aspect-ratio:16/9;border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
+      '<div class="ds-aside">' +
+        '<div class="ds-art ds-ccstage" id="ccStage" style="border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
           '<div id="ccPreview" class="ds-cuetrack" style="position:relative;z-index:3;padding-bottom:7%"></div></div>' +
         '<div class="ds-row-f ds-g3" style="margin-top:16px">' +
           '<button class="ds-btn ds-btn--ghost" id="ccResetBtn">Сбросить по умолчанию</button>' +

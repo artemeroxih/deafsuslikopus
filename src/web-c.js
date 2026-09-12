@@ -187,7 +187,7 @@ S.checkout = function () {
         '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
           '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-accent)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
       '</div>' +
-      '<aside style="position:sticky;top:92px">' +
+      '<aside class="ds-aside">' +
         '<div class="ds-card" style="border-color:' + p.hex + '33">' +
           '<p class="ds-eyebrow" style="margin-bottom:12px">Ваш заказ</p>' +
           '<div class="ds-row-f ds-g3"><span style="width:4px;height:40px;border-radius:2px;background:' + p.color + '"></span>' +

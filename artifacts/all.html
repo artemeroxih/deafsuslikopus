@@ -530,6 +530,9 @@ body {
    POSTER / ARTWORK  (procedural — no third-party imagery)
    ============================================================ */
 .ds-art { position: relative; overflow: hidden; background: var(--ds-raised); isolation: isolate; }
+
+/* Кадр, на котором показан пример субтитров. */
+.ds-ccstage { aspect-ratio: 16/9; }
 .ds-art__grad { position: absolute; inset: 0; }
 .ds-art::after {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .28; mix-blend-mode: overlay;
@@ -625,6 +628,14 @@ body {
 }
 /* Full-width centring track the cue box sits in */
 .ds-cuetrack { width: 100%; text-align: center; padding: 0 5%; }
+
+/* Дорожка субтитров поверх кадра.
+   Классом, а не inline-стилем: на телефоне панель управления становится
+   выше, и реплику надо поднимать вместе с ней — а inline медиазапросом
+   не перебить. Кегль тоже отсюда: на узком экране 26 px даёт четыре
+   строки, они вылезают на тайм-код. */
+.ds-cuetrack--player { position: absolute; left: 0; right: 0; bottom: 17%; z-index: 2; }
+.ds-cuetrack--player .ds-cue { font-size: clamp(15px, 3.2vw, 26px); }
 
 /* Caption strip — recurring structural device */
 .ds-strip {
@@ -850,6 +861,10 @@ body {
 .ds-split--right { grid-template-columns: minmax(0, 1fr) 328px; }
 .ds-split--right-lg { grid-template-columns: minmax(0, 1fr) 380px; }
 .ds-split--left { grid-template-columns: 246px minmax(0, 1fr); gap: 44px; }
+
+/* Боковая колонка липнет к верху при прокрутке. Тоже классом: на телефоне
+   липкость надо снимать, иначе колонка занимает экран и не отпускает. */
+.ds-aside { position: sticky; top: 92px; }
 .ds-split--poster { grid-template-columns: 264px minmax(0, 1fr); gap: 44px; }
 
 @media (max-width: 1279px) {
@@ -907,6 +922,45 @@ body {
   /* Панели инструментов переносятся, а не уезжают за край */
   .ds-between, .ds-row-f { flex-wrap: wrap; }
   .ds-railhead { flex-wrap: nowrap; }
+}
+
+/* ============================================================
+   ТЕЛЕФОН
+
+   Веб смотрят с телефона, и наша аудитория — в первую очередь. Правила
+   ниже чинят то, что на широком экране незаметно: субтитры, налезающие
+   на панель плеера, и меню кабинета, закрывающее собой настройки.
+   ============================================================ */
+
+@media (max-width: 899px) {
+  /* Липкость отпускает: на коротком экране прилипшая колонка не даёт
+     добраться до содержимого */
+  .ds-aside { position: static; }
+
+  /* Кабинет: сначала то, зачем пришли, и только потом список разделов.
+     Двенадцать пунктов до заголовка означают, что до настроек человек
+     не доберётся — он решит, что открыл не тот экран. */
+  .ds-split--left { grid-template-columns: 1fr; gap: 28px; }
+  .ds-split--left > .ds-aside { order: 2; }
+}
+
+@media (max-width: 767px) {
+  /* Панель плеера собирается компактнее, чтобы не отнимать кадр */
+  .ds-player__top { padding: 12px 14px; gap: 8px; }
+  .ds-player__bottom { padding: 0 14px 14px; gap: 8px; }
+  .ds-player__center { gap: 20px; }
+  .ds-pbtn--main { width: 62px; height: 62px; }
+  .ds-pbtn--skip { width: 46px; height: 46px; }
+  .ds-pbtn--sm { width: 34px; height: 34px; }
+  .ds-pbtn--cc { height: 34px; padding: 0 10px; }
+
+  /* Реплика поднимается над панелью: субтитры на этой панели — не
+     украшение, а то, ради чего человек включил фильм */
+  .ds-cuetrack--player { bottom: 27%; }
+
+  /* Кадр предпросмотра растёт под текст. При крупном кегле реплика в
+     16:9 не помещается, и обрезается ровно то, что проверяют. */
+  .ds-ccstage { aspect-ratio: auto; min-height: 190px; }
 }
 
 </style>
@@ -1442,7 +1496,7 @@ function authFrame(inner, sideTitle, sideBody) {
 function settingsPage(title, sub, body, nav) {
   return topbar('') + '<main class="ds-container" style="padding-top:44px;padding-bottom:64px">' +
     '<div class="ds-split ds-split--left">' +
-      '<aside style="position:sticky;top:92px">' +
+      '<aside class="ds-aside">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Аккаунт</p>' +
         '<div class="ds-stack">' + (nav || ACCOUNT_NAV).map(function (n) {
           return '<button class="ds-row" style="min-height:42px;padding:8px 12px;border-radius:var(--ds-r-sm);border-bottom:0' +
@@ -1947,7 +2001,7 @@ S.movie = function () {
           wRail('Вам также понравится', [3, 11, 15, 19, 4, 8, 12], { mt: 44 }) +
         '</div>' +
 
-        '<aside style="position:sticky;top:92px">' +
+        '<aside class="ds-aside">' +
           '<div class="ds-card ds-card--flush" style="border-color:var(--ds-amber-edge)">' +
             '<div style="padding:18px 20px;background:var(--ds-amber-dim);border-bottom:1px solid var(--ds-amber-edge)">' +
               '<div class="ds-row-f ds-g2"><span style="color:var(--ds-amber);display:flex">' + ic('cc', 19) + '</span>' +
@@ -1993,8 +2047,8 @@ function playerChrome(panel, opts) {
   return '<div class="ds-player" style="height:900px">' +
     '<div class="ds-player__stage">' + dsArt('player-main') + '</div>' +
     (opts.hideCue ? '' :
-      '<div class="ds-cuetrack" style="position:absolute;left:0;right:0;bottom:17%;z-index:2">' +
-        '<span class="ds-cuebox" style="max-width:44ch"><span class="ds-cue" style="font-size:26px">' +
+      '<div class="ds-cuetrack ds-cuetrack--player">' +
+        '<span class="ds-cuebox" style="max-width:44ch"><span class="ds-cue">' +
         '<span class="ds-cue__speaker">АННА:</span>Я скоро вернусь, обещаю.' +
         '<span class="ds-cue__sound">[дверь резко захлопывается]</span></span></span></div>') +
     '<div class="ds-player__ui">' +
@@ -2158,8 +2212,8 @@ S.ccSettings = function () {
       '<p class="ds-sm" style="margin-top:6px">Настройки применяются ко всем фильмам на всех ваших устройствах.</p></div></div>' +
 
     '<div class="ds-split ds-split--right-lg" style="margin-top:30px">' +
-      '<div style="position:sticky;top:92px">' +
-        '<div class="ds-art" id="ccStage" style="aspect-ratio:16/9;border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
+      '<div class="ds-aside">' +
+        '<div class="ds-art ds-ccstage" id="ccStage" style="border-radius:var(--ds-r-lg);border:1px solid var(--ds-line);position:relative;display:flex;align-items:flex-end;justify-content:center">' +
           '<div id="ccPreview" class="ds-cuetrack" style="position:relative;z-index:3;padding-bottom:7%"></div></div>' +
         '<div class="ds-row-f ds-g3" style="margin-top:16px">' +
           '<button class="ds-btn ds-btn--ghost" id="ccResetBtn">Сбросить по умолчанию</button>' +
@@ -2643,7 +2697,7 @@ S.checkout = function () {
         '<label class="ds-opt" style="align-items:flex-start"><span class="ds-opt__box ds-opt__box--check is-on" style="border-color:var(--ds-amber);background:var(--ds-amber);margin-top:2px"></span>' +
           '<span class="ds-sm">Соглашаюсь с <span style="color:var(--ds-accent)">условиями подписки</span> и разрешаю ежемесячное списание ' + p.price + ' ₽</span></label>' +
       '</div>' +
-      '<aside style="position:sticky;top:92px">' +
+      '<aside class="ds-aside">' +
         '<div class="ds-card" style="border-color:' + p.hex + '33">' +
           '<p class="ds-eyebrow" style="margin-bottom:12px">Ваш заказ</p>' +
           '<div class="ds-row-f ds-g3"><span style="width:4px;height:40px;border-radius:2px;background:' + p.color + '"></span>' +
@@ -3216,7 +3270,7 @@ S.ticket = function () {
             '<button class="ds-btn ds-btn--sm ds-btn--primary">' + ic('send', 14) + ' Отправить</button></div></div></div>' +
       '</div>' +
 
-      '<aside class="ds-card" style="position:sticky;top:92px">' +
+      '<aside class="ds-card ds-aside">' +
         '<p class="ds-eyebrow" style="margin-bottom:14px">Данные обращения</p>' +
         '<div class="ds-stack ds-g3">' +
           [['Номер', '#DS-10482'], ['Категория', 'Ошибка CC+'], ['Приоритет', 'Обычный'],
